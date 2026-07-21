@@ -84,6 +84,7 @@
   .btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     border: none;
     border-radius: 999px;
@@ -446,7 +447,9 @@
 
   .gift .kicker { color: var(--white); opacity: 0.85; }
 
-  .on-dark .kicker, .program .kicker, .author .kicker { color: var(--purple-light); }
+  .on-dark .kicker, .program .kicker { color: var(--purple-light); }
+
+  .author .kicker { color: var(--white); font-family: 'Unbounded', sans-serif; font-weight: 700; }
 
   /* ================= PRICING ================= */
   .pricing-grid {
@@ -527,12 +530,12 @@
     display: grid;
     grid-template-columns: 0.7fr 1.3fr;
     gap: 48px;
-    align-items: center;
+    align-items: start;
   }
 
   .author-photo {
     width: 100%;
-    aspect-ratio: 352/686;
+    aspect-ratio: 352/560;
     border-radius: 24px;
     background: linear-gradient(155deg, var(--purple), var(--pink-deep));
     object-fit: cover;
@@ -773,8 +776,7 @@
 <section class="argument" id="pricing">
   <div class="wrap">
     <div data-reveal>
-      <div class="kicker">Варианты участия</div>
-      <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem);">Карта ролей и интересов</h2>
+      <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem);">Варианты участия</h2>
       <p class="prose">Искусство убеждения через управление ролями в общении. 20 — 27 августа.</p>
     </div>
 
@@ -789,7 +791,7 @@
         </ul>
         <div class="price-block">
           <span class="price-old">100 000 ₽</span>
-          <span class="price-new">25 000 ₽</span>
+          <span class="price-new">29 950 ₽</span>
         </div>
         <a href="https://f5game.site/forma/pay/win_clients" id="buy-training" class="btn btn-primary">Купить</a>
       </div>
