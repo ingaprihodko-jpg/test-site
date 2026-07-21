@@ -208,7 +208,7 @@
     font-size: clamp(1.5rem, 2.6vw, 2.1rem);
     font-weight: 700;
     font-family: 'Unbounded', sans-serif;
-    line-height: 1;
+    line-height: 0.92;
     max-width: 18ch;
     margin-bottom: 28px;
   }
@@ -223,10 +223,10 @@
 
   .role-list {
     list-style: none;
-    margin: 20px 0;
+    margin: 14px 0;
     padding: 0;
     display: grid;
-    gap: 10px;
+    gap: 4px;
   }
 
   .role-list li {
@@ -240,7 +240,36 @@
     content: "—";
     position: absolute;
     left: 0;
-    color: var(--pink);
+    color: var(--purple);
+  }
+
+  .chain-list {
+    list-style: none;
+    margin: 24px 0 0;
+    padding: 0;
+  }
+
+  .chain-list li {
+    position: relative;
+    background: var(--paper-warm);
+    border-radius: 16px;
+    padding: 16px 20px;
+    font-size: 1.02rem;
+  }
+
+  .chain-list li:not(:last-child) {
+    margin-bottom: 28px;
+  }
+
+  .chain-list li:not(:last-child)::after {
+    content: "↓";
+    position: absolute;
+    left: 20px;
+    bottom: -28px;
+    color: var(--purple);
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1;
   }
 
   .comic-strip {
@@ -598,9 +627,11 @@
         <li>пытающегося убедить,</li>
       </ul>
       <p>вы проиграли.</p>
-      <p>Если вы входите в разговор из роли человека, которому очень нужно, <strong>ваши аргументы звучат как просьба.</strong></p>
-      <p>Если входите из роли оправдывающегося — <strong>любые факты становятся защитой.</strong></p>
-      <p>Если автоматически отдаёте собеседнику роль человека, от которого зависит всё, <strong>вы сами лишаете себя влияния.</strong></p>
+      <ul class="chain-list">
+        <li>Если вы входите в разговор из роли человека, которому очень нужно, <strong>ваши аргументы звучат как просьба.</strong></li>
+        <li>Если входите из роли оправдывающегося — <strong>любые факты становятся защитой.</strong></li>
+        <li>Если автоматически отдаёте собеседнику роль человека, от которого зависит всё, <strong>вы сами лишаете себя влияния.</strong></li>
+      </ul>
     </div>
 
     <div data-reveal class="comic-strip">
