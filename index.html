@@ -151,7 +151,7 @@
   .hero {
     position: relative;
     background: radial-gradient(ellipse 90% 70% at 78% 0%, #FCE4F0 0%, #ffffff 55%);
-    padding: clamp(56px, 9vw, 96px) 0 0;
+    padding: clamp(56px, 9vw, 96px) 0 clamp(40px, 6vw, 72px);
     overflow: hidden;
   }
 
@@ -544,22 +544,23 @@
     object-position: top center;
   }
 
-  .author ul {
+  .author-grid ul {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
     gap: 14px;
+    text-align: left;
   }
 
-  .author li {
+  .author-grid li {
     padding-left: 26px;
     position: relative;
     font-weight: 600;
     color: var(--ink-soft);
   }
 
-  .author li::before {
+  .author-grid li::before {
     content: "—";
     position: absolute;
     left: 0;
@@ -598,9 +599,7 @@
     .comic-strip { grid-template-columns: 1fr; }
     .learn-list { grid-template-columns: 1fr; }
     .pricing-grid { grid-template-columns: 1fr; }
-    .author-grid { text-align: center; }
     .author-photo { max-width: 220px; margin: 0 auto; }
-    .author li { text-align: left; }
   }
 </style>
 </head>
