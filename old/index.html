@@ -324,9 +324,25 @@
     position: relative;
     background: var(--paper-warm);
     border-radius: 16px;
-    padding: 16px 20px;
+    padding: 16px 60px 16px 20px;
     font-size: 1.02rem;
   }
+
+  .chain-list .mini-icon {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .chain-list .mini-icon svg { width: 18px; height: 18px; }
 
   .chain-list li:not(:last-child) {
     margin-bottom: 28px;
@@ -746,9 +762,9 @@
       </ul>
       <p>вы проиграли.</p>
       <ul class="chain-list">
-        <li>Если вы входите в разговор из роли человека, которому очень нужно, <strong>ваши аргументы звучат как просьба.</strong></li>
-        <li>Если входите из роли оправдывающегося — <strong>любые факты становятся защитой.</strong></li>
-        <li>Если автоматически отдаёте собеседнику роль человека, от которого зависит всё, <strong>вы сами лишаете себя влияния.</strong></li>
+        <li><span class="mini-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v12H8l-4 4V4z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></span>Если вы входите в разговор из роли человека, которому очень нужно, <strong>ваши аргументы звучат как просьба.</strong></li>
+        <li><span class="mini-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></span>Если входите из роли оправдывающегося — <strong>любые факты становятся защитой.</strong></li>
+        <li><span class="mini-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4v14M12 18l-5-5M12 18l5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Если автоматически отдаёте собеседнику роль человека, от которого зависит всё, <strong>вы сами лишаете себя влияния.</strong></li>
       </ul>
     </div>
 
