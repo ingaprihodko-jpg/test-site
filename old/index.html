@@ -528,7 +528,6 @@
   .gift {
     background: linear-gradient(135deg, var(--pink), var(--pink-deep));
     color: var(--white);
-    padding-bottom: 0;
   }
 
   .gift-grid {
@@ -538,7 +537,12 @@
     align-items: center;
   }
 
-  .gift-icon { justify-self: end; align-self: end; width: 100%; }
+  .gift-icon {
+    justify-self: end;
+    align-self: end;
+    width: 100%;
+    margin-bottom: calc(-1 * clamp(56px, 9vw, 108px));
+  }
 
   .gift-icon img { width: 100%; max-width: 300px; margin-left: auto; }
 
