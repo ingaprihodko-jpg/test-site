@@ -695,7 +695,14 @@
     .hero-visual { order: -1; max-width: 280px; margin: 0 auto 12px; }
     .argument-grid, .roles-grid, .map-grid, .gift-grid, .author-grid { grid-template-columns: 1fr; }
     .gift-icon { justify-self: center; margin-top: 24px; }
-    .comic-strip { grid-template-columns: 1fr; }
+    .comic-strip {
+      grid-template-columns: 1fr;
+      margin-left: -24px;
+      margin-right: -24px;
+      border-radius: 0;
+      padding: 20px 16px;
+      gap: 16px;
+    }
     .chain-list { grid-template-columns: 1fr; grid-template-rows: none; gap: 16px; }
     .chain-list li:nth-child(1),
     .chain-list li:nth-child(2),
