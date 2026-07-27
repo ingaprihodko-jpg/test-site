@@ -532,13 +532,14 @@
 
   .gift-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+    align-items: center;
   }
 
-  .gift-icon { width: 100%; }
+  .gift-icon { justify-self: end; align-self: center; width: 100%; }
 
-  .gift-icon img { width: 100%; max-width: 100%; margin: 0 auto; }
+  .gift-icon img { width: 100%; max-width: 100%; margin-left: auto; }
 
   .gift .kicker { color: var(--white); opacity: 0.85; }
 
