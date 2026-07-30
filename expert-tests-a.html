@@ -431,17 +431,11 @@
     align-items: center;
   }
 
-  .illus-placeholder {
-    aspect-ratio: 1;
-    border: 2px dashed #d8d5e6;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--ink-soft);
-    font-size: 0.88rem;
-    text-align: center;
-    padding: 20px;
+  .tech-illus img {
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+    filter: drop-shadow(0 20px 30px rgba(22, 21, 31, 0.18));
   }
 
   /* ================= GIFT ================= */
@@ -769,8 +763,9 @@
       <p class="prose" style="margin-top: 18px;">Мы в <a href="http://f5game.ru" style="color: var(--pink); font-weight: 700;">F5GAME.RU</a> постоянно тестируем новые технические возможности и придумываем, как их использовать, чтобы сделать нашу работу эффективнее, а реализацию идей — ярче и привлекательней. Этому учим и вас, участников нашего сообщества.</p>
       <p class="prose">Именно поэтому на интенсиве речь пойдёт не только о технической стороне создания тестов, но и о её логике и смыслах. А вайбкодинг станет инструментом, позволяющим их выразить и усилить ваш профессионализм.</p>
     </div>
-    <!-- TODO: заменить на иллюстрацию «человечек с роботом» с сайта «Сайт за 1 вечер» -->
-    <div class="illus-placeholder" data-reveal>Здесь — иллюстрация «человечек с роботом», как на «Сайте за 1 вечер»</div>
+    <div class="tech-illus illus" data-reveal>
+      <img src="assets/images/robot-mascot.svg" alt="Человек с роботом-помощником" width="1024" height="1536">
+    </div>
   </div>
 </section>
 
