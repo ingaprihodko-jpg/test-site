@@ -359,77 +359,46 @@
     color: var(--pink-bright);
   }
 
-  /* ================= DAY CARD (program) ================= */
-  .day-card {
-    background: var(--white);
-    border-radius: 24px;
-    padding: clamp(24px, 4vw, 40px);
-    box-shadow: 0 20px 45px -30px rgba(22, 21, 31, 0.35);
-    position: relative;
-    overflow: hidden;
+  /* ================= PROGRAM GRID ================= */
+  .program-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
     margin-top: 40px;
   }
 
-  .day-card::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, var(--pink), var(--purple));
+  .program-card {
+    background: var(--white);
+    border: 1px solid #ece9f2;
+    border-radius: 16px;
+    padding: clamp(20px, 3vw, 28px);
   }
 
-  .day-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 10px 18px;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #ece9f2;
+  .program-card.full { grid-column: 1 / -1; }
+
+  .program-card .step-num {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 800;
+    font-size: 0.78rem;
+    color: var(--pink);
+    margin-bottom: 10px;
   }
 
-  .day-head .label {
+  .program-card h4 {
     font-family: 'Unbounded', sans-serif;
     font-weight: 700;
-    font-size: 1.15rem;
+    font-size: 1.02rem;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
     color: var(--ink);
+    margin: 0 0 8px;
   }
 
-  .day-head .meta { color: var(--pink); font-weight: 700; font-size: 0.92rem; }
-
-  .step-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    counter-reset: step;
-    display: grid;
-    gap: 16px;
-  }
-
-  .step-list li {
-    counter-increment: step;
-    padding-left: 40px;
-    position: relative;
-    font-weight: 600;
+  .program-card p {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.08rem;
     color: var(--ink-soft);
-  }
-
-  .step-list li::before {
-    content: counter(step);
-    position: absolute;
-    left: 0;
-    top: -2px;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: #E4F7EC;
-    color: var(--green);
-    font-family: 'Unbounded', sans-serif;
-    font-weight: 700;
-    font-size: 0.82rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin: 0;
   }
 
   /* ================= VALUE CONTRAST ================= */
@@ -452,7 +421,28 @@
     color: var(--pink-bright);
   }
 
-  .value-item .label { color: #c7c5da; font-size: 0.9rem; margin-top: 4px; }
+  .value-item .label { color: #c7c5da; font-size: 1.08rem; margin-top: 4px; }
+
+  /* ================= TECH (placeholder illustration) ================= */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .illus-placeholder {
+    aspect-ratio: 1;
+    border: 2px dashed #d8d5e6;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+    text-align: center;
+    padding: 20px;
+  }
 
   /* ================= GIFT ================= */
   .gift-grid {
@@ -464,7 +454,7 @@
 
   .gift-icon { justify-self: end; }
 
-  .gift-icon svg { width: 180px; height: 180px; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.35)); }
+  .gift-icon svg { width: 260px; height: 260px; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.35)); }
 
   /* ================= COMPARE (Как проходит) ================= */
   .compare-grid {
@@ -566,9 +556,11 @@
     .hero-visual { order: -1; max-width: 260px; margin: 0 auto 12px; }
     .gift-grid { grid-template-columns: 1fr; }
     .gift-icon { justify-self: center; order: -1; }
+    .tech-grid { grid-template-columns: 1fr; }
     .learn-list { grid-template-columns: 1fr; }
     .type-grid { grid-template-columns: 1fr; }
     .compare-grid { grid-template-columns: 1fr; }
+    .program-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -703,22 +695,48 @@
   <div class="wrap">
     <div data-reveal>
       <div class="eyebrow">На интенсиве разберём</div>
-      <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem);">Экспертные тесты</h2>
+      <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem);">Программа интенсива</h2>
+      <p class="prose" style="margin-top: 8px;">5 сентября · 10:00 мск</p>
     </div>
-    <div class="day-card" data-reveal>
-      <div class="day-head">
-        <span class="label">Программа интенсива</span>
-        <span class="meta">5 сентября · 10:00 мск</span>
+    <div class="program-grid" data-reveal>
+      <div class="program-card">
+        <div class="step-num">01</div>
+        <h4>Схема создания теста</h4>
+        <p>Пошаговая логика от идеи до работающего инструмента</p>
       </div>
-      <ol class="step-list">
-        <li>Схема создания экспертного теста — пошаговая логика от идеи до работающего инструмента</li>
-        <li>Как придумывать типы (категории) аудитории — на чём их строить и как назвать, чтобы попадало в запрос</li>
-        <li>Механика теста — как создавать вопросы и ответы, чтобы результаты были достоверными и рабочими</li>
-        <li>Как связывать результаты теста со своим продуктом — персонализация предложения под каждый тип</li>
-        <li>Как зашивать авторскую методику в логику теста</li>
-        <li>Как внедрять тест в воронку продаж</li>
-        <li>Как реализовать такой тест с помощью вайбкодинга 🔥</li>
-      </ol>
+      <div class="program-card">
+        <div class="step-num">02</div>
+        <h4>Как придумывать типы</h4>
+        <p>Категории аудитории — на чём их строить и как назвать, чтобы попадало в запрос</p>
+      </div>
+      <div class="program-card">
+        <div class="step-num">03</div>
+        <h4>Механика теста</h4>
+        <p>Как создавать вопросы и ответы, чтобы результаты были достоверными и рабочими</p>
+      </div>
+      <div class="program-card">
+        <div class="step-num">04</div>
+        <h4>Результаты теста</h4>
+        <p>Как связывать результаты теста со своим продуктом — персонализация предложения под каждый тип</p>
+      </div>
+      <div class="program-card">
+        <div class="step-num">05</div>
+        <h4>Авторская методика</h4>
+        <p>Как зашивать авторскую методику в логику теста</p>
+      </div>
+      <div class="program-card">
+        <div class="step-num">06</div>
+        <h4>Внедрение теста</h4>
+        <p>Как внедрять тест в воронку продаж</p>
+      </div>
+      <div class="program-card full">
+        <div class="step-num">07</div>
+        <h4>Вайбкодинг</h4>
+        <p>И конечно, как реализовать такой тест с помощью вайбкодинга 🔥</p>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 36px;" data-reveal>
+      <a href="#pricing" class="btn btn-primary">Купить</a>
     </div>
   </div>
 </section>
@@ -744,13 +762,15 @@
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap tech-grid">
     <div data-reveal>
       <div class="eyebrow">Технологии не заменят вас</div>
       <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem); max-width: 22ch;">Но усилят вашу экспертность</h2>
       <p class="prose" style="margin-top: 18px;">Мы в <a href="http://f5game.ru" style="color: var(--pink); font-weight: 700;">F5GAME.RU</a> постоянно тестируем новые технические возможности и придумываем, как их использовать, чтобы сделать нашу работу эффективнее, а реализацию идей — ярче и привлекательней. Этому учим и вас, участников нашего сообщества.</p>
       <p class="prose">Именно поэтому на интенсиве речь пойдёт не только о технической стороне создания тестов, но и о её логике и смыслах. А вайбкодинг станет инструментом, позволяющим их выразить и усилить ваш профессионализм.</p>
     </div>
+    <!-- TODO: заменить на иллюстрацию «человечек с роботом» с сайта «Сайт за 1 вечер» -->
+    <div class="illus-placeholder" data-reveal>Здесь — иллюстрация «человечек с роботом», как на «Сайте за 1 вечер»</div>
   </div>
 </section>
 
