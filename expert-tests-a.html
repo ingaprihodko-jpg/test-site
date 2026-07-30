@@ -10,15 +10,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --lime: #3F9E1E;
-    --lime-bright: #9AFF5C;
-    --lime-deep: #2E7A15;
-    --lime-soft: #E9FBD9;
-    --coral: #FF5A45;
-    --coral-bright: #FF8A73;
-    --coral-deep: #E13B27;
+    --pink: #E31C79;
+    --pink-bright: #FF4FA3;
+    --pink-deep: #B01463;
     --purple: #7B2FF7;
     --purple-deep: #5A1FD6;
+    --green: #34B768;
     --navy: #15142B;
     --navy-soft: #1E1D3B;
     --gray-bg: #F4F4F7;
@@ -74,11 +71,11 @@
     font-size: 0.8rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--lime);
+    color: var(--pink);
     margin-bottom: 16px;
   }
 
-  .bg-navy .eyebrow { color: var(--lime-bright); }
+  .bg-navy .eyebrow { color: var(--pink-bright); }
 
   .eyebrow::before {
     content: "";
@@ -90,7 +87,7 @@
 
   .badge-gradient {
     display: inline-block;
-    background: linear-gradient(90deg, var(--lime-deep), var(--purple));
+    background: linear-gradient(90deg, var(--pink), var(--purple));
     color: var(--white);
     font-weight: 800;
     font-size: 0.78rem;
@@ -107,10 +104,10 @@
     color: var(--ink-soft);
   }
 
-  .prose strong { color: var(--coral-deep); font-weight: 800; }
+  .prose strong { color: var(--pink); font-weight: 800; }
 
   .bg-navy .prose { color: #c7c5da; }
-  .bg-navy .prose strong { color: var(--coral-bright); }
+  .bg-navy .prose strong { color: var(--pink-bright); }
 
   .btn {
     display: inline-flex;
@@ -131,12 +128,12 @@
   .btn:hover { transform: translateY(-2px); }
 
   .btn-primary {
-    background: var(--coral);
+    background: var(--pink);
     color: var(--white);
-    box-shadow: 0 14px 30px -12px rgba(255, 90, 69, 0.55);
+    box-shadow: 0 14px 30px -12px rgba(227, 28, 121, 0.55);
   }
 
-  .btn-primary:hover { background: var(--coral-deep); }
+  .btn-primary:hover { background: var(--pink-deep); }
 
   /* ---------- reveal-on-scroll ---------- */
   [data-reveal] {
@@ -152,7 +149,7 @@
   /* ================= HERO ================= */
   .hero {
     position: relative;
-    background: radial-gradient(ellipse 90% 70% at 78% 0%, #EAF9DC 0%, #ffffff 55%);
+    background: radial-gradient(ellipse 90% 70% at 78% 0%, #FCE4F0 0%, #ffffff 55%);
     padding: clamp(56px, 9vw, 96px) 0 clamp(40px, 6vw, 72px);
     overflow: hidden;
   }
@@ -181,7 +178,7 @@
     color: var(--ink);
   }
 
-  .hero h1 .accent { color: var(--coral); }
+  .hero h1 .accent { color: var(--pink); }
 
   .hero-sub {
     font-size: clamp(1.05rem, 1.6vw, 1.3rem);
@@ -290,7 +287,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: var(--lime);
+    background: var(--green);
   }
 
   .learn-list li::after {
@@ -359,7 +356,7 @@
 
   .pull-quote em {
     font-style: normal;
-    color: var(--lime-bright);
+    color: var(--pink-bright);
   }
 
   /* ================= DAY CARD (program) ================= */
@@ -378,7 +375,7 @@
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 5px;
-    background: linear-gradient(90deg, var(--lime-deep), var(--purple));
+    background: linear-gradient(90deg, var(--pink), var(--purple));
   }
 
   .day-head {
@@ -398,7 +395,7 @@
     color: var(--ink);
   }
 
-  .day-head .meta { color: var(--coral); font-weight: 700; font-size: 0.92rem; }
+  .day-head .meta { color: var(--pink); font-weight: 700; font-size: 0.92rem; }
 
   .step-list {
     list-style: none;
@@ -425,8 +422,8 @@
     width: 26px;
     height: 26px;
     border-radius: 50%;
-    background: var(--lime-soft);
-    color: var(--lime-deep);
+    background: #E4F7EC;
+    color: var(--green);
     font-family: 'Unbounded', sans-serif;
     font-weight: 700;
     font-size: 0.82rem;
@@ -452,7 +449,7 @@
     font-family: 'Unbounded', sans-serif;
     font-weight: 800;
     font-size: clamp(1.8rem, 4vw, 2.6rem);
-    color: var(--coral-bright);
+    color: var(--pink-bright);
   }
 
   .value-item .label { color: #c7c5da; font-size: 0.9rem; margin-top: 4px; }
@@ -496,84 +493,6 @@
 
   .compare-card ol li { font-weight: 600; }
 
-  /* ================= 48H BONUS ================= */
-  .bonus-card {
-    background: linear-gradient(155deg, var(--navy-soft), var(--navy));
-    border-radius: 28px;
-    padding: clamp(28px, 5vw, 48px);
-    color: var(--white);
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 32px;
-    align-items: center;
-  }
-
-  .bonus-list {
-    list-style: none;
-    margin: 18px 0 0;
-    padding: 0;
-    display: grid;
-    gap: 8px;
-  }
-
-  .bonus-list li {
-    font-weight: 700;
-    padding-left: 22px;
-    position: relative;
-  }
-
-  .bonus-list li::before {
-    content: "—";
-    position: absolute;
-    left: 0;
-    color: var(--coral-bright);
-  }
-
-  .timer-box {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 20px;
-    padding: 24px;
-    text-align: center;
-  }
-
-  .timer-label {
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #c7c5da;
-    margin-bottom: 14px;
-  }
-
-  .timer-units {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .timer-unit {
-    background: var(--navy);
-    border-radius: 12px;
-    padding: 10px 4px;
-    min-width: 60px;
-  }
-
-  .timer-unit .n {
-    font-family: 'Unbounded', sans-serif;
-    font-weight: 800;
-    font-size: 1.5rem;
-    color: var(--coral-bright);
-    display: block;
-  }
-
-  .timer-unit .u {
-    font-size: 0.68rem;
-    color: #a09fb5;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
   /* ================= PRICING ================= */
   .price-card {
     background: var(--white);
@@ -582,8 +501,8 @@
     padding: clamp(28px, 5vw, 44px);
     max-width: 520px;
     margin: 40px auto 0;
-    border-color: var(--coral);
-    box-shadow: 0 20px 50px -28px rgba(255, 90, 69, 0.4);
+    border-color: var(--pink);
+    box-shadow: 0 20px 50px -28px rgba(227, 28, 121, 0.4);
   }
 
   .price-card h3 {
@@ -611,7 +530,7 @@
     content: "—";
     position: absolute;
     left: 0;
-    color: var(--coral);
+    color: var(--pink);
     font-weight: 700;
   }
 
@@ -631,8 +550,8 @@
   }
 
   .price-discount {
-    background: var(--lime-soft);
-    color: var(--lime-deep);
+    background: #E4F7EC;
+    color: var(--green);
     font-weight: 800;
     font-size: 0.78rem;
     padding: 5px 12px;
@@ -640,21 +559,6 @@
   }
 
   .price-card .btn-primary { width: 100%; justify-content: center; }
-
-  /* ================= CLOSING ================= */
-  .closing {
-    text-align: center;
-    padding: clamp(56px, 8vw, 88px) 0;
-  }
-
-  .closing h2 {
-    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
-    margin-bottom: 12px;
-    color: var(--white);
-  }
-
-  .closing .badge-gradient { margin-bottom: 22px; }
-  .closing p { color: #c7c5da; margin-bottom: 30px; }
 
   /* ================= RESPONSIVE ================= */
   @media (max-width: 860px) {
@@ -665,8 +569,6 @@
     .learn-list { grid-template-columns: 1fr; }
     .type-grid { grid-template-columns: 1fr; }
     .compare-grid { grid-template-columns: 1fr; }
-    .bonus-card { grid-template-columns: 1fr; }
-    .timer-unit { min-width: 52px; }
   }
 </style>
 </head>
@@ -691,19 +593,19 @@
     <div class="hero-visual" data-reveal>
       <div class="test-diagram" data-draw>
         <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-          <line class="td-line" pathLength="1" stroke="#3F9E1E" x1="150" y1="150" x2="150" y2="46"/>
-          <line class="td-line" pathLength="1" stroke="#FF5A45" x1="150" y1="150" x2="248" y2="210"/>
+          <line class="td-line" pathLength="1" stroke="#E31C79" x1="150" y1="150" x2="150" y2="46"/>
+          <line class="td-line" pathLength="1" stroke="#34B768" x1="150" y1="150" x2="248" y2="210"/>
           <line class="td-line" pathLength="1" stroke="#7B2FF7" x1="150" y1="150" x2="52" y2="210"/>
           <g class="td-node">
             <circle cx="150" cy="150" r="38" fill="url(#tdGrad)"/>
             <text class="td-center-label" x="150" y="155" text-anchor="middle">ТЕСТ</text>
           </g>
           <g class="td-node">
-            <circle cx="150" cy="46" r="28" fill="#3F9E1E"/>
+            <circle cx="150" cy="46" r="28" fill="#E31C79"/>
             <text class="td-label" x="150" y="52" text-anchor="middle">A</text>
           </g>
           <g class="td-node">
-            <circle cx="248" cy="210" r="28" fill="#FF5A45"/>
+            <circle cx="248" cy="210" r="28" fill="#34B768"/>
             <text class="td-label" x="248" y="216" text-anchor="middle">B</text>
           </g>
           <g class="td-node">
@@ -712,7 +614,7 @@
           </g>
           <defs>
             <linearGradient id="tdGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#3F9E1E"/>
+              <stop offset="0" stop-color="#E31C79"/>
               <stop offset="1" stop-color="#7B2FF7"/>
             </linearGradient>
           </defs>
@@ -721,7 +623,7 @@
     </div>
     <svg class="spark" style="top:12%; left:6%; width:24px; color:#FFD23F;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.2 8.8L23 12l-8.8 2.2L12 24l-2.2-8.8L1 12l8.8-2.2z"/></svg>
     <svg class="spark" style="top:62%; left:3%; width:16px; color:#7B2FF7; animation-delay:.6s,.3s;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.2 8.8L23 12l-8.8 2.2L12 24l-2.2-8.8L1 12l8.8-2.2z"/></svg>
-    <svg class="spark" style="top:8%; left:66%; width:18px; color:#FF5A45; animation-delay:1.1s,.5s;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.2 8.8L23 12l-8.8 2.2L12 24l-2.2-8.8L1 12l8.8-2.2z"/></svg>
+    <svg class="spark" style="top:8%; left:66%; width:18px; color:#E31C79; animation-delay:1.1s,.5s;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.2 8.8L23 12l-8.8 2.2L12 24l-2.2-8.8L1 12l8.8-2.2z"/></svg>
   </div>
 </section>
 
@@ -766,8 +668,8 @@
     </div>
     <div class="type-grid" data-reveal>
       <div class="type-card">
-        <div class="type-icon" style="background: var(--lime-soft);">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#3F9E1E" stroke-width="2"><path d="M4 18h16M6 18l-1-9 4 3 3-6 3 6 4-3-1 9" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <div class="type-icon" style="background: #FDE3EE;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E31C79" stroke-width="2"><path d="M4 18h16M6 18l-1-9 4 3 3-6 3 6 4-3-1 9" stroke-linejoin="round" stroke-linecap="round"/></svg>
         </div>
         <h4>Принцесса</h4>
         <p>Роль, которая ждёт и получает</p>
@@ -780,8 +682,8 @@
         <p>Роль, которая действует и защищает</p>
       </div>
       <div class="type-card">
-        <div class="type-icon" style="background: #FFE7E2;">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FF5A45" stroke-width="2"><path d="M12 2C8 6 6 10 6 13a6 6 0 0012 0c0-3-2-7-6-11z" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <div class="type-icon" style="background: #E4F7EC;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#34B768" stroke-width="2"><path d="M12 2C8 6 6 10 6 13a6 6 0 0012 0c0-3-2-7-6-11z" stroke-linejoin="round" stroke-linecap="round"/></svg>
         </div>
         <h4>Дракон</h4>
         <p>Роль, которая испытывает и вознаграждает</p>
@@ -846,7 +748,7 @@
     <div data-reveal>
       <div class="eyebrow">Технологии не заменят вас</div>
       <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem); max-width: 22ch;">Но усилят вашу экспертность</h2>
-      <p class="prose" style="margin-top: 18px;">Мы в <a href="http://f5game.ru" style="color: var(--coral-deep); font-weight: 700;">F5GAME.RU</a> постоянно тестируем новые технические возможности и придумываем, как их использовать, чтобы сделать нашу работу эффективнее, а реализацию идей — ярче и привлекательней. Этому учим и вас, участников нашего сообщества.</p>
+      <p class="prose" style="margin-top: 18px;">Мы в <a href="http://f5game.ru" style="color: var(--pink); font-weight: 700;">F5GAME.RU</a> постоянно тестируем новые технические возможности и придумываем, как их использовать, чтобы сделать нашу работу эффективнее, а реализацию идей — ярче и привлекательней. Этому учим и вас, участников нашего сообщества.</p>
       <p class="prose">Именно поэтому на интенсиве речь пойдёт не только о технической стороне создания тестов, но и о её логике и смыслах. А вайбкодинг станет инструментом, позволяющим их выразить и усилить ваш профессионализм.</p>
     </div>
   </div>
@@ -857,16 +759,16 @@
     <div data-reveal>
       <div class="eyebrow">🎁 Подарок</div>
       <h2 style="font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 18px; color: var(--white);">Для всех участников интенсива</h2>
-      <p class="prose" style="max-width: 44ch;"><strong style="color: var(--lime-bright);">Гайд-конструктор «5 готовых схем экспертных тестов»</strong> — в дополнение к схеме, которую разберём на интенсиве. Выберете самую подходящую для себя.</p>
+      <p class="prose" style="max-width: 44ch;"><strong style="color: var(--pink-bright);">Гайд-конструктор «5 готовых схем экспертных тестов»</strong> — в дополнение к схеме, которую разберём на интенсиве. Выберете самую подходящую для себя.</p>
     </div>
     <div class="gift-icon illus" data-reveal>
       <svg viewBox="0 0 168 180" xmlns="http://www.w3.org/2000/svg">
-        <rect x="14" y="70" width="140" height="98" rx="10" fill="#3F9E1E"/>
-        <rect x="14" y="70" width="140" height="30" rx="10" fill="#2E7A15"/>
-        <rect x="4" y="46" width="160" height="30" rx="8" fill="#9AFF5C"/>
-        <rect x="76" y="46" width="16" height="122" fill="#2E7A15"/>
-        <path d="M84 46c-20 0-30-14-22-26 8-10 22 4 22 26z" fill="#FF5A45"/>
-        <path d="M84 46c20 0 30-14 22-26 -8-10-22 4-22 26z" fill="#FF8A73"/>
+        <rect x="14" y="70" width="140" height="98" rx="10" fill="#E31C79"/>
+        <rect x="14" y="70" width="140" height="30" rx="10" fill="#B01463"/>
+        <rect x="4" y="46" width="160" height="30" rx="8" fill="#FF4FA3"/>
+        <rect x="76" y="46" width="16" height="122" fill="#B01463"/>
+        <path d="M84 46c-20 0-30-14-22-26 8-10 22 4 22 26z" fill="#7B2FF7"/>
+        <path d="M84 46c20 0 30-14 22-26 -8-10-22 4-22 26z" fill="#9B5CFF"/>
       </svg>
     </div>
   </div>
@@ -897,31 +799,6 @@
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <div class="bonus-card" data-reveal>
-      <div>
-        <div class="eyebrow" style="color: var(--coral-bright);">Дополнительный подарок</div>
-        <h2 style="font-size: clamp(1.5rem, 2.8vw, 2rem); color: var(--white);">Для всех, кто покупает билет в течение 48 часов</h2>
-        <p class="prose" style="margin-top: 14px;">Самые мощные тесты F5GAME.RU, которые мы запускали для своих проектов и которых нет в открытом доступе. Пройдите их сами, узнайте много нового о себе и изучите, как работает механика и как тест передаёт авторский метод.</p>
-        <ul class="bonus-list">
-          <li>«Гений переговоров»</li>
-          <li>«Продажи в большом городе»</li>
-          <li>«Страшные сказки и установки»</li>
-        </ul>
-      </div>
-      <div class="timer-box">
-        <div class="timer-label">Подарок сгорит через</div>
-        <div class="timer-units">
-          <div class="timer-unit"><span class="n" id="t-h">48</span><span class="u">часов</span></div>
-          <div class="timer-unit"><span class="n" id="t-m">00</span><span class="u">минут</span></div>
-          <div class="timer-unit"><span class="n" id="t-s">00</span><span class="u">секунд</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section id="pricing" class="bg-gray">
   <div class="wrap" style="text-align: center;">
     <div data-reveal>
@@ -943,15 +820,6 @@
       <!-- TODO: заменить на реальную ссылку оплаты -->
       <a href="#" id="buy-tests" class="btn btn-primary">Купить</a>
     </div>
-  </div>
-</section>
-
-<section class="closing bg-navy">
-  <div class="wrap">
-    <span class="badge-gradient">5 сентября · 10:00 мск</span>
-    <h2>Экспертные тесты</h2>
-    <p>Инструмент диагностики, усиливающий личный бренд и продающий ваши услуги вместо вас.</p>
-    <a href="#pricing" class="btn btn-primary">Купить</a>
   </div>
 </section>
 
@@ -981,31 +849,6 @@
     }, { threshold: 0.3 });
     drawIO.observe(diagram);
   }
-
-  // 48h bonus countdown — deadline persists per visitor via localStorage
-  (function () {
-    const KEY = 'expertTestsBonusDeadline';
-    let deadline = parseInt(localStorage.getItem(KEY), 10);
-    if (!deadline || isNaN(deadline)) {
-      deadline = Date.now() + 48 * 60 * 60 * 1000;
-      localStorage.setItem(KEY, deadline);
-    }
-    const hEl = document.getElementById('t-h');
-    const mEl = document.getElementById('t-m');
-    const sEl = document.getElementById('t-s');
-    function pad(n) { return String(n).padStart(2, '0'); }
-    function tick() {
-      const remaining = Math.max(0, deadline - Date.now());
-      const h = Math.floor(remaining / 3600000);
-      const m = Math.floor((remaining % 3600000) / 60000);
-      const s = Math.floor((remaining % 60000) / 1000);
-      if (hEl) hEl.textContent = pad(h);
-      if (mEl) mEl.textContent = pad(m);
-      if (sEl) sEl.textContent = pad(s);
-    }
-    tick();
-    setInterval(tick, 1000);
-  })();
 </script>
 
 </body>
