@@ -146,6 +146,24 @@
   .illus { transition: transform 220ms ease-in-out; }
   .illus:hover { transform: rotate(-2deg) scale(1.035); }
 
+  /* ---------- grounds a floating character illustration with a soft contact shadow ---------- */
+  .grounded {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .grounded::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 4%;
+    transform: translateX(-50%);
+    width: 55%;
+    height: 22px;
+    background: radial-gradient(ellipse, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0) 75%);
+    z-index: -1;
+  }
+
   /* ================= HERO ================= */
   .hero {
     position: relative;
@@ -566,7 +584,7 @@
       <span class="badge-gradient">Интенсив</span>
       <div class="hero-meta">Анастасия Соликова · 5 сентября (суббота) · 10:00 мск</div>
       <h1>Экспертные<br><span class="accent">тесты</span></h1>
-      <p class="hero-sub">Как создать инструмент диагностики, усиливающий ваш личный бренд и продающий ваши услуги вместо вас.</p>
+      <p class="hero-sub">Как создать инструмент диагностики, усиливающий ваш личный бренд и&nbsp;продающий ваши услуги вместо вас.</p>
       <div class="hero-price">
         <span class="price-old">45 000 ₽</span>
         <span class="price-new">9 950 ₽</span>
@@ -616,15 +634,15 @@
 <section>
   <div class="wrap">
     <div data-reveal>
-      <div class="eyebrow" style="font-size: 1.05rem;">Что такое экспертный тест?</div>
-      <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem); max-width: 20ch;">Система быстрой диагностики, которая разжигает интерес к вашим продуктам</h2>
-      <p class="prose" style="margin-top: 20px;">Мы продолжаем учиться создавать инструменты для работы эксперта и переходим на следующую ступень. Экспертный тест — это система быстрой диагностики и типирования аудитории, которая даёт результат, разжигающий интерес к вашим продуктам.</p>
-      <p class="prose">Системы типирования не обязательно должны быть многоуровневыми — многие из них максимально банальны и при этом безумно популярны.</p>
+      <div class="eyebrow" style="font-size: 1.05rem;">Что&nbsp;такое экспертный тест?</div>
+      <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem); max-width: 20ch;">Система быстрой диагностики, которая разжигает интерес к&nbsp;вашим продуктам</h2>
+      <p class="prose" style="margin-top: 20px;">Мы&nbsp;продолжаем учиться создавать инструменты для&nbsp;работы эксперта и&nbsp;переходим на следующую ступень. Экспертный тест — это&nbsp;система быстрой диагностики и&nbsp;типирования аудитории, которая даёт результат, разжигающий интерес к&nbsp;вашим продуктам.</p>
+      <p class="prose">Системы типирования не обязательно должны быть многоуровневыми — многие из&nbsp;них максимально банальны и&nbsp;при&nbsp;этом безумно популярны.</p>
       <ul class="examples-pills">
         <li><strong>12</strong> архетипов бренда</li>
         <li><strong>16</strong> типов личности</li>
         <li><strong>13</strong> типажей внешности Кибби</li>
-        <li>«Птички и рыбки»</li>
+        <li>«Птички и&nbsp;рыбки»</li>
       </ul>
     </div>
   </div>
@@ -633,12 +651,12 @@
 <section class="bg-gray">
   <div class="wrap">
     <div data-reveal>
-      <div class="eyebrow">Почему это важно</div>
-      <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem);">Правильный тест входит в ядро личного бренда</h2>
+      <div class="eyebrow">Почему это&nbsp;важно</div>
+      <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem);">Правильный тест входит в&nbsp;ядро личного бренда</h2>
       <ul class="learn-list">
-        <li>Делите аудиторию на типы, связываете это со своей темой и продвигаете себя как эксперта</li>
-        <li>Привлекаете новую аудиторию — люди обожают проходить тесты и угадывать, кто они</li>
-        <li>Создаёте экспертный продающий контент — например, разборы известных людей по вашей системе</li>
+        <li>Делите аудиторию на типы, связываете это&nbsp;со&nbsp;своей темой и&nbsp;продвигаете себя как эксперта</li>
+        <li>Привлекаете новую аудиторию — люди обожают проходить тесты и&nbsp;угадывать, кто они</li>
+        <li>Создаёте экспертный продающий контент — например, разборы известных людей по&nbsp;вашей системе</li>
         <li>На основе типирования предлагаете свой продукт — эффективный способ продаж</li>
       </ul>
     </div>
@@ -649,8 +667,8 @@
   <div class="wrap">
     <div data-reveal>
       <div class="eyebrow">Наш пример</div>
-      <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem);">Принцесса, Рыцарь и Дракон</h2>
-      <p class="prose" style="margin-top: 16px;">Одна из самых крутых авторских типологизаций Ольги Грищенко — она лежит в основе карточной переговорной игры, ставшей бестселлером, и легла в основу книги, которую Ольга пишет сейчас.</p>
+      <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem);">Принцесса, Рыцарь и&nbsp;Дракон</h2>
+      <p class="prose" style="margin-top: 16px;">Одна из&nbsp;самых крутых авторских типологизаций Ольги Грищенко — она&nbsp;лежит в&nbsp;основе карточной переговорной игры, ставшей бестселлером, и&nbsp;легла в&nbsp;основу книги, которую Ольга пишет сейчас.</p>
     </div>
     <div class="type-grid" data-reveal>
       <div class="type-card">
@@ -658,24 +676,24 @@
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#E31C79" stroke-width="2"><path d="M4 18h16M6 18l-1-9 4 3 3-6 3 6 4-3-1 9" stroke-linejoin="round" stroke-linecap="round"/></svg>
         </div>
         <h4>Принцесса</h4>
-        <p>Роль, которая ждёт и получает</p>
+        <p>Роль, которая ждёт и&nbsp;получает</p>
       </div>
       <div class="type-card">
         <div class="type-icon" style="background: #EFE7FE;">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7B2FF7" stroke-width="2"><path d="M14.5 2.5l7 7L10 21l-6 2 2-6L14.5 2.5z" stroke-linejoin="round" stroke-linecap="round"/></svg>
         </div>
         <h4>Рыцарь</h4>
-        <p>Роль, которая действует и защищает</p>
+        <p>Роль, которая действует и&nbsp;защищает</p>
       </div>
       <div class="type-card">
         <div class="type-icon" style="background: #E4F7EC;">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#34B768" stroke-width="2"><path d="M12 2C8 6 6 10 6 13a6 6 0 0012 0c0-3-2-7-6-11z" stroke-linejoin="round" stroke-linecap="round"/></svg>
         </div>
         <h4>Дракон</h4>
-        <p>Роль, которая испытывает и вознаграждает</p>
+        <p>Роль, которая испытывает и&nbsp;вознаграждает</p>
       </div>
     </div>
-    <p class="type-note" data-reveal>Здесь будет блок с полным разбором типов ПРД — материалы с сайта игры.</p>
+    <p class="type-note" data-reveal>Здесь будет блок с&nbsp;полным разбором типов ПРД — материалы с&nbsp;сайта игры.</p>
   </div>
 </section>
 
@@ -696,37 +714,37 @@
       <div class="program-card">
         <div class="step-num">01</div>
         <h4>Схема создания теста</h4>
-        <p>Пошаговая логика от идеи до работающего инструмента</p>
+        <p>Пошаговая логика от&nbsp;идеи до&nbsp;работающего инструмента</p>
       </div>
       <div class="program-card">
         <div class="step-num">02</div>
         <h4>Как придумывать типы</h4>
-        <p>Категории аудитории — на чём их строить и как назвать, чтобы попадало в запрос</p>
+        <p>Категории аудитории — на чём их строить и&nbsp;как назвать, чтобы&nbsp;попадало в&nbsp;запрос</p>
       </div>
       <div class="program-card">
         <div class="step-num">03</div>
         <h4>Механика теста</h4>
-        <p>Как создавать вопросы и ответы, чтобы результаты были достоверными и рабочими</p>
+        <p>Как создавать вопросы и&nbsp;ответы, чтобы&nbsp;результаты были достоверными и&nbsp;рабочими</p>
       </div>
       <div class="program-card">
         <div class="step-num">04</div>
         <h4>Результаты теста</h4>
-        <p>Как связывать результаты теста со своим продуктом — персонализация предложения под каждый тип</p>
+        <p>Как связывать результаты теста со&nbsp;своим продуктом — персонализация предложения под&nbsp;каждый тип</p>
       </div>
       <div class="program-card">
         <div class="step-num">05</div>
         <h4>Авторская методика</h4>
-        <p>Как зашивать авторскую методику в логику теста</p>
+        <p>Как зашивать авторскую методику в&nbsp;логику теста</p>
       </div>
       <div class="program-card">
         <div class="step-num">06</div>
         <h4>Внедрение теста</h4>
-        <p>Как внедрять тест в воронку продаж</p>
+        <p>Как внедрять тест в&nbsp;воронку продаж</p>
       </div>
       <div class="program-card full">
         <div class="step-num">07</div>
         <h4>Вайбкодинг</h4>
-        <p>И конечно, как реализовать такой тест с помощью вайбкодинга 🔥</p>
+        <p>И&nbsp;конечно, как реализовать такой тест с&nbsp;помощью вайбкодинга 🔥</p>
       </div>
     </div>
     <div style="text-align: center; margin-top: 36px;" data-reveal>
@@ -738,20 +756,20 @@
 <section class="bg-navy">
   <div class="wrap value-block">
     <div data-reveal>
-      <div class="eyebrow" style="justify-content: center;">На заказ это стоит дорого</div>
-      <p class="pull-quote" style="max-width: 26ch;">Подобный инструмент эксперты делают на заказ с методологами и продуктологами</p>
+      <div class="eyebrow" style="justify-content: center;">На заказ это&nbsp;стоит дорого</div>
+      <p class="pull-quote" style="max-width: 26ch;">Подобный инструмент эксперты делают на заказ с&nbsp;методологами и&nbsp;продуктологами</p>
     </div>
     <div class="value-row" data-reveal>
       <div class="value-item">
-        <div class="num">от 250 000 ₽</div>
+        <div class="num">от&nbsp;250 000 ₽</div>
         <div class="label">услуги методолога</div>
       </div>
       <div class="value-item">
-        <div class="num">от 30 000 ₽</div>
+        <div class="num">от&nbsp;30 000 ₽</div>
         <div class="label">техническая разработка</div>
       </div>
     </div>
-    <p class="prose" style="margin: 0 auto; text-align: center; color: #c7c5da;">Научитесь на интенсиве делать это самостоятельно — и получите крышесносное преимущество на рынке 🔥</p>
+    <p class="prose" style="margin: 0 auto; text-align: center; color: #c7c5da;">Научитесь на интенсиве делать это&nbsp;самостоятельно — и&nbsp;получите крышесносное преимущество на рынке 🔥</p>
   </div>
 </section>
 
@@ -759,11 +777,11 @@
   <div class="wrap tech-grid">
     <div data-reveal>
       <div class="eyebrow">Технологии не заменят вас</div>
-      <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem); max-width: 22ch;">Но усилят вашу экспертность</h2>
-      <p class="prose" style="margin-top: 18px;">Мы в <a href="http://f5game.ru" style="color: var(--pink); font-weight: 700;">F5GAME.RU</a> постоянно тестируем новые технические возможности и придумываем, как их использовать, чтобы сделать нашу работу эффективнее, а реализацию идей — ярче и привлекательней. Этому учим и вас, участников нашего сообщества.</p>
-      <p class="prose">Именно поэтому на интенсиве речь пойдёт не только о технической стороне создания тестов, но и о её логике и смыслах. А вайбкодинг станет инструментом, позволяющим их выразить и усилить ваш профессионализм.</p>
+      <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem); max-width: 22ch;">Но&nbsp;усилят вашу экспертность</h2>
+      <p class="prose" style="margin-top: 18px;">Мы&nbsp;в&nbsp;<a href="http://f5game.ru" style="color: var(--pink); font-weight: 700;">F5GAME.RU</a> постоянно тестируем новые технические возможности и&nbsp;придумываем, как их использовать, чтобы&nbsp;сделать нашу работу эффективнее, а&nbsp;реализацию идей — ярче и&nbsp;привлекательней. Этому учим и&nbsp;вас, участников нашего сообщества.</p>
+      <p class="prose">Именно поэтому на интенсиве речь пойдёт не только о&nbsp;технической стороне создания тестов, но&nbsp;и&nbsp;о&nbsp;её логике и&nbsp;смыслах. А&nbsp;вайбкодинг станет инструментом, позволяющим их выразить и&nbsp;усилить ваш профессионализм.</p>
     </div>
-    <div class="tech-illus illus" data-reveal>
+    <div class="tech-illus illus grounded" data-reveal>
       <img src="assets/images/robot-mascot.svg" alt="Человек с роботом-помощником" width="1024" height="1536">
     </div>
   </div>
@@ -773,10 +791,10 @@
   <div class="wrap gift-grid">
     <div data-reveal>
       <div class="eyebrow">🎁 Подарок</div>
-      <h2 style="font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 18px; color: var(--white);">Для всех участников интенсива</h2>
-      <p class="prose" style="max-width: 44ch;"><strong style="color: var(--pink-bright);">Гайд-конструктор «5 готовых схем экспертных тестов»</strong> — в дополнение к схеме, которую разберём на интенсиве. Выберете самую подходящую для себя.</p>
+      <h2 style="font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 18px; color: var(--white);">Для&nbsp;всех участников интенсива</h2>
+      <p class="prose" style="max-width: 44ch;"><strong style="color: var(--pink-bright);">Гайд-конструктор «5 готовых схем экспертных тестов»</strong> — в&nbsp;дополнение к&nbsp;схеме, которую разберём на интенсиве. Выберете самую подходящую для&nbsp;себя.</p>
     </div>
-    <div class="gift-icon illus" data-reveal>
+    <div class="gift-icon illus grounded" data-reveal>
       <img src="assets/images/gift-mascot.svg" alt="Девушка с подарочной коробкой" width="1103" height="1426">
     </div>
   </div>
@@ -790,17 +808,17 @@
     </div>
     <div class="compare-grid">
       <div class="compare-card" data-reveal>
-        <div class="eyebrow">Вместе с ведущим</div>
+        <div class="eyebrow">Вместе с&nbsp;ведущим</div>
         <ol>
-          <li>Разбираете теоретическую часть — придумываете идеи для себя и наблюдаете за созданием теста ведущим в режиме реального времени</li>
-          <li>Наблюдаете за процессом технической разработки теста на экране ведущего, задаёте вопросы в реальном времени и получаете готовые инструкции</li>
+          <li>Разбираете теоретическую часть — придумываете идеи для&nbsp;себя и&nbsp;наблюдаете за&nbsp;созданием теста ведущим в&nbsp;режиме реального времени</li>
+          <li>Наблюдаете за&nbsp;процессом технической разработки теста на экране ведущего, задаёте вопросы в&nbsp;реальном времени и&nbsp;получаете готовые инструкции</li>
         </ol>
       </div>
       <div class="compare-card" data-reveal>
         <div class="eyebrow">Повторяете сами</div>
         <ol>
-          <li>Получаете запись на 3 месяца и пошаговую стратегию</li>
-          <li>Разрабатываете и создаёте тест в любое удобное время</li>
+          <li>Получаете запись на 3 месяца и&nbsp;пошаговую стратегию</li>
+          <li>Разрабатываете и&nbsp;создаёте тест в&nbsp;любое удобное время</li>
         </ol>
       </div>
     </div>
@@ -814,10 +832,10 @@
       <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem);">Ведущая — Анастасия Соликова</h2>
     </div>
     <div class="price-card" data-reveal style="text-align: left;">
-      <h3>Участие в интенсиве</h3>
+      <h3>Участие в&nbsp;интенсиве</h3>
       <ul>
-        <li>Участие онлайн 5 сентября в 10:00 мск</li>
-        <li>Доступ к записи интенсива 3 месяца</li>
+        <li>Участие онлайн 5 сентября в&nbsp;10:00 мск</li>
+        <li>Доступ к&nbsp;записи интенсива 3 месяца</li>
         <li>Подарок — гайд-конструктор «5 готовых схем экспертных тестов»</li>
       </ul>
       <div class="price-block">
