@@ -146,22 +146,24 @@
   .illus { transition: transform 220ms ease-in-out; }
   .illus:hover { transform: rotate(-2deg) scale(1.035); }
 
-  /* ---------- grounds a floating character illustration with a soft contact shadow ---------- */
+  /* ---------- grounds a floating character illustration with a soft backdrop halo ---------- */
   .grounded {
     position: relative;
     display: flex;
     justify-content: center;
+    align-items: center;
   }
-  .grounded::after {
+  .grounded::before {
     content: "";
     position: absolute;
-    left: 50%;
-    bottom: 4%;
-    transform: translateX(-50%);
-    width: 55%;
-    height: 22px;
-    background: radial-gradient(ellipse, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0) 75%);
+    width: 84%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(227, 28, 121, 0.10) 0%, rgba(227, 28, 121, 0) 70%);
     z-index: -1;
+  }
+  .bg-navy .grounded::before {
+    background: radial-gradient(circle, rgba(255, 79, 163, 0.16) 0%, rgba(255, 79, 163, 0) 70%);
   }
 
   /* ================= HERO ================= */
@@ -256,28 +258,6 @@
   .test-diagram.draw g .td-node { transition-delay: 480ms; }
   .test-diagram .td-label { font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 800; fill: var(--white); }
   .test-diagram .td-center-label { font-family: 'Unbounded', sans-serif; font-size: 14px; font-weight: 700; fill: var(--white); }
-
-  /* ================= EXAMPLES ================= */
-  .examples-pills {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 24px 0 0;
-    padding: 0;
-  }
-
-  .examples-pills li {
-    background: var(--gray-bg);
-    border: 1px solid #e6e4ee;
-    border-radius: 999px;
-    padding: 9px 18px;
-    font-weight: 700;
-    font-size: 0.92rem;
-    color: var(--ink);
-  }
-
-  .examples-pills li strong { color: var(--purple); }
 
   /* ================= LEARN LIST ================= */
   .learn-list {
@@ -464,9 +444,9 @@
     align-items: center;
   }
 
-  .gift-icon { justify-self: end; }
+  .gift-icon { justify-self: end; align-self: end; }
 
-  .gift-icon img { width: 100%; max-width: 300px; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.35)); }
+  .gift-icon img { width: 100%; max-width: 380px; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.35)); }
 
   /* ================= COMPARE (Как проходит) ================= */
   .compare-grid {
@@ -638,12 +618,6 @@
       <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem); max-width: 20ch;">Система быстрой диагностики, которая разжигает интерес к&nbsp;вашим продуктам</h2>
       <p class="prose" style="margin-top: 20px;">Мы&nbsp;продолжаем учиться создавать инструменты для&nbsp;работы эксперта и&nbsp;переходим на следующую ступень. Экспертный тест — это&nbsp;система быстрой диагностики и&nbsp;типирования аудитории, которая даёт результат, разжигающий интерес к&nbsp;вашим продуктам.</p>
       <p class="prose">Системы типирования не обязательно должны быть многоуровневыми — многие из&nbsp;них максимально банальны и&nbsp;при&nbsp;этом безумно популярны.</p>
-      <ul class="examples-pills">
-        <li><strong>12</strong> архетипов бренда</li>
-        <li><strong>16</strong> типов личности</li>
-        <li><strong>13</strong> типажей внешности Кибби</li>
-        <li>«Птички и&nbsp;рыбки»</li>
-      </ul>
     </div>
   </div>
 </section>
