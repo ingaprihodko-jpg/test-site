@@ -241,7 +241,7 @@
     align-items: center;
   }
 
-  .hero-visual svg { width: 100%; max-width: 380px; }
+  .hero-visual img { width: 100%; max-width: 520px; }
 
   .spark {
     position: absolute;
@@ -256,25 +256,6 @@
     0%, 100% { opacity: 0.45; }
     50% { opacity: 1; }
   }
-
-  /* ---------- self-drawing test diagram ---------- */
-  .test-diagram .td-line {
-    stroke-width: 2;
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    opacity: 0.6;
-    transition: stroke-dashoffset 900ms ease-out;
-  }
-  .test-diagram .td-node { opacity: 0; transform: scale(0.6); transform-origin: center; transition: opacity 320ms ease-out, transform 320ms ease-out; }
-  .test-diagram.draw .td-line { stroke-dashoffset: 0; }
-  .test-diagram.draw .td-node { opacity: 1; transform: scale(1); }
-  .test-diagram .td-line:nth-of-type(1) { transition-delay: 0ms; }
-  .test-diagram .td-line:nth-of-type(2) { transition-delay: 120ms; }
-  .test-diagram .td-line:nth-of-type(3) { transition-delay: 240ms; }
-  .test-diagram.draw .td-node:nth-of-type(1) { transition-delay: 380ms; }
-  .test-diagram.draw g .td-node { transition-delay: 480ms; }
-  .test-diagram .td-label { font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 800; fill: var(--white); }
-  .test-diagram .td-center-label { font-family: 'Unbounded', sans-serif; font-size: 14px; font-weight: 700; fill: var(--white); }
 
   /* ================= LEARN LIST ================= */
   .learn-list {
@@ -622,35 +603,7 @@
       </div>
     </div>
     <div class="hero-visual" data-reveal>
-      <div class="test-diagram" data-draw>
-        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-          <line class="td-line" pathLength="1" stroke="#E31C79" x1="150" y1="150" x2="150" y2="46"/>
-          <line class="td-line" pathLength="1" stroke="#34B768" x1="150" y1="150" x2="248" y2="210"/>
-          <line class="td-line" pathLength="1" stroke="#7B2FF7" x1="150" y1="150" x2="52" y2="210"/>
-          <g class="td-node">
-            <circle cx="150" cy="150" r="38" fill="url(#tdGrad)"/>
-            <text class="td-center-label" x="150" y="155" text-anchor="middle">ТЕСТ</text>
-          </g>
-          <g class="td-node">
-            <circle cx="150" cy="46" r="28" fill="#E31C79"/>
-            <text class="td-label" x="150" y="52" text-anchor="middle">A</text>
-          </g>
-          <g class="td-node">
-            <circle cx="248" cy="210" r="28" fill="#34B768"/>
-            <text class="td-label" x="248" y="216" text-anchor="middle">B</text>
-          </g>
-          <g class="td-node">
-            <circle cx="52" cy="210" r="28" fill="#7B2FF7"/>
-            <text class="td-label" x="52" y="216" text-anchor="middle">C</text>
-          </g>
-          <defs>
-            <linearGradient id="tdGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#E31C79"/>
-              <stop offset="1" stop-color="#7B2FF7"/>
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
+      <img src="assets/images/hero-woman-growth.png" alt="Женщина держит зелёную стрелку роста" width="1024" height="1536">
     </div>
     <svg class="spark" style="top:12%; left:6%; width:24px; color:#FFD23F;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.2 8.8L23 12l-8.8 2.2L12 24l-2.2-8.8L1 12l8.8-2.2z"/></svg>
     <svg class="spark" style="top:62%; left:3%; width:16px; color:#7B2FF7; animation-delay:.6s,.3s;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.2 8.8L23 12l-8.8 2.2L12 24l-2.2-8.8L1 12l8.8-2.2z"/></svg>
@@ -659,12 +612,15 @@
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap tech-grid">
     <div data-reveal>
       <div class="eyebrow" style="font-size: 1.05rem;">Что&nbsp;такое экспертный тест?</div>
       <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem); max-width: 20ch;">Система быстрой диагностики, которая разжигает интерес к&nbsp;вашим продуктам</h2>
       <p class="prose" style="margin-top: 20px;">Мы&nbsp;продолжаем учиться создавать инструменты для&nbsp;работы эксперта и&nbsp;переходим на следующую ступень. Экспертный тест — это&nbsp;система быстрой диагностики и&nbsp;типирования аудитории, которая даёт результат, разжигающий интерес к&nbsp;вашим продуктам.</p>
       <p class="prose">Системы типирования не обязательно должны быть многоуровневыми — многие из&nbsp;них максимально банальны и&nbsp;при&nbsp;этом безумно популярны.</p>
+    </div>
+    <div class="tech-illus grounded" data-reveal>
+      <img src="assets/images/expert-test-guy.png" alt="Мужчина держит доску со схемой роста от точки А к точке Б" width="1024" height="1536">
     </div>
   </div>
 </section>
@@ -882,20 +838,6 @@
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
   revealEls.forEach((el) => revealIO.observe(el));
-
-  // self-drawing diagram
-  const diagram = document.querySelector('[data-draw]');
-  if (diagram) {
-    const drawIO = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('draw');
-          drawIO.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    drawIO.observe(diagram);
-  }
 </script>
 
 </body>
