@@ -357,6 +357,28 @@
     font-style: italic;
   }
 
+  .dash-list {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+
+  .dash-list li {
+    padding-left: 20px;
+    position: relative;
+    font-size: 1.08rem;
+    color: var(--ink-soft);
+  }
+
+  .dash-list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--pink);
+  }
+
   /* ================= PULL QUOTE (dark) ================= */
   .pull-quote {
     font-family: 'Unbounded', sans-serif;
@@ -669,7 +691,11 @@
     <div data-reveal>
       <div class="eyebrow">Наш пример</div>
       <h2 style="font-size: clamp(1.8rem, 3.4vw, 2.6rem);">Принцесса, Рыцарь и&nbsp;Дракон</h2>
-      <p class="prose" style="margin-top: 16px;">Одна из&nbsp;самых крутых авторских типологизаций Ольги Грищенко — она&nbsp;лежит в&nbsp;основе карточной переговорной игры, ставшей бестселлером, и&nbsp;легла в&nbsp;основу книги, которую Ольга пишет сейчас.</p>
+      <p class="prose" style="margin-top: 16px;">Одна из&nbsp;самых крутых авторских типологизаций Ольги Грищенко — она&nbsp;лежит в&nbsp;основе:</p>
+      <ul class="dash-list">
+        <li>карточной переговорной игры, ставшей бестселлером</li>
+        <li>книги, которую Ольга Грищенко пишет сейчас</li>
+      </ul>
     </div>
     <div class="type-grid" data-reveal>
       <div class="type-card">
