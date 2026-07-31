@@ -301,7 +301,7 @@
     position: relative;
     max-width: 620px;
     margin: 48px auto 0;
-    aspect-ratio: 600 / 660;
+    aspect-ratio: 600 / 820;
   }
 
   .prd-arrows { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -320,21 +320,21 @@
 
   .prd-node img { display: block; width: 100%; height: auto; filter: drop-shadow(0 14px 20px rgba(22, 21, 31, 0.18)); }
 
-  .prd-node-princess { left: 50%; top: 12%; width: 30%; }
-  .prd-node-knight { left: 80%; top: 70%; width: 24%; }
-  .prd-node-dragon { left: 20%; top: 70%; width: 27%; }
+  .prd-node-princess { left: 50%; top: 10%; width: 30%; }
+  .prd-node-knight { left: 80%; top: 72%; width: 24%; }
+  .prd-node-dragon { left: 20%; top: 72%; width: 27%; }
 
   .prd-center {
     position: absolute;
     left: 50%;
-    top: 52%;
+    top: 50%;
     transform: translate(-50%, -50%);
-    width: 46%;
+    width: 48%;
     text-align: center;
     font-weight: 700;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--ink);
-    line-height: 1.35;
+    line-height: 1.4;
   }
 
   .dash-list {
@@ -656,16 +656,16 @@
       </ul>
     </div>
     <div class="prd-diagram" data-reveal>
-      <svg class="prd-arrows" viewBox="0 0 600 660" xmlns="http://www.w3.org/2000/svg">
+      <svg class="prd-arrows" viewBox="0 0 600 820" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <marker id="prdArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" fill="#7B2FF7"/>
           </marker>
         </defs>
-        <path id="prdPath1" d="M 345 125 Q 500 220 455 415" fill="none" stroke="#7B2FF7" stroke-width="2.5" marker-end="url(#prdArrow)"/>
-        <path id="prdPath2" d="M 420 505 Q 300 600 180 505" fill="none" stroke="#7B2FF7" stroke-width="2.5" marker-end="url(#prdArrow)"/>
-        <path id="prdPath3" d="M 145 415 Q 90 220 255 120" fill="none" stroke="#7B2FF7" stroke-width="2.5" marker-end="url(#prdArrow)"/>
-        <path id="prdPath2Text" d="M 180 505 Q 300 600 420 505" fill="none" stroke="none"/>
+        <path id="prdPath1" d="M 345 127 Q 500 300 455 535" fill="none" stroke="#7B2FF7" stroke-width="2.5" marker-end="url(#prdArrow)"/>
+        <path id="prdPath2" d="M 420 635 Q 300 760 180 635" fill="none" stroke="#7B2FF7" stroke-width="2.5" marker-end="url(#prdArrow)"/>
+        <path id="prdPath3" d="M 145 535 Q 90 300 255 127" fill="none" stroke="#7B2FF7" stroke-width="2.5" marker-end="url(#prdArrow)"/>
+        <path id="prdPath2Text" d="M 180 635 Q 300 760 420 635" fill="none" stroke="none"/>
         <text class="prd-arc-label" dy="-10"><textPath href="#prdPath1" startOffset="50%" text-anchor="middle">Очаровывает рыцаря</textPath></text>
         <text class="prd-arc-label" dy="-10"><textPath href="#prdPath2Text" startOffset="50%" text-anchor="middle">Убивает дракона</textPath></text>
         <text class="prd-arc-label" dy="-10"><textPath href="#prdPath3" startOffset="50%" text-anchor="middle">Съедает принцессу</textPath></text>
