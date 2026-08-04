@@ -597,27 +597,18 @@
     .value-break { display: none; }
     .value-block .pull-quote { font-size: 24px; }
     .prd-diagram {
-      aspect-ratio: auto;
-      max-width: 320px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
+      max-width: 300px;
+      aspect-ratio: 300 / 640;
     }
-    .prd-arrows { display: none; }
-    .prd-node { position: static; transform: none; width: 160px; }
-    .prd-node-princess { order: 1; }
-    .prd-node-knight { order: 2; }
-    .prd-node-dragon { order: 3; }
+    .prd-node-princess { top: 6%; width: 34%; }
+    .prd-node-knight { top: 78%; width: 26%; }
+    .prd-node-dragon { top: 78%; width: 29%; }
     .prd-center {
-      order: 4;
-      position: static;
-      transform: none;
-      width: 100%;
-      max-width: none;
-      font-size: 14px;
-      margin-top: 8px;
+      width: 80%;
+      font-size: 10px;
+      line-height: 1.35;
     }
+    .prd-arc-label { font-size: 10px; }
     .learn-list { grid-template-columns: 1fr; }
     .compare-grid { grid-template-columns: 1fr; }
     .program-grid { grid-template-columns: 1fr; }
