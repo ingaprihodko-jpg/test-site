@@ -594,6 +594,28 @@
     .tech-grid { grid-template-columns: 1fr; }
     .tech-illus--lg { margin-bottom: 24px; }
     .tech-illus--lg img { transform: none; max-width: 280px; margin: 0 auto; }
+    .prd-diagram {
+      aspect-ratio: auto;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .prd-arrows { display: none; }
+    .prd-node { position: static; transform: none; width: 160px; }
+    .prd-node-princess { order: 1; }
+    .prd-node-knight { order: 2; }
+    .prd-node-dragon { order: 3; }
+    .prd-center {
+      order: 4;
+      position: static;
+      transform: none;
+      width: 100%;
+      max-width: none;
+      font-size: 14px;
+      margin-top: 8px;
+    }
     .learn-list { grid-template-columns: 1fr; }
     .compare-grid { grid-template-columns: 1fr; }
     .program-grid { grid-template-columns: 1fr; }
