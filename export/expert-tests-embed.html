@@ -557,6 +557,44 @@
     font-weight: 700;
   }
 
+  .deadline-timer { margin-bottom: 22px; }
+
+  .deadline-timer__label {
+    font-weight: 700;
+    font-size: 14.72px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+
+  .deadline-timer__units {
+    display: flex;
+    gap: 8px;
+  }
+
+  .deadline-timer__unit {
+    flex: 1;
+    background: var(--gray-bg);
+    border: 1px solid #ece9f2;
+    border-radius: 12px;
+    padding: 10px 4px;
+    text-align: center;
+  }
+
+  .deadline-timer__unit .n {
+    display: block;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 800;
+    font-size: 20.8px;
+    color: var(--pink);
+  }
+
+  .deadline-timer__unit .u {
+    font-size: 10.56px;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
   .price-block { margin-bottom: 22px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 
   .price-old {
@@ -846,6 +884,15 @@
         <li>Доступ к&nbsp;записи интенсива 3 месяца</li>
         <li>Подарок — гайд-конструктор «5 готовых схем экспертных тестов»</li>
       </ul>
+      <div class="deadline-timer">
+        <div class="deadline-timer__label">Цена по&nbsp;акции действует до&nbsp;31&nbsp;августа, 23:59 мск</div>
+        <div class="deadline-timer__units">
+          <div class="deadline-timer__unit"><span class="n" id="dt-d">00</span><span class="u">дней</span></div>
+          <div class="deadline-timer__unit"><span class="n" id="dt-h">00</span><span class="u">часов</span></div>
+          <div class="deadline-timer__unit"><span class="n" id="dt-m">00</span><span class="u">минут</span></div>
+          <div class="deadline-timer__unit"><span class="n" id="dt-s">00</span><span class="u">секунд</span></div>
+        </div>
+      </div>
       <div class="price-block">
         <span class="price-old">45 000 ₽</span>
         <span class="price-new">11 950 ₽</span>
@@ -868,6 +915,30 @@
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
   revealEls.forEach((el) => revealIO.observe(el));
+
+  // ---------- deadline countdown (fixed date: 31 августа, 23:59 мск) ----------
+  (function () {
+    const deadline = new Date('2026-08-31T23:59:59+03:00').getTime();
+    const dEl = document.getElementById('dt-d');
+    const hEl = document.getElementById('dt-h');
+    const mEl = document.getElementById('dt-m');
+    const sEl = document.getElementById('dt-s');
+    if (!dEl) return;
+    function pad(n) { return String(n).padStart(2, '0'); }
+    function tick() {
+      const remaining = Math.max(0, deadline - Date.now());
+      const d = Math.floor(remaining / 86400000);
+      const h = Math.floor((remaining % 86400000) / 3600000);
+      const m = Math.floor((remaining % 3600000) / 60000);
+      const s = Math.floor((remaining % 60000) / 1000);
+      dEl.textContent = pad(d);
+      hEl.textContent = pad(h);
+      mEl.textContent = pad(m);
+      sEl.textContent = pad(s);
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
 </script>
 
 </body>
