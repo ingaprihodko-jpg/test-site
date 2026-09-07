@@ -162,15 +162,20 @@
     content: "";
     position: absolute;
     left: 50%;
-    top: 52%;
-    width: 92%;
-    height: 92%;
+    top: 56%;
+    width: 104%;
+    height: 100%;
     transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(227, 28, 121, 0.20) 0%, rgba(227, 28, 121, 0) 68%);
+    background: radial-gradient(circle, rgba(227, 28, 121, 0.34) 0%, rgba(227, 28, 121, 0.12) 46%, rgba(227, 28, 121, 0) 72%);
     z-index: 0;
     pointer-events: none;
   }
   .grounded img { position: relative; z-index: 1; }
+
+  /* halo tuned for the dark gift section */
+  .bg-navy .grounded::before {
+    background: radial-gradient(circle, rgba(255, 79, 163, 0.30) 0%, rgba(123, 47, 247, 0.22) 45%, rgba(123, 47, 247, 0) 72%);
+  }
 
   /* ================= HERO ================= */
   .hero {
@@ -521,7 +526,8 @@
   }
 
   .gift-icon { justify-self: end; }
-  .gift-icon img { width: 100%; max-width: 560px; filter: drop-shadow(0 24px 34px rgba(0,0,0,0.32)); }
+  .gift-icon .grounded { width: 100%; max-width: 560px; }
+  .gift-icon img { width: 100%; filter: drop-shadow(0 24px 34px rgba(0,0,0,0.32)); }
 
   /* gift block: exactly two type styles — caps (Unbounded) + running text (Manrope) */
   .gift-caps {
@@ -632,7 +638,7 @@
     .price-card { position: static; }
     .gift-grid { grid-template-columns: 1fr; }
     .gift-icon { justify-self: center; order: -1; }
-    .gift-icon img { max-width: 300px; }
+    .gift-icon .grounded { max-width: 300px; }
   }
 
   @media (max-width: 520px) {
@@ -783,7 +789,9 @@
       <p class="gift-text">Старт курса 28&nbsp;сентября</p>
     </div>
     <div class="gift-icon illus" data-reveal>
-      <img src="assets/images/gift-friends.png" alt="Один собеседник дарит другому большую подарочную коробку" width="1536" height="1024">
+      <span class="grounded">
+        <img src="assets/images/gift-friends.png" alt="Один собеседник дарит другому большую подарочную коробку" width="1536" height="1024">
+      </span>
     </div>
   </div>
 </section>
