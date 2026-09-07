@@ -238,13 +238,38 @@
     translate: 0 clamp(96px, 13vw, 180px);
   }
 
-  .hero-visual .grounded { width: 100%; max-width: 820px; }
+  .hero-visual .grounded { width: 100%; max-width: 820px; position: relative; }
   .hero-visual .grounded::before { display: none; }
   .hero-visual img {
     width: 100%;
     filter: drop-shadow(0 26px 34px rgba(123, 47, 247, 0.22));
   }
   .hero-visual .box { max-width: 400px; }
+
+  /* animated devils on the shoulders — pivot near the head so only the
+     lower body + tail visibly swing */
+  .hero-visual .hero-devil {
+    position: absolute;
+    filter: none;
+    pointer-events: none;
+    animation: devilWag 3.4s ease-in-out infinite;
+  }
+  .hero-visual .hero-devil--l {
+    left: 1%; top: 3%; width: 27%;
+    transform-origin: 62% 16%;
+    animation-duration: 3.1s;
+  }
+  .hero-visual .hero-devil--r {
+    right: 0%; top: -3%; width: 26%;
+    transform-origin: 40% 15%;
+    animation-duration: 3.7s;
+    animation-delay: -1.4s;
+  }
+  @keyframes devilWag {
+    0%, 100% { rotate: -2.2deg; }
+    50%      { rotate: 2.6deg; }
+  }
+  @media (prefers-reduced-motion: reduce) { .hero-devil { animation: none; } }
 
   .spark {
     position: absolute;
@@ -684,6 +709,8 @@
     <div class="hero-visual">
       <span class="grounded">
         <img class="illus" src="assets/images/hero-characters.png" alt="Двое собеседников на повышенных тонах, у каждого на плече красный чертёнок" width="1301" height="1009">
+        <img class="hero-devil hero-devil--l" src="assets/images/devil-b.png" alt="" width="1254" height="1254" aria-hidden="true">
+        <img class="hero-devil hero-devil--r" src="assets/images/devil-a.png" alt="" width="1254" height="1254" aria-hidden="true">
       </span>
     </div>
     <svg class="spark" style="top:12%; left:5%; width:26px; color:#FFD23F;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.2 8.8L23 12l-8.8 2.2L12 24l-2.2-8.8L1 12l8.8-2.2z"/></svg>
