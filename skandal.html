@@ -274,33 +274,49 @@
   }
 
   .bullet-list li {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 1.05rem;
     color: var(--ink);
-    padding-left: 34px;
+    padding-left: 22px;
     position: relative;
   }
 
   .bullet-list li::before {
     content: "";
     position: absolute;
-    left: 0;
-    top: 4px;
-    width: 20px;
-    height: 20px;
+    left: 2px;
+    top: 0.62em;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: var(--green);
+    background: var(--pink);
   }
 
-  .bullet-list li::after {
-    content: "✓";
-    position: absolute;
-    left: 4.5px;
-    top: 2px;
-    color: var(--white);
-    font-size: 0.8rem;
-    font-weight: 900;
+  /* ================= INTRO GRID ================= */
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 44px;
+    align-items: center;
   }
+
+  .intro-visual { display: flex; justify-content: center; }
+  .intro-visual .grounded { width: 100%; max-width: 360px; }
+  .intro-visual img { width: 100%; filter: drop-shadow(0 22px 30px rgba(123, 47, 247, 0.16)); }
+
+  /* ================= STATEMENT ================= */
+  .statement {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto;
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.35rem, 2.8vw, 2.1rem);
+    line-height: 1.32;
+    color: var(--ink);
+  }
+
+  .statement strong { color: var(--pink); font-weight: 700; }
 
   /* ================= "ЭТО:" CARDS ================= */
   .feature-grid {
@@ -526,6 +542,10 @@
     .hero-visual { order: -1; margin: 0 auto 8px; }
     .hero-visual .box { max-width: 240px; }
     .hero-sub { max-width: none; }
+    .intro-grid { grid-template-columns: 1fr; }
+    .intro-visual { order: -1; }
+    .intro-visual .grounded { max-width: 240px; }
+    .wide-br { display: none; }
     .feature-grid { grid-template-columns: 1fr; }
     .offer-grid { grid-template-columns: 1fr; }
     .price-card { position: static; }
@@ -562,11 +582,10 @@
 </section>
 
 <section>
-  <div class="wrap">
-    <div data-reveal>
-      <div class="eyebrow">Экспертные карты «Какой скандал!»</div>
+  <div class="wrap intro-grid" data-reveal>
+    <div>
       <p class="lede">Инструмент обучения и&nbsp;консультирования</p>
-      <p class="prose">В&nbsp;набор экспертных карт «Какой скандал!» входят авторские <strong>техники и&nbsp;стратегии общения,</strong> которые позволяют:</p>
+      <p class="prose">В&nbsp;набор экспертных карт «Какой скандал!» входят авторские<br class="wide-br">техники и&nbsp;стратегии общения, которые позволяют:</p>
       <ul class="bullet-list">
         <li>предотвратить нежелательный конфликт</li>
         <li>выйти из&nbsp;уже разгоревшегося конфликта, сохранить отношения с&nbsp;собеседником</li>
@@ -575,14 +594,21 @@
         <li>изменять в&nbsp;диалоге намерения и&nbsp;цели собеседника</li>
       </ul>
     </div>
-
-    <div data-reveal class="prose" style="margin-top: 32px; max-width: 60ch;">
-      <p>Это одна из&nbsp;самых востребованных у&nbsp;нашей аудитории тем, которую вы, <strong>благодаря экспертным картам, сможете упаковать в&nbsp;различные форматы продуктов и&nbsp;услуг.</strong></p>
+    <div class="intro-visual">
+      <span class="grounded">
+        <img class="illus" src="assets/images/boss-desk.webp" alt="Разговор на повышенных тонах в кабинете" width="1000" height="920">
+      </span>
     </div>
   </div>
 </section>
 
 <section class="bg-gray">
+  <div class="wrap">
+    <p class="statement" data-reveal>Это одна из&nbsp;самых востребованных у&nbsp;нашей аудитории тем, которую вы, <strong>благодаря экспертным картам, сможете упаковать в&nbsp;различные форматы продуктов и&nbsp;услуг.</strong></p>
+  </div>
+</section>
+
+<section>
   <div class="wrap">
     <div data-reveal>
       <div class="eyebrow">Экспертные карты Ольги Грищенко</div>
