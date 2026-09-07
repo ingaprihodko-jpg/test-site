@@ -180,8 +180,8 @@
   /* ================= HERO ================= */
   .hero {
     position: relative;
-    background: radial-gradient(ellipse 90% 70% at 78% 0%, #FCE4F0 0%, #ffffff 55%);
-    padding: clamp(56px, 9vw, 96px) 0 clamp(40px, 6vw, 72px);
+    background: radial-gradient(ellipse 90% 70% at 78% 0%, #FCE4F0 0%, #FBEEF4 55%);
+    padding: clamp(56px, 9vw, 96px) 0 0;
     overflow: hidden;
   }
 
@@ -233,6 +233,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    align-self: end;
   }
 
   .hero-visual .grounded { width: 100%; max-width: 680px; }
@@ -298,6 +299,8 @@
   }
 
   /* ================= INTRO GRID ================= */
+  .intro-section { padding-bottom: 0; overflow: hidden; }
+
   .intro-grid {
     display: grid;
     grid-template-columns: 0.92fr 1.08fr;
@@ -305,7 +308,7 @@
     align-items: center;
   }
 
-  .intro-visual { display: flex; justify-content: center; }
+  .intro-visual { display: flex; justify-content: center; align-self: end; }
   .intro-visual .grounded { width: 100%; max-width: 580px; }
   .intro-visual img { width: 100%; filter: drop-shadow(0 22px 30px rgba(123, 47, 247, 0.16)); }
 
@@ -629,13 +632,15 @@
 
   /* ================= RESPONSIVE ================= */
   @media (max-width: 900px) {
+    .hero { padding-bottom: clamp(40px, 6vw, 72px); }
     .hero .wrap { grid-template-columns: 1fr; }
-    .hero-visual { order: -1; margin: 0 auto 8px; }
+    .hero-visual { order: -1; margin: 0 auto 8px; align-self: auto; }
     .hero-visual .box { max-width: 240px; }
     .hero-visual .grounded { max-width: 340px; }
     .hero-sub { max-width: none; }
+    .intro-section { padding-bottom: clamp(56px, 9vw, 108px); }
     .intro-grid { grid-template-columns: 1fr; }
-    .intro-visual { order: -1; }
+    .intro-visual { order: -1; align-self: auto; }
     .intro-visual .grounded { max-width: 300px; }
     .wide-br { display: none; }
     .feature-grid { grid-template-columns: 1fr; }
@@ -678,7 +683,7 @@
   </div>
 </section>
 
-<section>
+<section class="bg-gray intro-section">
   <div class="wrap intro-grid" data-reveal>
     <div>
       <p class="lede">Инструмент обучения и&nbsp;консультирования</p>
@@ -699,7 +704,7 @@
   </div>
 </section>
 
-<section class="bg-gray">
+<section>
   <div class="wrap">
     <p class="statement" data-reveal>Это одна из&nbsp;самых востребованных у&nbsp;нашей аудитории тем, которую вы, <strong>благодаря экспертным картам, сможете упаковать в&nbsp;различные форматы продуктов и&nbsp;услуг.</strong></p>
   </div>
