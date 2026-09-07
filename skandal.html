@@ -518,6 +518,8 @@
   }
 
   /* ================= GIFT ================= */
+  .gift-section { position: relative; overflow: visible; padding-bottom: 0; }
+
   .gift-grid {
     display: grid;
     grid-template-columns: 0.95fr 1.05fr;
@@ -525,7 +527,13 @@
     align-items: center;
   }
 
-  .gift-icon { justify-self: end; }
+  .gift-icon {
+    justify-self: end;
+    align-self: end;
+    position: relative;
+    z-index: 2;
+    margin-bottom: clamp(-140px, -9vw, -70px);
+  }
   .gift-icon .grounded { width: 100%; max-width: 560px; }
   .gift-icon img { width: 100%; filter: drop-shadow(0 24px 34px rgba(0,0,0,0.32)); }
 
@@ -636,8 +644,9 @@
     .offer-visual { order: -1; }
     .offer-visual img { max-width: 240px; }
     .price-card { position: static; }
+    .gift-section { padding-bottom: clamp(56px, 9vw, 108px); }
     .gift-grid { grid-template-columns: 1fr; }
-    .gift-icon { justify-self: center; order: -1; }
+    .gift-icon { justify-self: center; order: -1; margin-bottom: 0; }
     .gift-icon .grounded { max-width: 300px; }
   }
 
@@ -776,7 +785,7 @@
   </div>
 </section>
 
-<section class="bg-navy">
+<section class="bg-navy gift-section">
   <div class="wrap gift-grid">
     <div data-reveal>
       <p class="gift-caps">ГЛАВНЫЙ ПОДАРОК</p>
