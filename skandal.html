@@ -181,8 +181,9 @@
   .hero {
     position: relative;
     background: radial-gradient(ellipse 90% 70% at 78% 0%, #FCE4F0 0%, #FBEEF4 55%);
-    padding: clamp(56px, 9vw, 96px) 0 0;
-    overflow: hidden;
+    padding: clamp(56px, 9vw, 96px) 0 clamp(40px, 6vw, 72px);
+    overflow-x: clip;
+    overflow-y: visible;
   }
 
   .hero .wrap {
@@ -234,6 +235,7 @@
     justify-content: center;
     align-items: flex-end;
     align-self: end;
+    transform: translateY(clamp(40px, 6vw, 72px));
   }
 
   .hero-visual .grounded { width: 100%; max-width: 680px; }
@@ -299,7 +301,7 @@
   }
 
   /* ================= INTRO GRID ================= */
-  .intro-section { padding-bottom: 0; overflow: hidden; }
+  .intro-section { overflow-x: clip; overflow-y: visible; }
 
   .intro-grid {
     display: grid;
@@ -308,11 +310,13 @@
     align-items: center;
   }
 
-  .intro-visual { display: flex; justify-content: center; align-self: end; }
+  .intro-visual { display: flex; justify-content: center; align-self: end; transform: translateY(clamp(12px, 2.5vw, 36px)); }
   .intro-visual .grounded { width: 100%; max-width: 580px; }
   .intro-visual img { width: 100%; filter: drop-shadow(0 22px 30px rgba(123, 47, 247, 0.16)); }
 
   /* ================= STATEMENT ================= */
+  .statement-section { padding-top: clamp(40px, 6vw, 60px); padding-bottom: clamp(24px, 3.5vw, 36px); }
+
   .statement {
     text-align: center;
     max-width: 1080px;
@@ -325,6 +329,8 @@
   }
 
   .statement strong { color: var(--pink); font-weight: 700; }
+
+  .feature-section { padding-top: clamp(28px, 4vw, 40px); }
 
   /* ================= "ЭТО:" CARDS ================= */
   .feature-grid {
@@ -532,12 +538,13 @@
 
   /* image drops onto the bottom edge of the block; transform keeps page flow intact */
   .gift-icon {
-    justify-self: end;
+    justify-self: center;
+    align-self: end;
     position: relative;
     z-index: 2;
-    transform: translateY(24%);
+    transform: translateY(clamp(48px, 8vw, 96px));
   }
-  .gift-icon .grounded { width: 100%; max-width: 560px; }
+  .gift-icon .grounded { width: 100%; max-width: 400px; }
   .gift-icon img { width: 100%; filter: drop-shadow(0 24px 34px rgba(0,0,0,0.32)); }
 
   /* gift block: exactly two type styles — caps (Unbounded) + running text (Manrope) */
@@ -632,15 +639,13 @@
 
   /* ================= RESPONSIVE ================= */
   @media (max-width: 900px) {
-    .hero { padding-bottom: clamp(40px, 6vw, 72px); }
     .hero .wrap { grid-template-columns: 1fr; }
-    .hero-visual { order: -1; margin: 0 auto 8px; align-self: auto; }
+    .hero-visual { order: -1; margin: 0 auto 8px; align-self: auto; transform: none; }
     .hero-visual .box { max-width: 240px; }
     .hero-visual .grounded { max-width: 340px; }
     .hero-sub { max-width: none; }
-    .intro-section { padding-bottom: clamp(56px, 9vw, 108px); }
     .intro-grid { grid-template-columns: 1fr; }
-    .intro-visual { order: -1; align-self: auto; }
+    .intro-visual { order: -1; align-self: auto; transform: none; }
     .intro-visual .grounded { max-width: 300px; }
     .wide-br { display: none; }
     .feature-grid { grid-template-columns: 1fr; }
@@ -651,7 +656,7 @@
     .price-card { position: static; }
     .gift-grid { grid-template-columns: 1fr; }
     .gift-icon { justify-self: center; order: -1; transform: none; }
-    .gift-icon .grounded { max-width: 300px; }
+    .gift-icon .grounded { max-width: 260px; }
   }
 
   @media (max-width: 520px) {
@@ -704,13 +709,13 @@
   </div>
 </section>
 
-<section>
+<section class="statement-section">
   <div class="wrap">
     <p class="statement" data-reveal>Это одна из&nbsp;самых востребованных у&nbsp;нашей аудитории тем, которую вы, <strong>благодаря экспертным картам, сможете упаковать в&nbsp;различные форматы продуктов и&nbsp;услуг.</strong></p>
   </div>
 </section>
 
-<section>
+<section class="feature-section">
   <div class="wrap">
     <div data-reveal>
       <h2 class="section-title">Что дают экспертные карты<br class="wide-br">КАКОЙ СКАНДАЛ!</h2>
@@ -803,7 +808,7 @@
     </div>
     <div class="gift-icon illus" data-reveal>
       <span class="grounded">
-        <img src="assets/images/gift-friends.png" alt="Один собеседник дарит другому большую подарочную коробку" width="1536" height="1024">
+        <img src="assets/images/olga-gift.png" alt="Ольга Грищенко с подарочной коробкой" width="1052" height="1494">
       </span>
     </div>
   </div>
