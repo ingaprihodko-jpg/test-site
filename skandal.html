@@ -233,8 +233,9 @@
   .hero-visual .grounded { width: 100%; max-width: 380px; }
   .hero-visual img {
     width: 100%;
-    filter: drop-shadow(0 30px 40px rgba(123, 47, 247, 0.18));
+    filter: drop-shadow(0 26px 34px rgba(123, 47, 247, 0.22));
   }
+  .hero-visual .box { max-width: 400px; }
 
   .spark {
     position: absolute;
@@ -523,7 +524,7 @@
   @media (max-width: 900px) {
     .hero .wrap { grid-template-columns: 1fr; }
     .hero-visual { order: -1; margin: 0 auto 8px; }
-    .hero-visual .grounded { max-width: 210px; }
+    .hero-visual .box { max-width: 240px; }
     .hero-sub { max-width: none; }
     .feature-grid { grid-template-columns: 1fr; }
     .offer-grid { grid-template-columns: 1fr; }
@@ -546,14 +547,12 @@
   <div class="wrap">
     <div data-reveal>
       <div class="hero-meta">Экспертные карты Ольги&nbsp;Грищенко</div>
-      <h1>Какой <span class="accent">скандал!</span></h1>
+      <h1>КАКОЙ <span class="accent">СКАНДАЛ!</span></h1>
       <p class="hero-sub">Как разрешить любой конфликт даже с&nbsp;самым сложным собеседником</p>
       <a href="#pricing" class="btn btn-primary">Купить</a>
     </div>
     <div class="hero-visual" data-reveal>
-      <span class="grounded">
-        <img class="illus" src="assets/images/prd-dragon.png" alt="Дракон со скрещёнными на груди лапами — недовольный, но держащий себя в руках" width="1188" height="1908">
-      </span>
+      <img class="illus box" src="assets/images/skandal-box.png" alt="Коробка экспертных карт «Какой скандал!»" width="415" height="494">
     </div>
     <svg class="spark" style="top:12%; left:5%; width:26px; color:#FFD23F;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.2 8.8L23 12l-8.8 2.2L12 24l-2.2-8.8L1 12l8.8-2.2z"/></svg>
     <svg class="spark" style="top:84%; left:1%; width:16px; color:#7B2FF7; animation-delay:.6s,.3s;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.2 8.8L23 12l-8.8 2.2L12 24l-2.2-8.8L1 12l8.8-2.2z"/></svg>
