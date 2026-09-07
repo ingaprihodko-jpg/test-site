@@ -183,9 +183,9 @@
   .hero .wrap {
     position: relative;
     display: grid;
-    grid-template-columns: 1fr 1.02fr;
+    grid-template-columns: 0.9fr 1.1fr;
     align-items: center;
-    gap: 28px;
+    gap: 24px;
   }
 
   .hero-meta {
@@ -230,7 +230,7 @@
     align-items: flex-end;
   }
 
-  .hero-visual .grounded { width: 100%; max-width: 580px; }
+  .hero-visual .grounded { width: 100%; max-width: 680px; }
   .hero-visual img {
     width: 100%;
     filter: drop-shadow(0 26px 34px rgba(123, 47, 247, 0.22));
@@ -295,13 +295,13 @@
   /* ================= INTRO GRID ================= */
   .intro-grid {
     display: grid;
-    grid-template-columns: 1fr 0.95fr;
-    gap: 40px;
+    grid-template-columns: 0.92fr 1.08fr;
+    gap: 36px;
     align-items: center;
   }
 
   .intro-visual { display: flex; justify-content: center; }
-  .intro-visual .grounded { width: 100%; max-width: 480px; }
+  .intro-visual .grounded { width: 100%; max-width: 580px; }
   .intro-visual img { width: 100%; filter: drop-shadow(0 22px 30px rgba(123, 47, 247, 0.16)); }
 
   /* ================= STATEMENT ================= */
@@ -515,13 +515,13 @@
   /* ================= GIFT ================= */
   .gift-grid {
     display: grid;
-    grid-template-columns: 1fr 0.82fr;
+    grid-template-columns: 0.95fr 1.05fr;
     gap: 40px;
     align-items: center;
   }
 
   .gift-icon { justify-self: end; }
-  .gift-icon img { width: 100%; max-width: 440px; filter: drop-shadow(0 24px 34px rgba(0,0,0,0.32)); }
+  .gift-icon img { width: 100%; max-width: 560px; filter: drop-shadow(0 24px 34px rgba(0,0,0,0.32)); }
 
   /* gift block: exactly two type styles — caps (Unbounded) + running text (Manrope) */
   .gift-caps {
@@ -618,11 +618,11 @@
     .hero .wrap { grid-template-columns: 1fr; }
     .hero-visual { order: -1; margin: 0 auto 8px; }
     .hero-visual .box { max-width: 240px; }
-    .hero-visual .grounded { max-width: 300px; }
+    .hero-visual .grounded { max-width: 340px; }
     .hero-sub { max-width: none; }
     .intro-grid { grid-template-columns: 1fr; }
     .intro-visual { order: -1; }
-    .intro-visual .grounded { max-width: 240px; }
+    .intro-visual .grounded { max-width: 300px; }
     .wide-br { display: none; }
     .feature-grid { grid-template-columns: 1fr; }
     .card-strip { grid-template-columns: 1fr; gap: 16px; }
@@ -632,7 +632,7 @@
     .price-card { position: static; }
     .gift-grid { grid-template-columns: 1fr; }
     .gift-icon { justify-self: center; order: -1; }
-    .gift-icon img { max-width: 240px; }
+    .gift-icon img { max-width: 300px; }
   }
 
   @media (max-width: 520px) {
