@@ -507,18 +507,28 @@
   }
 
   .gift-icon { justify-self: end; }
-  .gift-icon img { width: 100%; max-width: 320px; filter: drop-shadow(0 24px 34px rgba(0,0,0,0.32)); }
+  .gift-icon img { width: 100%; max-width: 440px; filter: drop-shadow(0 24px 34px rgba(0,0,0,0.32)); }
 
-  .gift-start {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 20px;
+  /* gift block: exactly two type styles — caps (Unbounded) + running text (Manrope) */
+  .gift-caps {
     font-family: 'Unbounded', sans-serif;
-    font-weight: 700;
-    font-size: 1.05rem;
+    font-weight: 800;
+    font-size: clamp(1.4rem, 2.8vw, 2rem);
+    line-height: 1.18;
     color: var(--white);
+    margin: 0;
   }
+
+  .gift-text {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-size: 1.15rem;
+    line-height: 1.45;
+    color: #c7c5da;
+    margin: 4px 0 0;
+  }
+
+  .gift-text--gap { margin-top: 24px; }
 
   /* ================= USE / BENEFIT ================= */
   .use-list {
@@ -742,13 +752,17 @@
 <section class="bg-navy">
   <div class="wrap gift-grid">
     <div data-reveal>
-      <div class="eyebrow">🎁 Главный подарок для&nbsp;всех покупателей</div>
-      <h2 class="section-title" style="margin-bottom: 18px;">Обучение на&nbsp;курсе Ольги Грищенко «Управление конфликтами»</h2>
-      <p class="prose" style="max-width: 46ch;">Реальная стоимость этого курса&nbsp;— гораздо выше стоимости карт.</p>
-      <span class="gift-start">🔥 Старт курса 28&nbsp;сентября</span>
+      <p class="gift-caps">ГЛАВНЫЙ ПОДАРОК</p>
+      <p class="gift-text">для&nbsp;всех покупателей</p>
+
+      <p class="gift-text gift-text--gap">обучение на&nbsp;курсе Ольги&nbsp;Грищенко</p>
+      <p class="gift-caps">УПРАВЛЕНИЕ КОНФЛИКТАМИ</p>
+
+      <p class="gift-text gift-text--gap">Реальная стоимость этого курса&nbsp;— гораздо выше стоимости карт</p>
+      <p class="gift-text">Старт курса 28&nbsp;сентября</p>
     </div>
     <div class="gift-icon illus" data-reveal>
-      <img src="assets/images/gift-real.webp" alt="Ольга Грищенко с большой подарочной коробкой" width="820" height="1320">
+      <img src="assets/images/gift-friends.png" alt="Один собеседник дарит другому большую подарочную коробку" width="1536" height="1024">
     </div>
   </div>
 </section>
