@@ -676,6 +676,9 @@
   .lt-raw-html,
   .lt-block-wrapper { font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif !important; }
   .prose { font-family: 'Manrope', sans-serif !important; }
+  /* reveal-on-scroll can't be trusted inside GetCourse (observer/scroll
+     container differs) — show everything, skip the fade-in */
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
 </style>
 <noscript><style>[data-reveal] { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
@@ -689,7 +692,7 @@
       <p class="hero-sub">Как разрешить любой конфликт даже с&nbsp;самым сложным собеседником</p>
       <a href="#pricing" class="btn btn-primary">Купить</a>
     </div>
-    <div class="hero-visual" data-reveal>
+    <div class="hero-visual">
       <span class="grounded">
         <img class="illus" src="https://ingaprihodko-jpg.github.io/test-site/assets/images/hero-characters.png" alt="Двое собеседников на повышенных тонах, у каждого на плече красный чертёнок" width="1301" height="1009">
       </span>
