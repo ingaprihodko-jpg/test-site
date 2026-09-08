@@ -564,7 +564,7 @@
   /* text keeps the block height; photo is absolutely placed so it can
      hang to the block's bottom edge without changing the block size */
   .gift-grid { position: relative; }
-  .gift-col { max-width: 62%; }
+  .gift-col { max-width: 66%; }
 
   .gift-icon {
     position: absolute;
@@ -581,36 +581,42 @@
   .gift-caps {
     font-family: 'Unbounded', sans-serif;
     font-weight: 800;
-    font-size: clamp(2rem, 4.4vw, 3.2rem);
+    font-size: clamp(1.7rem, 4vw, 3rem);
     line-height: 1.04;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
     color: var(--white);
     margin: 0;
+    white-space: nowrap;
   }
 
-  .gift-lead {
-    font-family: 'Manrope', sans-serif;
-    font-weight: 500;
-    font-size: 1.1rem;
-    line-height: 1.25;
-    color: #c7c5da;
-    margin: 6px 0 0;
-  }
-
-  .gift-lead--gap { margin-top: 22px; }
-
+  /* the course name + its lead-in both sit on one gradient plate,
+     the plate hugs the text (width driven by its widest line) */
   .gift-badge {
     display: inline-block;
+    background: linear-gradient(90deg, var(--pink), var(--purple));
+    padding: 14px 24px;
+    border-radius: 14px;
+    margin: 24px 0 0;
+  }
+
+  .gift-badge__lead {
+    display: block;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, 0.88);
+    margin-bottom: 6px;
+  }
+
+  .gift-badge__name {
+    display: block;
     font-family: 'Unbounded', sans-serif;
     font-weight: 800;
     font-size: clamp(1.3rem, 2.8vw, 2rem);
     line-height: 1.1;
     letter-spacing: -0.01em;
     color: var(--white);
-    background: linear-gradient(90deg, var(--pink), var(--purple));
-    padding: 10px 22px;
-    border-radius: 14px;
-    margin: 8px 0 0;
   }
 
   .gift-note {
@@ -623,8 +629,9 @@
     white-space: nowrap;
   }
 
-  .gift-note--gap { margin-top: 22px; }
-  .gift-note--accent { color: var(--white); font-weight: 700; }
+  /* keep the notes off the plate — they are a separate paragraph */
+  .gift-note--after-badge { margin-top: 32px; }
+  .gift-note--accent { color: var(--white); font-weight: 700; margin-top: 14px; }
 
   /* ================= USE / BENEFIT ================= */
   .use-list {
@@ -730,6 +737,8 @@
     .gift-section { padding-bottom: 6px; }
     .gift-grid { display: flex; flex-direction: column; }
     .gift-col { max-width: none; }
+    /* keep "ГЛАВНЫЙ ПОДАРОК" on one line on phones too */
+    .gift-caps { font-size: clamp(1.1rem, 5.6vw, 1.7rem); }
     .gift-note { white-space: normal; }
     .gift-icon {
       position: static;
@@ -880,12 +889,13 @@
   <div class="wrap gift-grid">
     <div class="gift-col" data-reveal>
       <p class="gift-caps">ГЛАВНЫЙ ПОДАРОК</p>
-      <p class="gift-lead">для&nbsp;всех покупателей</p>
 
-      <p class="gift-lead gift-lead--gap">обучение на&nbsp;курсе Ольги&nbsp;Грищенко</p>
-      <p class="gift-badge">УПРАВЛЕНИЕ КОНФЛИКТАМИ</p>
+      <div class="gift-badge">
+        <span class="gift-badge__lead">обучение на&nbsp;авторском курсе Ольги&nbsp;Грищенко</span>
+        <span class="gift-badge__name">УПРАВЛЕНИЕ КОНФЛИКТАМИ</span>
+      </div>
 
-      <p class="gift-note gift-note--gap">Реальная стоимость этого курса&nbsp;— гораздо выше стоимости карт</p>
+      <p class="gift-note gift-note--after-badge">Реальная стоимость этого курса&nbsp;— гораздо выше стоимости карт</p>
       <p class="gift-note gift-note--accent">Старт курса 28&nbsp;сентября</p>
     </div>
     <div class="gift-icon illus" data-reveal>
