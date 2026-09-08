@@ -765,6 +765,11 @@
   /* reveal-on-scroll can't be trusted inside GetCourse (observer/scroll
      container differs) — show everything, skip the fade-in */
   [data-reveal] { opacity: 1 !important; transform: translateY(0) !important; }
+  /* the generic `p { margin ... !important }` above zeroes component
+     paragraph spacing — re-assert the ones that carry real layout gaps */
+  .gift-note { margin: 6px 0 0 !important; }
+  .gift-note--after-badge { margin-top: 32px !important; }
+  .gift-note--accent { margin-top: 14px !important; }
 </style>
 <noscript><style>[data-reveal] { opacity: 1 !important; transform: none !important; }</style></noscript>
 </head>
