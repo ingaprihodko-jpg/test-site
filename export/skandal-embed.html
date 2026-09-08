@@ -481,7 +481,13 @@
     border-radius: 999px;
   }
 
-  .price-card .btn { width: 100%; justify-content: center; }
+  .price-card .btn {
+    display: flex;
+    width: max-content;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 18px 56px;
+  }
 
   .price-card.is-wide {
     position: static;
