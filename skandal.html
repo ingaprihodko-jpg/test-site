@@ -246,20 +246,24 @@
     /* pinned to the wrap's right edge (stays inside the container on every
        platform — GetCourse caps the block width, so no bleed / no clipping) */
     right: 0;
-    top: 50%;
-    translate: 0 calc(-50% + 16px);
+    /* sit the figures ON the seam between this block and the next: the wrap's
+       bottom padding equals .hero's padding-bottom, so a negative bottom of
+       that amount drops the picture's base exactly to the section edge */
+    bottom: calc(-1 * clamp(36px, 4.5vw, 56px));
+    top: auto;
+    translate: 0;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     /* as wide as the room left of the wrap edge allows, next to the text */
     width: min(600px, calc(min(100vw, 1200px) - 545px));
-    z-index: 1;
+    z-index: 3;
   }
 
   .hero-visual .grounded { width: 100%; max-width: none; position: relative; }
   .hero-visual .grounded::before { display: none; }
   .hero-visual img {
     width: 100%;
-    filter: drop-shadow(0 26px 34px rgba(123, 47, 247, 0.22));
+    filter: drop-shadow(0 10px 14px rgba(123, 47, 247, 0.18));
   }
   .hero-visual .box { max-width: 400px; }
 
