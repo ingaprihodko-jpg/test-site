@@ -196,6 +196,15 @@
     max-width: 1360px;
   }
 
+  /* The hero .wrap is wider than the standard 1140px sections so the
+     illustration can stay large. Pad the text column back in so its left
+     edge lines up with every other section's text (the intro block etc.).
+     Offset = half the difference between this wrap and a 1140 wrap,
+     collapsing to 0 on narrow viewports. */
+  .hero .wrap > div:first-child {
+    padding-left: max(0px, min(110px, calc((100vw - 1140px) / 2)));
+  }
+
   .hero-meta {
     font-family: 'Manrope', sans-serif;
     font-weight: 800;
@@ -212,9 +221,6 @@
     font-weight: 900;
     margin-bottom: 18px;
     color: var(--ink);
-    /* optical margin: pull the heavy display caps back so their visible
-       left edge lines up with the eyebrow / body text */
-    margin-left: -0.03em;
   }
 
   .hero h1 .accent { color: var(--pink); }
