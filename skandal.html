@@ -397,9 +397,9 @@
   /* ================= INCLUDED + PRICE ================= */
   .offer-grid {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: 1fr 1fr;
     gap: 40px;
-    align-items: start;
+    align-items: center;
     margin-top: 40px;
   }
 
@@ -419,8 +419,8 @@
     min-height: 34px;
     display: flex;
     align-items: center;
-    font-weight: 600;
-    color: var(--ink);
+    font-weight: 400;
+    color: var(--ink-soft);
   }
 
   .included-list li::before {
@@ -497,7 +497,7 @@
 
   .offer-visual img {
     width: 100%;
-    max-width: 320px;
+    max-width: 500px;
     filter: drop-shadow(0 22px 32px rgba(123, 47, 247, 0.18));
   }
 
@@ -660,7 +660,7 @@
     .card-tile { max-width: 420px; margin: 0 auto; }
     .offer-grid { grid-template-columns: 1fr; }
     .offer-visual { order: -1; }
-    .offer-visual img { max-width: 240px; }
+    .offer-visual img { max-width: 300px; }
     .price-card { position: static; }
     .gift-section { padding-bottom: 6px; }
     .gift-grid { display: flex; flex-direction: column; }
