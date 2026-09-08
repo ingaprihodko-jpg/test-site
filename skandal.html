@@ -200,7 +200,7 @@
   .hero .wrap > div:first-child {
     position: relative;
     z-index: 2;
-    max-width: 430px;
+    max-width: 410px;
   }
 
   .hero-meta {
@@ -215,7 +215,7 @@
   }
 
   .hero h1 {
-    font-size: clamp(2.45rem, 5.6vw, 3.6rem);
+    font-size: clamp(2.2rem, 4.8vw, 3.2rem);
     font-weight: 900;
     margin-bottom: 18px;
     color: var(--ink);
@@ -254,10 +254,10 @@
     translate: 0;
     display: flex;
     align-items: flex-end;
-    /* as wide as the room left of the wrap edge allows, next to the text
-       (client asked for +15% over the previous size — text column trimmed
-       to make the room) */
-    width: min(690px, calc(min(100vw, 1220px) - 484px));
+    /* client wants the illustration bigger; the GetCourse block caps the
+       row at ~1082px, so the text column + H1 are trimmed to make room and
+       the vw term is capped at 1090 so the picture can't overrun it. */
+    width: min(660px, calc(min(100vw, 1090px) - 470px));
     z-index: 3;
   }
 
@@ -325,22 +325,31 @@
   }
 
   /* ================= INTRO GRID ================= */
-  .intro-section { overflow-x: clip; overflow-y: visible; }
+  .intro-section { position: relative; overflow-x: clip; overflow-y: visible; }
 
   .intro-grid {
     display: grid;
-    grid-template-columns: 0.92fr 1.08fr;
-    gap: 36px;
+    grid-template-columns: 1.12fr 0.88fr;
+    gap: clamp(24px, 4vw, 48px);
     align-items: center;
   }
 
-  .intro-visual { display: flex; justify-content: center; align-self: end; translate: 0 clamp(-48px, -4vw, -16px); }
+  /* illustration on the LEFT (opposite side to the hero art, so the two
+     blocks don't read as one stacked pair) and emerging from the section's
+     bottom edge — same language as the hero */
+  .intro-visual {
+    order: -1;
+    display: flex;
+    justify-content: flex-start;
+    align-self: end;
+    margin-bottom: calc(-1 * clamp(56px, 9vw, 108px));
+  }
   .intro-visual .grounded::before { display: none; }
-  .intro-visual .grounded { width: 100%; max-width: 560px; }
+  .intro-visual .grounded { width: 100%; max-width: 720px; }
   .intro-visual img {
     width: 100%;
-    -webkit-mask-image: linear-gradient(to bottom, #000 68%, rgba(0,0,0,0.4) 83%, transparent 92%);
-    mask-image: linear-gradient(to bottom, #000 68%, rgba(0,0,0,0.4) 83%, transparent 92%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 99%);
+    mask-image: linear-gradient(to bottom, #000 88%, transparent 99%);
   }
 
   /* ================= STATEMENT ================= */
@@ -729,8 +738,8 @@
 
   @media (max-width: 900px) {
     .intro-grid { grid-template-columns: 1fr; }
-    .intro-visual { order: -1; align-self: auto; transform: none; translate: none; }
-    .intro-visual .grounded { max-width: 300px; }
+    .intro-visual { order: -1; align-self: auto; justify-content: center; margin-bottom: 0; transform: none; translate: none; }
+    .intro-visual .grounded { max-width: 320px; }
     .wide-br { display: none; }
     .feature-grid { grid-template-columns: 1fr; }
     .card-tile { max-width: 420px; margin: 0 auto; }
