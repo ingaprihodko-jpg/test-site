@@ -324,32 +324,36 @@
     background: var(--pink);
   }
 
-  /* ================= INTRO GRID ================= */
-  .intro-section { position: relative; overflow-x: clip; overflow-y: visible; }
+  /* ================= INTRO ================= */
+  /* text on top (stays left, clear of GetCourse's corner badge), then one
+     wide illustration band along the bottom edge — no side-by-side column,
+     so it never reads as "another picture stacked under the hero" */
+  .intro-section { position: relative; overflow-x: clip; overflow-y: visible; padding-bottom: 0; }
 
-  .intro-grid {
-    display: grid;
-    grid-template-columns: 1.12fr 0.88fr;
-    gap: clamp(24px, 4vw, 48px);
-    align-items: center;
+  .intro-grid { display: block; }
+
+  .intro-copy .prose { margin-bottom: 4px; }
+
+  .intro-grid .bullet-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px clamp(24px, 4vw, 56px);
+    margin-bottom: clamp(28px, 5vw, 48px);
   }
 
-  /* illustration on the LEFT (opposite side to the hero art, so the two
-     blocks don't read as one stacked pair) and emerging from the section's
-     bottom edge — same language as the hero */
   .intro-visual {
-    order: -1;
-    display: flex;
-    justify-content: flex-start;
-    align-self: end;
-    margin-bottom: calc(-1 * clamp(56px, 9vw, 108px));
+    display: block;
+    width: 100%;
+    margin: 0;
   }
+  .intro-visual .grounded { display: block; width: 100%; max-width: none; }
   .intro-visual .grounded::before { display: none; }
-  .intro-visual .grounded { width: 100%; max-width: 720px; }
   .intro-visual img {
     width: 100%;
-    -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 99%);
-    mask-image: linear-gradient(to bottom, #000 88%, transparent 99%);
+    max-height: clamp(240px, 30vw, 380px);
+    object-fit: cover;
+    object-position: center 26%;
+    -webkit-mask-image: linear-gradient(to bottom, #000 90%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 90%, transparent 100%);
   }
 
   /* ================= STATEMENT ================= */
@@ -737,9 +741,10 @@
   }
 
   @media (max-width: 900px) {
-    .intro-grid { grid-template-columns: 1fr; }
-    .intro-visual { order: -1; align-self: auto; justify-content: center; margin-bottom: 0; transform: none; translate: none; }
-    .intro-visual .grounded { max-width: 320px; }
+    .intro-grid .bullet-list { grid-template-columns: 1fr; }
+    .intro-visual { margin-top: 8px; }
+    .intro-visual .grounded { max-width: 380px; margin: 0 auto; }
+    .intro-visual img { max-height: none; object-fit: contain; }
     .wide-br { display: none; }
     .feature-grid { grid-template-columns: 1fr; }
     .card-tile { max-width: 420px; margin: 0 auto; }
@@ -810,7 +815,7 @@
 
 <section class="bg-gray intro-section">
   <div class="wrap intro-grid" data-reveal>
-    <div>
+    <div class="intro-copy">
       <p class="lede">Инструмент обучения и&nbsp;консультирования</p>
       <p class="prose">В&nbsp;набор экспертных карт «Какой скандал!» входят авторские техники и&nbsp;стратегии общения, которые позволяют:</p>
       <ul class="bullet-list">
