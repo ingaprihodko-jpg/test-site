@@ -182,7 +182,7 @@
   .hero {
     position: relative;
     background: radial-gradient(ellipse 90% 70% at 78% 0%, #FCE4F0 0%, #FBEEF4 55%);
-    padding: clamp(36px, 4.5vw, 52px) 0 clamp(28px, 3.5vw, 44px);
+    padding: clamp(48px, 6vw, 68px) 0 clamp(36px, 4.5vw, 56px);
     overflow-x: clip;
     overflow-y: visible;
   }
@@ -192,7 +192,7 @@
      max-width instead of by widening the wrap. */
   .hero .wrap {
     position: relative;
-    min-height: clamp(280px, 28vw, 400px);
+    min-height: clamp(340px, 34vw, 460px);
     display: flex;
     align-items: center;
   }
@@ -247,7 +247,7 @@
        platform — GetCourse caps the block width, so no bleed / no clipping) */
     right: 0;
     top: 50%;
-    translate: 0 -50%;
+    translate: 0 calc(-50% - 8px);
     display: flex;
     align-items: center;
     /* as wide as the room left of the wrap edge allows, next to the text */
