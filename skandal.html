@@ -200,7 +200,7 @@
   .hero .wrap > div:first-child {
     position: relative;
     z-index: 2;
-    max-width: 470px;
+    max-width: 430px;
   }
 
   .hero-meta {
@@ -215,7 +215,7 @@
   }
 
   .hero h1 {
-    font-size: clamp(2.6rem, 6vw, 4rem);
+    font-size: clamp(2.45rem, 5.6vw, 3.6rem);
     font-weight: 900;
     margin-bottom: 18px;
     color: var(--ink);
@@ -254,8 +254,10 @@
     translate: 0;
     display: flex;
     align-items: flex-end;
-    /* as wide as the room left of the wrap edge allows, next to the text */
-    width: min(600px, calc(min(100vw, 1200px) - 545px));
+    /* as wide as the room left of the wrap edge allows, next to the text
+       (client asked for +15% over the previous size — text column trimmed
+       to make the room) */
+    width: min(690px, calc(min(100vw, 1220px) - 484px));
     z-index: 3;
   }
 
