@@ -1,9 +1,13 @@
 <meta charset="utf-8">
 <!-- ============================================================
-     БЛОК: «Запись эфира. Управление конфликтами» + кнопка
-     Для GetCourse — вставляется во ВТОРОЙ блок страницы
-     (между основным блоком и блоком с подарком).
-     Светлая секция в стилистике сайта.
+     БЛОК «Запись эфира. Управление конфликтами»
+     Второй блок страницы (между основным блоком и подарком).
+     Баннер сверху во всю ширину — на нём уже есть заголовок,
+     поэтому отдельного <h2> нет.
+
+     >>> КАРТИНКА: заменить src у <img class="wrec__banner">
+         на ссылку своего баннера (жёлтый, «УПРАВЛЕНИЕ КОНФЛИКТАМИ»).
+         Пока стоит placeholder.
      Кнопка → https://f5game.site/video/scandal1-1
      ============================================================ -->
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800;900&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -16,18 +20,10 @@
     font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif !important;
     font-size: 17px !important;
     line-height: 1.5;
-    padding: clamp(48px, 9vw, 92px) 0;
-    overflow: hidden;
+    padding: clamp(40px, 8vw, 84px) 0;
   }
 
-  .wrec__wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
-
-  .wrec__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: clamp(24px, 5vw, 48px);
-    align-items: center;
-  }
+  .wrec__wrap { max-width: 920px; margin: 0 auto; padding: 0 24px; }
 
   .wrec__eyebrow {
     display: flex;
@@ -39,7 +35,7 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: #E31C79;
-    margin: 0 0 16px;
+    margin: 0 0 18px;
   }
   .wrec__eyebrow::before {
     content: "";
@@ -49,21 +45,20 @@
     flex-shrink: 0;
   }
 
-  .wrec__title {
-    font-family: 'Unbounded', 'Manrope', sans-serif !important;
-    font-weight: 800;
-    font-size: clamp(28.8px, 3.4vw, 41.6px) !important;
-    line-height: 1.12;
-    letter-spacing: -0.01em;
-    color: #16151F;
-    margin: 0 0 20px;
+  .wrec__banner {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 22px;
+    box-shadow: 0 30px 60px -32px rgba(22, 21, 31, 0.4);
+    margin: 0 0 clamp(24px, 4vw, 40px);
   }
 
   .wrec p { margin: 0 0 18px; }
   .wrec p:last-child { margin-bottom: 0; }
 
   .wrec__prose {
-    max-width: 60ch;
+    max-width: 62ch;
     font-size: 17.28px !important;
     color: #5B5A6E;
   }
@@ -71,10 +66,10 @@
   .wrec__note {
     font-family: 'Unbounded', sans-serif !important;
     font-weight: 700;
-    font-size: clamp(17.6px, 1.9vw, 23.2px) !important;
+    font-size: clamp(17.6px, 1.9vw, 22.4px) !important;
     line-height: 1.32;
     color: #16151F;
-    margin: 26px 0 14px !important;
+    margin: 24px 0 14px !important;
   }
   .wrec__note b { color: #E31C79; font-weight: 700; }
 
@@ -109,7 +104,7 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin-top: 34px;
+    margin-top: 32px;
     background: #E31C79;
     color: #FFFFFF !important;
     font-family: 'Manrope', sans-serif !important;
@@ -124,54 +119,32 @@
   }
   .wrec__cta:hover { background: #B01463; transform: translateY(-2px); }
 
-  .wrec__media {
-    display: flex;
-    justify-content: center;
-  }
-  .wrec__illus {
-    display: block;
-    width: 100%;
-    max-width: 380px;
-    height: auto;
-    filter: drop-shadow(0 22px 34px rgba(123, 47, 247, 0.18));
-  }
-
-  @media (min-width: 820px) {
-    .wrec__grid { grid-template-columns: 1.25fr 0.75fr; }
-    .wrec__illus { max-width: 100%; }
-  }
-
   @media (max-width: 560px) {
+    .wrec__banner { border-radius: 16px; }
     .wrec__cta { display: flex; width: 100%; }
   }
 </style>
 
 <div class="wrec">
   <div class="wrec__wrap">
-    <div class="wrec__grid">
-      <div class="wrec__content">
-        <p class="wrec__eyebrow">Запись эфира</p>
-        <h2 class="wrec__title">Управление конфликтами</h2>
+    <p class="wrec__eyebrow">Запись эфира</p>
 
-        <p class="wrec__prose">Управление конфликтами&nbsp;— высший пилотаж, которому практически не&nbsp;обучают на&nbsp;рынке. Но&nbsp;если его освоить, это станет вашим главным преимуществом и&nbsp;суперсилой для&nbsp;разрешения самых сложных ситуаций и&nbsp;достижения желаемого в&nbsp;любом общении.</p>
+    <!-- ЗАМЕНИТЬ src на ссылку своего баннера -->
+    <img class="wrec__banner"
+         src="https://ingaprihodko-jpg.github.io/test-site/assets/images/webinar-banner.png"
+         alt="Управление конфликтами — двое собеседников на повышенных тонах, у каждого на плече красный чертёнок">
 
-        <p class="wrec__note">Сейчас для&nbsp;вас доступна к&nbsp;просмотру запись эфира <b>«Управление конфликтами»</b>,</p>
+    <p class="wrec__prose">Управление конфликтами&nbsp;— высший пилотаж, которому практически не&nbsp;обучают на&nbsp;рынке. Но&nbsp;если его освоить, это станет вашим главным преимуществом и&nbsp;суперсилой для&nbsp;разрешения самых сложных ситуаций и&nbsp;достижения желаемого в&nbsp;любом общении.</p>
 
-        <p class="wrec__prose">где вы&nbsp;можете познакомиться с&nbsp;авторским методом управления конфликтами Ольги&nbsp;Грищенко, а&nbsp;ещё увидеть:</p>
+    <p class="wrec__note">Сейчас для&nbsp;вас доступна к&nbsp;просмотру запись эфира <b>«Управление конфликтами»</b>,</p>
 
-        <ul class="wrec__list">
-          <li>разбор распространённых экспертных советов по&nbsp;решению конфликтов, которые разжигают конфликты ещё&nbsp;больше;</li>
-          <li>демонстрацию возможностей экспертных карт по&nbsp;управлению конфликтами <b>«Какой скандал!»</b>&nbsp;— именно метод управления конфликтами лежит в&nbsp;основе этой колоды.</li>
-        </ul>
+    <p class="wrec__prose">где вы&nbsp;можете познакомиться с&nbsp;авторским методом управления конфликтами Ольги&nbsp;Грищенко, а&nbsp;ещё увидеть:</p>
 
-        <a class="wrec__cta" href="https://f5game.site/video/scandal1-1">Смотреть эфир</a>
-      </div>
+    <ul class="wrec__list">
+      <li>разбор распространённых экспертных советов по&nbsp;решению конфликтов, которые разжигают конфликты ещё&nbsp;больше;</li>
+      <li>демонстрацию возможностей экспертных карт по&nbsp;управлению конфликтами <b>«Какой скандал!»</b>&nbsp;— именно метод управления конфликтами лежит в&nbsp;основе этой колоды.</li>
+    </ul>
 
-      <div class="wrec__media">
-        <img class="wrec__illus"
-             src="https://ingaprihodko-jpg.github.io/test-site/assets/images/hero-characters.png"
-             alt="Двое собеседников на повышенных тонах, у каждого на плече красный чертёнок">
-      </div>
-    </div>
+    <a class="wrec__cta" href="https://f5game.site/video/scandal1-1">Смотреть эфир</a>
   </div>
 </div>
