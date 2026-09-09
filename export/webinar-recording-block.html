@@ -1,28 +1,26 @@
 <meta charset="utf-8">
 <!-- ============================================================
      БЛОК: «Запись эфира. Управление конфликтами» + кнопка
-     Самостоятельный блок для GetCourse (вставляется как «Код»)
-     в отдельный блок перед блоком с подарком.
-     Стилистика — как у остальных секций сайта (тёмная секция).
+     Для GetCourse — вставляется во ВТОРОЙ блок страницы
+     (между основным блоком и блоком с подарком).
+     Светлая секция в стилистике сайта — контраст с тёмным
+     блоком «Главный подарок», который идёт следом.
+     Кнопка → https://f5game.site/video/scandal1-1
      ============================================================ -->
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800;900&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   .wrec, .wrec * { box-sizing: border-box; }
 
   .wrec {
-    background: #15142B;
-    color: #FFFFFF;
+    background: #FFFFFF;
+    color: #16151F;
     font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif !important;
     font-size: 17px !important;
     line-height: 1.5;
-    padding: clamp(48px, 9vw, 96px) 0;
+    padding: clamp(48px, 9vw, 92px) 0;
   }
 
-  .wrec__wrap {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
+  .wrec__wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; }
 
   .wrec__eyebrow {
     display: flex;
@@ -33,7 +31,7 @@
     font-size: 12.8px !important;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #FF4FA3;
+    color: #E31C79;
     margin: 0 0 16px;
   }
   .wrec__eyebrow::before {
@@ -50,7 +48,7 @@
     font-size: clamp(28.8px, 3.4vw, 41.6px) !important;
     line-height: 1.12;
     letter-spacing: -0.01em;
-    color: #FFFFFF;
+    color: #16151F;
     margin: 0 0 20px;
   }
 
@@ -60,7 +58,7 @@
   .wrec__prose {
     max-width: 62ch;
     font-size: 17.28px !important;
-    color: #c7c5da;
+    color: #5B5A6E;
   }
 
   .wrec__note {
@@ -68,10 +66,10 @@
     font-weight: 700;
     font-size: clamp(17.6px, 1.9vw, 23.2px) !important;
     line-height: 1.32;
-    color: #FFFFFF;
+    color: #16151F;
     margin: 26px 0 14px !important;
   }
-  .wrec__note b { color: #FF4FA3; font-weight: 700; }
+  .wrec__note b { color: #E31C79; font-weight: 700; }
 
   .wrec__list {
     list-style: none;
@@ -83,7 +81,7 @@
   .wrec__list li {
     position: relative;
     padding-left: 22px;
-    color: #c7c5da;
+    color: #5B5A6E;
     font-size: 17.28px !important;
     line-height: 1.45;
   }
@@ -97,7 +95,7 @@
     border-radius: 50%;
     background: #E31C79;
   }
-  .wrec__list b { color: #FFFFFF; font-weight: 700; }
+  .wrec__list b { color: #16151F; font-weight: 700; }
 
   .wrec__cta {
     display: inline-flex;
