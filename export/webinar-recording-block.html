@@ -3,8 +3,7 @@
      БЛОК: «Запись эфира. Управление конфликтами» + кнопка
      Для GetCourse — вставляется во ВТОРОЙ блок страницы
      (между основным блоком и блоком с подарком).
-     Светлая секция в стилистике сайта — контраст с тёмным
-     блоком «Главный подарок», который идёт следом.
+     Светлая секция в стилистике сайта.
      Кнопка → https://f5game.site/video/scandal1-1
      ============================================================ -->
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800;900&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -18,9 +17,17 @@
     font-size: 17px !important;
     line-height: 1.5;
     padding: clamp(48px, 9vw, 92px) 0;
+    overflow: hidden;
   }
 
-  .wrec__wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  .wrec__wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+  .wrec__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(24px, 5vw, 48px);
+    align-items: center;
+  }
 
   .wrec__eyebrow {
     display: flex;
@@ -56,7 +63,7 @@
   .wrec p:last-child { margin-bottom: 0; }
 
   .wrec__prose {
-    max-width: 62ch;
+    max-width: 60ch;
     font-size: 17.28px !important;
     color: #5B5A6E;
   }
@@ -117,6 +124,23 @@
   }
   .wrec__cta:hover { background: #B01463; transform: translateY(-2px); }
 
+  .wrec__media {
+    display: flex;
+    justify-content: center;
+  }
+  .wrec__illus {
+    display: block;
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    filter: drop-shadow(0 22px 34px rgba(123, 47, 247, 0.18));
+  }
+
+  @media (min-width: 820px) {
+    .wrec__grid { grid-template-columns: 1.25fr 0.75fr; }
+    .wrec__illus { max-width: 100%; }
+  }
+
   @media (max-width: 560px) {
     .wrec__cta { display: flex; width: 100%; }
   }
@@ -124,20 +148,30 @@
 
 <div class="wrec">
   <div class="wrec__wrap">
-    <p class="wrec__eyebrow">Запись эфира</p>
-    <h2 class="wrec__title">Управление конфликтами</h2>
+    <div class="wrec__grid">
+      <div class="wrec__content">
+        <p class="wrec__eyebrow">Запись эфира</p>
+        <h2 class="wrec__title">Управление конфликтами</h2>
 
-    <p class="wrec__prose">Управление конфликтами&nbsp;— высший пилотаж, которому практически не&nbsp;обучают на&nbsp;рынке. Но&nbsp;если его освоить, это станет вашим главным преимуществом и&nbsp;суперсилой для&nbsp;разрешения самых сложных ситуаций и&nbsp;достижения желаемого в&nbsp;любом общении.</p>
+        <p class="wrec__prose">Управление конфликтами&nbsp;— высший пилотаж, которому практически не&nbsp;обучают на&nbsp;рынке. Но&nbsp;если его освоить, это станет вашим главным преимуществом и&nbsp;суперсилой для&nbsp;разрешения самых сложных ситуаций и&nbsp;достижения желаемого в&nbsp;любом общении.</p>
 
-    <p class="wrec__note">Сейчас для&nbsp;вас доступна к&nbsp;просмотру запись эфира <b>«Управление конфликтами»</b>,</p>
+        <p class="wrec__note">Сейчас для&nbsp;вас доступна к&nbsp;просмотру запись эфира <b>«Управление конфликтами»</b>,</p>
 
-    <p class="wrec__prose">где вы&nbsp;можете познакомиться с&nbsp;авторским методом управления конфликтами Ольги&nbsp;Грищенко, а&nbsp;ещё увидеть:</p>
+        <p class="wrec__prose">где вы&nbsp;можете познакомиться с&nbsp;авторским методом управления конфликтами Ольги&nbsp;Грищенко, а&nbsp;ещё увидеть:</p>
 
-    <ul class="wrec__list">
-      <li>разбор распространённых экспертных советов по&nbsp;решению конфликтов, которые разжигают конфликты ещё&nbsp;больше;</li>
-      <li>демонстрацию возможностей экспертных карт по&nbsp;управлению конфликтами <b>«Какой скандал!»</b>&nbsp;— именно метод управления конфликтами лежит в&nbsp;основе этой колоды.</li>
-    </ul>
+        <ul class="wrec__list">
+          <li>разбор распространённых экспертных советов по&nbsp;решению конфликтов, которые разжигают конфликты ещё&nbsp;больше;</li>
+          <li>демонстрацию возможностей экспертных карт по&nbsp;управлению конфликтами <b>«Какой скандал!»</b>&nbsp;— именно метод управления конфликтами лежит в&nbsp;основе этой колоды.</li>
+        </ul>
 
-    <a class="wrec__cta" href="https://f5game.site/video/scandal1-1">Смотреть эфир</a>
+        <a class="wrec__cta" href="https://f5game.site/video/scandal1-1">Смотреть эфир</a>
+      </div>
+
+      <div class="wrec__media">
+        <img class="wrec__illus"
+             src="https://ingaprihodko-jpg.github.io/test-site/assets/images/hero-characters.png"
+             alt="Двое собеседников на повышенных тонах, у каждого на плече красный чертёнок">
+      </div>
+    </div>
   </div>
 </div>
