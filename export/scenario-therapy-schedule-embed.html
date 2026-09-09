@@ -1,0 +1,1123 @@
+<!--
+  Календарь-расписание курса по сценарной терапии (открытые эфиры + закрытая программа).
+  Самодостаточный блок: вся разметка, стили и скрипт — внутри .st-sc-schedule,
+  ничего не трогает вне себя (нет body{}, *{}, голых h1/p без скоупа).
+
+  Куда вставить: в блок "HTML-код" / "Дополнительный код" на нужной странице
+  потока — весь файл целиком, как есть, в одно поле.
+-->
+<div class="st-sc-schedule">
+<style>
+  .st-sc-schedule{
+    --ink:#171b21;
+    --ink-soft:#4b5563;
+    --ink-faint:#8b93a1;
+    --paper:#eff2f1;
+    --card:#ffffff;
+    --border:rgba(23,27,33,0.10);
+    --border-strong:rgba(23,27,33,0.16);
+    --open:#1f5f5b;
+    --open-soft:rgba(31,95,91,0.10);
+    --open-line:rgba(31,95,91,0.28);
+    --closed:#6b3b5e;
+    --closed-soft:rgba(107,59,94,0.10);
+    --closed-line:rgba(107,59,94,0.28);
+    --practice:#2f6690;
+    --practice-soft:rgba(47,102,144,0.10);
+    --practice-line:rgba(47,102,144,0.32);
+    --highlight:#b96f1f;
+    --highlight-soft:rgba(185,111,31,0.14);
+    --highlight-line:rgba(185,111,31,0.4);
+    --font-display: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --font-body: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+
+    display:block;
+    background:var(--paper);
+    color:var(--ink) !important;
+    font-family:var(--font-body) !important;
+    -webkit-font-smoothing:antialiased;
+    border-radius:20px;
+  }
+  .st-sc-schedule, .st-sc-schedule *{box-sizing:border-box;}
+  .st-sc-schedule ul{margin:0;padding:0;}
+  .st-sc-schedule p{margin:0;}
+
+  .st-sc-schedule .st-wrap{max-width:920px;margin:0 auto;padding:40px 20px 56px;}
+
+  /* ---------- header ---------- */
+  .st-sc-schedule .st-page-head{margin-bottom:44px;}
+  .st-sc-schedule .st-eyebrow{
+    font-family:var(--font-display) !important;
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--highlight) !important;
+    margin:0 0 10px;
+  }
+  .st-sc-schedule h1{
+    font-family:var(--font-display) !important;
+    font-weight:800;
+    font-size:clamp(26px,4.4vw,40px);
+    line-height:1.12;
+    letter-spacing:-0.01em;
+    margin:0 0 14px;
+    color:var(--ink) !important;
+  }
+  .st-sc-schedule .st-lead{
+    font-family:var(--font-body) !important;
+    font-size:17px;
+    color:var(--ink-soft) !important;
+    margin:0;
+    max-width:60ch;
+  }
+
+  /* ---------- calendar section ---------- */
+  .st-sc-schedule .st-calendar-section{margin-bottom:56px;}
+  .st-sc-schedule h2{
+    font-family:var(--font-display) !important;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-faint) !important;
+    margin:0 0 18px;
+  }
+  .st-sc-schedule .st-legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:18px;
+    margin-bottom:20px;
+    font-family:var(--font-display) !important;
+    font-size:13.5px;
+    color:var(--ink-soft) !important;
+  }
+  .st-sc-schedule .st-legend-item{display:flex;align-items:center;gap:7px;}
+  .st-sc-schedule .st-dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex-shrink:0;}
+  .st-sc-schedule .st-dot.st-open{background:var(--open);}
+  .st-sc-schedule .st-dot.st-closed{background:var(--closed);}
+  .st-sc-schedule .st-dot.st-practice{background:var(--practice);}
+  .st-sc-schedule .st-dot.st-milestone{
+    background:var(--highlight);
+    border-radius:2px;
+    transform:rotate(45deg);
+    width:8px;height:8px;
+  }
+
+  .st-sc-schedule .st-month-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(228px,1fr));
+    gap:14px;
+  }
+  .st-sc-schedule .st-month-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px 16px 14px;
+  }
+  .st-sc-schedule .st-month-title{
+    font-family:var(--font-display) !important;
+    font-size:14px;
+    font-weight:700;
+    margin:0 0 12px;
+    color:var(--ink) !important;
+  }
+  .st-sc-schedule .st-month-weekdays,
+  .st-sc-schedule .st-month-days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:3px;
+  }
+  .st-sc-schedule .st-month-weekdays span{
+    font-family:var(--font-mono) !important;
+    font-size:10px;
+    text-align:center;
+    color:var(--ink-faint) !important;
+    padding-bottom:6px;
+    display:block;
+  }
+  .st-sc-schedule .st-day-cell{
+    aspect-ratio:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:var(--font-mono) !important;
+    font-size:12px;
+    font-variant-numeric:tabular-nums;
+    color:var(--ink-soft) !important;
+    border-radius:7px;
+    position:relative;
+  }
+  .st-sc-schedule .st-day-cell.st-empty{visibility:hidden;}
+  .st-sc-schedule .st-day-cell.st-event{
+    font-weight:700;
+    cursor:default;
+  }
+  .st-sc-schedule .st-day-cell.st-event.st-open{background:var(--open-soft);color:var(--open) !important;box-shadow:inset 0 0 0 1px var(--open-line);}
+  .st-sc-schedule .st-day-cell.st-event.st-closed{background:var(--closed-soft);color:var(--closed) !important;box-shadow:inset 0 0 0 1px var(--closed-line);}
+  .st-sc-schedule .st-day-cell.st-event.st-practice{background:var(--practice-soft);color:var(--practice) !important;box-shadow:inset 0 0 0 1px var(--practice-line);}
+  .st-sc-schedule .st-day-cell.st-event.st-milestone{background:var(--highlight-soft);color:var(--highlight) !important;box-shadow:inset 0 0 0 1.5px var(--highlight-line);border-radius:5px;}
+
+  /* ---------- day tooltip ---------- */
+  .st-sc-schedule .st-day-tooltip{
+    position:fixed;
+    z-index:9999;
+    max-width:240px;
+    background:var(--ink);
+    color:var(--paper) !important;
+    font-family:var(--font-display) !important;
+    font-size:12.5px;
+    line-height:1.5;
+    font-weight:600;
+    padding:8px 11px;
+    border-radius:8px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.22);
+    pointer-events:none;
+    opacity:0;
+    transform:translate(-50%,calc(-100% - 10px));
+    transition:opacity .12s ease, transform .12s ease;
+    text-align:left;
+  }
+  .st-sc-schedule .st-day-tooltip.st-visible{opacity:1;transform:translate(-50%,calc(-100% - 14px));}
+  .st-sc-schedule .st-day-tooltip .st-tt-line{display:block;}
+  .st-sc-schedule .st-day-tooltip .st-tt-line + .st-tt-line{margin-top:4px;padding-top:4px;border-top:1px solid rgba(239,242,241,0.18);}
+  .st-sc-schedule .st-day-tooltip::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:-5px;
+    width:9px;height:9px;
+    background:var(--ink);
+    transform:translateX(-50%) rotate(45deg);
+  }
+
+  /* ---------- tracks ---------- */
+  .st-sc-schedule .st-track{margin-bottom:52px;}
+  .st-sc-schedule .st-track-head{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:20px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--border-strong);
+  }
+  .st-sc-schedule .st-track-head h2{margin:0;font-size:20px;letter-spacing:0;text-transform:none;color:var(--ink) !important;font-weight:800;}
+  .st-sc-schedule .st-track-open .st-track-head h2::before,
+  .st-sc-schedule .st-track-closed .st-track-head h2::before{
+    content:"";
+    display:inline-block;
+    width:9px;height:9px;
+    border-radius:50%;
+    margin-right:10px;
+    vertical-align:middle;
+  }
+  .st-sc-schedule .st-track-open .st-track-head h2::before{background:var(--open);}
+  .st-sc-schedule .st-track-closed .st-track-head h2::before{background:var(--closed);}
+
+  .st-sc-schedule .st-module-group{margin-bottom:28px;}
+  .st-sc-schedule .st-module-group:last-child{margin-bottom:0;}
+  .st-sc-schedule .st-module-title{
+    font-family:var(--font-display) !important;
+    font-size:14.5px;
+    font-weight:700;
+    color:var(--closed) !important;
+    margin:0 0 12px;
+  }
+
+  .st-sc-schedule .st-practice-note{
+    font-family:var(--font-display) !important;
+    font-size:12.5px;
+    line-height:1.6;
+    color:var(--ink-faint) !important;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px 16px;
+    margin-bottom:24px;
+  }
+  .st-sc-schedule .st-availability{
+    font-family:var(--font-display) !important;
+    font-size:12px;
+    color:var(--ink-faint) !important;
+    margin:2px 0 10px;
+  }
+  .st-sc-schedule .st-milestone-sub{
+    font-family:var(--font-display) !important;
+    font-size:12px;
+    color:var(--highlight) !important;
+    opacity:0.8;
+    margin:4px 0 0;
+  }
+  .st-sc-schedule .st-tba{
+    font-family:var(--font-body) !important;
+    font-size:14px;
+    font-style:italic;
+    color:var(--ink-faint) !important;
+    margin:0;
+  }
+
+  .st-sc-schedule .st-session-card{
+    display:flex;
+    gap:20px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px 20px;
+    margin-bottom:12px;
+  }
+  .st-sc-schedule .st-session-card:last-child{margin-bottom:0;}
+
+  .st-sc-schedule .st-session-date{
+    flex:0 0 64px;
+    text-align:center;
+    font-family:var(--font-mono) !important;
+    padding-top:2px;
+  }
+  .st-sc-schedule .st-session-date .st-day{
+    display:block;
+    font-size:26px;
+    font-weight:600;
+    line-height:1;
+    font-variant-numeric:tabular-nums;
+  }
+  .st-sc-schedule .st-session-date .st-mon{
+    display:block;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-top:4px;
+    color:var(--ink-faint) !important;
+  }
+  .st-sc-schedule .st-session-date .st-year{
+    display:block;
+    font-size:10px;
+    color:var(--ink-faint) !important;
+    margin-top:1px;
+  }
+  .st-sc-schedule .st-track-open .st-session-date .st-day{color:var(--open) !important;}
+  .st-sc-schedule .st-track-closed .st-session-date .st-day{color:var(--closed) !important;}
+
+  .st-sc-schedule .st-practice-card{
+    background:var(--practice-soft);
+    box-shadow:inset 0 0 0 1px var(--practice-line);
+  }
+  .st-sc-schedule .st-practice-card .st-session-date .st-day{color:var(--practice) !important;}
+  .st-sc-schedule .st-practice-card .st-tag{background:var(--card);color:var(--practice) !important;box-shadow:inset 0 0 0 1px var(--practice-line);}
+  .st-sc-schedule .st-practice-card .st-availability{color:var(--practice) !important;opacity:0.9;}
+
+  .st-sc-schedule .st-session-body{flex:1;min-width:0;}
+  .st-sc-schedule .st-session-meta{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:8px;
+  }
+  .st-sc-schedule .st-tag{
+    font-family:var(--font-display) !important;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    padding:3px 9px;
+    border-radius:20px;
+  }
+  .st-sc-schedule .st-track-open .st-tag{background:var(--open-soft);color:var(--open) !important;}
+  .st-sc-schedule .st-track-closed .st-tag{background:var(--closed-soft);color:var(--closed) !important;}
+  .st-sc-schedule .st-time{
+    font-family:var(--font-mono) !important;
+    font-size:12.5px;
+    color:var(--ink-faint) !important;
+  }
+  .st-sc-schedule .st-session-title{
+    font-family:var(--font-display) !important;
+    font-size:17px;
+    font-weight:700;
+    line-height:1.32;
+    margin:0 0 4px;
+    color:var(--ink) !important;
+  }
+  .st-sc-schedule .st-session-presenter{
+    font-family:var(--font-display) !important;
+    font-size:13px;
+    color:var(--ink-soft) !important;
+    margin:0 0 10px;
+  }
+  .st-sc-schedule .st-session-topics{
+    padding-left:18px;
+    list-style:disc;
+    font-family:var(--font-body) !important;
+    font-size:14.5px;
+    line-height:1.6;
+    color:var(--ink-soft) !important;
+  }
+  .st-sc-schedule .st-session-topics li{margin-bottom:4px;}
+  .st-sc-schedule .st-session-topics li:last-child{margin-bottom:0;}
+
+  /* ---------- collapsible session head ---------- */
+  .st-sc-schedule .st-session-head{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    width:100%;
+    background:none;
+    border:none;
+    padding:0;
+    margin:0;
+    cursor:pointer;
+    text-align:left;
+    font:inherit;
+    color:inherit;
+    -webkit-appearance:none;
+    appearance:none;
+  }
+  .st-sc-schedule .st-session-head:focus-visible{
+    outline:2px solid var(--ink-faint);
+    outline-offset:4px;
+    border-radius:6px;
+  }
+  .st-sc-schedule .st-session-head-text{flex:1;min-width:0;}
+  .st-sc-schedule .st-session-card:not(.st-open) .st-session-title{margin-bottom:0;}
+  .st-sc-schedule .st-chevron{
+    flex-shrink:0;
+    width:18px;
+    height:18px;
+    margin-top:4px;
+    color:var(--ink-faint);
+    transition:transform .25s ease;
+  }
+  .st-sc-schedule .st-session-card.st-open .st-chevron{transform:rotate(180deg);}
+  .st-sc-schedule .st-session-panel{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .st-sc-schedule .st-session-panel-inner{padding-top:10px;}
+  @media (prefers-reduced-motion:reduce){
+    .st-sc-schedule .st-chevron,
+    .st-sc-schedule .st-session-panel{transition:none;}
+  }
+
+  /* milestone card */
+  .st-sc-schedule .st-milestone-card{
+    background:var(--highlight-soft);
+    box-shadow:inset 0 0 0 1px var(--highlight-line);
+  }
+  .st-sc-schedule .st-milestone-card .st-session-date .st-day{color:var(--highlight) !important;}
+  .st-sc-schedule .st-milestone-card .st-session-title{color:var(--highlight) !important;}
+  .st-sc-schedule .st-milestone-card .st-session-date::after{
+    content:"";
+    display:block;
+    width:9px;height:9px;
+    background:var(--highlight);
+    margin:8px auto 0;
+    border-radius:2px;
+    transform:rotate(45deg);
+  }
+
+  @media (max-width:560px){
+    .st-sc-schedule .st-session-card{gap:14px;padding:16px;}
+    .st-sc-schedule .st-session-date{flex-basis:52px;}
+    .st-sc-schedule .st-session-date .st-day{font-size:22px;}
+  }
+</style>
+
+<div class="st-wrap">
+
+  <header class="st-page-head">
+    <p class="st-eyebrow">Расписание курса</p>
+    <h1>Открытые эфиры и закрытая программа</h1>
+    <p class="st-lead">Ведут: Елена Станковская, Ричард Эрскин, Ирина Пингарева</p>
+  </header>
+
+  <section class="st-calendar-section">
+    <h2>Даты по месяцам</h2>
+    <div class="st-legend">
+      <span class="st-legend-item"><i class="st-dot st-open"></i>Открытые эфиры</span>
+      <span class="st-legend-item"><i class="st-dot st-closed"></i>Закрытая программа</span>
+      <span class="st-legend-item"><i class="st-dot st-practice"></i>Практические встречи</span>
+      <span class="st-legend-item"><i class="st-dot st-milestone"></i>Аттестация</span>
+    </div>
+    <div class="st-month-grid" id="stMonthGrid"></div>
+  </section>
+
+  <section class="st-track st-track-open">
+    <div class="st-track-head"><h2>Открытые эфиры</h2></div>
+
+    <article class="st-session-card">
+      <div class="st-session-date"><span class="st-day">18</span><span class="st-mon">сен</span><span class="st-year">2026</span></div>
+      <div class="st-session-body">
+        <button type="button" class="st-session-head">
+        <span class="st-session-head-text">
+          <div class="st-session-meta"><span class="st-tag">Супервизия</span><span class="st-time">18:00–20:00 МСК</span></div>
+          <h4 class="st-session-title">Клиент ходит по кругу. Как работать психологу</h4>
+        </span>
+        <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      <div class="st-session-panel">
+          <div class="st-session-panel-inner">
+            <p class="st-session-presenter">Елена Станковская</p>
+        <ul class="st-session-topics">
+          <li>Клиент всё понимает, но продолжает жить по-старому: как выстроить терапию</li>
+          <li>Как распознать повторяющийся сценарий у клиента</li>
+          <li>Как найти точку входа и перевести осознание в реальные изменения</li>
+          <li>Чек-лист: как понимаем, что это сценарий</li>
+        </ul>
+          </div>
+      </div>
+    </article>
+
+    <article class="st-session-card">
+      <div class="st-session-date"><span class="st-day">8</span><span class="st-mon">окт</span><span class="st-year">2026</span></div>
+      <div class="st-session-body">
+        <button type="button" class="st-session-head">
+        <span class="st-session-head-text">
+          <div class="st-session-meta"><span class="st-tag">Демонстрационная сессия</span><span class="st-time">17:00–19:00 МСК</span></div>
+          <h4 class="st-session-title">Что мешает мне развиваться в профессии: психолог и его сценарная система</h4>
+        </span>
+        <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      <div class="st-session-panel">
+          <div class="st-session-panel-inner">
+            <p class="st-session-presenter">Елена Станковская</p>
+        <ul class="st-session-topics">
+          <li>Сценарии, которые влияют на работу психолога: не могу поднимать цены, реакция на обесценивание и др.</li>
+          <li>Какие клиенты активизируют нашу сценарную систему и как с этим работать</li>
+          <li>Как схлестываются сценарии клиента и психолога и как это влияет на терапию</li>
+        </ul>
+          </div>
+      </div>
+    </article>
+
+    <article class="st-session-card">
+      <div class="st-session-date"><span class="st-day">29</span><span class="st-mon">окт</span><span class="st-year">2026</span></div>
+      <div class="st-session-body">
+        <button type="button" class="st-session-head">
+        <span class="st-session-head-text">
+          <div class="st-session-meta"><span class="st-time">18:00–20:00 МСК</span></div>
+          <h4 class="st-session-title">За кулисами сценарной терапии</h4>
+        </span>
+        <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      <div class="st-session-panel">
+          <div class="st-session-panel-inner">
+            <p class="st-session-presenter">Ричард Эрскин</p>
+        <ul class="st-session-topics">
+          <li>Демонстрационная сессия Ричарда Эрскин</li>
+          <li>Разбор сессии от Елены Станковской</li>
+          <li>Ответы на вопросы</li>
+        </ul>
+          </div>
+      </div>
+    </article>
+
+    <article class="st-session-card">
+      <div class="st-session-date"><span class="st-day">10</span><span class="st-mon">ноя</span><span class="st-year">2026</span></div>
+      <div class="st-session-body">
+        <button type="button" class="st-session-head">
+        <span class="st-session-head-text">
+          <div class="st-session-meta"><span class="st-tag">Демонстрационная сессия</span><span class="st-time">00:00–00:00 МСК</span></div>
+          <h4 class="st-session-title">Снова выбираю не тех: как увидеть любовный сценарий клиента</h4>
+        </span>
+        <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      <div class="st-session-panel">
+          <div class="st-session-panel-inner">
+            <p class="st-session-presenter">Елена Станковская</p>
+        <ul class="st-session-topics">
+          <li>Как связаны повторяющиеся сценарии в любви и ранний детский опыт</li>
+          <li>Работа с жизненным сценарием в теме отношений</li>
+        </ul>
+          </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="st-track st-track-closed">
+    <div class="st-track-head"><h2>Закрытая программа</h2></div>
+
+    <div class="st-module-group">
+      <h3 class="st-module-title">Модуль 1. Распознавание сценария и построение карты терапии</h3>
+
+      <article class="st-session-card">
+        <div class="st-session-date"><span class="st-day">23</span><span class="st-mon">ноя</span><span class="st-year">2026</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Лекция 1</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">От повторяющихся событий к алгоритму сценарной терапии</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+          <ul class="st-session-topics">
+            <li>Повторяемые паттерны в жизни клиента: обзор идей</li>
+            <li>Особенности сценарной системы Ричарда Эрскина</li>
+            <li>Элементы сценарной системы: сценарные убеждения, сценарное поведение, подкрепляющий опыт</li>
+            <li>Самоподдерживающийся характер сценария</li>
+            <li>Сценарные изменения как цель психотерапии: психотерапевтические изменения первого и второго порядка</li>
+            <li>Функции сценария: безопасность, предсказуемость, структура, поддержка идентичности и др.</li>
+            <li>Два алгоритма работы со сценарием клиента: через элементы и эго-состояния</li>
+            <li>Как выглядит «излечение от сценария». Сценарий как источник</li>
+            <li>Упражнение на исследования своего сценария</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card">
+        <div class="st-session-date"><span class="st-day">30</span><span class="st-mon">ноя</span><span class="st-year">2026</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Лекция 2</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <p class="st-tba">Тема уточняется</p>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card">
+        <div class="st-session-date"><span class="st-day">7</span><span class="st-mon">дек</span><span class="st-year">2026</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Лекция 3</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Поиск точки входа в сценарную систему клиента</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+          <ul class="st-session-topics">
+            <li>4 источника формирования сценария: неосознаваемые выводы на основе опыта, ранние реакции выживания, ранние решения, интроекты</li>
+            <li>Выбор стратегий работы и инструментов в зависимости от источника</li>
+            <li>Скромность терапевта перед силой сценария</li>
+            <li>Как использовать самоподдерживающийся характер сценария на благо клиента</li>
+            <li>Определяем наиболее доступный для изменений элемент сценария</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card st-practice-card">
+        <div class="st-session-date"><span class="st-day">10</span><span class="st-mon">дек</span><span class="st-year">2026</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Практическая встреча 4</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Анализ сценарной системы клиента и поиск точек входа</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+          <p class="st-availability">Тариф с практикой — онлайн, тариф без практики — в записи</p>
+          <ul class="st-session-topics">
+            <li>Работа в тройках</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="st-module-group">
+      <h3 class="st-module-title">Модуль 2. Терапия сценария через элементы системы</h3>
+
+      <article class="st-session-card">
+        <div class="st-session-date"><span class="st-day">14</span><span class="st-mon">дек</span><span class="st-year">2026</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Лекция 1 + демосессия</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Изменение сценарных убеждений (элемент 1)</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+          <ul class="st-session-topics">
+            <li>Изменение сценарных убеждений о себе, о других, о мире: разные инструменты</li>
+            <li>Работа с подкрепляющими воспоминаниями и результатом фантазий как инструмент освобождения от сценария</li>
+            <li>Кумулятивная травма: отсутствие или прерывание необходимого опыта в сензитивный период</li>
+            <li>Терапевтические отношения как пространство для корректирующего опыта и изучения сценарных выводов. Реакция сопоставления и как с ней обходиться в терапии</li>
+            <li>Внутреннее путешествие клиента в процессе изменения сценарных выводов: слитность с ними, двойственность (хочу по-другому, но не доверяю этому), новая норма</li>
+            <li>Инструменты сопровождения на каждом этапе</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card">
+        <div class="st-session-date"><span class="st-day">21</span><span class="st-mon">дек</span><span class="st-year">2026</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Лекция 2</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Изменение сценарного поведения (элемент 2)</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card st-practice-card">
+        <div class="st-session-date"><span class="st-day">24</span><span class="st-mon">дек</span><span class="st-year">2026</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Практическая встреча 3</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Терапия сценария через изменение элементов системы</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+          <p class="st-availability">Тариф с практикой — онлайн, тариф без практики — в записи</p>
+          <ul class="st-session-topics">
+            <li>Работа в тройках</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card">
+        <div class="st-session-date"><span class="st-day">28</span><span class="st-mon">дек</span><span class="st-year">2026</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Лекция 4</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Изменение подтверждающего опыта (элемент 3)</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card st-milestone-card">
+        <div class="st-session-date"><span class="st-day">28</span><span class="st-mon">дек</span><span class="st-year">2026</span></div>
+        <div class="st-session-body">
+          <h4 class="st-session-title">Промежуточная анкета ОС</h4>
+          <p class="st-milestone-sub">Открывается в 10:00</p>
+        </div>
+      </article>
+
+      <article class="st-session-card st-milestone-card">
+        <div class="st-session-date"><span class="st-day">28</span><span class="st-mon">дек</span><span class="st-year">2026</span></div>
+        <div class="st-session-body">
+          <h4 class="st-session-title">Промежуточная аттестация</h4>
+          <p class="st-milestone-sub">Открывается в 10:00</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="st-module-group">
+      <h3 class="st-module-title">Модуль 3. Терапия сценария через эго-состояния</h3>
+
+      <article class="st-session-card">
+        <div class="st-session-date"><span class="st-day">11</span><span class="st-mon">янв</span><span class="st-year">2027</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Лекция 1</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Работа со Взрослым эго-состоянием</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+          <ul class="st-session-topics">
+            <li>Баланс стабилизации и стимулирования контакта со сценарным содержанием в терапии</li>
+            <li>Как научить клиента отслеживать и понимать его сценарную систему</li>
+            <li>Избирательность восприятия и подтверждение сценария</li>
+            <li>Упражнения, направленные на усиление влияния Взрослого</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card st-practice-card">
+        <div class="st-session-date"><span class="st-day">14</span><span class="st-mon">янв</span><span class="st-year">2027</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Практическая встреча 2</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Работа со Взрослым эго-состоянием</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+          <p class="st-availability">Тариф с практикой — онлайн, тариф без практики — в записи</p>
+          <ul class="st-session-topics">
+            <li>Работа в тройках</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card">
+        <div class="st-session-date"><span class="st-day">18</span><span class="st-mon">янв</span><span class="st-year">2027</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Лекция 3 + демосессия (интерпозиция)</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Изменение ядра сценария: работа с Внутренним Ребенком</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+          <ul class="st-session-topics">
+            <li>Работа с Детским состоянием</li>
+            <li>Инструменты: интерпозиция и поддерживающая регрессия</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card">
+        <div class="st-session-date"><span class="st-day">25</span><span class="st-mon">янв</span><span class="st-year">2027</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Лекция 4 + демосессия</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Освобождение от влияния интроектов Внутреннего Родителя</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+          <ul class="st-session-topics">
+            <li>Родительское интервью</li>
+            <li>Терапия интроекта</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card st-practice-card">
+        <div class="st-session-date"><span class="st-day">28</span><span class="st-mon">янв</span><span class="st-year">2027</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Практическая встреча 5</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Работа с Детским эго-состоянием</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+          <p class="st-availability">Тариф с практикой — онлайн, тариф без практики — в записи</p>
+          <ul class="st-session-topics">
+            <li>Определение потребностей, стратегий совладания, ранних решений и выводов</li>
+            <li>Отработка в тройках поддерживающей регрессии</li>
+            <li>Ответы на вопросы по интерпозиции</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card st-practice-card">
+        <div class="st-session-date"><span class="st-day">11</span><span class="st-mon">фев</span><span class="st-year">2027</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Практическая встреча 6</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Родительское интервью. Встраивание уникальных эпизодов в историю о своей жизни</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+          <p class="st-availability">Тариф с практикой — онлайн, тариф без практики — в записи</p>
+          <ul class="st-session-topics">
+            <li>Работа в тройках</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="st-module-group">
+      <h3 class="st-module-title">Модуль 4. Особенности телесного и любовного сценариев</h3>
+
+      <article class="st-session-card">
+        <div class="st-session-date"><span class="st-day">1</span><span class="st-mon">фев</span><span class="st-year">2027</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Лекция 1 + супервизия</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Повторяющиеся сценарии в любви</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Ричард Эрскин, Елена Станковская</p>
+          <ul class="st-session-topics">
+            <li>Схлестнулись сценариями: применение сценарной системы при работе с темой отношений</li>
+            <li>Опознавание сценарного поведения и взаимодополняющих элементов сценарных систем партнеров</li>
+            <li>Супервизия (Ричард Эрскин)</li>
+            <li>Разбор супервизии (Елена Станковская)</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card">
+        <div class="st-session-date"><span class="st-day">8</span><span class="st-mon">фев</span><span class="st-year">2027</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Лекция 2</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Телесный сценарий: как изменить повторяющиеся ощущения</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Ирина Пингарева</p>
+          <ul class="st-session-topics">
+            <li>Сценарий, закодированный в тело</li>
+            <li>Инструменты работы с соматическим измерением сценария</li>
+            <li>Хроническая боль, пренебрежение здоровьем, нарушения сна, пищеварительной системы и т.д. как последствия ранних отношений</li>
+            <li>Излечение от сценария как восстановление заботы о своем здоровье</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="st-module-group">
+      <h3 class="st-module-title">Модуль 5. Интеграция изменений</h3>
+
+      <article class="st-session-card">
+        <div class="st-session-date"><span class="st-day">15</span><span class="st-mon">фев</span><span class="st-year">2027</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Лекция 1</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Признаки устойчивых сценарных изменений и завершение терапии</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+          <ul class="st-session-topics">
+            <li>Как понять, что сценарий изменяется</li>
+            <li>Какие изменения устойчивы</li>
+            <li>Как работать с возвратами к старому</li>
+            <li>Как завершить терапию и научить клиента поддерживать изменения без терапевта</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card">
+        <div class="st-session-date"><span class="st-day">1</span><span class="st-mon">мар</span><span class="st-year">2027</span></div>
+        <div class="st-session-body">
+          <button type="button" class="st-session-head">
+          <span class="st-session-head-text">
+            <div class="st-session-meta"><span class="st-tag">Ответы на вопросы</span><span class="st-time">18:00–20:00 МСК</span></div>
+            <h4 class="st-session-title">Ответы на вопросы</h4>
+          </span>
+          <svg class="st-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="st-session-panel">
+            <div class="st-session-panel-inner">
+              <p class="st-session-presenter">Елена Станковская</p>
+          <ul class="st-session-topics">
+            <li>Разбор вопросов участников курса</li>
+          </ul>
+            </div>
+        </div>
+      </article>
+
+      <article class="st-session-card st-milestone-card">
+        <div class="st-session-date"><span class="st-day">1</span><span class="st-mon">мар</span><span class="st-year">2027</span></div>
+        <div class="st-session-body">
+          <h4 class="st-session-title">Итоговая анкета ОС</h4>
+          <p class="st-milestone-sub">Открывается в 10:00</p>
+        </div>
+      </article>
+
+      <article class="st-session-card st-milestone-card">
+        <div class="st-session-date"><span class="st-day">1</span><span class="st-mon">мар</span><span class="st-year">2027</span></div>
+        <div class="st-session-body">
+          <h4 class="st-session-title">Итоговая аттестация</h4>
+          <p class="st-milestone-sub">Открывается в 10:00</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<script>
+(function(){
+  var events = [
+    {date:'2026-09-18', type:'open', title:'Клиент ходит по кругу. Как работать психологу'},
+    {date:'2026-10-08', type:'open', title:'Что мешает мне развиваться в профессии: психолог и его сценарная система'},
+    {date:'2026-10-29', type:'open', title:'За кулисами сценарной терапии'},
+    {date:'2026-11-10', type:'open', title:'Снова выбираю не тех: как увидеть любовный сценарий клиента'},
+    {date:'2026-11-23', type:'closed', title:'Лекция 1. От повторяющихся событий к алгоритму сценарной терапии'},
+    {date:'2026-11-30', type:'closed', title:'Лекция 2. Тема уточняется'},
+    {date:'2026-12-07', type:'closed', title:'Лекция 3. Поиск точки входа в сценарную систему клиента'},
+    {date:'2026-12-10', type:'practice', title:'Практическая встреча 4. Анализ сценарной системы клиента и поиск точек входа'},
+    {date:'2026-12-14', type:'closed', title:'Изменение сценарных убеждений (элемент 1)'},
+    {date:'2026-12-21', type:'closed', title:'Изменение сценарного поведения (элемент 2)'},
+    {date:'2026-12-24', type:'practice', title:'Практическая встреча 3. Терапия сценария через изменение элементов системы'},
+    {date:'2026-12-28', type:'closed', title:'Изменение подтверждающего опыта (элемент 3)'},
+    {date:'2026-12-28', type:'milestone', title:'Промежуточная анкета ОС'},
+    {date:'2026-12-28', type:'milestone', title:'Промежуточная аттестация'},
+    {date:'2027-01-11', type:'closed', title:'Работа со Взрослым эго-состоянием (лекция)'},
+    {date:'2027-01-14', type:'practice', title:'Работа со Взрослым эго-состоянием (практическая встреча)'},
+    {date:'2027-01-18', type:'closed', title:'Изменение ядра сценария: работа с Внутренним Ребенком'},
+    {date:'2027-01-25', type:'closed', title:'Освобождение от влияния интроектов Внутреннего Родителя'},
+    {date:'2027-01-28', type:'practice', title:'Практическая встреча 5. Работа с Детским эго-состоянием'},
+    {date:'2027-02-01', type:'closed', title:'Повторяющиеся сценарии в любви'},
+    {date:'2027-02-08', type:'closed', title:'Телесный сценарий: как изменить повторяющиеся ощущения'},
+    {date:'2027-02-11', type:'practice', title:'Практическая встреча 6. Родительское интервью'},
+    {date:'2027-02-15', type:'closed', title:'Признаки устойчивых сценарных изменений и завершение терапии'},
+    {date:'2027-03-01', type:'closed', title:'Ответы на вопросы'},
+    {date:'2027-03-01', type:'milestone', title:'Итоговая анкета ОС'},
+    {date:'2027-03-01', type:'milestone', title:'Итоговая аттестация'}
+  ];
+
+  var byDate = {};
+  events.forEach(function(e){
+    (byDate[e.date] = byDate[e.date] || []).push(e);
+  });
+
+  var monthNames = ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+  var weekdays = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+  var months = [[2026,8],[2026,9],[2026,10],[2026,11],[2027,0],[2027,1],[2027,2]]; // 0-indexed month
+
+  var priority = {milestone:4, practice:3, closed:2, open:1};
+
+  function pad(n){ return n < 10 ? '0'+n : ''+n; }
+
+  var container = document.querySelector('.st-sc-schedule');
+  var grid = document.getElementById('stMonthGrid');
+
+  var tooltip = document.createElement('div');
+  tooltip.className = 'st-day-tooltip';
+  container.appendChild(tooltip);
+
+  function showTooltip(cell, dayEvents){
+    tooltip.innerHTML = dayEvents.map(function(e){
+      return '<span class="st-tt-line">' + e.title.replace(/&/g,'&amp;').replace(/</g,'&lt;') + '</span>';
+    }).join('');
+    var rect = cell.getBoundingClientRect();
+    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
+    tooltip.style.top = rect.top + 'px';
+    tooltip.classList.add('st-visible');
+  }
+  function hideTooltip(){
+    tooltip.classList.remove('st-visible');
+  }
+
+  months.forEach(function(pair){
+    var year = pair[0], m = pair[1];
+    var card = document.createElement('div');
+    card.className = 'st-month-card';
+
+    var title = document.createElement('p');
+    title.className = 'st-month-title';
+    title.textContent = monthNames[m].charAt(0).toUpperCase() + monthNames[m].slice(1) + ' ' + year;
+    card.appendChild(title);
+
+    var wd = document.createElement('div');
+    wd.className = 'st-month-weekdays';
+    weekdays.forEach(function(w){
+      var s = document.createElement('span');
+      s.textContent = w;
+      wd.appendChild(s);
+    });
+    card.appendChild(wd);
+
+    var days = document.createElement('div');
+    days.className = 'st-month-days';
+
+    var first = new Date(year, m, 1);
+    var offset = (first.getDay() + 6) % 7;
+    for (var i = 0; i < offset; i++){
+      var blank = document.createElement('div');
+      blank.className = 'st-day-cell st-empty';
+      days.appendChild(blank);
+    }
+
+    var daysInMonth = new Date(year, m + 1, 0).getDate();
+    for (let d = 1; d <= daysInMonth; d++){
+      let cell = document.createElement('div');
+      cell.className = 'st-day-cell';
+      cell.textContent = d;
+      let key = year + '-' + pad(m + 1) + '-' + pad(d);
+      let dayEvents = byDate[key];
+      if (dayEvents){
+        let top = dayEvents.reduce(function(a,b){ return priority[b.type] > priority[a.type] ? b : a; });
+        cell.classList.add('st-event', 'st-' + top.type);
+        cell.setAttribute('aria-label', dayEvents.map(function(e){ return e.title; }).join(' · '));
+        cell.tabIndex = 0;
+        cell.addEventListener('mouseenter', function(){ showTooltip(cell, dayEvents); });
+        cell.addEventListener('mouseleave', hideTooltip);
+        cell.addEventListener('focus', function(){ showTooltip(cell, dayEvents); });
+        cell.addEventListener('blur', hideTooltip);
+      }
+      days.appendChild(cell);
+    }
+
+    card.appendChild(days);
+    grid.appendChild(card);
+  });
+
+  container.querySelectorAll('.st-session-head').forEach(function(head){
+    var card = head.closest('.st-session-card');
+    var panel = card.querySelector('.st-session-panel');
+    head.addEventListener('click', function(){
+      var isOpen = card.classList.contains('st-open');
+      if (isOpen){
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+        requestAnimationFrame(function(){ panel.style.maxHeight = '0px'; });
+        card.classList.remove('st-open');
+      } else {
+        card.classList.add('st-open');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+        panel.addEventListener('transitionend', function handler(){
+          if (card.classList.contains('st-open')) panel.style.maxHeight = 'none';
+          panel.removeEventListener('transitionend', handler);
+        });
+      }
+    });
+  });
+})();
+</script>

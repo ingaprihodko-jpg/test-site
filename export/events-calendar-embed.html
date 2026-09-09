@@ -1,0 +1,498 @@
+<!--
+  Календарь актуальных мероприятий F5GAME.
+  Чистый HTML + CSS, без единого <script> — на странице "Список тренингов"
+  (админка GetCourse, /teach/control/stream/index) блок "HTML-код" вырезает
+  <script> при сохранении, поэтому сетка календаря и ховер-превью собраны
+  как статичная разметка + CSS :hover/:focus-within, без JS-генерации.
+
+  Цвета: карточки месяцев — белые, месяц/дни недели — розовым, числа —
+  чёрным, обычные мероприятия подсвечены синим, дни повышения цены —
+  малиновым (см. легенду под заголовком).
+
+  Все ссылки — с ?utm_source=calendar.
+
+  Данные о мероприятиях (даты, названия, картинки, ссылки) взяты
+  из блока "Анонсы" на f5game.ru по состоянию на 21.08.2026, плюс дата
+  повышения цены (1 сентября) и гипотезы дат практики (17, 26 сентября —
+  тема ещё не определена, помечены тегом "Гипотеза") от заказчика.
+  Октябрь добавлен как пустая сетка (мероприятий пока нет — впишутся
+  по мере появления данных).
+
+  Чтобы добавить/изменить мероприятие — правь два места:
+  1) саму ячейку дня в сетке месяца (.f5ec-day.f5ec-event или
+     .f5ec-day.f5ec-event.f5ec-event-price для дней повышения цены)
+  2) превью внутри неё (.f5ec-tip) — картинка, тег, название, дата/время
+  Дни без мероприятий — просто <div class="f5ec-day">N</div>.
+  День с несколькими ссылками (как 1 сентября) — без <a> на самой ячейке,
+  ссылки живут внутри .f5ec-price-list в тултипе.
+
+  Самодостаточный блок: вся разметка и стили — внутри .f5ec,
+  ничего не трогает вне себя (нет body{}, *{}, голых h1/p без скоупа).
+
+  Куда вставить: в блок "HTML-код" на нужной странице — весь файл
+  целиком, как есть, в одно поле.
+-->
+<div class="f5ec">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  .f5ec{
+    --ink:#ffffff;
+    --ink-soft:rgba(255,255,255,0.8);
+    --ink-faint:rgba(255,255,255,0.55);
+    --paper:#55348d;
+    --paper-warm:rgba(255,255,255,0.08);
+    --card:#ffffff;
+    --card-border:rgba(27,16,35,0.10);
+    --day-ink:#1b1023;
+    --white:#ffffff;
+    --purple:#3a2266;
+    --label:#ee0778;
+    --blue:#2f6fed;
+    --blue-soft:rgba(47,111,237,0.14);
+    --blue-line:rgba(47,111,237,0.5);
+    --malinovy:#c2185b;
+    --malinovy-soft:rgba(194,24,91,0.14);
+    --malinovy-line:rgba(194,24,91,0.5);
+    --border-strong:rgba(255,255,255,0.24);
+    --font-display:'Unbounded', -apple-system, sans-serif;
+    --font-body:'Manrope', -apple-system, sans-serif;
+
+    display:block;
+    background:var(--paper);
+    color:var(--ink) !important;
+    font-family:var(--font-body) !important;
+    -webkit-font-smoothing:antialiased;
+    border-radius:20px;
+  }
+  .f5ec, .f5ec *{box-sizing:border-box;}
+  .f5ec ul{margin:0;padding:0;list-style:none;}
+  .f5ec p{margin:0;}
+  .f5ec a{text-decoration:none;color:inherit;}
+
+  .f5ec .f5ec-wrap{max-width:760px;margin:0 auto;padding:48px 20px 56px;}
+
+  /* ---------- header ---------- */
+  .f5ec .f5ec-eyebrow{
+    font-family:var(--font-display) !important;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink) !important;
+    margin:0 0 10px;
+  }
+  .f5ec h2.f5ec-title{
+    font-family:var(--font-display) !important;
+    font-weight:800;
+    font-size:clamp(24px,4vw,32px);
+    line-height:1.15;
+    letter-spacing:-0.01em;
+    margin:0 0 20px;
+    color:var(--ink) !important;
+  }
+  .f5ec .f5ec-legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    margin:0 0 28px;
+  }
+  .f5ec .f5ec-legend-item{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-family:var(--font-body) !important;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--ink-soft) !important;
+  }
+  .f5ec .f5ec-dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex-shrink:0;}
+  .f5ec .f5ec-dot-blue{background:var(--blue);}
+  .f5ec .f5ec-dot-malinovy{background:var(--malinovy);}
+
+  /* ---------- month grid ---------- */
+  .f5ec .f5ec-month-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:16px;
+    margin-bottom:8px;
+  }
+  .f5ec .f5ec-month-card{
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:16px;
+    padding:18px 18px 16px;
+    overflow:visible;
+  }
+  .f5ec .f5ec-month-title{
+    font-family:var(--font-display) !important;
+    font-size:14px;
+    font-weight:700;
+    margin:0 0 14px;
+    color:var(--label) !important;
+  }
+  .f5ec .f5ec-weekdays,
+  .f5ec .f5ec-days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:4px;
+  }
+  .f5ec .f5ec-weekdays span{
+    font-family:var(--font-body) !important;
+    font-size:11px;
+    font-weight:700;
+    text-align:center;
+    color:var(--label) !important;
+    padding-bottom:6px;
+    display:block;
+  }
+  .f5ec .f5ec-day{
+    aspect-ratio:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:var(--font-body) !important;
+    font-size:13px;
+    font-variant-numeric:tabular-nums;
+    color:var(--day-ink) !important;
+    border-radius:8px;
+    position:relative;
+  }
+  .f5ec .f5ec-day.f5ec-empty{visibility:hidden;}
+  .f5ec .f5ec-day.f5ec-event{
+    font-weight:800;
+    cursor:pointer;
+    background:var(--blue-soft);
+    color:var(--blue) !important;
+    box-shadow:inset 0 0 0 1.5px var(--blue-line);
+    transition:background .15s ease, transform .15s ease;
+    outline:none;
+  }
+  .f5ec .f5ec-day.f5ec-event:hover,
+  .f5ec .f5ec-day.f5ec-event:focus-visible,
+  .f5ec .f5ec-day.f5ec-event:focus-within{
+    background:var(--blue);
+    color:var(--white) !important;
+    transform:translateY(-1px);
+    z-index:20;
+  }
+  .f5ec .f5ec-day.f5ec-event.f5ec-event-price{
+    background:var(--malinovy-soft);
+    color:var(--malinovy) !important;
+    box-shadow:inset 0 0 0 1.5px var(--malinovy-line);
+  }
+  .f5ec .f5ec-day.f5ec-event.f5ec-event-price:hover,
+  .f5ec .f5ec-day.f5ec-event.f5ec-event-price:focus-visible,
+  .f5ec .f5ec-day.f5ec-event.f5ec-event-price:focus-within{
+    background:var(--malinovy);
+    color:var(--white) !important;
+  }
+  .f5ec .f5ec-day.f5ec-event:focus-visible{
+    box-shadow:inset 0 0 0 1.5px var(--blue), 0 0 0 3px var(--blue-line);
+  }
+  .f5ec .f5ec-day.f5ec-event.f5ec-event-price:focus-visible{
+    box-shadow:inset 0 0 0 1.5px var(--malinovy), 0 0 0 3px var(--malinovy-line);
+  }
+
+  /* ---------- hover preview (pure CSS — no JS on this GetCourse block) ---------- */
+  /* default direction: opens upward, above the day cell */
+  .f5ec .f5ec-tip{
+    position:absolute;
+    z-index:30;
+    bottom:calc(100% + 18px);
+    width:264px;
+    background:var(--purple);
+    border-radius:16px;
+    box-shadow:0 20px 48px rgba(19,10,38,0.45), inset 0 0 0 1px var(--border-strong);
+    overflow:hidden;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transform:translateY(6px);
+    transition:opacity .14s ease, transform .14s ease, visibility .14s;
+  }
+  .f5ec .f5ec-tip.f5ec-tip-wide{width:340px;}
+  /* first-row dates: not enough room above — open the preview downward instead */
+  .f5ec .f5ec-tip.f5ec-tip-down{
+    bottom:auto;
+    top:calc(100% + 18px);
+    transform:translateY(-6px);
+  }
+  .f5ec .f5ec-tip.f5ec-tip-center{left:50%;transform:translate(-50%,6px);}
+  .f5ec .f5ec-tip.f5ec-tip-center.f5ec-tip-down{transform:translate(-50%,-6px);}
+  .f5ec .f5ec-tip.f5ec-tip-left{left:0;}
+  .f5ec .f5ec-tip.f5ec-tip-right{right:0;}
+  .f5ec .f5ec-day.f5ec-event:hover .f5ec-tip,
+  .f5ec .f5ec-day.f5ec-event:focus-visible .f5ec-tip,
+  .f5ec .f5ec-day.f5ec-event:focus-within .f5ec-tip{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+  }
+  .f5ec .f5ec-day.f5ec-event:hover .f5ec-tip.f5ec-tip-center,
+  .f5ec .f5ec-day.f5ec-event:focus-visible .f5ec-tip.f5ec-tip-center,
+  .f5ec .f5ec-day.f5ec-event:focus-within .f5ec-tip.f5ec-tip-center{transform:translate(-50%,0);}
+  .f5ec .f5ec-day.f5ec-event:hover .f5ec-tip.f5ec-tip-left,
+  .f5ec .f5ec-day.f5ec-event:focus-visible .f5ec-tip.f5ec-tip-left,
+  .f5ec .f5ec-day.f5ec-event:focus-within .f5ec-tip.f5ec-tip-left,
+  .f5ec .f5ec-day.f5ec-event:hover .f5ec-tip.f5ec-tip-right,
+  .f5ec .f5ec-day.f5ec-event:focus-visible .f5ec-tip.f5ec-tip-right,
+  .f5ec .f5ec-day.f5ec-event:focus-within .f5ec-tip.f5ec-tip-right{transform:translateY(0);}
+  .f5ec .f5ec-tip-img{
+    display:block;
+    width:100%;
+    height:128px;
+    object-fit:cover;
+    background:var(--paper-warm);
+  }
+  .f5ec .f5ec-tip-body{display:block;padding:26px 24px 28px;white-space:normal;}
+  .f5ec .f5ec-tip-tag{
+    display:inline-block;
+    font-family:var(--font-display) !important;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--white) !important;
+    background:var(--blue);
+    padding:5px 13px;
+    border-radius:20px;
+    margin-bottom:16px;
+  }
+  .f5ec .f5ec-tip-tag.f5ec-tip-tag-malinovy{background:var(--malinovy);}
+  .f5ec .f5ec-tip-title{
+    display:block;
+    font-family:var(--font-display) !important;
+    font-size:14.5px;
+    font-weight:700;
+    line-height:1.5;
+    color:var(--white) !important;
+    margin:0 0 12px;
+  }
+  .f5ec .f5ec-tip-meta{
+    display:block;
+    font-family:var(--font-body) !important;
+    font-size:11.5px;
+    font-weight:600;
+    color:var(--ink-faint) !important;
+  }
+
+  /* ---------- price-increase day: list of linked items instead of one CTA ---------- */
+  .f5ec .f5ec-price-list{display:block;margin-top:6px;}
+  .f5ec a.f5ec-price-item{
+    display:block;
+    padding:12px 0;
+    border-top:1px solid rgba(255,255,255,0.14);
+    transition:background .12s ease;
+  }
+  .f5ec .f5ec-price-list .f5ec-price-item:first-child{border-top:none;padding-top:0;}
+  .f5ec a.f5ec-price-item:hover{background:rgba(255,255,255,0.05);}
+  .f5ec .f5ec-price-item-name{
+    display:block;
+    font-family:var(--font-display) !important;
+    font-size:13px;
+    font-weight:700;
+    color:var(--white) !important;
+    margin:0 0 3px;
+  }
+  .f5ec a.f5ec-price-item:hover .f5ec-price-item-name{text-decoration:underline;}
+  .f5ec .f5ec-price-item-desc{
+    display:block;
+    font-family:var(--font-body) !important;
+    font-size:11.5px;
+    line-height:1.45;
+    color:var(--ink-faint) !important;
+  }
+  .f5ec .f5ec-price-item-note{
+    display:block;
+    font-family:var(--font-body) !important;
+    font-size:10.5px;
+    font-style:italic;
+    color:var(--malinovy-line) !important;
+    margin-top:4px;
+  }
+
+  @media (max-width:480px){
+    .f5ec .f5ec-tip{width:200px;}
+    .f5ec .f5ec-tip.f5ec-tip-wide{width:250px;}
+    .f5ec .f5ec-tip-img{height:104px;}
+    .f5ec .f5ec-tip-body{padding:16px 16px 18px;}
+  }
+</style>
+
+<div class="f5ec-wrap">
+
+  <header>
+    <h2 class="f5ec-title">Расписание обучений</h2>
+  </header>
+
+  <div class="f5ec-legend">
+    <span class="f5ec-legend-item"><i class="f5ec-dot f5ec-dot-blue"></i>Мероприятие</span>
+    <span class="f5ec-legend-item"><i class="f5ec-dot f5ec-dot-malinovy"></i>Повышение цены</span>
+  </div>
+
+  <div class="f5ec-month-grid">
+
+    <div class="f5ec-month-card">
+      <p class="f5ec-month-title">Сентябрь 2026</p>
+      <div class="f5ec-weekdays">
+        <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+      </div>
+      <div class="f5ec-days">
+        <div class="f5ec-day f5ec-empty"></div>
+        <div class="f5ec-day f5ec-event f5ec-event-price" tabindex="0" aria-label="Повышение цен на интенсивы, 1 сентября">
+          1
+          <span class="f5ec-tip f5ec-tip-left f5ec-tip-down f5ec-tip-wide">
+            <span class="f5ec-tip-body">
+              <span class="f5ec-tip-tag f5ec-tip-tag-malinovy">Повышение цен</span>
+              <span class="f5ec-tip-title">Повышение цен на интенсивы</span>
+              <span class="f5ec-price-list">
+                <a class="f5ec-price-item" href="https://f5game.site/lime?utm_source=calendar" target="_blank" rel="noopener">
+                  <span class="f5ec-price-item-name">Как завоевать клиентов?</span>
+                  <span class="f5ec-price-item-desc">Большое исследование применения успеха LIME для экспертов</span>
+                </a>
+                <a class="f5ec-price-item" href="https://f5game.ru/vibecoding?utm_source=calendar" target="_blank" rel="noopener">
+                  <span class="f5ec-price-item-name">Сайт за 1 вечер</span>
+                  <span class="f5ec-price-item-desc">Как создать сайт, приглашающий на ваше мероприятие</span>
+                </a>
+                <a class="f5ec-price-item" href="https://f5game.site/presentation?utm_source=calendar" target="_blank" rel="noopener">
+                  <span class="f5ec-price-item-name">Красивые презентации</span>
+                  <span class="f5ec-price-item-desc">Как оформлять свои экспертные выступления так, чтобы превращать слушателей в клиентов</span>
+                </a>
+                <a class="f5ec-price-item" href="https://f5game.site/expert-tests?utm_source=calendar" target="_blank" rel="noopener">
+                  <span class="f5ec-price-item-name">Экспертные тесты</span>
+                  <span class="f5ec-price-item-desc">Как создать инструмент диагностики, усиливающий ваш личный бренд и продающий ваши услуги вместо вас</span>
+                  <span class="f5ec-price-item-note">Можно попасть онлайн — 5 сентября, 10:00 МСК</span>
+                </a>
+              </span>
+            </span>
+          </span>
+        </div>
+        <div class="f5ec-day">2</div>
+        <a class="f5ec-day f5ec-event" href="https://f5game.site/forma/pay/map_role?utm_source=calendar" target="_blank" rel="noopener" aria-label="Карта ролей и интересов — практика с Ольгой, 3 сентября, 18:00 МСК">
+          3
+          <span class="f5ec-tip f5ec-tip-center f5ec-tip-down">
+            <img class="f5ec-tip-img" src="https://static.tildacdn.com/tild6239-6665-4835-a165-653166383237/_2-23.png" alt="">
+            <span class="f5ec-tip-body">
+              <span class="f5ec-tip-tag">Интенсив</span>
+              <span class="f5ec-tip-title">Карта ролей и интересов — практика с Ольгой</span>
+              <span class="f5ec-tip-meta">3 сентября · 18:00 МСК</span>
+            </span>
+          </span>
+        </a>
+        <div class="f5ec-day">4</div>
+        <a class="f5ec-day f5ec-event" href="https://f5game.site/forma/pay/test-ekspert?utm_source=calendar" target="_blank" rel="noopener" aria-label="Экспертные тесты, 5 сентября, 10:00 МСК">
+          5
+          <span class="f5ec-tip f5ec-tip-right f5ec-tip-down">
+            <img class="f5ec-tip-img" src="https://static.tildacdn.com/tild3431-6262-4764-a338-643038323338/_2-31_2.png" alt="">
+            <span class="f5ec-tip-body">
+              <span class="f5ec-tip-tag">Интенсив</span>
+              <span class="f5ec-tip-title">Экспертные тесты</span>
+              <span class="f5ec-tip-meta">5 сентября (сб) · 10:00 МСК</span>
+            </span>
+          </span>
+        </a>
+        <div class="f5ec-day">6</div>
+        <div class="f5ec-day">7</div>
+        <div class="f5ec-day">8</div>
+        <div class="f5ec-day">9</div>
+        <div class="f5ec-day">10</div>
+        <div class="f5ec-day">11</div>
+        <div class="f5ec-day">12</div>
+        <div class="f5ec-day">13</div>
+        <div class="f5ec-day">14</div>
+        <div class="f5ec-day">15</div>
+        <div class="f5ec-day">16</div>
+        <a class="f5ec-day f5ec-event" href="https://f5game.site/forma/pay/hypotheses?utm_source=calendar" target="_blank" rel="noopener" aria-label="Практика (гипотеза), 17 сентября, 18:00 МСК">
+          17
+          <span class="f5ec-tip f5ec-tip-center">
+            <span class="f5ec-tip-body">
+              <span class="f5ec-tip-tag">Гипотеза</span>
+              <span class="f5ec-tip-title">Практика</span>
+              <span class="f5ec-tip-meta">17 сентября (чт) · 18:00 МСК</span>
+            </span>
+          </span>
+        </a>
+        <div class="f5ec-day">18</div>
+        <a class="f5ec-day f5ec-event" href="https://f5game.ru/explorable_explanations1?utm_source=calendar" target="_blank" rel="noopener" aria-label="Исследуемые объяснения — практика, 19 сентября, 10:00 МСК">
+          19
+          <span class="f5ec-tip f5ec-tip-right">
+            <span class="f5ec-tip-body">
+              <span class="f5ec-tip-tag">Интенсив</span>
+              <span class="f5ec-tip-title">Исследуемые объяснения — практика</span>
+              <span class="f5ec-tip-meta">19 сентября (сб) · 10:00 МСК</span>
+            </span>
+          </span>
+        </a>
+        <div class="f5ec-day">20</div>
+        <div class="f5ec-day">21</div>
+        <div class="f5ec-day">22</div>
+        <div class="f5ec-day">23</div>
+        <div class="f5ec-day">24</div>
+        <div class="f5ec-day">25</div>
+        <a class="f5ec-day f5ec-event" href="https://f5game.site/forma/pay/hypotheses?utm_source=calendar" target="_blank" rel="noopener" aria-label="Практика (гипотеза), 26 сентября, 10:00 МСК">
+          26
+          <span class="f5ec-tip f5ec-tip-right">
+            <span class="f5ec-tip-body">
+              <span class="f5ec-tip-tag">Гипотеза</span>
+              <span class="f5ec-tip-title">Практика</span>
+              <span class="f5ec-tip-meta">26 сентября (сб) · 10:00 МСК</span>
+            </span>
+          </span>
+        </a>
+        <div class="f5ec-day">27</div>
+        <div class="f5ec-day">28</div>
+        <div class="f5ec-day">29</div>
+        <div class="f5ec-day">30</div>
+      </div>
+    </div>
+
+    <div class="f5ec-month-card">
+      <p class="f5ec-month-title">Октябрь 2026</p>
+      <div class="f5ec-weekdays">
+        <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+      </div>
+      <div class="f5ec-days">
+        <div class="f5ec-day f5ec-empty"></div>
+        <div class="f5ec-day f5ec-empty"></div>
+        <div class="f5ec-day f5ec-empty"></div>
+        <div class="f5ec-day">1</div>
+        <div class="f5ec-day">2</div>
+        <div class="f5ec-day">3</div>
+        <div class="f5ec-day">4</div>
+        <div class="f5ec-day">5</div>
+        <div class="f5ec-day">6</div>
+        <div class="f5ec-day">7</div>
+        <div class="f5ec-day">8</div>
+        <div class="f5ec-day">9</div>
+        <div class="f5ec-day">10</div>
+        <div class="f5ec-day">11</div>
+        <div class="f5ec-day">12</div>
+        <div class="f5ec-day">13</div>
+        <div class="f5ec-day">14</div>
+        <div class="f5ec-day">15</div>
+        <div class="f5ec-day">16</div>
+        <div class="f5ec-day">17</div>
+        <div class="f5ec-day">18</div>
+        <div class="f5ec-day">19</div>
+        <div class="f5ec-day">20</div>
+        <div class="f5ec-day">21</div>
+        <div class="f5ec-day">22</div>
+        <div class="f5ec-day">23</div>
+        <div class="f5ec-day">24</div>
+        <div class="f5ec-day">25</div>
+        <div class="f5ec-day">26</div>
+        <div class="f5ec-day">27</div>
+        <div class="f5ec-day">28</div>
+        <div class="f5ec-day">29</div>
+        <div class="f5ec-day">30</div>
+        <div class="f5ec-day">31</div>
+        <div class="f5ec-day f5ec-empty"></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div>

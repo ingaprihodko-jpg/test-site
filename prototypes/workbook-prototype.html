@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Рабочая тетрадь — прототип</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --terracotta: #C82925;
+    --terracotta-deep: #A32019;
+    --tan: #C7B895;
+    --cream: #F4F1E7;
+    --sage: #6F8F6B;
+    --ink: #262626;
+    --ink-soft: rgba(38,38,38,0.62);
+    --white: #FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    padding: 0 0 100px;
+  }
+
+  /* ---- proto chrome: explains what this is, not part of the real embed ---- */
+  .proto-note{
+    background: #fff7e6;
+    border-bottom: 1px solid #f0dca6;
+    padding: 14px 20px;
+    font-size: 13.5px;
+    color: #6b5416;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .proto-note b{ color:#4a3b0f; }
+
+  .wrap{max-width: 720px; margin: 0 auto; padding: 40px 20px 0;}
+
+  /* ---- header ---- */
+  .wb-header{ margin-bottom: 28px; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:'Manrope', sans-serif; font-weight: 700; font-size: 12.5px;
+    letter-spacing: 0.04em; color: var(--terracotta);
+    background: var(--white);
+    border: 1px solid rgba(38,38,38,0.12);
+    padding: 6px 14px; border-radius: 999px;
+    margin-bottom: 16px;
+  }
+  .wb-header h1{
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600; font-size: 30px; letter-spacing: -0.01em; line-height: 1.2;
+    margin: 0 0 10px; color: var(--ink);
+  }
+  .wb-header p{
+    font-size: 15px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 22px; max-width: 46ch;
+  }
+
+  .overall-progress{
+    display:flex; align-items:center; gap:12px;
+  }
+  .overall-progress .bar{
+    flex:1; height: 8px; border-radius: 999px; background: rgba(38,38,38,0.08); overflow:hidden;
+  }
+  .overall-progress .bar-fill{
+    height:100%; border-radius: 999px;
+    background: var(--terracotta);
+    transition: width .35s cubic-bezier(.22,1,.36,1);
+  }
+  .overall-progress .count{
+    font-size: 13px; font-weight: 700; color: var(--ink); white-space:nowrap;
+  }
+
+  /* ---- lesson switcher: stands in for "5 separate GetCourse pages" ---- */
+  .lesson-switch{
+    display:flex; gap:8px; flex-wrap:wrap;
+    margin: 26px 0 28px;
+  }
+  .lesson-switch button{
+    font-family:'Manrope', sans-serif; font-size: 13px; font-weight:700;
+    border:1px solid rgba(38,38,38,0.16); background:var(--white); color: var(--ink);
+    padding: 9px 16px; border-radius: 999px; cursor:pointer;
+    display:flex; align-items:center; gap:7px;
+    transition: all .15s ease;
+  }
+  .lesson-switch button:hover{ border-color: var(--terracotta); }
+  .lesson-switch button.active{
+    background: var(--ink); border-color: var(--ink); color:#fff;
+  }
+  .lesson-switch .dot{
+    width:7px; height:7px; border-radius:50%; background: rgba(38,38,38,0.25); flex-shrink:0;
+  }
+  .lesson-switch button.active .dot{ background: #fff; }
+  .lesson-switch button.done .dot{ background: var(--sage); }
+  .lesson-switch button.done.active .dot{ background: var(--sage); }
+
+  /* ---- mimic of a normal GetCourse lesson body above the workbook ---- */
+  .lesson-page h2.lesson-title{
+    font-family: 'Manrope', sans-serif;
+    font-size: 21px; font-weight: 700; color: var(--ink); margin: 0 0 14px; letter-spacing:-0.01em;
+  }
+  .lesson-text{
+    font-size: 14.5px; line-height: 1.6; color: var(--ink-soft); margin-bottom: 34px;
+  }
+
+  .section-label{
+    display:flex; align-items:center; gap:12px;
+    margin: 0 2px 16px;
+  }
+  .section-label .icon{
+    width:32px; height:32px; border-radius:10px; flex-shrink:0;
+    background: var(--terracotta);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .section-label h3{
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.02em; color: var(--ink); margin:0;
+  }
+  .section-label .progress-tag{
+    margin-left:auto; font-size: 12.5px; font-weight:700; color: var(--terracotta);
+    background: rgba(200,41,37,0.08); padding: 5px 12px; border-radius: 999px;
+  }
+
+  /* ---- the workbook card: THIS is the part that gets embedded per lesson ---- */
+  .workbook{
+    background:#fff; border-radius: 20px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 16px 40px -28px rgba(38,38,38,0.30);
+    padding: 28px 28px 20px;
+    border: 1px solid rgba(38,38,38,0.06);
+  }
+  .field{ margin-bottom: 22px; }
+  .field label{
+    display:block; font-size: 14.5px; font-weight: 700; color: var(--ink);
+    margin-bottom: 9px; line-height:1.45;
+  }
+  .field textarea{
+    width:100%; min-height: 66px; resize: vertical;
+    font-family:'Manrope', sans-serif; font-size: 14px; line-height:1.5; color: var(--ink);
+    border: 1.5px solid #e5e0d3; border-radius: 12px; padding: 13px 15px;
+    background: #fbfaf6;
+    transition: border-color .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  .field textarea::placeholder{ color: #b0aa98; }
+  .field textarea:focus{
+    outline:none; border-color: var(--terracotta); background:#fff;
+    box-shadow: 0 0 0 4px rgba(200,41,37,0.08);
+  }
+  .field textarea.filled{ border-color: rgba(111,143,107,0.45); background:#fff; }
+
+  .save-row{
+    display:flex; align-items:center; justify-content:flex-end; gap:6px;
+    font-size: 12.5px; color: #a39d8c; height: 20px; margin-top: -4px;
+  }
+  .save-row .ok-icon{
+    opacity:0; transition: opacity .2s ease; color: var(--sage); font-weight:700;
+    display:flex; align-items:center; gap:4px;
+  }
+  .save-row.saved .ok-icon{ opacity:1; }
+
+  .workbook-foot{
+    border-top: 1px solid #f0ede3; margin-top: 4px; padding-top: 16px;
+    font-size: 12.5px; color: #a39d8c; display:flex; align-items:center; gap:8px;
+  }
+  .workbook-foot svg{ flex-shrink:0; }
+
+  @media (max-width: 560px){
+    .wrap{ padding: 28px 14px 0; }
+    .wb-header h1{ font-size: 24px; }
+    .workbook{ padding: 22px 18px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="proto-note">
+  Это кликабельный прототип, чтобы показать <b>принцип и вид</b> — не итоговая интеграция и не финальный текст.<br>
+  Ответы реально сохраняются в этом браузере (localStorage). Переключайте уроки вверху — ответы у&nbsp;каждого свои.
+</div>
+
+<div class="wrap">
+
+  <div class="wb-header">
+    <span class="eyebrow">ЛИЧНЫЙ ПРОГРЕСС</span>
+    <h1>Рабочая тетрадь курса</h1>
+    <p>Ответы сохраняются по&nbsp;ходу курса. Видите их только вы — доступ к&nbsp;чужим тетрадям закрыт.</p>
+    <div class="overall-progress">
+      <div class="bar"><div class="bar-fill" id="overallBarFill" style="width:0%"></div></div>
+      <span class="count" id="overallCount">0 / 15 вопросов</span>
+    </div>
+  </div>
+
+  <div class="lesson-switch" id="lessonSwitch"></div>
+
+  <div class="lesson-page">
+    <h2 class="lesson-title" id="lessonTitle"></h2>
+    <p class="lesson-text" id="lessonText"></p>
+
+    <div class="section-label">
+      <div class="icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 4h16v16H4z" stroke="#fff" stroke-width="1.7"/><path d="M8 9h8M8 13h5" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></svg>
+      </div>
+      <h3>ВАША РАБОЧАЯ ТЕТРАДЬ</h3>
+      <span class="progress-tag" id="progressTag">0 / 3</span>
+    </div>
+
+    <div class="workbook" id="workbook"></div>
+  </div>
+
+</div>
+
+<script>
+const lessons = [
+  {
+    id: 'l1',
+    title: 'Урок 1. Введение',
+    text: 'Короткое вступление к&nbsp;теме урока — здесь будет текст из&nbsp;программы курса.',
+    questions: [
+      'Что&nbsp;вы&nbsp;ждёте от&nbsp;этого курса лично для&nbsp;себя?',
+      'Опишите ситуацию из&nbsp;своей практики, которую хотите разобрать.',
+      'Что&nbsp;для&nbsp;вас сейчас самое сложное в&nbsp;этой теме?'
+    ]
+  },
+  {
+    id: 'l2',
+    title: 'Урок 2. Основные понятия',
+    text: 'Разбираем ключевые термины и&nbsp;модели, на которые курс будет опираться дальше.',
+    questions: [
+      'Какое понятие из&nbsp;урока было для&nbsp;вас новым?',
+      'Приведите свой пример, где это&nbsp;применимо.',
+      'Что&nbsp;осталось непонятным — сформулируйте вопрос.'
+    ]
+  },
+  {
+    id: 'l3',
+    title: 'Урок 3. Практика',
+    text: 'Урок с&nbsp;практическими упражнениями — здесь вы&nbsp;применяете модель на своём кейсе.',
+    questions: [
+      'Опишите свой кейс по&nbsp;шагам из&nbsp;урока.',
+      'Какой результат вы&nbsp;получили при&nbsp;разборе?',
+      'Что&nbsp;бы&nbsp;вы&nbsp;сделали иначе в&nbsp;следующий раз?'
+    ]
+  },
+  {
+    id: 'l4',
+    title: 'Урок 4. Разбор кейсов',
+    text: 'Разбор типичных ситуаций и&nbsp;ошибок — с&nbsp;примерами и&nbsp;комментариями.',
+    questions: [
+      'Какой из&nbsp;кейсов ближе всего к&nbsp;вашей ситуации?',
+      'Что&nbsp;вы&nbsp;добавили бы&nbsp;в&nbsp;этот разбор из&nbsp;своего опыта?',
+      'Какой вывод вы&nbsp;для&nbsp;себя делаете?'
+    ]
+  },
+  {
+    id: 'l5',
+    title: 'Урок 5. Итоги и следующие шаги',
+    text: 'Закрепляем материал и&nbsp;намечаем план дальнейших действий.',
+    questions: [
+      'Три главных вывода из&nbsp;курса лично для&nbsp;вас.',
+      'Что&nbsp;вы&nbsp;примените в&nbsp;течение ближайшей недели?',
+      'Как вы&nbsp;поймёте, что&nbsp;это&nbsp;сработало?'
+    ]
+  }
+];
+
+const STORAGE_KEY = 'f5-workbook-proto';
+function loadAll(){
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch(e){ return {}; }
+}
+function saveAll(data){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+let active = lessons[0].id;
+const switchEl = document.getElementById('lessonSwitch');
+const workbookEl = document.getElementById('workbook');
+const titleEl = document.getElementById('lessonTitle');
+const textEl = document.getElementById('lessonText');
+const progressEl = document.getElementById('progressTag');
+const overallBarFill = document.getElementById('overallBarFill');
+const overallCount = document.getElementById('overallCount');
+
+function filledCount(lesson, data){
+  const answers = data[lesson.id] || {};
+  return lesson.questions.filter((_, i) => (answers[i] || '').trim().length > 0).length;
+}
+function isLessonDone(lesson, data){
+  return filledCount(lesson, data) === lesson.questions.length;
+}
+
+function renderSwitch(){
+  const data = loadAll();
+  switchEl.innerHTML = '';
+  lessons.forEach((l, idx) => {
+    const btn = document.createElement('button');
+    btn.className = (l.id === active ? 'active ' : '') + (isLessonDone(l, data) ? 'done' : '');
+    btn.innerHTML = '<span class="dot"></span> Урок ' + (idx + 1);
+    btn.addEventListener('click', () => { active = l.id; renderAll(); });
+    switchEl.appendChild(btn);
+  });
+}
+
+function renderLesson(){
+  const lesson = lessons.find(l => l.id === active);
+  titleEl.innerHTML = lesson.title;
+  textEl.innerHTML = lesson.text;
+
+  const data = loadAll();
+  const answers = data[lesson.id] || {};
+
+  workbookEl.innerHTML = '';
+  lesson.questions.forEach((q, i) => {
+    const field = document.createElement('div');
+    field.className = 'field';
+
+    const label = document.createElement('label');
+    label.innerHTML = (i + 1) + '. ' + q;
+
+    const textarea = document.createElement('textarea');
+    textarea.placeholder = 'Ваш ответ...';
+    textarea.value = answers[i] || '';
+    if (textarea.value.trim()) textarea.classList.add('filled');
+
+    const saveRow = document.createElement('div');
+    saveRow.className = 'save-row';
+    saveRow.innerHTML = '<span class="ok-icon">✓ сохранено</span>';
+
+    let saveTimer;
+    textarea.addEventListener('input', () => {
+      textarea.classList.toggle('filled', textarea.value.trim().length > 0);
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => {
+        const d = loadAll();
+        d[lesson.id] = d[lesson.id] || {};
+        d[lesson.id][i] = textarea.value;
+        saveAll(d);
+        saveRow.classList.add('saved');
+        updateProgress();
+        renderSwitch();
+        setTimeout(() => saveRow.classList.remove('saved'), 1400);
+      }, 500);
+    });
+
+    field.appendChild(label);
+    field.appendChild(textarea);
+    field.appendChild(saveRow);
+    workbookEl.appendChild(field);
+  });
+
+  const foot = document.createElement('div');
+  foot.className = 'workbook-foot';
+  foot.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2.5" stroke="#6F8F6B" stroke-width="1.6"/><path d="M8 10V7a4 4 0 018 0v3" stroke="#6F8F6B" stroke-width="1.6"/></svg> Ответы видны только вам — другие участники их не видят.';
+  workbookEl.appendChild(foot);
+
+  updateProgress();
+}
+
+function updateProgress(){
+  const lesson = lessons.find(l => l.id === active);
+  const data = loadAll();
+  const filled = filledCount(lesson, data);
+  progressEl.textContent = filled + ' / ' + lesson.questions.length;
+
+  const totalQuestions = lessons.reduce((sum, l) => sum + l.questions.length, 0);
+  const totalFilled = lessons.reduce((sum, l) => sum + filledCount(l, data), 0);
+  overallBarFill.style.width = Math.round((totalFilled / totalQuestions) * 100) + '%';
+  overallCount.textContent = totalFilled + ' / ' + totalQuestions + ' вопросов';
+}
+
+function renderAll(){
+  renderSwitch();
+  renderLesson();
+}
+
+renderAll();
+</script>
+
+</body>
+</html>

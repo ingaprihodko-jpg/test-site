@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "test-repo-preview",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8532", "--directory", "/Users/inga/test"],
+      "port": 8532
+    },
+    {
+      "name": "f5game-site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8533", "--directory", "/Users/inga/f5game-site"],
+      "port": 8533
+    }
+  ]
+}

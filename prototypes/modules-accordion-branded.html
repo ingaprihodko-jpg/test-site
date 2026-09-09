@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Модули — фирменный вариант</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap');
+
+  :root{
+    --navy-950: #0a1622;
+    --navy-900: #0d1b2b;
+    --navy-800: #142838;
+    --navy-700: #1c3448;
+    --navy-600: #274257;
+    --gold: #c8933c;
+    --gold-bright: #e0ac52;
+    --gold-dim: rgba(200,147,60,0.35);
+    --cream: #f4ede1;
+    --ink-muted: rgba(244,237,225,0.56);
+    --page-bg: #eef0f5;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: 'Manrope', -apple-system, "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--page-bg);
+    padding: 48px 20px 100px;
+  }
+  .wrap{max-width: 760px; margin: 0 auto;}
+
+  /* --- echo of the real banner, for continuity in the preview --- */
+  .banner-echo{
+    background: linear-gradient(120deg, var(--navy-950) 0%, var(--navy-800) 100%);
+    border-radius: 20px;
+    padding: 28px 32px;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .banner-echo::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image: repeating-linear-gradient(115deg, transparent 0 18px, rgba(200,147,60,0.05) 18px 19px);
+  }
+  .banner-echo h1{
+    color:#fff; font-size: 26px; font-weight: 800; margin:0; position:relative; letter-spacing:-0.01em;
+  }
+  .banner-echo h1 span{ color: var(--gold-bright); }
+  .banner-echo p{
+    color: var(--ink-muted); margin: 6px 0 0; font-size: 14px; position:relative;
+  }
+
+  .section-label{
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin: 30px 4px 14px;
+  }
+  .section-label h2{
+    font-size: 15px; font-weight: 800; letter-spacing: 0.02em; color: var(--navy-800); margin:0;
+  }
+  .section-label span{ font-size: 13px; color: #8a93a0; }
+
+  /* --- module row --- */
+  .module{
+    position: relative;
+    background: linear-gradient(150deg, var(--navy-800), var(--navy-900));
+    border-radius: 18px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 10px 24px -16px rgba(10,22,34,0.55);
+  }
+  .module.locked{
+    background: linear-gradient(150deg, #2a2f38, #1c2027);
+  }
+
+  .module-head{
+    display:flex; align-items:center; gap:18px;
+    padding: 20px 22px;
+    cursor:pointer; user-select:none;
+  }
+  .module.locked .module-head{ cursor: default; }
+
+  .module-num{
+    font-size: 34px; font-weight: 800; color: transparent;
+    -webkit-text-stroke: 1.4px rgba(224,172,82,0.45);
+    line-height: 1; flex-shrink:0; width: 46px;
+    font-variant-numeric: tabular-nums;
+  }
+  .module.locked .module-num{ -webkit-text-stroke-color: rgba(255,255,255,0.16); }
+
+  .module-body-text{ flex:1; min-width:0; }
+  .module-title{
+    font-size: 18px; font-weight: 800; color: var(--cream); margin: 0 0 3px;
+    letter-spacing: -0.01em;
+  }
+  .module.locked .module-title{ color: rgba(255,255,255,0.4); }
+  .module-meta{ font-size: 13px; color: var(--ink-muted); }
+  .module.locked .module-meta{ color: rgba(255,255,255,0.28); }
+
+  /* equalizer-bar expand affordance */
+  .gc-eq{
+    display:flex; align-items:flex-end; gap:3px; width:28px; height:26px; flex-shrink:0;
+    transition: opacity .2s ease;
+  }
+  .gc-eq i{
+    display:block; width:4px; border-radius: 2px;
+    background: var(--gold);
+    transition: height .35s cubic-bezier(.22,1,.36,1), background .25s ease;
+  }
+  .gc-eq i:nth-child(1){ height: 10px; }
+  .gc-eq i:nth-child(2){ height: 22px; }
+  .gc-eq i:nth-child(3){ height: 15px; }
+  .gc-eq i:nth-child(4){ height: 26px; }
+  .module.locked .gc-eq i{ background: rgba(255,255,255,0.2); height: 6px !important; }
+
+  .module.open .gc-eq i:nth-child(1){ height: 26px; animation: eqPulse 0.9s ease-in-out infinite; }
+  .module.open .gc-eq i:nth-child(2){ height: 12px; animation: eqPulse 0.7s ease-in-out infinite .1s; }
+  .module.open .gc-eq i:nth-child(3){ height: 22px; animation: eqPulse 0.8s ease-in-out infinite .2s; }
+  .module.open .gc-eq i:nth-child(4){ height: 14px; animation: eqPulse 0.6s ease-in-out infinite .15s; }
+  @keyframes eqPulse{
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.5); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .module.open .gc-eq i{ animation: none !important; }
+  }
+
+  .module-body{
+    max-height: 0; overflow: hidden;
+    transition: max-height .35s cubic-bezier(.22,1,.36,1);
+  }
+
+  .submodule{
+    padding: 2px 22px 18px 76px;
+  }
+  .submodule + .submodule{
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 16px;
+  }
+  .submodule-title{
+    font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--gold-bright); margin: 8px 0 10px;
+  }
+  .lesson{
+    display:flex; align-items:center; gap: 12px;
+    padding: 10px 14px; border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+    margin-bottom: 6px;
+    transition: background .15s ease;
+  }
+  .lesson:hover{ background: rgba(255,255,255,0.07); }
+  .lesson-dot{
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--gold); flex-shrink:0;
+  }
+  .lesson-name{ font-size: 14.5px; color: rgba(244,237,225,0.9); }
+
+  .note{ text-align:center; color:#9aa2ad; font-size: 13px; margin-top: 28px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="banner-echo">
+    <h1>Саунд-дизайн <span>с нуля</span></h1>
+    <p>Содержание курса — та же навигация, но в цветах студии</p>
+  </div>
+
+  <div class="section-label">
+    <h2>СОДЕРЖАНИЕ КУРСА</h2>
+    <span>4 модуля</span>
+  </div>
+
+  <div class="module" data-state="closed">
+    <div class="module-head">
+      <div class="module-num">01</div>
+      <div class="module-body-text">
+        <p class="module-title">Технические основы для саунд-дизайна</p>
+        <p class="module-meta">3 подмодуля · 8 уроков</p>
+      </div>
+      <div class="gc-eq"><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="module-body">
+      <div class="submodule">
+        <p class="submodule-title">1.1 Как устроен звук</p>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Введение в саунд-дизайн</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Частоты и волны</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Обработка сигнала</span></div>
+      </div>
+      <div class="submodule">
+        <p class="submodule-title">1.2 Оборудование</p>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Микрофоны и звуковые карты</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Настройка домашней студии</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module" data-state="open">
+    <div class="module-head">
+      <div class="module-num">02</div>
+      <div class="module-body-text">
+        <p class="module-title">Звуковая атмосфера</p>
+        <p class="module-meta">2 подмодуля · 5 уроков</p>
+      </div>
+      <div class="gc-eq"><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="module-body">
+      <div class="submodule">
+        <p class="submodule-title">2.1 Что такое атмосфера</p>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Зачем она нужна</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Виды звуков</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Музыка в саунд-дизайне</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module" data-state="closed">
+    <div class="module-head">
+      <div class="module-num">03</div>
+      <div class="module-body-text">
+        <p class="module-title">Профессиональный саунд-дизайн</p>
+        <p class="module-meta">нет уроков</p>
+      </div>
+      <div class="gc-eq"><i></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+
+  <div class="module locked">
+    <div class="module-head">
+      <div class="module-num">04</div>
+      <div class="module-body-text">
+        <p class="module-title">Финальный проект</p>
+        <p class="module-meta">Откроется позже</p>
+      </div>
+      <div class="gc-eq"><i></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+
+  <p class="note">Названия — заглушки, цвета и приём с эквалайзером — предложение, подгоню под реальный контент.</p>
+
+</div>
+
+<script>
+document.querySelectorAll('.module:not(.locked) .module-head').forEach(head => {
+  head.addEventListener('click', () => {
+    const module = head.closest('.module');
+    const body = module.querySelector('.module-body');
+    if (!body) return;
+    const isOpen = module.classList.contains('open');
+    if (isOpen) {
+      body.style.maxHeight = body.scrollHeight + 'px';
+      requestAnimationFrame(() => { body.style.maxHeight = '0px'; });
+      module.classList.remove('open');
+    } else {
+      module.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+      body.addEventListener('transitionend', function handler(){
+        if (module.classList.contains('open')) body.style.maxHeight = 'none';
+        body.removeEventListener('transitionend', handler);
+      });
+    }
+  });
+});
+document.querySelectorAll('.module.open .module-body').forEach(body => {
+  body.style.maxHeight = 'none';
+});
+</script>
+</body>
+</html>

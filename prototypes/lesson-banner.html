@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Lesson banner preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; padding:40px; background:#0b0f14; }
+</style>
+</head>
+<body>
+
+<!--
+  Баннер урока для GetCourse (карточка-плашка перед уроком).
+  Вставлять в блок с текстом/HTML в конструкторе страницы (CSS без тегов <style>, разметку — как есть).
+  Фон — сгенерированные CSS-блики (боке) вместо реального фото, чтобы не тянуть внешнюю картинку;
+  при желании можно заменить .lb-photo на background-image с настоящим кадром.
+-->
+<style>
+.f5-lesson-banner {
+  position: relative;
+  max-width: 860px;
+  border-radius: 26px;
+  overflow: hidden;
+  background: linear-gradient(120deg, #163634 0%, #163634 42%, #24534c 100%);
+  padding: 34px 40px;
+  box-sizing: border-box;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  isolation: isolate;
+}
+.f5-lesson-banner + .f5-lesson-banner { margin-top: 16px; }
+.f5-lesson-banner .lb-photo {
+  position: absolute; inset: 0; z-index: -2;
+  background:
+    radial-gradient(ellipse 320px 270px at 88% 30%, rgba(255,150,70,0.65), transparent 60%),
+    radial-gradient(ellipse 270px 240px at 78% 78%, rgba(200,60,40,0.6), transparent 60%),
+    radial-gradient(ellipse 360px 310px at 100% 55%, rgba(255,200,90,0.45), transparent 65%);
+  filter: blur(2px);
+}
+.f5-lesson-banner .lb-photo::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, #163634 0%, rgba(22,54,52,0.8) 38%, rgba(22,54,52,0.25) 62%, rgba(22,54,52,0.05) 100%);
+}
+.f5-lesson-banner .lb-decor { position: absolute; z-index: -1; opacity: 0.5; pointer-events: none; }
+.f5-lesson-banner .lb-decor-tl { top: 0; left: 0; width: 230px; height: 140px; }
+.f5-lesson-banner .lb-decor-bl { bottom: 0; left: 0; width: 230px; height: 140px; }
+
+.f5-lesson-banner .lb-content { position: relative; z-index: 1; max-width: 60%; }
+.f5-lesson-banner .lb-title {
+  margin: 0;
+  font-family: 'Unbounded', 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 1.32;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.f5-lesson-banner .lb-btn {
+  position: relative; z-index: 1;
+  margin-left: auto;
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(47,168,155,0.32);
+  border: 1.5px solid rgba(120,220,205,0.6);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.01em;
+  padding: 24px 38px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: transform .2s ease, background .2s ease;
+}
+.f5-lesson-banner .lb-btn:hover { background: rgba(47,168,155,0.42); transform: translateY(-1px); }
+
+@media (max-width: 620px) {
+  .f5-lesson-banner { flex-direction: column; align-items: flex-start; gap: 20px; padding: 26px 22px; height: auto; }
+  .f5-lesson-banner .lb-content { max-width: 100%; }
+  .f5-lesson-banner .lb-title { font-size: 20px; }
+  .f5-lesson-banner .lb-btn { margin-left: 0; width: 100%; padding: 16px 20px; }
+}
+</style>
+
+<div class="f5-lesson-banner">
+  <div class="lb-photo"></div>
+
+  <svg class="lb-decor lb-decor-tl" viewBox="0 0 230 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 12H70L90 32V70" stroke="white" stroke-width="1"/>
+    <path d="M0 40H40" stroke="white" stroke-width="1"/>
+    <path d="M14 12V0" stroke="white" stroke-width="1"/>
+    <circle cx="14" cy="12" r="3" fill="white"/>
+    <circle cx="70" cy="12" r="3" fill="white"/>
+    <circle cx="90" cy="32" r="3" fill="white"/>
+    <circle cx="0" cy="40" r="3" fill="white"/>
+    <g opacity="0.5">
+      <path d="M120 26 L134 18 L148 26 L148 42 L134 50 L120 42 Z" stroke="white" stroke-width="1"/>
+      <path d="M148 34 L162 26 L176 34 L176 50 L162 58 L148 50 Z" stroke="white" stroke-width="1"/>
+    </g>
+  </svg>
+
+  <svg class="lb-decor lb-decor-bl" viewBox="0 0 230 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 128H60L80 108V80" stroke="white" stroke-width="1"/>
+    <path d="M0 100H30" stroke="white" stroke-width="1"/>
+    <circle cx="60" cy="128" r="3" fill="white"/>
+    <circle cx="80" cy="108" r="3" fill="white"/>
+    <circle cx="0" cy="100" r="3" fill="white"/>
+    <g opacity="0.5">
+      <path d="M110 118 L124 110 L138 118 L138 134 L124 142 L110 134 Z" stroke="white" stroke-width="1"/>
+    </g>
+  </svg>
+
+  <div class="lb-content">
+    <h3 class="lb-title">Почему наши бабушки готовили на десятерых, а мы выгораем на четверых?</h3>
+  </div>
+
+  <a href="#" class="lb-btn">СМОТРЕТЬ УРОК</a>
+</div>
+
+</body>
+</html>

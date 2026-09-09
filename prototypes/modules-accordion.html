@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Аккордеон модулей — прототип</title>
+<style>
+  :root{
+    --navy: #262a3a;
+    --navy-2: #2f3448;
+    --orange: #ff7a2f;
+    --orange-dark: #e8631c;
+    --bg: #eef0f7;
+    --card: #f8f9fd;
+    --card-locked: #eceef5;
+    --text-dark: #2f3448;
+    --text-muted: #9a9fb0;
+    --text-body: #565b70;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: -apple-system, "SF Pro Display", "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    padding: 40px 20px;
+  }
+  .wrap{max-width: 760px; margin: 0 auto;}
+
+  .hero{
+    background: var(--navy);
+    background-image: radial-gradient(circle at 15% 20%, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 26px 26px;
+    border-radius: 20px;
+    padding: 40px 36px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero h1{
+    color: #fff;
+    font-size: 34px;
+    line-height: 1.2;
+    margin: 0;
+    max-width: 60%;
+    position: relative;
+    z-index: 1;
+  }
+  .hero .accent{color: var(--orange);}
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:-40px; top:-40px; bottom:-40px;
+    width: 260px;
+    background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+    transform: skewX(-12deg);
+    opacity: 0.9;
+  }
+
+  .module{
+    background: var(--card);
+    border-radius: 18px;
+    margin-bottom: 14px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(38,42,58,0.04);
+  }
+  .module.locked{background: var(--card-locked);}
+
+  .module-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 22px 26px;
+    cursor: pointer;
+    user-select:none;
+  }
+  .module.locked .module-head{cursor:default;}
+
+  .module-title{
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin: 0 0 4px 0;
+  }
+  .module.locked .module-title{color: var(--text-muted);}
+
+  .module-meta{
+    font-size: 14px;
+    color: var(--text-body);
+  }
+  .module.locked .module-meta{color: var(--text-muted);}
+
+  .chevron{
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: rgba(255,122,47,0.12);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    transition: transform 0.25s ease, background 0.25s ease;
+  }
+  .module.locked .chevron{background: transparent;}
+  .chevron svg{width:14px; height:14px; stroke: var(--orange-dark);}
+  .module.locked .chevron svg{stroke: var(--text-muted);}
+  .module.open .chevron{transform: rotate(180deg); background: var(--orange);}
+  .module.open .chevron svg{stroke:#fff;}
+
+  .module-body{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+  .module.open .module-body{ /* max-height set inline via JS */ }
+
+  .submodule{
+    padding: 4px 26px 18px 26px;
+  }
+  .submodule + .submodule{
+    border-top: 1px solid rgba(38,42,58,0.06);
+    padding-top: 16px;
+  }
+  .submodule-title{
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--orange-dark);
+    margin: 10px 0 10px 0;
+  }
+  .lesson{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    padding: 11px 12px;
+    border-radius: 10px;
+    transition: background 0.15s ease;
+  }
+  .lesson:hover{background: rgba(38,42,58,0.04);}
+  .lesson-dot{
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--orange);
+    flex-shrink: 0;
+  }
+  .lesson-name{
+    font-size: 15px;
+    color: var(--text-dark);
+  }
+
+  .note{
+    text-align:center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 24px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>Название курса — <span class="accent">заглушка</span></h1>
+  </div>
+
+  <div class="module" data-state="open">
+    <div class="module-head">
+      <div>
+        <p class="module-title">Модуль 1. Название модуля</p>
+        <p class="module-meta">3 подмодуля · 8 уроков</p>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+    </div>
+    <div class="module-body">
+      <div class="submodule">
+        <p class="submodule-title">Подмодуль 1.1</p>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 1. Название урока</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 2. Название урока</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 3. Название урока</span></div>
+      </div>
+      <div class="submodule">
+        <p class="submodule-title">Подмодуль 1.2</p>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 1. Название урока</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 2. Название урока</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module">
+    <div class="module-head">
+      <div>
+        <p class="module-title">Модуль 2. Название модуля</p>
+        <p class="module-meta">2 подмодуля · 5 уроков</p>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+    </div>
+    <div class="module-body">
+      <div class="submodule">
+        <p class="submodule-title">Подмодуль 2.1</p>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 1. Название урока</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 2. Название урока</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 3. Название урока</span></div>
+      </div>
+      <div class="submodule">
+        <p class="submodule-title">Подмодуль 2.2</p>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 1. Название урока</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 2. Название урока</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module">
+    <div class="module-head">
+      <div>
+        <p class="module-title">Модуль 3. Название модуля</p>
+        <p class="module-meta">2 подмодуля · 6 уроков</p>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+    </div>
+    <div class="module-body">
+      <div class="submodule">
+        <p class="submodule-title">Подмодуль 3.1</p>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 1. Название урока</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 2. Название урока</span></div>
+      </div>
+      <div class="submodule">
+        <p class="submodule-title">Подмодуль 3.2</p>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 1. Название урока</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 2. Название урока</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 3. Название урока</span></div>
+        <div class="lesson"><span class="lesson-dot"></span><span class="lesson-name">Урок 4. Название урока</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module locked">
+    <div class="module-head">
+      <div>
+        <p class="module-title">Модуль 4. Название модуля</p>
+        <p class="module-meta">Откроется позже</p>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></div>
+    </div>
+  </div>
+
+  <p class="note">Названия модулей/уроков — заглушки, подставим реальные из вашего плана курса.</p>
+
+</div>
+
+<script>
+document.querySelectorAll('.module:not(.locked) .module-head').forEach(head => {
+  head.addEventListener('click', () => {
+    const module = head.closest('.module');
+    const body = module.querySelector('.module-body');
+    const isOpen = module.classList.contains('open');
+
+    if (isOpen) {
+      body.style.maxHeight = body.scrollHeight + 'px';
+      requestAnimationFrame(() => { body.style.maxHeight = '0px'; });
+      module.classList.remove('open');
+    } else {
+      module.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+      body.addEventListener('transitionend', function handler(){
+        if (module.classList.contains('open')) body.style.maxHeight = 'none';
+        body.removeEventListener('transitionend', handler);
+      });
+    }
+  });
+});
+
+document.querySelectorAll('.module.open .module-body').forEach(body => {
+  body.style.maxHeight = 'none';
+});
+</script>
+</body>
+</html>

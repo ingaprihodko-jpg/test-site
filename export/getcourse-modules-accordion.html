@@ -1,0 +1,267 @@
+<!--
+  Фирменный аккордеон для списка модулей/уроков ГК (tsss.site — Tim Shtok Sound Studio).
+  Цвета взяты пипеткой с реального баннера курса: тёмно-синий #0d1b2b/#142838, золото #c8933c.
+  Номер-«призрак» у каждой карточки берётся прямо из текста заголовка (первая цифра в названии,
+  например «БЛОК 1» → 01), а не из отдельного счётчика — так он никогда не разъедется с текстом.
+  Работает поверх реальной вёрстки GetCourse (xdget-trainingList, stream-table, training-row) —
+  ничего не переверстывает, только стилизует и добавляет раскрытие по клику без перехода на новую страницу.
+
+  Куда вставить: в конструкторе страницы — блок "Список тренингов" → "Настройки" → CSS-styles (без тегов <style>),
+  и отдельным элементом "Javascript" на странице (без тегов <script>).
+-->
+<style>
+.stream-table { border-collapse: separate; border-spacing: 0 14px; }
+.stream-table tr.training-row { display: table-row; }
+.stream-table tr.training-row td {
+  background: linear-gradient(150deg, #142838, #0d1b2b) !important;
+  border-radius: 18px !important; padding: 22px 26px !important; height: auto !important; min-height: 78px;
+  box-shadow: 0 10px 24px -18px rgba(10,22,34,0.6);
+}
+.stream-table tr.training-row.no-lessons.no-children td {
+  background: linear-gradient(150deg, #2b303a, #1c2027) !important;
+  box-shadow: none;
+}
+.stream-table tr.training-row a {
+  color: #f4ede1 !important; text-decoration: none;
+  display: flex !important; align-items: center; gap: 18px;
+}
+.gc-text-wrap { flex: 1; min-width: 0; }
+.stream-title {
+  font-size: 19px !important; font-weight: 800 !important; color: #f4ede1 !important;
+  line-height: 1.3; letter-spacing: -0.01em; display: block;
+}
+.stream-table tr.no-lessons.no-children .stream-title { color: rgba(255,255,255,0.4) !important; }
+.stream-table tr.training-row > td > a > .gc-text-wrap > div { font-size: 13px; color: #aab4bf; margin-top: 3px; }
+
+.xdget-trainingList table.stream-table tr.training-row > td > a[data-gcnum]::before {
+  content: attr(data-gcnum);
+  font-size: 30px; font-weight: 800; color: transparent;
+  -webkit-text-stroke: 1.3px rgba(224,172,82,0.5);
+  flex-shrink: 0; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.xdget-trainingList table.stream-table tr.training-row.no-lessons.no-children > td > a[data-gcnum]::before {
+  -webkit-text-stroke-color: rgba(255,255,255,0.16);
+}
+
+.stream-table tr.training-row.no-lessons.no-children > td > a::after {
+  content: "····"; margin-left: auto; color: rgba(255,255,255,0.2);
+  letter-spacing: 4px; font-size: 16px; flex-shrink: 0;
+}
+
+.gc-acc-caret {
+  display: flex; align-items: flex-end; gap: 3px; width: 26px; height: 24px;
+  flex-shrink: 0; margin-left: auto;
+}
+.gc-acc-caret i { display: block; width: 4px; border-radius: 2px; background: #c8933c; transition: height .35s cubic-bezier(.22,1,.36,1); }
+.gc-acc-caret i:nth-child(1) { height: 9px; }
+.gc-acc-caret i:nth-child(2) { height: 20px; }
+.gc-acc-caret i:nth-child(3) { height: 14px; }
+.gc-acc-caret i:nth-child(4) { height: 24px; }
+tr.gc-acc-open .gc-acc-caret i:nth-child(1) { height: 24px; animation: gcEq .9s ease-in-out infinite; }
+tr.gc-acc-open .gc-acc-caret i:nth-child(2) { height: 11px; animation: gcEq .7s ease-in-out infinite .1s; }
+tr.gc-acc-open .gc-acc-caret i:nth-child(3) { height: 20px; animation: gcEq .8s ease-in-out infinite .2s; }
+tr.gc-acc-open .gc-acc-caret i:nth-child(4) { height: 13px; animation: gcEq .6s ease-in-out infinite .15s; }
+@keyframes gcEq { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(.5); } }
+@media (prefers-reduced-motion: reduce) { tr.gc-acc-open .gc-acc-caret i { animation: none !important; } }
+
+tr.gc-acc-panel > td { padding: 0 !important; border: none; background: transparent !important; }
+.gc-acc-inner { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+.gc-acc-inner.gc-acc-modules { padding: 4px 8px 12px 54px; }
+.gc-acc-inner .stream-table { margin: 0; border-spacing: 0 10px; }
+.gc-acc-inner table.stream-table tr.training-row td {
+  background: #1c3448 !important; box-shadow: none;
+  padding: 14px 18px !important; min-height: auto;
+}
+.gc-acc-inner table.stream-table tr.training-row.no-lessons.no-children td {
+  background: #262b34 !important;
+}
+.gc-acc-inner .stream-title { font-size: 15px !important; font-weight: 700 !important; }
+.gc-acc-inner .gc-text-wrap > div { font-size: 12px; }
+.gc-acc-inner .gc-acc-caret { width: 20px; height: 18px; }
+.gc-acc-inner .gc-acc-caret i { width: 3px; }
+.gc-acc-loading, .gc-acc-error { padding: 14px 4px; font-size: 14px; color: #aab4bf; }
+
+.gc-acc-inner table.stream-table tr.training-row > td > a[data-gcnum]::before { content: none; }
+.gc-acc-inner table.stream-table tr.training-row.no-lessons.no-children > td > a::after { display: none; }
+</style>
+
+<script>
+(function () {
+  var cache = new Map();
+
+  function extractPanel(doc) {
+    var tl = doc.querySelector('.xdget-trainingList table.stream-table');
+    if (tl) return { type: 'modules', html: tl.outerHTML };
+    return null;
+  }
+
+  function isExpandable(tr) {
+    return tr.classList.contains('has-children');
+  }
+
+  function isDead(tr) {
+    return tr.classList.contains('no-children') && tr.classList.contains('no-lessons');
+  }
+
+  function restructureRow(tr) {
+    var link = tr.querySelector(':scope > td > a');
+    if (!link) return;
+    var title = link.querySelector('.stream-title');
+    if (!title) return;
+
+    if (!link.querySelector('.gc-text-wrap')) {
+      var meta = title.nextElementSibling;
+      var wrap = document.createElement('div');
+      wrap.className = 'gc-text-wrap';
+      link.insertBefore(wrap, title);
+      wrap.appendChild(title);
+      if (meta) wrap.appendChild(meta);
+    }
+
+    if (!link.hasAttribute('data-gcnum')) {
+      var m = title.textContent.match(/\d+/);
+      if (m) {
+        var num = m[0].length < 2 ? '0' + m[0] : m[0];
+        link.setAttribute('data-gcnum', num);
+      }
+    }
+  }
+
+  function markExpandable(tr) {
+    restructureRow(tr);
+    if (!isExpandable(tr)) return;
+    var link = tr.querySelector(':scope > td > a');
+    if (!link || link.querySelector('.gc-acc-caret')) return;
+    var caret = document.createElement('span');
+    caret.className = 'gc-acc-caret';
+    caret.innerHTML = '<i></i><i></i><i></i><i></i>';
+    link.appendChild(caret);
+  }
+
+  function markAllExpandable(scope) {
+    (scope || document).querySelectorAll('table.stream-table > tbody > tr.training-row').forEach(markExpandable);
+  }
+
+  function growAncestors(inner) {
+    var node = inner.parentElement;
+    while (node) {
+      var anc = node.closest ? node.closest('.gc-acc-inner') : null;
+      if (!anc) break;
+      if (anc.style.maxHeight && anc.style.maxHeight !== '0px' && anc.style.maxHeight !== 'none') {
+        anc.style.maxHeight = anc.scrollHeight + 'px';
+      }
+      node = anc.parentElement;
+    }
+  }
+
+  function settleOpen(inner, tr) {
+    var done = false;
+    var finish = function () {
+      if (done) return;
+      done = true;
+      inner.removeEventListener('transitionend', finish);
+      if (tr.classList.contains('gc-acc-open')) {
+        inner.style.maxHeight = 'none';
+        growAncestors(inner);
+      }
+    };
+    inner.addEventListener('transitionend', finish);
+    setTimeout(finish, 400);
+  }
+
+  function collapseRow(tr) {
+    tr.classList.remove('gc-acc-open');
+    var panel = tr.__gcPanel;
+    if (!panel) return;
+    var inner = panel.querySelector('.gc-acc-inner');
+    inner.style.maxHeight = inner.scrollHeight + 'px';
+    requestAnimationFrame(function () {
+      inner.style.maxHeight = '0px';
+      growAncestors(inner);
+    });
+    var done = false;
+    var remove = function () {
+      if (done) return;
+      done = true;
+      inner.removeEventListener('transitionend', remove);
+      if (panel.parentNode) panel.parentNode.removeChild(panel);
+      growAncestors(inner);
+    };
+    inner.addEventListener('transitionend', remove);
+    setTimeout(remove, 400);
+  }
+
+  function openInner(inner, tr, html) {
+    inner.innerHTML = html;
+    inner.classList.add('gc-acc-modules');
+    markAllExpandable(inner);
+    inner.style.maxHeight = 'none';
+    var h = inner.scrollHeight;
+    inner.style.maxHeight = '0px';
+    requestAnimationFrame(function () {
+      inner.style.maxHeight = h + 'px';
+      growAncestors(inner);
+      settleOpen(inner, tr);
+    });
+  }
+
+  async function expandRow(tr, link) {
+    tr.classList.add('gc-acc-open');
+    var panelRow = document.createElement('tr');
+    panelRow.className = 'gc-acc-panel';
+    var td = document.createElement('td');
+    td.colSpan = 2;
+    var inner = document.createElement('div');
+    inner.className = 'gc-acc-inner';
+    td.appendChild(inner);
+    panelRow.appendChild(td);
+    tr.parentNode.insertBefore(panelRow, tr.nextSibling);
+    tr.__gcPanel = panelRow;
+
+    var data = cache.get(link.href);
+    if (!data) {
+      inner.innerHTML = '<div class="gc-acc-loading">Загрузка…</div>';
+      inner.style.maxHeight = inner.scrollHeight + 'px';
+      growAncestors(inner);
+      try {
+        var res = await fetch(link.href, { credentials: 'same-origin' });
+        var text = await res.text();
+        var doc = new DOMParser().parseFromString(text, 'text/html');
+        data = extractPanel(doc);
+        cache.set(link.href, data);
+      } catch (e) {
+        inner.innerHTML = '<div class="gc-acc-error">Не удалось загрузить</div>';
+        return;
+      }
+    }
+
+    if (!data) {
+      inner.innerHTML = '<div class="gc-acc-error">Пусто</div>';
+      inner.style.maxHeight = inner.scrollHeight + 'px';
+      growAncestors(inner);
+      return;
+    }
+    openInner(inner, tr, data.html);
+  }
+
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('table.stream-table tr.training-row > td > a');
+    if (!link) return;
+    var tr = link.closest('tr.training-row');
+    if (isDead(tr)) {
+      e.preventDefault();
+      return;
+    }
+    if (!isExpandable(tr)) return;
+    e.preventDefault();
+    if (tr.classList.contains('gc-acc-open')) {
+      collapseRow(tr);
+    } else {
+      expandRow(tr, link);
+    }
+  }, true);
+
+  markAllExpandable(document);
+})();
+</script>

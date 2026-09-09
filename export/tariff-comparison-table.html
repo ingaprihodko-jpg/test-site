@@ -1,0 +1,37 @@
+<!--
+  Таблица сравнения тарифов «Сегодня / После старта» для письма GetCourse.
+  Вёрстка табличная, все стили инлайновые — так надёжнее переживает почтовые клиенты
+  (Gmail/Apple Mail корректно покажут скруглённые углы, Outlook на Windows углы срежет
+  до прямых — это не критично, сама таблица останется читаемой).
+  Все размеры в px. Вставлять в блок письма как HTML-код целиком.
+-->
+<table role="presentation" cellpadding="0" cellspacing="6" border="0" bgcolor="#ffffff"
+  style="width:100%; max-width:600px; border-radius:14px; overflow:hidden; border-collapse:separate; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;">
+  <tr>
+    <td width="34%" bgcolor="#f4f6fa" style="border-radius:8px; padding:16px 18px;">&nbsp;</td>
+    <td width="33%" align="center" bgcolor="#ddf7e6" style="border-radius:8px; padding:16px 10px; font-size:17px; font-weight:700; color:#1a1a1a;">Сегодня</td>
+    <td width="33%" align="center" bgcolor="#fbe2e0" style="border-radius:8px; padding:16px 10px; font-size:17px; font-weight:700; color:#1a1a1a;">После&nbsp;старта</td>
+  </tr>
+  <tr>
+    <td bgcolor="#f8f9fc" style="border-radius:8px; padding:16px 18px; font-size:16px; font-weight:700; color:#1a1a1a;">Тариф&nbsp;Лекционный</td>
+    <td align="center" bgcolor="#eefbf3" style="border-radius:8px; padding:16px 10px;">
+      <div style="font-size:19px; font-weight:700; color:#1a1a1a; white-space:nowrap;">34&nbsp;900&nbsp;₽</div>
+      <div style="margin-top:4px; font-size:14px; color:#98a2b3; white-space:nowrap;">от&nbsp;5&nbsp;817&nbsp;₽/мес</div>
+    </td>
+    <td align="center" bgcolor="#fdf3f2" style="border-radius:8px; padding:16px 10px;">
+      <div style="font-size:19px; font-weight:700; color:#1a1a1a; white-space:nowrap;">43&nbsp;900&nbsp;₽</div>
+      <div style="margin-top:4px; font-size:14px; color:#98a2b3; white-space:nowrap;">от&nbsp;7&nbsp;317&nbsp;₽/мес</div>
+    </td>
+  </tr>
+  <tr>
+    <td bgcolor="#f8f9fc" style="border-radius:8px; padding:16px 18px; font-size:16px; font-weight:700; color:#1a1a1a;">Тариф&nbsp;Практический</td>
+    <td align="center" bgcolor="#eefbf3" style="border-radius:8px; padding:16px 10px;">
+      <div style="font-size:19px; font-weight:700; color:#1a1a1a; white-space:nowrap;">39&nbsp;900&nbsp;₽</div>
+      <div style="margin-top:4px; font-size:14px; color:#98a2b3; white-space:nowrap;">от&nbsp;6&nbsp;650&nbsp;₽/мес</div>
+    </td>
+    <td align="center" bgcolor="#fdf3f2" style="border-radius:8px; padding:16px 10px;">
+      <div style="font-size:19px; font-weight:700; color:#1a1a1a; white-space:nowrap;">48&nbsp;900&nbsp;₽</div>
+      <div style="margin-top:4px; font-size:14px; color:#98a2b3; white-space:nowrap;">от&nbsp;8&nbsp;150&nbsp;₽/мес</div>
+    </td>
+  </tr>
+</table>
