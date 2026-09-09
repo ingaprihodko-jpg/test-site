@@ -23,7 +23,9 @@
     padding: clamp(40px, 8vw, 84px) 0;
   }
 
-  .wrec__wrap { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+  /* та же ширина, что и у остальных секций сайта (--max 1140) —
+     чтобы текст был выровнен по одному левому краю */
+  .wrec__wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
 
   .wrec__eyebrow {
     display: flex;
@@ -48,6 +50,7 @@
   .wrec__banner {
     display: block;
     width: 100%;
+    max-width: 760px;
     height: auto;
     border-radius: 22px;
     box-shadow: 0 30px 60px -32px rgba(22, 21, 31, 0.4);
