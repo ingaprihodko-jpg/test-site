@@ -462,6 +462,7 @@
     100% { transform: scale(1.8); opacity: 0; }
   }
 
+  .quadrant-notes { max-width: 720px; margin: 0 auto; padding: 0 30px 0 46px; }
   .types-note {
     margin-top: 28px !important;
     font-size: 15px;
@@ -815,6 +816,7 @@
     .comic-track .frame { flex: 0 0 100%; }
     .author-photo { max-width: 220px; margin: 0 auto; }
     .quadrant-wrap { --pad-l: 40px; }
+    .quadrant-notes { padding-left: 40px; }
     .qcell { min-height: 170px; }
     .tr-cols { grid-template-columns: 1fr; }
   }
@@ -823,6 +825,7 @@
     .axis-line, .axis-arrow, .ax-y-top, .ax-y-bottom, .qmarker { display: none; }
     .ax-x-start, .ax-x-end { position: static; display: inline-block; margin-bottom: 8px; }
     .quadrant-wrap { padding: 0; }
+    .quadrant-notes { padding: 0; }
     .qcell { min-height: 0; }
     .qphrase { opacity: 0.92; transform: none; }
     .hint-hover { display: none; }
@@ -978,7 +981,9 @@
 
         <span class="qmarker" id="qmarker"></span>
       </div>
+    </div>
 
+    <div class="quadrant-notes">
       <p class="types-note">Горизонтальная шкала&nbsp;— видимость влияния: явно или скрыто действует человек. Вертикальная шкала&nbsp;— на&nbsp;что опирается: на&nbsp;боль или на&nbsp;пробуждение желания.</p>
       <p class="hint-hover">Наведите на квадрант&nbsp;— увидите, как звучит каждый тип влияния.</p>
     </div>
