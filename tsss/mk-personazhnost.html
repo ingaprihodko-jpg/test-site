@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Режиссура сцены и персонажность — игровой мастер-класс TSSS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080706;
+  --bg-2:#110d09;
+  --card:#16110c;
+  --line:rgba(217,170,90,.24);
+  --gold:#d6a955;
+  --gold-hi:#f0cf8a;
+  --gold-grad:linear-gradient(180deg,#ecd08a 0%,#c99a48 45%,#94702e 100%);
+  --text:#f4f0ea;
+  --muted:#aaa49b;
+  --radius:18px;
+  --wrap:1280px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Montserrat',system-ui,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(20px,4vw,64px)}
+
+/* ---------- кнопка ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:60px;padding:0 52px;border-radius:999px;
+  background:var(--gold-grad);border:1px solid rgba(255,226,160,.65);
+  box-shadow:0 10px 30px -10px rgba(214,169,85,.55),inset 0 1px 0 rgba(255,255,255,.35);
+  color:#fff;text-shadow:0 1px 2px rgba(80,50,10,.55);font-weight:700;font-size:17px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;
+  transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 16px 36px -10px rgba(214,169,85,.7),inset 0 1px 0 rgba(255,255,255,.35)}
+.btn:active{transform:translateY(0)}
+
+/* ---------- общие ---------- */
+.sec{padding:56px 0;position:relative}
+.h2{font-size:clamp(28px,3.8vw,46px);font-weight:800;line-height:1.1;text-transform:uppercase;text-align:center}
+.h2 em{font-style:normal;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:19px;max-width:720px;margin:16px auto 0;text-align:center}
+.dots{position:absolute;pointer-events:none;background-image:radial-gradient(circle,var(--gold) 1.6px,transparent 2px);background-size:14px 14px}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:min(100vh,820px);display:flex;align-items:center;overflow:hidden;background:var(--bg)}
+.hero__photo{position:absolute;inset:0;background:url(assets/mk-hero.webp) right 0 bottom 0/auto 100% no-repeat;
+  -webkit-mask:linear-gradient(90deg,transparent 30%,#000 62%);mask:linear-gradient(90deg,transparent 30%,#000 62%)}
+.hero__shade{position:absolute;inset:0;background:
+  linear-gradient(90deg,var(--bg) 0%,rgba(8,7,6,.9) 34%,rgba(8,7,6,.35) 62%,rgba(8,7,6,0) 82%),
+  linear-gradient(0deg,var(--bg) 0%,rgba(8,7,6,0) 20%),linear-gradient(180deg,rgba(8,7,6,.7) 0%,rgba(8,7,6,0) 25%)}
+.hero .dots{left:-60px;top:50%;width:380px;height:760px;transform:translateY(-50%);
+  -webkit-mask:radial-gradient(ellipse 55% 50% at 0% 50%,#000 0%,rgba(0,0,0,.5) 40%,transparent 75%);
+          mask:radial-gradient(ellipse 55% 50% at 0% 50%,#000 0%,rgba(0,0,0,.5) 40%,transparent 75%);opacity:.8}
+.hero .wrap{position:relative;z-index:2;width:100%;padding-top:52px;padding-bottom:68px}
+.hero__in{max-width:min(860px,64%);margin-left:clamp(0px,8vw,150px)}
+.brand{display:flex;align-items:center;gap:22px}
+.brand img{width:140px;height:auto}
+.brand p{font-size:clamp(14px,1.5vw,19px);line-height:1.35;color:#e8e4dd;max-width:470px}
+.eyebrow{margin-top:60px;font-size:clamp(20px,2.4vw,34px);font-weight:600;letter-spacing:.02em;text-transform:uppercase}
+.hero h1{margin-top:8px;margin-bottom:0;font-weight:800;font-size:clamp(40px,6vw,84px);line-height:1;text-transform:uppercase;color:#fff}
+.hero__sub{margin-top:24px;font-size:clamp(17px,1.6vw,22px);font-weight:500;line-height:1.3;max-width:620px}
+.hero .btn{margin-top:48px;min-width:360px}
+.m-br{display:none}
+
+/* ---------- ПОДАРОК ---------- */
+.gift{padding-top:24px}
+.gift__card{position:relative;overflow:hidden;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center;padding:36px 44px;border-radius:24px;
+  background:radial-gradient(100% 140% at 0% 0%,rgba(214,169,85,.22),transparent 60%),var(--card);border:1px solid var(--line)}
+.gift__ico{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;background:var(--gold-grad);box-shadow:0 0 0 10px rgba(214,169,85,.12)}
+.gift__ico svg{width:44px;height:44px}
+.gift small{font-size:15px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.gift p{margin-top:8px;font-size:clamp(19px,2vw,24px);font-weight:600;line-height:1.35}
+
+/* ---------- ЗАЧЕМ ---------- */
+.why__grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:44px}
+.why__card{padding:30px 32px;border-radius:var(--radius);background:var(--card);border:1px solid rgba(255,255,255,.06)}
+.why__card p{font-size:19px;line-height:1.45}
+.why__card b{display:block;width:44px;height:4px;margin-bottom:20px;border-radius:2px;background:rgba(255,255,255,.18)}
+.why__turn{grid-column:1/-1;padding:34px 36px;border-radius:var(--radius);background:linear-gradient(135deg,rgba(214,169,85,.16),rgba(214,169,85,.04));border:1px solid var(--line)}
+.why__turn p{font-size:20px;line-height:1.45}
+.why__turn strong{display:inline-block;margin-right:6px;color:var(--gold-hi);font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.why__key{grid-column:1/-1;position:relative;overflow:hidden;padding:40px 44px;border-radius:24px;background:var(--gold-grad);color:#1a1208}
+.why__key p{position:relative;font-size:clamp(20px,2.2vw,26px);font-weight:700;line-height:1.35}
+
+/* ---------- ЭТАПЫ ---------- */
+.stages{background:linear-gradient(180deg,var(--bg) 0,var(--bg-2) 200px,var(--bg-2) calc(100% - 200px),var(--bg) 100%)}
+.stages .dots{right:0;top:60px;width:340px;height:520px;opacity:.35;
+  -webkit-mask:radial-gradient(ellipse 70% 50% at 100% 50%,#000,transparent 75%);mask:radial-gradient(ellipse 70% 50% at 100% 50%,#000,transparent 75%)}
+.stages__grid{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px}
+.stage{padding:36px 34px;border-radius:24px;background:var(--card);border:1px solid var(--line)}
+.stage__num{display:inline-block;padding:7px 16px;border-radius:999px;background:rgba(214,169,85,.14);color:var(--gold-hi);font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.stage h3{margin-top:18px;font-size:clamp(20px,2vw,24px);font-weight:800;line-height:1.25}
+.stage__note{margin-top:8px;color:var(--muted);font-size:16px}
+.stage__lbl{margin-top:24px;font-weight:700}
+.list{list-style:none;margin-top:14px;display:grid;gap:12px}
+.list li{position:relative;padding-left:24px;color:#dcd8d1;font-size:17px}
+.list li::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.total{position:relative;display:flex;gap:22px;align-items:center;margin-top:24px;padding:28px 34px;border-radius:var(--radius);
+  background:linear-gradient(90deg,rgba(214,169,85,.18),rgba(214,169,85,.04));border:1px solid var(--line)}
+.total i{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--gold-grad);color:#fff;font-style:normal;font-size:24px;font-weight:700;text-shadow:0 1px 2px rgba(80,50,10,.5)}
+.total p{font-size:19px;line-height:1.4}
+.total b{color:var(--gold-hi)}
+
+/* ---------- ФОРМАТ И СТОИМОСТЬ ---------- */
+.price__grid{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;margin-top:44px;align-items:stretch}
+.facts{display:grid;gap:14px}
+.fact{display:flex;gap:20px;align-items:flex-start;padding:22px 26px;border-radius:var(--radius);background:var(--card);border:1px solid rgba(255,255,255,.06)}
+.fact i{flex:none;width:12px;height:12px;margin-top:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 6px rgba(214,169,85,.15)}
+.fact h3{font-size:19px;font-weight:700;line-height:1.3}
+.fact p{margin-top:4px;color:var(--muted);font-size:16px;line-height:1.45}
+.card-price{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:44px 40px;border-radius:24px;
+  background:radial-gradient(120% 80% at 100% 0%,rgba(214,169,85,.28),transparent 60%),var(--card);border:1px solid var(--line)}
+.card-price .dots{right:-40px;top:-40px;width:260px;height:260px;opacity:.4;-webkit-mask:radial-gradient(circle at 100% 0%,#000,transparent 70%);mask:radial-gradient(circle at 100% 0%,#000,transparent 70%)}
+.card-price>*:not(.dots){position:relative}
+.card-price small{font-size:15px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.card-price s{display:block;margin-top:16px;color:var(--muted);font-size:24px;font-weight:600;text-decoration-color:var(--gold);text-decoration-thickness:2px}
+.card-price .now{margin-top:4px;font-size:clamp(52px,5.5vw,72px);font-weight:900;line-height:1}
+.card-price .btn{margin-top:36px;width:100%;padding:0 24px}
+
+/* ---------- ПРЕПОДАВАТЕЛИ ---------- */
+.teachers{background:linear-gradient(180deg,var(--bg) 0,var(--bg-2) 200px)}
+.teachers__grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px}
+.tch{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:start;padding:28px;border-radius:24px;background:var(--card);border:1px solid rgba(255,255,255,.06)}
+.photo{aspect-ratio:4/5;border-radius:18px;overflow:hidden;display:grid;place-items:center;background:linear-gradient(160deg,#241a10,#100c08);border:1px solid var(--line)}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.photo span{color:var(--muted);font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+.tch__name{font-size:clamp(24px,2.4vw,32px);font-weight:900;line-height:1.05;text-transform:uppercase}
+.tch .list{margin-top:18px;gap:10px}
+.tch .list li{font-size:16px}
+.tch .list li::before{width:12px;height:2px;border-radius:2px;top:.72em}
+.tch .list li{padding-left:24px}
+
+/* ---------- появление ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .rv.in{opacity:1;transform:none}
+}
+
+/* ---------- адаптив ---------- */
+@media (max-width:1024px){
+  .price__grid,.stages__grid,.teachers__grid{grid-template-columns:1fr}
+  .sec{padding:48px 0}
+}
+@media (max-width:900px){
+  .hero{min-height:auto;align-items:flex-start;text-align:center}
+  .hero .wrap{padding-top:min(9vw,52px);padding-bottom:min(66vw,500px)}
+  .hero__in{max-width:none;margin:0;display:flex;flex-direction:column;align-items:center}
+  .hero__photo{top:auto;bottom:0;height:min(70vw,500px);background-size:min(100%,720px) auto;background-position:center bottom;
+    -webkit-mask:linear-gradient(180deg,transparent 0,#000 32%);mask:linear-gradient(180deg,transparent 0,#000 32%)}
+  .hero__shade{background:linear-gradient(0deg,var(--bg) 0,rgba(8,7,6,0) 10%)}
+  .hero .dots{left:-140px;width:300px;height:640px;opacity:.5}
+  .brand{justify-content:center;gap:2.6vw;text-align:left}
+  .brand img{width:min(16vw,120px);min-width:58px}
+  .brand p{font-size:min(3.1vw,16px);line-height:1.3;max-width:min(66vw,440px)}
+  .eyebrow{margin-top:min(9vw,52px);font-size:min(5.4vw,32px);line-height:1.1}
+  .hero h1{margin-top:1vw;font-size:min(9.6vw,76px)}
+  .hero__sub{margin:min(4vw,28px) auto 0;font-size:min(4.4vw,24px);line-height:1.2}
+  .m-br{display:inline}
+  .hero .btn{margin-top:min(6vw,36px);min-width:min(64vw,360px);min-height:50px;padding:0 34px;font-size:15px}
+  .why__grid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  .sec{padding:36px 0}
+  .why__grid,.stages__grid,.price__grid,.teachers__grid{margin-top:28px}
+  .h2{font-size:25px}
+  .gift__card{grid-template-columns:1fr;justify-items:center;text-align:center;gap:20px;padding:30px 22px}
+  .gift__ico{width:72px;height:72px}
+  .gift__ico svg{width:36px;height:36px}
+  .why__card,.why__turn{padding:24px 22px}
+  .why__card p{font-size:17px}
+  .why__turn p{font-size:18px}
+  .why__key{padding:28px 22px}
+  .stage{padding:28px 22px}
+  .list li{font-size:16px}
+  .total{flex-direction:column;align-items:flex-start;padding:24px 22px}
+  .total p{font-size:17px}
+  .fact{padding:20px}
+  .card-price{padding:32px 22px}
+  .btn{font-size:15px;letter-spacing:.04em;white-space:nowrap}
+  .tch{grid-template-columns:1fr;padding:22px}
+  .photo{max-width:260px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero__photo" aria-hidden="true"></div>
+  <div class="hero__shade" aria-hidden="true"></div>
+  <div class="dots" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero__in">
+      <div class="brand">
+        <img src="assets/tsss-logo.png" alt="Tim Shtok Sound Studio">
+        <p>Дистанционное обучение озвучке книг, видеоконтента, рекламы и&nbsp;т.д</p>
+      </div>
+      <p class="eyebrow">Игровой мастер-класс</p>
+      <h1>Режиссура<br>сцены и<br>персонажность</h1>
+      <p class="hero__sub">Узнайте приемы режиссерской работы в&nbsp;озвучке и&nbsp;научитесь раскрывать характеры персонажей, контролировать интонационную подачу и&nbsp;создавать по-настоящему убедительные&nbsp;сцены</p>
+      <a class="btn" href="#form">Участвовать</a>
+    </div>
+  </div>
+</header>
+
+<section class="sec gift">
+  <div class="wrap">
+    <div class="gift__card rv">
+      <div class="gift__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg></div>
+      <div>
+        <small>Подарок каждому участнику</small>
+        <p>Карты-конструктор сцен для поиска новых сочетаний, творческих экспериментов и&nbsp;дальнейших&nbsp;тренировок</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec why">
+  <div class="wrap">
+    <h2 class="h2 rv">Зачем диктору <em>режиссерский взгляд?</em></h2>
+    <div class="why__grid">
+      <div class="why__card rv"><b aria-hidden="true"></b><p>Можно изменить тембр, добавить эмоций и&nbsp;прочитать выразительно. Но&nbsp;герой останется пластмассовым, а&nbsp;сцена&nbsp;— набором&nbsp;реплик</p></div>
+      <div class="why__card rv"><b aria-hidden="true"></b><p>Дикция, дыхание и&nbsp;выразительность дают профессиональную&nbsp;основу</p></div>
+      <div class="why__turn rv"><p><strong>Но!</strong> Дальнейший рост связан с&nbsp;точностью решений: почему герой говорит именно так, что происходит между персонажами и&nbsp;какой эффект создает ваше&nbsp;исполнение.</p></div>
+      <div class="why__key rv"><p>Именно здесь начинается режиссерский взгляд&nbsp;— навык, который становится повышающим коэффициентом гонорара диктора и&nbsp;выводит его на&nbsp;новый уровень&nbsp;карьеры</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec stages">
+  <div class="dots" aria-hidden="true"></div>
+  <div class="wrap">
+    <h2 class="h2 rv"><em>Как проходит мастер-класс</em></h2>
+    <p class="lead rv">Программа состоит из&nbsp;2-х&nbsp;этапов</p>
+    <div class="stages__grid">
+      <div class="stage rv">
+        <span class="stage__num">1 этап</span>
+        <h3>Основы режиссерского подхода к&nbsp;персонажам и&nbsp;созданию сцен в&nbsp;озвучке</h3>
+        <p class="stage__note">Теоретическая часть</p>
+        <p class="stage__lbl">Вы получаете знания, которые помогут:</p>
+        <ul class="list">
+          <li>Создавать характеры без карикатурных&nbsp;голосов</li>
+          <li>Передавать эмоции без искусственности и&nbsp;переигрывания</li>
+          <li>Превращать отдельные реплики в&nbsp;живое взаимодействие между&nbsp;героями</li>
+          <li>Находить разные трактовки одной&nbsp;сцены</li>
+          <li>Слышать, что мешает исполнению, и&nbsp;понимать, как его&nbsp;улучшить</li>
+          <li>Замечать шаблонность и&nbsp;давать себе конкретные правки вместо бесконечного «попробую»</li>
+        </ul>
+      </div>
+      <div class="stage rv">
+        <span class="stage__num">2 этап</span>
+        <h3>Отработка навыков в&nbsp;игровом тренинговом формате с&nbsp;участниками и&nbsp;преподавателем в&nbsp;прямом&nbsp;эфире</h3>
+        <p class="stage__lbl">На этом этапе вы:</p>
+        <ul class="list">
+          <li>Будете учиться создавать и&nbsp;исполнять сцены, менять роли, слушать друг друга и&nbsp;пробовать новые&nbsp;решения.</li>
+          <li>Пройдете путь от&nbsp;первого прочтения до&nbsp;нового&nbsp;исполнения</li>
+          <li>Обсудите решения и&nbsp;услышите, как меняется сцена после точной&nbsp;правки</li>
+        </ul>
+      </div>
+    </div>
+    <div class="total rv"><i>✓</i><p><b>Итог 2-х этапов.</b> Получите алгоритм работы с&nbsp;персонажем и&nbsp;сценами, к&nbsp;которому можно возвращаться перед&nbsp;записью</p></div>
+  </div>
+</section>
+
+<section class="sec price" id="price">
+  <div class="wrap">
+    <h2 class="h2 rv"><em>Формат участия и&nbsp;стоимость</em></h2>
+    <div class="price__grid">
+      <div class="facts">
+        <div class="fact rv"><i></i><div><h3>Живой мастер-класс</h3><p>Три часа теории, демонстраций и&nbsp;практики в&nbsp;прямом&nbsp;эфире.</p></div></div>
+        <div class="fact rv"><i></i><div><h3>Два игровых раунда</h3><p>Работа со&nbsp;сценами и&nbsp;партнерами в&nbsp;небольших группах и&nbsp;обратной связью от&nbsp;преподавателя</p></div></div>
+        <div class="fact rv"><i></i><div><h3>Запись общей части</h3><p>Чтобы пересмотреть объяснения и&nbsp;разборы после&nbsp;встречи.</p></div></div>
+        <div class="fact rv"><i></i><div><h3>Карты-конструктор сцен&nbsp;— в&nbsp;подарок</h3><p>Для новых сочетаний, творческих экспериментов и&nbsp;дальнейших&nbsp;тренировок.</p></div></div>
+        <div class="fact rv"><i></i><div><h3>Памятка для самостоятельной работы</h3><p>Вопросы для разбора сцены и&nbsp;проверки&nbsp;исполнения.</p></div></div>
+      </div>
+      <div class="card-price rv">
+        <div class="dots" aria-hidden="true"></div>
+        <small>Стоимость</small>
+        <s>5&nbsp;500&nbsp;₽</s>
+        <div class="now">3&nbsp;900&nbsp;₽</div>
+        <a class="btn" href="#form">Забронировать участие</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec teachers">
+  <div class="wrap">
+    <h2 class="h2 rv"><em>Преподаватель мастер-класса</em></h2>
+    <div class="teachers__grid">
+      <div class="tch rv">
+        <div class="photo"><span>Фото</span></div>
+        <div>
+          <div class="tch__name">Антон<br>Гусаков</div>
+          <ul class="list">
+            <li>Генеральный директор медиахолдинга&nbsp;TSSS</li>
+            <li>Куратор школы TSSS</li>
+            <li>Помогает студентам запускать свои&nbsp;проекты</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tch rv">
+        <div class="photo"><span>Фото</span></div>
+        <div>
+          <div class="tch__name">Тим<br>Шток</div>
+          <ul class="list">
+            <li>Журналист, писатель</li>
+            <li>В прошлом&nbsp;— главный голос молодежного вещания канала «Россия&nbsp;1»</li>
+            <li>Много лет работал в&nbsp;СМИ</li>
+            <li>Ведущий диктор озвучания студии Sound Design&nbsp;RUS</li>
+            <li>Большой опыт работы на&nbsp;фрилансе</li>
+            <li>В 2022 основал студию TSSS</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>

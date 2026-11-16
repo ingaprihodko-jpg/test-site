@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Карта прогрева аудитории — Какой скандал!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* цвета коробки «Какой скандал!»: жёлтый, красный, чёрный, оранжевое пламя */
+:root{--yellow:#FFDD00;--yellow-soft:#FFF6BF;--red:#E2231A;--orange:#F26B1D;--ink:#161616;--paper:#fff;--grey:#8a8a8a}
+@page{size:A4;margin:18mm 18mm 20mm;
+  @bottom-right{content:counter(page);font:700 10pt Manrope,sans-serif;color:var(--grey)}
+  @bottom-left{content:"Карта прогрева · Какой скандал! · F5GAME.RU";font:600 9pt Manrope,sans-serif;color:#b0b0b0;letter-spacing:.04em}
+}
+@page cover{margin:0;@bottom-right{content:none}@bottom-left{content:none}}
+@page full{margin:0;@bottom-right{content:none}@bottom-left{content:none}}
+*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html,body{margin:0;background:#fff}
+body{font:400 14pt/1.55 Manrope,sans-serif;color:var(--ink)}
+p{margin:0 0 3.5mm;text-wrap:pretty}
+b{font-weight:800}
+h2,h3,.disp{font-family:Unbounded,sans-serif;margin:0;text-wrap:balance}
+.page{break-before:page}
+
+/* ОБЛОЖКА */
+.cover{page:cover;height:297mm;position:relative;overflow:hidden;background:var(--yellow)}
+.cover .burst{position:absolute;left:3mm;top:6mm;width:204mm;height:150mm}
+/* обложка: только два стиля — капс и строчные, всё по центру */
+.cover .caps{font:900 30pt/1.15 Unbounded;text-transform:uppercase;text-align:center;margin:0}
+.cover .low{font:600 15pt/1.4 Manrope;text-align:center;margin:3mm auto 4mm;max-width:120mm}
+.cover .title{position:absolute;left:0;right:0;top:50mm;z-index:1}
+.cover .red{color:var(--red)}
+.cover .brand{position:absolute;left:0;right:0;bottom:7mm;z-index:3;color:#fff}
+.cover .flames{position:absolute;left:0;right:0;bottom:0;height:80mm;background:
+  radial-gradient(55% 60% at 8% 100%,var(--orange) 70%,transparent 71%),
+  radial-gradient(38% 55% at 33% 100%,var(--red) 70%,transparent 71%),
+  radial-gradient(42% 62% at 60% 100%,var(--orange) 70%,transparent 71%),
+  radial-gradient(40% 40% at 92% 100%,var(--red) 70%,transparent 71%)}
+.cover .pair{position:absolute;left:50%;transform:translateX(-50%);bottom:0;height:185mm;max-width:210mm;z-index:1}
+.cover .flames{z-index:2}  /* пламя перекрывает ноги: герои стоят, а не висят */
+
+/* ОБЩЕЕ */
+.kicker{font:800 10.5pt Unbounded;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:3mm}
+.h{padding-top:2mm;font:900 26pt/1.2 Unbounded;text-transform:uppercase;margin:0 0 7mm}
+.h .r{color:var(--red)}
+.lead{font-size:16pt;line-height:1.5}
+.p1 .lead{font-size:19pt;margin-bottom:7mm}
+.p1 p{font-size:16pt}
+.p1 .box{margin-top:14mm}
+.lead b:first-child{font-family:Unbounded;font-weight:900;color:var(--red)}
+.box{background:var(--yellow);border:3px solid var(--ink);border-radius:6mm;padding:8mm 9mm;margin:8mm 0;box-shadow:2.5mm 2.5mm 0 var(--ink);break-inside:avoid}
+.box .t{font:900 15pt Unbounded;text-transform:uppercase;margin-bottom:3mm}
+.box p{margin:0;font-weight:600}
+.box .big{font:900 24pt/1.15 Unbounded;color:var(--red);margin:1mm 0 2mm}
+
+/* ШАГИ */
+.step{display:grid;grid-template-columns:24mm 1fr;gap:5mm;margin:0 0 7mm;break-inside:avoid}
+.step .n{width:24mm;height:24mm;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;text-align:center;font:900 10pt/1.1 Unbounded;text-transform:uppercase}
+.step .n b{display:block;font-size:24pt;font-weight:900}
+.step .lbl{font:800 14pt/1.35 Manrope;margin:2mm 0 2.5mm}
+.step p{margin:0 0 2.5mm}
+.plan{background:var(--yellow-soft);border-radius:5mm;padding:7mm 8mm;margin-top:3mm;break-inside:avoid}
+.plan .t{font:800 11pt Unbounded;letter-spacing:.06em;margin-bottom:4mm}
+.plan ul{margin:0;padding:0;list-style:none}
+.plan li{position:relative;padding-left:9mm;margin:0 0 2.2mm;font-weight:600}
+.plan li::before{content:"";position:absolute;left:0;top:1.4mm;width:4.5mm;height:4.5mm;border:2px solid var(--ink);border-radius:1.2mm;background:#fff}
+
+/* ЭТАПЫ */
+.stages{display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin-top:2mm}
+.stage{border:2.5px solid var(--ink);border-radius:4.5mm;padding:4mm 5mm;background:#fff;break-inside:avoid}
+.stage .e{font:900 9.5pt Unbounded;letter-spacing:.08em;color:var(--red)}
+.stage p{margin:1mm 0 0;font-weight:700;font-size:13pt;line-height:1.35}
+.stage.last{grid-column:span 2;background:var(--yellow)}
+.note{display:inline-block;margin-top:6mm;background:var(--ink);color:var(--yellow);border-radius:3mm;padding:3mm 6mm;font:800 12pt Manrope}
+
+/* СПИСКИ-ЧИПЫ */
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:2.2mm 3.5mm;margin-top:3mm}
+.chips div{background:var(--yellow-soft);border-radius:3.5mm;padding:2mm 3.5mm 2mm 9mm;position:relative;font-size:12pt;line-height:1.3;font-weight:600;break-inside:avoid}
+.chips div::before{content:"";position:absolute;left:3.6mm;top:3.5mm;width:2.6mm;height:2.6mm;border-radius:50%;background:var(--red)}
+.chips small{display:block;font-weight:500;color:#555}
+.sub{font:800 14pt Manrope;margin:7mm 0 0}
+
+/* ВОПРОС-ОБЛАЧКО */
+.say{position:relative;background:var(--red);color:#fff;border-radius:6mm;padding:9mm 10mm;margin:8mm 0 18mm;font:800 17pt/1.4 Manrope;box-shadow:2.5mm 2.5mm 0 var(--ink)}
+.say::after{content:"";position:absolute;left:18mm;bottom:-12mm;border:6mm solid transparent;border-top:12mm solid var(--red);border-bottom:0}
+.p6 .art{display:block;width:150mm;margin:4mm auto 0}
+
+/* ШАГ 4 */
+.formula{margin:8mm 0 2mm;background:var(--ink);color:#fff;border-radius:5mm;padding:7mm 8mm;text-align:center;break-inside:avoid}
+.formula .disp{font:900 15pt/1.35 Unbounded;color:var(--yellow)}
+.formula .tag{display:inline-block;margin-top:4mm;background:var(--red);border-radius:2mm;padding:1.5mm 4mm;font:800 10pt Unbounded;letter-spacing:.06em}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:5mm;margin:4mm 0 8mm;break-inside:avoid}
+.cards img{width:100%;display:block;border-radius:4mm;box-shadow:0 2mm 6mm rgba(0,0,0,.18)}
+ol.todo{list-style:none;counter-reset:t;margin:0 0 6mm;padding:0}
+ol.todo li{counter-increment:t;position:relative;padding-left:13mm;margin:0 0 4.5mm;break-inside:avoid}
+ol.todo li::before{content:counter(t);position:absolute;left:0;top:.5mm;width:9mm;height:9mm;border-radius:50%;background:var(--yellow);border:2px solid var(--ink);display:grid;place-items:center;font:900 12pt Unbounded}
+
+/* ФИНАЛ */
+.final{page:full;break-before:page;height:297mm;position:relative;overflow:hidden;background:var(--yellow);padding:28mm 18mm}
+.final h2{font:900 40pt/1 Unbounded;color:var(--red);text-transform:uppercase}
+.final .t2{font:800 22pt/1.25 Unbounded;margin-top:5mm}
+.final .flames{position:absolute;left:0;right:0;bottom:0;height:60mm;background:
+  radial-gradient(60% 90% at 10% 100%,var(--orange) 40%,transparent 41%),
+  radial-gradient(40% 80% at 35% 100%,var(--red) 40%,transparent 41%),
+  radial-gradient(45% 95% at 62% 100%,var(--orange) 40%,transparent 41%),
+  radial-gradient(40% 75% at 90% 100%,var(--red) 40%,transparent 41%)}
+.final .olga{position:absolute;right:0;bottom:0;height:185mm;z-index:1}
+.final .box3d{position:absolute;left:14mm;bottom:12mm;height:120mm;z-index:2;filter:drop-shadow(0 3mm 6mm rgba(0,0,0,.35))}
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <svg class="burst" viewBox="-4 -4 208 168" preserveAspectRatio="none"><polygon points="100.0,2.8 106.6,13.0 114.8,5.2 119.6,14.7 131.0,3.8 132.1,17.9 142.6,13.1 143.9,22.7 158.1,16.0 154.6,28.9 168.6,25.1 163.9,36.4 175.8,36.0 171.6,44.9 187.8,44.2 177.6,54.3 188.8,56.9 181.7,64.3 196.6,67.8 183.7,74.7 193.8,80.0 183.7,85.3 192.8,91.8 181.7,95.7 192.9,104.1 177.6,105.7 191.0,117.1 171.6,115.1 176.3,124.4 163.9,123.6 167.5,134.0 154.6,131.1 158.7,144.7 143.9,137.3 147.0,153.7 132.1,142.1 130.7,155.6 119.6,145.3 115.2,156.9 106.6,147.0 100.0,163.0 93.4,147.0 85.4,153.9 80.4,145.3 68.3,157.9 67.9,142.1 56.3,148.6 56.1,137.3 44.4,141.2 45.4,131.1 33.3,133.3 36.1,123.6 22.0,125.3 28.4,115.1 9.1,117.0 22.4,105.7 9.7,103.5 18.3,95.7 1.8,92.4 16.3,85.3 -0.0,80.0 16.3,74.7 4.1,67.8 18.3,64.3 5.8,55.5 22.4,54.3 16.5,46.0 28.4,44.9 24.2,36.0 36.1,36.4 32.6,26.1 45.4,28.9 40.9,15.0 56.1,22.7 55.6,10.4 67.9,17.9 70.2,6.6 80.4,14.7 84.4,1.4 93.4,13.0" fill="#fff" stroke="#161616" stroke-width="1.2" stroke-linejoin="round"/></svg>
+  <div class="title">
+    <p class="caps">КАРТА ПРОГРЕВА</p>
+    <p class="low">на&nbsp;игру/тренинг с&nbsp;использованием экспертных карт</p>
+    <p class="caps red">КАКОЙ СКАНДАЛ!</p>
+  </div>
+  <div class="flames"></div>
+  <img class="pair" src="img/s-pair.png" alt="">
+  <p class="caps brand">F5GAME.RU</p>
+</section>
+
+<section class="page p1">
+  <p class="lead"><b>ПРОГРЕВ</b> — это последовательное создание у аудитории жгучего интереса к вам и вашему продукту, которое заканчивается продажами, приносящими людям счастье.</p>
+  <p>Прогрев реализуется в соцсетях и задействует все виды коммуникаций с потенциальными клиентами: посты, видеоролики, прямые эфиры.</p>
+  <div class="box">
+    <div class="t">ПРОДОЛЖИТЕЛЬНОСТЬ ПРОГРЕВА:</div>
+    <div class="big">от 1 дня до 2-3 месяцев</div>
+    <p>перед большим запуском продукта.</p>
+  </div>
+</section>
+
+<section class="page">
+  <div class="step"><div class="n"><b>1</b>шаг</div><div>
+    <div class="lbl">Определите главную цель прогрева.</div>
+    <p>Например, собрать группу 12 человек на игру.</p>
+  </div></div>
+  <div class="step"><div class="n"><b>2</b>шаг</div><div>
+    <div class="lbl">Рассчитайте продолжительность прогрева.</div>
+    <p>Продолжительность прогрева может быть от 1 дня до 2-3 месяцев перед большим запуском продукта.</p>
+    <p>Продолжительность зависит от того, насколько аудитория уже знакома с вами и вашим продуктом и от его стоимости. Для подготовки к дорогому запуску требуется больше времени.</p>
+    <p>Пример: вы хотите собрать группу на игру за 2 недели.</p>
+  </div></div>
+  <div class="step"><div class="n"><b>3</b>шаг</div><div>
+    <div class="lbl">Составление контент-плана прогрева.</div>
+    <div class="plan">
+      <div class="t">СОДЕРЖАНИЕ КОНТЕНТ-ПЛАНА ПО ДНЯМ</div>
+      <ul>
+        <li>Дата</li>
+        <li>Этап прогрева (может растягиваться на несколько дней)</li>
+        <li>Главная идея дня</li>
+        <li>Целевое действие аудитории, которое вы ожидаете</li>
+        <li>Сюжетная линия</li>
+        <li>Впечатления</li>
+      </ul>
+    </div>
+  </div></div>
+</section>
+
+<section class="page">
+  <h2 class="h">ЭТАПЫ ПРОГРЕВА</h2>
+  <p>Чтобы вы могли составлять контент-план прогрева, как пазл, расшифруем, какими могут быть все составляющие контент-плана.</p>
+  <div class="kicker" style="margin-top:6mm">ОСНОВНЫЕ ЭТАПЫ ПРОГРЕВА</div>
+  <div class="stages">
+    <div class="stage"><div class="e">ЭТАП 1</div><p>История, с которой все начинается</p></div>
+    <div class="stage"><div class="e">ЭТАП 2</div><p>Вброс идеи</p></div>
+    <div class="stage"><div class="e">ЭТАП 3</div><p>Обсуждение, создание ажиотажа</p></div>
+    <div class="stage"><div class="e">ЭТАП 4</div><p>Рассказ о продукте</p></div>
+    <div class="stage"><div class="e">ЭТАП 5</div><p>Кейсы и истории, демонстрирующие продукт</p></div>
+    <div class="stage"><div class="e">ЭТАП 6</div><p>Объявление даты и создание предвкушения</p></div>
+    <div class="stage"><div class="e">ЭТАП 7</div><p>Открытие регистраций в назначенную дату</p></div>
+    <div class="stage"><div class="e">ЭТАП 8</div><p>Демонстрация интереса аудитории</p></div>
+    <div class="stage"><div class="e">ЭТАП 9</div><p>Обсуждение страхов и сдерживающих факторов аудитории</p></div>
+    <div class="stage"><div class="e">ЭТАП 10</div><p>Завершение продаж</p></div>
+    <div class="stage last"><div class="e">ЭТАП 11</div><p>Демонстрация результатов</p></div>
+  </div>
+  <div class="note">можно использовать не все этапы</div>
+</section>
+
+<section class="page">
+  <h2 class="h">ЦЕЛЕВОЕ ДЕЙСТВИЕ</h2>
+  <p>Главная идея дня — это та мысль, с который вы бы хотели оставить свою аудиторию после изучения вашего контента.</p>
+  <p>Например: «Интересно, а у меня получится создавать управляемые конфликты?»</p>
+  <div class="sub">Примеры целевых действий аудитории:</div>
+  <div class="chips">
+    <div>Подписка на телеграм-канал</div>
+    <div>Вопрос по теме</div>
+    <div>Комментарий к посту</div>
+    <div>Переписка в личных сообщениях</div>
+    <div>Участие в игре в канале</div>
+    <div>Переход на ваш сайт</div>
+    <div>Передача контактов<small>(например, в форме предварительной регистрации)</small></div>
+    <div>Получение подарка от вас (гайд, чек-лист, алгоритм и т.д.)</div>
+    <div>Подписка на рассылку</div>
+    <div>Подключение уведомлений на публикации</div>
+    <div>Рассказ о вас в посте или истории</div>
+    <div>Репост вашей публикации или истории</div>
+    <div>Написание отзыва (текст или видео)</div>
+    <div>Предзаказ</div>
+    <div>Покупка</div>
+    <div>Апгрейд покупки или дополнительные покупки</div>
+    <div>Приглашение друзей к вам на страницу</div>
+  </div>
+</section>
+
+<section class="page">
+  <h2 class="h">ИНФОПОВОД</h2>
+  <p>На чем может строиться сюжетная линия, которая подводит аудиторию к целевому действию:</p>
+  <div class="chips">
+    <div>Проблема, с которой вы столкнулись</div>
+    <div>Интерес, которым вы сейчас живете</div>
+    <div>Ваше большое достижение</div>
+    <div>Эмоция, которая вас захватила</div>
+    <div>Результат, на который вы вышли</div>
+    <div>Идея, инсайт, которыми вы хотите поделиться</div>
+    <div>Провал, который вы переживаете</div>
+    <div>Открытие дня</div>
+    <div>Большое приключение, в котором вы оказались</div>
+    <div>Встреча, диалог, которые оказали на вас влияние</div>
+    <div>Ваш страх, ограничение или установка, с которыми вы работаете</div>
+    <div>Смешная ситуация</div>
+    <div>Челлендж, который вы хотите реализовать</div>
+    <div>Ситуация, в которой вы оказались и нашли или не нашли выход</div>
+    <div>Знак Вселенной, который вы встретили и трактовали в свою пользу</div>
+    <div>Ваша большая мечта (путь к ней или реализация)</div>
+    <div>Отношения, которые для вас важны (с любимым, родителями, детьми, друзьями)</div>
+    <div>Желания из детства, которые ушли в тень на долгие годы</div>
+    <div>Обучение, которое вы проходите</div>
+    <div>Ваша ценность, и как она реализуется (например, получать впечатления от жизни)</div>
+    <div>Деньги, и какие у вас отношения с ними</div>
+    <div>Как вы решаете бытовые вопросы</div>
+  </div>
+</section>
+
+<section class="page p6">
+  <p class="lead">Любая история интересна аудитории, только если в ней есть что-то удивительное, цепляющее, интригующее, создающее WOW-эффект и впечатления.</p>
+  <p class="sub">Ответьте себе на вопрос:</p>
+  <div class="say">— Что нужно добавить в сюжетную линию, чтобы аудитория сказала: «Вот это да!»</div>
+  <img class="art" src="img/s-glasses.png" alt="">
+</section>
+
+<section class="page">
+  <div class="step"><div class="n"><b>4</b>шаг</div><div>
+    <p>Выберите одну из карт «Какой скандал!» — это может быть техника, кейс или карта-схема. Не нужно ее раскрывать аудитории, подумайте сами, чем вас зацепила сейчас именно эта карта, на какую идею она вас натолкнула, какие мысли у вас появились – и напишите об этой идее пост. Саму карту не раскрывайте.</p>
+    <p>Таким образом вы можете проанализировать, на какие темы и идеи ваша аудитория откликается больше всего.</p>
+  </div></div>
+  <div class="formula">
+    <div class="disp">ОДИН ТЕКСТ = ОДНА WOW-ИДЕЯ = ОДИН ДРАЙВЕР КЛИЕНТА</div>
+    <div class="tag">ПОДТВЕРЖДЕННЫЙ ИЛИ НЕПОДТВЕРЖДЕННЫЙ</div>
+  </div>
+  <p class="sub" style="margin-bottom:2mm">Например, вы прочли карту:</p>
+  <div class="cards">
+    <img src="img/s-card-front.png" alt="Карта «Уровень 1. Страх конфликта»">
+    <img src="img/s-card-back.png" alt="Оборот карты">
+  </div>
+  <ol class="todo">
+    <li>Подумайте над вопросами карты и напишите об этом пост о себе. Будет здорово, если вы расскажете о собственном опыте или найдете историю, которую наблюдали со стороны – например, интересный конфликт незнакомцев в публичном месте или сцена из фильма.</li>
+    <li>Предложите аудитории в комментариях вместе с вами порассуждать, к чему может привести избегание конфликтов.</li>
+    <li>Расскажите, что эту тему вы подробно исследуете с помощью экспертных карт “Какой скандал!” и сейчас есть возможность записаться к вам на игру, где участники смогут разобраться в уровнях взаимодействия с конфликтом, научиться не бояться конфликтов, а управлять ими и смогут разобрать свои конкретные конфликты и понять, как им вести себя в них.</li>
+  </ol>
+  <p>Призыв на игру вы можете добавить в конец первого поста или опубликовать в следующем посте (но публикуйте его не позднее следующего дня, а еще лучше — в этот же день, через несколько часов).</p>
+  <p>Если подписчики в ответ на ваш пост расскажут свои крутые истории, делитесь ими у вас на канале и связывайте с приглашением на игру.</p>
+  <p>Подобным образом используйте и другие карты игры для написания постов для прогрева.</p>
+  <div class="box"><p>Внутренние стороны карты публиковать в соцсетях не нужно, используйте для оформления профессиональные фотографии игры, ссылки на них размещены в канале для ведущих.</p></div>
+</section>
+
+<section class="final">
+  <h2>БОЛЬШИХ ВАМ ПРОДАЖ</h2>
+  <div class="t2">и впечатляющих историй<br>для прогревов!</div>
+  <div class="flames"></div>
+  <img class="olga" src="img/s-olga.png" alt="Ольга Грищенко">
+  <img class="box3d" src="img/s-box.png" alt="Игра «Какой скандал!»">
+</section>
+
+</body>
+</html>

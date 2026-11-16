@@ -1,0 +1,265 @@
+<!-- Экспертный кабинет · интенсив Ольги Грищенко · вариант в цветах проекта F5GAME. Вставляется в HTML-блок GetCourse. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+.pj{--ink:#1b1023;--ink-soft:#3a2c46;--paper:#f8f3ea;--paper-warm:#f1e6d3;--purple:#4b2c82;--purple-light:#b79cff;--purple-deep:#221040;--purple-mid:#35205e;--pink:#d6408c;--pink-deep:#b12d75;--raspberry:#E31C79;--lime:#c7ea3f;--white:#fffdf8;--line:#e7ddca;--max:1120px;
+  background:var(--paper);color:var(--ink);font-family:'Manrope',-apple-system,BlinkMacSystemFont,sans-serif !important;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.pj *,.pj *::before,.pj *::after{box-sizing:border-box}
+.pj h1,.pj h2,.pj h3,.pj ul,.pj ol{margin:0;padding:0}
+.pj h1,.pj h2,.pj h3{font-family:'Unbounded','Manrope',sans-serif !important;line-height:1.12;letter-spacing:-.01em;color:inherit}
+.pj p{margin:0 0 1.1em !important;font-family:'Manrope',sans-serif !important}
+.pj p:last-child{margin-bottom:0 !important}
+.pj ul,.pj ol{list-style:none}
+.pj a{text-decoration:none}
+.pj img{max-width:100%;height:auto;display:block}
+.pj .pj-wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.pj section{padding:clamp(56px,9vw,108px) 0}
+.pj .pj-kicker{display:inline-block;font-weight:800;font-size:12.8px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:14px}
+.pj .pj-btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:18px 40px;font-family:'Manrope',sans-serif !important;font-weight:800;font-size:16px;letter-spacing:.02em;cursor:pointer;background:var(--raspberry);color:var(--white) !important;box-shadow:0 10px 30px -10px rgba(227,28,121,.55);transition:transform 180ms ease-out,box-shadow 180ms ease-out}
+.pj .pj-btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px -10px rgba(227,28,121,.7)}
+.pj .pj-btn:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+
+/* reveal: скрываем только если скрипт запустился */
+.pj.pj-js [data-reveal]{opacity:0;transform:translateY(10px);transition:opacity 260ms ease-out,transform 260ms ease-out}
+.pj.pj-js [data-reveal].pj-in{opacity:1;transform:none}
+
+/* HERO */
+.pj .pj-hero{position:relative;background:radial-gradient(ellipse 120% 90% at 20% -10%,var(--purple-mid),var(--purple-deep) 55%);color:var(--white);padding:clamp(56px,8vw,88px) 0 clamp(48px,7vw,80px);overflow:hidden}
+.pj .pj-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 90% 70% at 85% 100%,var(--raspberry) 0%,transparent 60%);opacity:.22;pointer-events:none}
+.pj .pj-hero .pj-wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:32px}
+.pj .pj-date{display:inline-block;font-weight:700;font-size:15.2px;letter-spacing:.06em;color:var(--ink);background:var(--lime);border-radius:999px;padding:8px 18px;margin-bottom:22px}
+.pj .pj-hero-kicker{font-size:16.8px;color:#cdb8ec;margin-bottom:6px !important;font-weight:600}
+.pj .pj-hero h1{font-size:clamp(38px,5.6vw,66px);font-weight:900;margin-bottom:18px}
+.pj .pj-hero h1 span{color:var(--raspberry)}
+.pj .pj-hero-sub{font-size:clamp(16.8px,1.6vw,20.8px);color:#e7defa;max-width:34ch;margin-bottom:40px !important}
+.pj .pj-hero-visual{position:relative;display:flex;justify-content:center;align-items:flex-end}
+.pj .pj-hero-visual::before{content:"";position:absolute;top:46%;left:50%;width:110%;max-width:520px;aspect-ratio:1;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(214,64,140,.35),transparent 65%);pointer-events:none}
+.pj .pj-hero-visual img{position:relative;width:100%;max-width:480px;filter:drop-shadow(0 30px 40px rgba(0,0,0,.35))}
+
+/* PROBLEM */
+.pj .pj-problem .pj-wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(28px,5vw,64px);align-items:start}
+.pj .pj-problem h2{font-size:clamp(26px,3.3vw,40px);font-weight:800}
+.pj .pj-prose{font-size:17.3px;max-width:62ch;color:var(--ink-soft)}
+
+/* BRIDGE */
+.pj .pj-bridge{background:var(--ink);color:var(--white);text-align:center;padding:clamp(56px,8vw,96px) 0}
+.pj .pj-bridge p{color:#cdb8ec;font-size:clamp(17px,1.8vw,20.8px)}
+.pj .pj-bridge .pj-big{font-family:'Unbounded',sans-serif !important;font-weight:900;font-size:clamp(30px,6.2vw,76px);line-height:1.05;letter-spacing:-.01em;margin:18px 0 22px}
+.pj .pj-bridge .pj-big span{color:var(--lime)}
+.pj .pj-bridge .pj-note{max-width:40ch;margin:0 auto !important;color:var(--white)}
+
+/* WHAT */
+.pj .pj-what{background:var(--paper-warm)}
+.pj .pj-what .pj-wrap{display:grid;grid-template-columns:1fr 1.25fr;gap:clamp(28px,5vw,72px);align-items:start}
+.pj .pj-what h2{font-size:clamp(28px,3.6vw,46px);font-weight:900;margin-bottom:18px}
+.pj .pj-what h2 span{color:var(--raspberry)}
+.pj .pj-what .pj-lead{font-weight:700;font-size:19px;color:var(--purple)}
+.pj .pj-list li{display:flex;gap:20px;align-items:baseline;padding:20px 0;border-top:1px solid #dccfb6}
+.pj .pj-list li:first-child{border-top:0;padding-top:0}
+.pj .pj-list b{flex:0 0 auto;min-width:1.4em;font-family:'Unbounded',sans-serif !important;font-weight:800;font-size:30px;line-height:1;color:var(--raspberry)}
+.pj .pj-list span{font-size:17.5px}
+.pj .pj-list li.pj-final{background:var(--lime);border-radius:20px;border-top:0;padding:22px 24px;margin-top:12px}
+.pj .pj-list li.pj-final b{color:var(--ink)}
+.pj .pj-list li.pj-final span{font-weight:700}
+
+/* LEVEL */
+.pj .pj-level{background:radial-gradient(ellipse 120% 100% at 80% 0%,var(--purple-mid),var(--purple-deep) 60%);color:var(--white);padding-bottom:0}
+.pj .pj-level .pj-wrap{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(24px,5vw,64px);align-items:end}
+.pj .pj-level-img{display:flex;justify-content:center}
+.pj .pj-level-img img{width:100%;max-width:360px;filter:drop-shadow(0 24px 34px rgba(0,0,0,.35))}
+.pj .pj-level-text{padding-bottom:clamp(56px,9vw,108px)}
+.pj .pj-level h2{font-size:clamp(26px,3.5vw,42px);font-weight:900;margin-bottom:24px}
+.pj .pj-level h2 span{color:var(--lime)}
+.pj .pj-level p{font-size:clamp(17px,1.7vw,20px);color:#e7defa;max-width:46ch}
+
+/* PROGRAM */
+.pj .pj-program h2{font-size:clamp(30px,4.4vw,52px);font-weight:900;margin-bottom:40px}
+.pj .pj-days{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.pj .pj-day{background:var(--white);border:1px solid var(--line);border-radius:28px;padding:clamp(28px,4vw,40px)}
+.pj .pj-day.pj-dark{background:var(--purple-deep);border-color:var(--purple-deep);color:var(--white)}
+.pj .pj-day-label{font-family:'Unbounded',sans-serif !important;font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--raspberry);margin-bottom:10px !important}
+.pj .pj-day h3{font-size:clamp(22px,2.4vw,28px);font-weight:800;margin-bottom:16px}
+.pj .pj-day .pj-when{display:inline-block;font-weight:800;font-size:14.5px;background:var(--lime);color:var(--ink);border-radius:999px;padding:7px 16px;margin-bottom:24px}
+.pj .pj-day li{position:relative;padding:11px 0 11px 28px;border-top:1px solid var(--line);color:var(--ink-soft)}
+.pj .pj-day li::before{content:"";position:absolute;left:0;top:20px;width:12px;height:12px;border-radius:3px;background:var(--raspberry);transform:rotate(45deg) scale(.7)}
+.pj .pj-day .pj-by{margin-top:22px !important;font-weight:700;color:var(--purple)}
+.pj .pj-day.pj-dark p{color:#e7defa}
+.pj .pj-day.pj-dark .pj-by{color:var(--purple-light)}
+
+/* GIFT */
+.pj .pj-gift{background:linear-gradient(135deg,var(--pink),var(--pink-deep));color:var(--white);padding-bottom:0}
+.pj .pj-gift .pj-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:end}
+.pj .pj-gift .pj-kicker{color:var(--white);opacity:.85}
+.pj .pj-gift-text{padding-bottom:clamp(56px,9vw,108px);align-self:center}
+.pj .pj-gift h2{font-size:clamp(25px,3.2vw,38px);font-weight:900}
+.pj .pj-gift-img{justify-self:end}
+.pj .pj-gift-img img{width:100%;max-width:400px}
+
+/* OFFER */
+.pj .pj-offer{background:var(--paper-warm);text-align:center}
+.pj .pj-offer h2{font-size:clamp(28px,3.8vw,46px);font-weight:900;margin-bottom:40px}
+.pj .pj-offer h2 span{color:var(--raspberry)}
+.pj .pj-offer .pj-kicker{margin-bottom:12px}
+.pj .pj-price-card{max-width:580px;margin:0 auto;background:var(--white);border:1px solid var(--purple);border-radius:28px;padding:clamp(28px,4vw,40px);text-align:left;box-shadow:0 20px 50px -25px rgba(75,44,130,.4)}
+.pj .pj-price-card .pj-item{padding:14px 0;border-bottom:1px solid var(--line);color:var(--ink-soft)}
+.pj .pj-price-card .pj-item b{color:var(--ink);font-weight:800}
+.pj .pj-price-block{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:26px 0 30px}
+.pj .pj-price-block span{font-weight:700;color:var(--ink-soft)}
+.pj .pj-price-block strong{font-family:'Unbounded',sans-serif !important;font-weight:800;font-size:clamp(32px,4.6vw,42px);color:var(--purple);line-height:1}
+.pj .pj-price-card .pj-btn{display:flex;width:100%}
+
+@media (max-width:860px){
+  .pj{font-size:16px}
+  .pj .pj-hero .pj-wrap,.pj .pj-problem .pj-wrap,.pj .pj-what .pj-wrap,.pj .pj-level .pj-wrap,.pj .pj-days,.pj .pj-gift .pj-wrap{grid-template-columns:1fr}
+  .pj .pj-hero-visual{order:-1;margin-bottom:8px}
+  .pj .pj-hero-visual img{max-width:320px}
+  .pj .pj-btn{width:100%}
+  .pj .pj-level-img{order:2}
+  .pj .pj-level-text{padding-bottom:0}
+  .pj .pj-level-img img{max-width:280px}
+  .pj .pj-gift-text{padding-bottom:0}
+  .pj .pj-gift-img{justify-self:center}
+  .pj .pj-gift-img img{max-width:300px}
+}
+@media (prefers-reduced-motion:reduce){
+  .pj.pj-js [data-reveal]{opacity:1;transform:none;transition:none}
+  .pj .pj-btn{transition:none}.pj .pj-btn:hover{transform:none}
+}
+</style>
+
+<div class="pj" id="pj-root">
+
+  <header class="pj-hero">
+    <div class="pj-wrap">
+      <div>
+        <span class="pj-date">29&nbsp;октября и&nbsp;5&nbsp;ноября · 18:00&nbsp;мск</span>
+        <p class="pj-hero-kicker">интенсив Ольги Грищенко</p>
+        <h1>Экспертный <span>кабинет</span></h1>
+        <p class="pj-hero-sub">создаем красивое виртуальное пространство для онлайн консультаций</p>
+        <a class="pj-btn" href="#pj-buy">Купить</a>
+      </div>
+      <div class="pj-hero-visual">
+        <img src="https://ingaprihodko-jpg.github.io/test-site/assets/images/expert-test-guy.png" alt="Эксперт держит доску со схемой пути клиента от точки А к точке Б" width="1024" height="805">
+      </div>
+    </div>
+  </header>
+
+  <section class="pj-problem">
+    <div class="pj-wrap">
+      <h2 data-reveal>Какой инструмент вам необходим, чтобы ваши консультации стоили дорого?</h2>
+      <div class="pj-prose" data-reveal>
+        <p>Личные консультации сегодня – это один из продуктов, на которые стоит сделать ставку. При этом, подавляющее большинство экспертов проводят консультации по очень низким ценам – все потому, что клиенты зачастую не видят ее ценности.</p>
+        <p>Почему так происходит? Потому что чаще всего у эксперта нет инструмента, через который можно было бы донести практическую ценность консультации, сформировать видимый результат и отдать его клиенту для практического использования.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="pj-bridge">
+    <div class="pj-wrap" data-reveal>
+      <p>И мы придумали такой инструмент – виртуальный</p>
+      <div class="pj-big">ЭКСПЕРТНЫЙ <span>КАБИНЕТ</span></div>
+      <p class="pj-note">который мы будем учиться разрабатывать и реализовывать с помощью вайбкодинга на новом интенсиве</p>
+    </div>
+  </div>
+
+  <section class="pj-what">
+    <div class="pj-wrap">
+      <div data-reveal>
+        <span class="pj-kicker">что такое</span>
+        <h2>Экспертный <span>кабинет</span></h2>
+        <p class="pj-lead">это виртуальное пространство для консультаций:</p>
+      </div>
+      <ol class="pj-list" data-reveal>
+        <li><b>1</b><span>с необходимой эксперту схемой для ведения консультации</span></li>
+        <li><b>2</b><span>с видимым путем клиента, который он проходит для решения своей задачи</span></li>
+        <li><b>3</b><span>с визуальными подсказками, приемами, техниками, инструментами – наполнением, которое необходимо для получения супер результата</span></li>
+        <li><b>4</b><span>с возможностью отдать клиенту конкретный инструмент с собой</span></li>
+        <li class="pj-final"><b>5</b><span>и конечно, с очень красивым оформлением – потому что эстетика существенно поднимает стоимость продукта</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="pj-level">
+    <div class="pj-wrap">
+      <div class="pj-level-img" data-reveal>
+        <img src="https://ingaprihodko-jpg.github.io/test-site/assets/images/hero-woman-growth.png" alt="Эксперт с зелёной стрелкой роста дохода" width="1024" height="1536">
+      </div>
+      <div class="pj-level-text" data-reveal>
+        <h2>Наши интенсивы по разработке инструментов <span>выходят на новый уровень</span></h2>
+        <p>Теперь это двухдневный интенсив, где мы даем еще больше системы, формируем супер навыки и прокачиваем экспертное мышление для яркой проявленности и роста дохода.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pj-program">
+    <div class="pj-wrap">
+      <h2 data-reveal>Программа интенсива</h2>
+      <div class="pj-days">
+        <article class="pj-day" data-reveal>
+          <p class="pj-day-label">1 день</p>
+          <h3>Создание концепции</h3>
+          <span class="pj-when">29&nbsp;октября, 18:00&nbsp;мск</span>
+          <ul>
+            <li>Находим идею вашего экспертного кабинета</li>
+            <li>Разрабатываем схему ведения консультации</li>
+            <li>Добавляем авторские инструменты</li>
+            <li>Придумываем идеи для оформления</li>
+          </ul>
+          <p class="pj-by">Ольга Грищенко помогает каждому индивидуально создать концепцию своего экспертного кабинета.</p>
+        </article>
+        <article class="pj-day pj-dark" data-reveal>
+          <p class="pj-day-label">2 день</p>
+          <h3>Реализация</h3>
+          <span class="pj-when">5&nbsp;ноября, 18:00&nbsp;мск</span>
+          <p>С помощью вайбкодинга вы создадите ваш экспертный кабинет.</p>
+          <p class="pj-by">Ольга Грищенко будет создавать свой кабинет, вы будете наблюдать за пошаговым процессом и сможете задавать вопросы.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="pj-gift">
+    <div class="pj-wrap">
+      <div class="pj-gift-text" data-reveal>
+        <span class="pj-kicker">Подарок</span>
+        <h2>Набор всех пазлов для создания Экспертного кабинета</h2>
+      </div>
+      <div class="pj-gift-img" data-reveal>
+        <img src="https://ingaprihodko-jpg.github.io/test-site/assets/images/olga-gift.png" alt="Ольга Грищенко с подарочной коробкой" width="1049" height="1536">
+      </div>
+    </div>
+  </section>
+
+  <section class="pj-offer" id="pj-buy">
+    <div class="pj-wrap">
+      <div data-reveal>
+        <span class="pj-kicker">интенсив</span>
+        <h2>Экспертный <span>кабинет</span></h2>
+      </div>
+      <div class="pj-price-card" data-reveal>
+        <div class="pj-item"><b>1 день</b> — Создание концепции, 29&nbsp;октября, 18:00&nbsp;мск</div>
+        <div class="pj-item"><b>2 день</b> — Реализация, 5&nbsp;ноября, 18:00&nbsp;мск</div>
+        <div class="pj-item"><b>Подарок</b> — набор всех пазлов для создания Экспертного кабинета</div>
+        <div class="pj-price-block"><span>Стоимость</span><strong>31&nbsp;950&nbsp;₽</strong></div>
+        <!-- TODO: заменить href на ссылку предложения GetCourse -->
+        <a class="pj-btn" href="#pj-buy">Купить</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var root=document.getElementById('pj-root');
+  if(!root) return;
+  var items=root.querySelectorAll('[data-reveal]');
+  if(!('IntersectionObserver' in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  root.classList.add('pj-js');
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('pj-in'); io.unobserve(e.target); } });
+  },{threshold:.12});
+  items.forEach(function(el){ io.observe(el); });
+})();
+</script>

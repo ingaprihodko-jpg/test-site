@@ -1,0 +1,408 @@
+<title>Кабинет F5GAME: идеи</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout: одна колонка разбора сверху, затем три макета-«экрана» кабинета в рамках браузера, в фирменных цветах F5GAME */
+:root{
+  color-scheme:dark;
+  --bg:#2b1a4a;          /* фон страницы-разбора, темнее фирменного */
+  --brand:#55348d;       /* фирменный фиолетовый кабинета */
+  --brand-deep:#3a2266;
+  --pink:#ee0778;        /* малиновый акцент (меню GC, заголовки календаря) */
+  --sun:#f6dd4a;         /* жёлтый (плашка сверху, акцентные метки) */
+  --blue:#2f6fed;        /* «мероприятие» в легенде календаря */
+  --ink:#ffffff;
+  --ink-soft:rgba(255,255,255,.78);
+  --ink-faint:rgba(255,255,255,.52);
+  --line:rgba(255,255,255,.16);
+  --card:#ffffff;
+  --card-ink:#1b1023;
+  --card-soft:#6b5a80;
+  --ok:#2bb673;
+  --font-display:'Unbounded',-apple-system,'Segoe UI',sans-serif;
+  --font-body:'Manrope',-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding-block:48px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:64px}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(28px,5vw,46px);font-weight:800}
+h2{font-size:clamp(22px,3.4vw,30px);font-weight:700}
+h3{font-size:17px;font-weight:700}
+p{margin:0}
+.eyebrow{font-family:var(--font-display);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sun)}
+.lead{max-width:62ch;color:var(--ink-soft);font-size:17px}
+section{display:grid;gap:24px}
+.head{display:grid;gap:12px}
+
+/* ---------- разбор ---------- */
+.findings{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.finding{border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:8px;align-content:start;background:rgba(255,255,255,.03)}
+.finding .tag{justify-self:start;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:99px}
+.tag.bad{background:rgba(238,7,120,.18);color:#ff7cb8}
+.tag.good{background:rgba(43,182,115,.18);color:#6fe0a8}
+.tag.mid{background:rgba(246,221,74,.16);color:var(--sun)}
+.finding p{color:var(--ink-soft);font-size:15px}
+
+/* таблица данных */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:15px}
+th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--font-display);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);font-weight:700}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:700;width:26%}
+td.how{color:var(--ink-soft)}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;white-space:nowrap}
+.pill.y{background:rgba(43,182,115,.2);color:#6fe0a8}
+.pill.p{background:rgba(246,221,74,.18);color:var(--sun)}
+.pill.n{background:rgba(255,255,255,.1);color:var(--ink-soft)}
+
+/* ---------- макеты ---------- */
+.variant{display:grid;gap:20px}
+.variant-head{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+.letter{font-family:var(--font-display);font-weight:800;font-size:40px;line-height:1;color:var(--pink);width:56px;height:56px;border-radius:14px;background:rgba(238,7,120,.14);display:grid;place-items:center}
+.variant-head .lead{font-size:16px}
+.why{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.why span{font-size:13px;font-weight:600;padding:4px 11px;border-radius:99px;border:1px solid var(--line);color:var(--ink-soft)}
+
+.screen{border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.bar{background:#1d1132;display:flex;gap:6px;align-items:center;padding:10px 14px}
+.bar i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.18);display:block}
+.bar b{margin-left:10px;font-size:12px;font-weight:500;color:var(--ink-faint)}
+.cab{background:var(--brand);display:grid;grid-template-columns:56px 1fr}
+.rail{background:var(--pink);display:grid;align-content:start;gap:18px;padding:14px 0;justify-items:center}
+.rail i{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,.55);display:block}
+.rail i:first-child{border-radius:50%;width:30px;height:30px}
+.page{padding:28px clamp(16px,3vw,36px) 36px;display:grid;gap:22px;min-width:0}
+.note{font-size:12px;color:var(--ink-faint);font-style:italic}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:14px;padding:11px 18px;border-radius:12px;background:var(--pink);color:#fff;text-decoration:none;white-space:nowrap}
+.btn.ghost{background:transparent;border:1.5px solid rgba(255,255,255,.4)}
+.btn.sun{background:var(--sun);color:var(--card-ink)}
+
+/* A — пульт */
+.a-top{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+.a-hello{background:var(--brand-deep);border-radius:18px;padding:22px;display:grid;gap:14px;align-content:start}
+.a-hello h3{font-size:22px}
+.a-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.a-stat{background:rgba(255,255,255,.07);border-radius:12px;padding:12px}
+.a-stat b{display:block;font-family:var(--font-display);font-size:20px;font-variant-numeric:tabular-nums}
+.a-stat span{font-size:12px;color:var(--ink-soft)}
+.a-today{background:var(--card);color:var(--card-ink);border-radius:18px;padding:22px;display:grid;gap:10px;align-content:start;position:relative}
+.a-today .when{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pink)}
+.a-today h3{font-size:18px}
+.a-today p{color:var(--card-soft);font-size:14px}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;color:var(--pink)}
+.live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--pink)}
+.a-continue{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:18px;padding:18px 22px;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
+.play{width:46px;height:46px;border-radius:50%;background:var(--sun);display:grid;place-items:center}
+.play::after{content:"";border-left:13px solid var(--card-ink);border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:3px}
+.prog{height:8px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden;margin-top:8px}
+.prog i{display:block;height:100%;background:var(--sun);border-radius:99px}
+.a-continue small{color:var(--ink-soft);font-size:13px}
+.a-sections{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tile{border-radius:16px;padding:16px;min-height:120px;display:grid;align-content:space-between;gap:8px;background:linear-gradient(160deg,#7b4fd6,#5a33a8);border:2px solid rgba(255,255,255,.9)}
+.tile b{font-family:var(--font-display);font-size:14px;line-height:1.2}
+.tile span{font-size:12px;color:var(--ink-soft)}
+.tile .ill{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.18)}
+.a-help{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--ink-faint);border-top:1px solid var(--line);padding-top:14px}
+.a-help u{text-decoration-color:rgba(255,255,255,.3);text-underline-offset:3px}
+
+/* B — игровое поле */
+.b-board{background:var(--brand-deep);border-radius:20px;padding:22px;display:grid;gap:18px}
+.b-path{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;position:relative}
+.cell{border-radius:12px;padding:12px 10px;min-height:96px;display:grid;align-content:space-between;gap:6px;background:rgba(255,255,255,.07);border:1.5px dashed rgba(255,255,255,.22);font-size:12px}
+.cell b{font-family:var(--font-display);font-size:12px;line-height:1.2}
+.cell.done{background:rgba(43,182,115,.16);border:1.5px solid rgba(43,182,115,.6)}
+.cell.now{background:var(--sun);color:var(--card-ink);border:1.5px solid var(--sun);box-shadow:0 0 0 4px rgba(246,221,74,.25)}
+.cell .chip{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.75}
+.token{width:22px;height:22px;border-radius:50%;background:var(--pink);border:3px solid #fff;justify-self:end}
+.b-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.b-card{background:var(--card);color:var(--card-ink);border-radius:16px;padding:16px;display:grid;gap:8px;align-content:start}
+.b-card .k{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--pink)}
+.b-card p{font-size:13px;color:var(--card-soft)}
+.b-card.task{background:var(--pink);color:#fff}
+.b-card.task .k{color:var(--sun)}
+.b-card.task p{color:rgba(255,255,255,.85)}
+.b-score{font-family:var(--font-display);font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
+.b-ladder{display:flex;gap:6px;flex-wrap:wrap}
+.b-ladder span{font-size:12px;font-weight:700;padding:3px 9px;border-radius:99px;background:#efe8fa;color:var(--brand)}
+.b-ladder span.on{background:var(--brand);color:#fff}
+
+/* C — афиша и библиотека */
+.c-events{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ev{background:var(--card);color:var(--card-ink);border-radius:16px;overflow:hidden;display:grid;grid-template-rows:auto 1fr}
+.ev .date{background:var(--blue);color:#fff;padding:12px 16px;display:flex;align-items:baseline;gap:10px}
+.ev .date b{font-family:var(--font-display);font-size:28px;line-height:1;font-variant-numeric:tabular-nums}
+.ev .date span{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.ev.today .date{background:var(--pink)}
+.ev .body{padding:14px 16px;display:grid;gap:6px;align-content:start}
+.ev .body .t{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--card-soft)}
+.ev .body h3{font-size:14px;line-height:1.3}
+.ev .body a{font-size:13px;font-weight:800;color:var(--pink);text-decoration:none;margin-top:4px}
+.c-strip{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.c-strip small{color:var(--ink-soft);font-size:13px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips span{font-size:13px;font-weight:700;padding:6px 13px;border-radius:99px;background:rgba(255,255,255,.1)}
+.chips span.on{background:#fff;color:var(--brand)}
+.c-lib{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.course{background:rgba(255,255,255,.07);border-radius:14px;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:4px 14px;align-items:center}
+.course b{font-size:15px}
+.course small{color:var(--ink-soft);font-size:12.5px;grid-column:1}
+.course .ring{grid-row:1/3;grid-column:2;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;font-variant-numeric:tabular-nums}
+.course .badge{font-size:11px;font-weight:800;color:var(--sun)}
+
+/* сравнение */
+.compare .tbl-wrap table{min-width:620px}
+.quick{display:grid;gap:10px;counter-reset:q;padding:0;margin:0;list-style:none}
+.quick li{display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:start;padding:14px 16px;border:1px solid var(--line);border-radius:12px}
+.quick li::before{counter-increment:q;content:counter(q);font-family:var(--font-display);font-weight:800;font-size:14px;width:28px;height:28px;border-radius:8px;background:var(--sun);color:var(--card-ink);display:grid;place-items:center}
+.quick li span{color:var(--ink-soft);font-size:15px}
+.quick li strong{color:var(--ink)}
+
+@media (max-width:820px){
+  .a-top,.b-row,.c-events,.c-lib{grid-template-columns:1fr}
+  .a-sections{grid-template-columns:repeat(2,1fr)}
+  .b-path{grid-template-columns:repeat(3,1fr)}
+  .a-continue{grid-template-columns:auto 1fr}
+  .a-continue .btn{grid-column:1/-1;justify-self:start}
+}
+@media (max-width:520px){
+  .cab{grid-template-columns:1fr}
+  .rail{display:none}
+  .variant-head{grid-template-columns:1fr}
+  .b-path{grid-template-columns:repeat(2,1fr)}
+  .a-stats{grid-template-columns:repeat(3,1fr)}
+}
+a:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+</style>
+
+<div class="wrap">
+
+<header class="head">
+  <div class="eyebrow">f5game.site · teach/control/stream</div>
+  <h1>Главная кабинета: разбор и три варианта</h1>
+  <p class="lead">Смотрела страницу «Список тренингов» глазами ученика: что он видит при входе, что ему нужно сделать и чего не хватает. Ниже разбор, данные, которых нет, и три макета. Тексты в макетах — примеры для показа структуры, финальные формулировки берём у вас.</p>
+</header>
+
+<section>
+  <div class="head">
+    <div class="eyebrow">Что сейчас</div>
+    <h2>Сильные места и что мешает</h2>
+  </div>
+  <div class="findings">
+    <div class="finding"><span class="tag good">Работает</span><h3>Фирменный стиль узнаётся</h3><p>Фиолетовый фон, малиновое меню, иллюстрированные карточки разделов. Карточки «Обучающие курсы», «Мастер-классы», «Бонусы и подарки», «Узнать о новых запусках» — лучшее, что есть на странице.</p></div>
+    <div class="finding"><span class="tag mid">Спорно</span><h3>Календарь на первом экране</h3><p>Два месяца занимают весь первый экран, но события видны только при наведении. Сегодня 15 октября — день интенсива «Искусство влияния», а на календаре он выглядит так же, как 29-е. С телефона наведения нет вообще.</p></div>
+    <div class="finding"><span class="tag bad">Мешает</span><h3>Нет ответа «что мне делать сейчас»</h3><p>Нет кнопки «продолжить урок», прогресса, статуса домашки. Ученик с 3–4 курсами должен сам искать, где остановился.</p></div>
+    <div class="finding"><span class="tag bad">Мешает</span><h3>Служебные кнопки выше контента</h3><p>«Партнёрская программа», «Консультация по продукту», «Техподдержка» стоят перед разделами обучения и одного веса с ними. Это вторичные действия.</p></div>
+    <div class="finding"><span class="tag bad">Мешает</span><h3>Список тренингов не читается</h3><p>Системный список GetCourse: тёмный текст на фиолетовом, шрифт с засечками, не в стиле. Карточки сверху и список снизу дублируют друг друга.</p></div>
+    <div class="finding"><span class="tag mid">Проверить</span><h3>Старые и тестовые потоки</h3><p>В списке есть «Мастер-классы 2024 тест», «НЕ АКТУАЛЬНЫЕ: нет уроков», MoneyGame 2020 «закрыт». Если ученики их видят — стоит убрать в архив или скрыть.</p></div>
+    <div class="finding"><span class="tag mid">Спорно</span><h3>Всплывающий баннер в углу</h3><p>Баннер «Искусство влияния» справа внизу перекрывает список и кнопку помощи. Лучше показать то же событие внутри страницы, в блоке «Сегодня».</p></div>
+    <div class="finding"><span class="tag mid">Спорно</span><h3>Заголовок «Список тренингов»</h3><p>Оранжевый системный заголовок на фиолетовом плохо читается и звучит как раздел админки. Для ученика это «Мой кабинет» или приветствие по имени.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="head">
+    <div class="eyebrow">Каких данных не хватает</div>
+    <h2>Что ученик хотел бы видеть на главной</h2>
+    <p class="lead">Отметила, что можно сделать штатными блоками GetCourse — их список я посмотрела в редакторе этой страницы. Важно: в HTML-блок на этой странице нельзя вставить скрипт, GetCourse его вырезает, поэтому всё личное — только через системные блоки.</p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Данные</th><th>Зачем ученику</th><th>Как сделать в GC</th><th>Сложность</th></tr></thead>
+      <tbody>
+        <tr><td>Где я остановился</td><td>Вернуться в урок одним нажатием</td><td class="how">Блок «Список уроков» нужного тренинга или ссылка на последний открытый урок; в самом GC есть «Расписание уроков и чаты»</td><td><span class="pill p">средне</span></td></tr>
+        <tr><td>Прогресс по курсам</td><td>Видеть, сколько пройдено, хочется дойти до конца</td><td class="how">Проверить в «Настроить вид» списка тренингов, можно ли включить прогресс; иначе — блок «Список уроков» внутри тренинга</td><td><span class="pill p">проверить</span></td></tr>
+        <tr><td>Ближайшие события списком</td><td>Сразу видно, что сегодня и что дальше, работает на телефоне</td><td class="how">Тот же HTML-блок, что календарь: 3 карточки вместо сетки, обновлять вручную</td><td><span class="pill y">просто</span></td></tr>
+        <tr><td>Уровень и баллы</td><td>Игровая механика — в духе фабрики бизнес-игр</td><td class="how">Блок «Рейтинг пользователя по шкале достижений» + «Достижение цели пользователем»; баллы начислять процессами за уроки и домашки</td><td><span class="pill p">средне</span></td></tr>
+        <tr><td>Мои продукты и сроки доступа</td><td>Не потерять доступ, вовремя продлить</td><td class="how">Блок «Продление купленного продукта»</td><td><span class="pill y">просто</span></td></tr>
+        <tr><td>Партнёрский баланс</td><td>Видеть заработок с рекомендаций прямо на главной</td><td class="how">Блоки «Статус партнёра» и «Баланс текущего пользователя» вместо голой кнопки</td><td><span class="pill y">просто</span></td></tr>
+        <tr><td>Разное для разных учеников</td><td>Участнику клуба VIP-500+ — клуб, новичку — с чего начать, лицензиату — материалы для ведения</td><td class="how">«Динамический контейнер»: показывает разное содержимое по сегменту или группе</td><td><span class="pill p">средне</span></td></tr>
+        <tr><td>Ответы куратора на домашку</td><td>Не пропустить проверку</td><td class="how">Штатно на главную не выводится, только через раздел ответов или уведомления</td><td><span class="pill n">сложно</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== ВАРИАНТ A ===================== -->
+<section class="variant">
+  <div class="variant-head">
+    <div class="letter">A</div>
+    <div class="head">
+      <h2>«Пульт игрока»</h2>
+      <p class="lead">Главная отвечает на один вопрос: что мне делать сегодня. Сверху — приветствие со статусом и событие дня, затем «продолжить урок», ниже ваши четыре карточки разделов. Служебные ссылки уходят в подвал. Ближе всего к текущей странице, меньше всего переделок.</p>
+      <div class="why"><span>самый быстрый в запуске</span><span>сохраняет текущие карточки</span><span>хорошо на телефоне</span></div>
+    </div>
+  </div>
+  <div class="screen">
+    <div class="bar"><i></i><i></i><i></i><b>f5game.site/teach/control/stream</b></div>
+    <div class="cab">
+      <div class="rail"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="page">
+        <div class="a-top">
+          <div class="a-hello">
+            <div class="eyebrow">Мой кабинет</div>
+            <h3>Привет, [имя]!</h3>
+            <div class="a-stats">
+              <div class="a-stat"><b>3</b><span>курса в работе</span></div>
+              <div class="a-stat"><b>47%</b><span>пройдено</span></div>
+              <div class="a-stat"><b>320</b><span>баллов</span></div>
+            </div>
+            <p class="note">цифры — пример, данные из GC</p>
+          </div>
+          <div class="a-today">
+            <span class="live">Сегодня · 15 октября</span>
+            <span class="when">Интенсив</span>
+            <h3>Искусство влияния</h3>
+            <p>Практика — 24 октября</p>
+            <div><a class="btn" href="#">Перейти к трансляции</a></div>
+          </div>
+        </div>
+        <div class="a-continue">
+          <div class="play"></div>
+          <div>
+            <b>Продолжить: «Игры экспертов / 2 поток»</b>
+            <small> · модуль 4, урок 2</small>
+            <div class="prog"><i style="width:44%"></i></div>
+          </div>
+          <a class="btn sun" href="#">Продолжить</a>
+        </div>
+        <div class="a-sections">
+          <div class="tile"><div class="ill"></div><b>Обучающие курсы</b><span>иллюстрация как сейчас</span></div>
+          <div class="tile"><div class="ill"></div><b>Мастер-классы</b><span>иллюстрация как сейчас</span></div>
+          <div class="tile"><div class="ill"></div><b>Бонусы и подарки</b><span>иллюстрация как сейчас</span></div>
+          <div class="tile"><div class="ill"></div><b>Узнать о новых запусках</b><span>иллюстрация как сейчас</span></div>
+        </div>
+        <div class="a-help"><u>Партнёрская программа</u><u>Консультация по продукту</u><u>Техподдержка</u><u>Расписание на месяц</u></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ВАРИАНТ B ===================== -->
+<section class="variant">
+  <div class="variant-head">
+    <div class="letter">B</div>
+    <div class="head">
+      <h2>«Игровое поле»</h2>
+      <p class="lead">Кабинет оформлен как настольная игра — по теме F5GAME. Путь ученика нарисован клетками поля, фишка стоит на текущем шаге. Рядом — «Задание недели», баллы и уровень. Названия уровней и шагов — ваши, на макете для примера стоят ступени ваших же продуктов: Участник → Практик → Лицензия.</p>
+      <div class="why"><span>самый «игровой»</span><span>мотивирует проходить до конца</span><span>нужно настроить баллы в процессах</span></div>
+    </div>
+  </div>
+  <div class="screen">
+    <div class="bar"><i></i><i></i><i></i><b>f5game.site/teach/control/stream</b></div>
+    <div class="cab">
+      <div class="rail"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="page">
+        <div class="b-board">
+          <div class="c-strip"><h3>Мой путь</h3><small class="note">шаги — пример</small></div>
+          <div class="b-path">
+            <div class="cell done"><span class="chip">старт</span><b>Вводный урок</b></div>
+            <div class="cell done"><span class="chip">шаг 2</span><b>Первая игра</b></div>
+            <div class="cell now"><span class="chip">вы здесь</span><b>Модуль 4</b><span class="token"></span></div>
+            <div class="cell"><span class="chip">шаг 4</span><b>Домашка: своя механика</b></div>
+            <div class="cell"><span class="chip">шаг 5</span><b>Игра для 5 человек</b></div>
+            <div class="cell"><span class="chip">финиш</span><b>Лицензия</b></div>
+          </div>
+        </div>
+        <div class="b-row">
+          <div class="b-card task">
+            <span class="k">Задание недели</span>
+            <h3>Проведите одну игру и пришлите фото</h3>
+            <p>+50 баллов · до воскресенья</p>
+            <p class="note" style="color:rgba(255,255,255,.7)">текст — пример</p>
+          </div>
+          <div class="b-card">
+            <span class="k">Мои баллы</span>
+            <div class="b-score">320</div>
+            <div class="b-ladder"><span>Участник</span><span class="on">Практик</span><span>Мастер</span></div>
+          </div>
+          <div class="b-card">
+            <span class="k">Сегодня · 15 октября</span>
+            <h3>Искусство влияния</h3>
+            <p>Интенсив. Практика — 24 октября</p>
+          </div>
+        </div>
+        <div class="a-sections">
+          <div class="tile"><div class="ill"></div><b>Обучающие курсы</b><span>колода 1</span></div>
+          <div class="tile"><div class="ill"></div><b>Мастер-классы</b><span>колода 2</span></div>
+          <div class="tile"><div class="ill"></div><b>Бонусы и подарки</b><span>колода 3</span></div>
+          <div class="tile"><div class="ill"></div><b>Новые запуски</b><span>колода 4</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ВАРИАНТ C ===================== -->
+<section class="variant">
+  <div class="variant-head">
+    <div class="letter">C</div>
+    <div class="head">
+      <h2>«Афиша и библиотека»</h2>
+      <p class="lead">Для тех, у кого много материалов. Вместо двух календарей — афиша ближайших событий тремя карточками (полный календарь по ссылке). Ниже — «Моя библиотека» с фильтрами по типам: курсы, мастер-классы, записи эфиров, бонусы. Закрытые потоки уходят в «Архив».</p>
+      <div class="why"><span>решает проблему 40+ тренингов</span><span>события понятны без наведения</span><span>больше всего работы со списком</span></div>
+    </div>
+  </div>
+  <div class="screen">
+    <div class="bar"><i></i><i></i><i></i><b>f5game.site/teach/control/stream</b></div>
+    <div class="cab">
+      <div class="rail"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="page">
+        <div class="c-strip"><h3>Ближайшие события</h3><a class="btn ghost" href="#">Весь календарь</a></div>
+        <div class="c-events">
+          <div class="ev today"><div class="date"><b>15</b><span>окт · сегодня</span></div><div class="body"><span class="t">Интенсив</span><h3>Искусство влияния</h3><a href="#">Перейти →</a></div></div>
+          <div class="ev"><div class="date"><b>24</b><span>окт · сб</span></div><div class="body"><span class="t">Практика</span><h3>Искусство влияния</h3><a href="#">Подробнее →</a></div></div>
+          <div class="ev"><div class="date"><b>29</b><span>окт · чт</span></div><div class="body"><span class="t">Интенсив</span><h3>Экспертный кабинет — создаём красивое виртуальное пространство для онлайн-консультаций</h3><a href="#">Подробнее →</a></div></div>
+        </div>
+        <div class="c-strip">
+          <h3>Моя библиотека</h3>
+          <div class="chips"><span class="on">Всё</span><span>Курсы</span><span>Мастер-классы</span><span>Записи эфиров</span><span>Бонусы</span><span>Архив</span></div>
+        </div>
+        <div class="c-lib">
+          <div class="course"><b>Игры экспертов / 2 поток</b><small>Егор Грищенко · 98 уроков</small><div class="ring" style="background:conic-gradient(var(--sun) 44%,rgba(255,255,255,.14) 0)">44%</div></div>
+          <div class="course"><b>Обучающие курсы</b><small>963 урока</small><div class="ring" style="background:conic-gradient(var(--sun) 12%,rgba(255,255,255,.14) 0)">12%</div></div>
+          <div class="course"><b>КОНФЛИКТЫ. ТРИГГЕРЫ. ГРАНИЦЫ</b><small>9 уроков · <span class="badge">новое</span></small><div class="ring" style="background:conic-gradient(var(--sun) 0%,rgba(255,255,255,.14) 0)">0%</div></div>
+          <div class="course"><b>Библиотека VIP-клуба 500+</b><small>5 уроков</small><div class="ring" style="background:conic-gradient(var(--ok) 100%,rgba(255,255,255,.14) 0)">✓</div></div>
+        </div>
+        <p class="note">проценты — пример; названия и число уроков — из вашего списка</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="compare">
+  <div class="head">
+    <div class="eyebrow">Сравнение</div>
+    <h2>Какой выбрать</h2>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Вариант</th><th>Кому подходит</th><th>Что нужно сделать</th><th>Объём</th></tr></thead>
+      <tbody>
+        <tr><td>A · Пульт игрока</td><td>Всем ученикам, если хочется быстро и без ломки</td><td class="how">Перестроить порядок блоков, событие дня вместо календаря, ссылка «продолжить», служебные кнопки вниз</td><td><span class="pill y">1–2 дня</span></td></tr>
+        <tr><td>B · Игровое поле</td><td>Если хотите вовлечь в прохождение и подчеркнуть игровой проект</td><td class="how">Всё из A + шкала достижений, начисление баллов процессами, путь ученика по сегментам</td><td><span class="pill p">неделя+</span></td></tr>
+        <tr><td>C · Афиша и библиотека</td><td>Ученикам с большим количеством купленного, клубу VIP-500+</td><td class="how">Афиша вместо календаря, разбор потоков по папкам, скрыть закрытые и тестовые</td><td><span class="pill p">3–5 дней</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="lead">Варианты можно совмещать: например, верх из A (приветствие, событие дня, «продолжить») и низ из C (библиотека с фильтрами). Игровое поле из B добавляется позже, когда будут настроены баллы.</p>
+</section>
+
+<section>
+  <div class="head">
+    <div class="eyebrow">Можно сделать сразу</div>
+    <h2>Быстрые правки без редизайна</h2>
+  </div>
+  <ol class="quick">
+    <li><span><strong>Подсветить «сегодня» в календаре</strong> и показать под календарём ближайшее событие текстом — чтобы было видно без наведения и с телефона.</span></li>
+    <li><span><strong>Перенести три кнопки</strong> (партнёрская, консультация, техподдержка) под разделы или в подвал.</span></li>
+    <li><span><strong>Убрать из списка</strong> «НЕ АКТУАЛЬНЫЕ», «Мастер-классы 2024 тест» и закрытые потоки 2020–2021 в архив, если их видят ученики.</span></li>
+    <li><span><strong>Перекрасить системный список</strong> тренингов в белый текст и фирменный шрифт — сейчас он почти не читается на фиолетовом.</span></li>
+    <li><span><strong>Проверить «Настроить вид»</strong> у списка тренингов: если есть отображение прогресса — включить.</span></li>
+  </ol>
+</section>
+
+</div>

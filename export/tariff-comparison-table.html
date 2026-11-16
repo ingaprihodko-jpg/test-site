@@ -1,37 +1,34 @@
 <!--
-  Таблица сравнения тарифов «Сегодня / После старта» для письма GetCourse.
+  Таблица сравнения тарифов «Цена сейчас / в октябре / после старта обучения» для письма GetCourse.
   Вёрстка табличная, все стили инлайновые — так надёжнее переживает почтовые клиенты
   (Gmail/Apple Mail корректно покажут скруглённые углы, Outlook на Windows углы срежет
   до прямых — это не критично, сама таблица останется читаемой).
-  Все размеры в px. Вставлять в блок письма как HTML-код целиком.
+  Все размеры в px. Ширина зафиксирована в px + !important, потому что у GetCourse
+  своя CSS-подпорка растягивает table/img на 100% ширины блока (см. заметку про
+  class-name collisions) — просто max-width инлайн-стилем эту подпорку не переборет.
+  Хочешь другую ширину — поменяй 520px во всех трёх местах ниже (div и table).
+  Вставлять в блок письма как HTML-код целиком.
 -->
+<div style="width:520px !important; max-width:100%; margin:0 auto;">
 <table role="presentation" cellpadding="0" cellspacing="6" border="0" bgcolor="#ffffff"
-  style="width:100%; max-width:600px; border-radius:14px; overflow:hidden; border-collapse:separate; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;">
+  style="width:520px !important; max-width:520px !important; border-radius:14px; overflow:hidden; border-collapse:separate; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;">
   <tr>
-    <td width="34%" bgcolor="#f4f6fa" style="border-radius:8px; padding:16px 18px;">&nbsp;</td>
-    <td width="33%" align="center" bgcolor="#ddf7e6" style="border-radius:8px; padding:16px 10px; font-size:17px; font-weight:700; color:#1a1a1a;">Сегодня</td>
-    <td width="33%" align="center" bgcolor="#fbe2e0" style="border-radius:8px; padding:16px 10px; font-size:17px; font-weight:700; color:#1a1a1a;">После&nbsp;старта</td>
+    <td width="24%" bgcolor="#f4f6fa" style="border-radius:8px; padding:12px 10px;">&nbsp;</td>
+    <td width="25%" align="center" bgcolor="#ddf7e6" style="border-radius:8px; padding:12px 6px; font-size:12px; font-weight:700; color:#1a1a1a;">Цена&nbsp;сейчас</td>
+    <td width="25%" align="center" bgcolor="#fdf1d3" style="border-radius:8px; padding:12px 6px; font-size:12px; font-weight:700; color:#1a1a1a;">Цена&nbsp;в&nbsp;октябре</td>
+    <td width="26%" align="center" bgcolor="#fbe2e0" style="border-radius:8px; padding:12px 6px; font-size:12px; font-weight:700; color:#1a1a1a;">Цена&nbsp;после&nbsp;старта</td>
   </tr>
   <tr>
-    <td bgcolor="#f8f9fc" style="border-radius:8px; padding:16px 18px; font-size:16px; font-weight:700; color:#1a1a1a;">Тариф&nbsp;Лекционный</td>
-    <td align="center" bgcolor="#eefbf3" style="border-radius:8px; padding:16px 10px;">
-      <div style="font-size:19px; font-weight:700; color:#1a1a1a; white-space:nowrap;">34&nbsp;900&nbsp;₽</div>
-      <div style="margin-top:4px; font-size:14px; color:#98a2b3; white-space:nowrap;">от&nbsp;5&nbsp;817&nbsp;₽/мес</div>
-    </td>
-    <td align="center" bgcolor="#fdf3f2" style="border-radius:8px; padding:16px 10px;">
-      <div style="font-size:19px; font-weight:700; color:#1a1a1a; white-space:nowrap;">43&nbsp;900&nbsp;₽</div>
-      <div style="margin-top:4px; font-size:14px; color:#98a2b3; white-space:nowrap;">от&nbsp;7&nbsp;317&nbsp;₽/мес</div>
-    </td>
+    <td bgcolor="#f8f9fc" style="border-radius:8px; padding:14px 10px; font-size:13px; font-weight:700; color:#1a1a1a;">Тариф&nbsp;Лекционный</td>
+    <td align="center" bgcolor="#eefbf3" style="border-radius:8px; padding:14px 4px; font-size:15px; font-weight:700; color:#1a1a1a; white-space:nowrap;">36&nbsp;900&nbsp;руб.</td>
+    <td align="center" bgcolor="#fef8ea" style="border-radius:8px; padding:14px 4px; font-size:15px; font-weight:700; color:#1a1a1a; white-space:nowrap;">38&nbsp;900&nbsp;руб.</td>
+    <td align="center" bgcolor="#fdf3f2" style="border-radius:8px; padding:14px 4px; font-size:15px; font-weight:700; color:#1a1a1a; white-space:nowrap;">43&nbsp;900&nbsp;руб.</td>
   </tr>
   <tr>
-    <td bgcolor="#f8f9fc" style="border-radius:8px; padding:16px 18px; font-size:16px; font-weight:700; color:#1a1a1a;">Тариф&nbsp;Практический</td>
-    <td align="center" bgcolor="#eefbf3" style="border-radius:8px; padding:16px 10px;">
-      <div style="font-size:19px; font-weight:700; color:#1a1a1a; white-space:nowrap;">39&nbsp;900&nbsp;₽</div>
-      <div style="margin-top:4px; font-size:14px; color:#98a2b3; white-space:nowrap;">от&nbsp;6&nbsp;650&nbsp;₽/мес</div>
-    </td>
-    <td align="center" bgcolor="#fdf3f2" style="border-radius:8px; padding:16px 10px;">
-      <div style="font-size:19px; font-weight:700; color:#1a1a1a; white-space:nowrap;">48&nbsp;900&nbsp;₽</div>
-      <div style="margin-top:4px; font-size:14px; color:#98a2b3; white-space:nowrap;">от&nbsp;8&nbsp;150&nbsp;₽/мес</div>
-    </td>
+    <td bgcolor="#f8f9fc" style="border-radius:8px; padding:14px 10px; font-size:13px; font-weight:700; color:#1a1a1a;">Тариф&nbsp;Практический</td>
+    <td align="center" bgcolor="#eefbf3" style="border-radius:8px; padding:14px 4px; font-size:15px; font-weight:700; color:#1a1a1a; white-space:nowrap;">41&nbsp;900&nbsp;руб.</td>
+    <td align="center" bgcolor="#fef8ea" style="border-radius:8px; padding:14px 4px; font-size:15px; font-weight:700; color:#1a1a1a; white-space:nowrap;">43&nbsp;900&nbsp;руб.</td>
+    <td align="center" bgcolor="#fdf3f2" style="border-radius:8px; padding:14px 4px; font-size:15px; font-weight:700; color:#1a1a1a; white-space:nowrap;">48&nbsp;900&nbsp;руб.</td>
   </tr>
 </table>
+</div>

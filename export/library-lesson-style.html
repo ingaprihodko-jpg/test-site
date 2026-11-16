@@ -1,0 +1,206 @@
+<!-- Оформление уроков «Библиотеки встреч». Один код на все уроки.
+     Срабатывает, только если урок есть в таблице или в навигации есть ссылка на библиотеку.
+     Порядок блоков в уроке: спикер (две колонки) → «что вы узнаете» → видео/аудио → реклама курса. -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style id="lsx-style">
+/* пока код раскладывает урок, его не видно — без мигания старого вида; через 1,5 с покажется в любом случае */
+@keyframes lsx-show{to{opacity:1}}
+html:not(.lsx-ready) body:has(.lt-lesson-mission-block) .lite-page.block-set{opacity:0;animation:lsx-show .2s 1.5s forwards}
+.lsx-ready .lite-page.block-set{animation:lsx-show .15s both}
+.lsx-on{--lsx-hero:#d9e6fb;--lsx-card:#f4f0e8;--lsx-card-h:#efe9de;--lsx-ink:#1c2230;--lsx-text:#2b3242;--lsx-muted:#5d6577;--lsx-accent:#2f5fd0;--lsx-dark:#1f1f1f}
+.lsx-on .lite-page.block-set,.lsx-on .lite-page.block-set :is(p,h1,h2,h3,h4,li,a,span,b,strong,em,i,div,button,td):not([class*=fa]):not([class*=icon]):not([class*=glyph]){font-family:'Manrope',system-ui,sans-serif !important}
+.lsx-on .lite-page .lsx-hide{display:none !important}
+.lsx-on .lite-page .lsx-block{margin:0 0 16px !important}
+.lsx-on .lite-page .lsx-block>.lt-block-wrapper{background:transparent !important;border-radius:0 !important}
+
+/* шапка: блок про спикера */
+.lsx-on .lite-page .lsx-hero>.lt-block-wrapper{background:var(--lsx-hero) !important;border-radius:24px !important;padding:32px 28px !important}
+.lsx-on .lsx-hero p,.lsx-on .lsx-hero li,.lsx-on .lsx-hero span,.lsx-on .lsx-hero em,.lsx-on .lsx-hero strong,.lsx-on .lsx-hero b{color:var(--lsx-text) !important;text-align:left !important}
+.lsx-on .lsx-hero p,.lsx-on .lsx-hero li{font-size:16px !important;line-height:1.55 !important}
+.lsx-on .lsx-hero h1,.lsx-on .lsx-hero h1 *,.lsx-on .lsx-hero .f-header *{font-size:30px !important;line-height:1.15 !important;font-weight:800 !important;color:var(--lsx-ink) !important;text-align:left !important;letter-spacing:-.01em}
+.lsx-on .lsx-hero .part-subheader p,.lsx-on .lsx-hero .part-subheader *{font-size:14px !important;font-weight:600 !important;color:var(--lsx-muted) !important;font-style:normal !important}
+.lsx-on .lsx-hero img{border-radius:20px !important}
+@media (min-width:768px){
+  .lsx-on .lsx-hero .my-container{display:flex !important;gap:28px;align-items:center}
+  .lsx-on .lsx-hero .my-container>.builder.flex-column{float:none !important;margin-left:0 !important;padding:0 !important;width:auto !important;max-width:none !important;flex:1 1 0}
+  .lsx-on .lsx-hero .my-container>.builder.flex-column:last-of-type{flex:0 0 38%}
+}
+.lsx-on .lsx-hero .part-button{text-align:left !important}
+.lsx-chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.lsx-chip{font-size:13px !important;font-weight:600 !important;background:#fff;border-radius:999px;padding:5px 12px;text-decoration:none !important;color:var(--lsx-ink) !important;line-height:1.4}
+a.lsx-chip--theme{background:#e6f0dc}
+a.lsx-chip--theme:hover{background:#d8e8c8}
+
+/* текст: без рамок, по левому краю, читаемый размер */
+.lsx-on .lite-page .lsx-text .block-box,.lsx-on .lite-page .lsx-promo .block-box{border:0 !important;background:transparent !important;box-shadow:none !important;width:100% !important;max-width:100% !important;margin-left:0 !important;padding:0 !important;float:none !important}
+.lsx-on .lite-page .lsx-text>.lt-block-wrapper{padding:16px 4px !important}
+.lsx-on .lsx-text p,.lsx-on .lsx-text li,.lsx-on .lsx-promo p,.lsx-on .lsx-promo li{font-size:17px !important;line-height:1.65 !important;text-align:left !important;color:var(--lsx-text) !important}
+.lsx-on .lsx-text li,.lsx-on .lsx-promo li{font-size:16.5px !important;margin-bottom:6px !important}
+.lsx-on .lsx-text p *,.lsx-on .lsx-text li *,.lsx-on .lsx-promo p *,.lsx-on .lsx-promo li *,.lsx-on .lsx-hero p *,.lsx-on .lsx-hero li *{font-size:inherit !important;line-height:inherit !important;color:inherit !important}
+.lsx-on .lsx-text ul,.lsx-on .lsx-text ol,.lsx-on .lsx-promo ul,.lsx-on .lsx-promo ol,.lsx-on .lsx-hero ul{padding-left:22px !important;margin:8px 0 12px !important}
+.lsx-on .lite-page .lsx-empty{display:none !important}
+.lsx-on .lsx-text p+p,.lsx-on .lsx-promo p+p{margin-top:12px !important}
+.lsx-on .lite-page .lsx-text .part-header *,.lsx-on .lite-page .lsx-promo .part-header *,.lsx-on .lite-page .lsx-h,.lsx-on .lite-page p.lsx-h *,.lsx-on .lite-page .lsx-h *{font-size:26px !important;line-height:1.25 !important;font-weight:800 !important;color:var(--lsx-ink) !important;text-align:left !important;margin:0 0 14px !important}
+
+.lsx-on .lite-page .lsx-lead,.lsx-on .lite-page .lsx-lead *{font-size:20px !important;line-height:1.5 !important;font-weight:600 !important;color:var(--lsx-ink) !important;text-align:left !important}
+
+/* видео и аудио */
+.lsx-on .lite-page .lsx-media .block-box{width:100% !important;max-width:100% !important;margin-left:0 !important;padding:0 !important;float:none !important}
+.lsx-on .lite-page .lsx-media .vhi-root,.lsx-on .lite-page .lsx-media iframe{border-radius:20px !important;overflow:hidden !important}
+
+/* реклама курса: одна карточка */
+.lsx-on .lite-page .lsx-promo{margin:0 !important}
+.lsx-on .lite-page .lsx-promo>.lt-block-wrapper{background:var(--lsx-card) !important;padding:12px 36px !important}
+.lsx-on .lite-page .lsx-promo-first{margin-top:40px !important}
+.lsx-on .lite-page .lsx-promo-first>.lt-block-wrapper{border-radius:24px 24px 0 0 !important;padding-top:36px !important}
+.lsx-on .lite-page .lsx-promo-last>.lt-block-wrapper{border-radius:0 0 24px 24px !important;padding-bottom:36px !important}
+.lsx-on .lite-page .lsx-promo-first.lsx-promo-last>.lt-block-wrapper{border-radius:24px !important}
+.lsx-on .lite-page .lsx-promo .part-button{text-align:left !important}
+
+/* кнопки */
+.lsx-on .lite-page .btn.f-btn{background:var(--lsx-dark) !important;border-color:var(--lsx-dark) !important;color:#fff !important;border-radius:14px !important;font-size:16px !important;font-weight:700 !important;text-transform:none !important;box-shadow:none !important;height:auto !important;min-height:52px;padding:14px 28px !important;line-height:1.3 !important}
+.lsx-on .lite-page .btn.f-btn *{color:#fff !important;font-size:16px !important;font-weight:700 !important}
+
+/* ещё по теме */
+.lsx-more{margin:48px 0 16px}
+.lsx-more h2{font-size:26px !important;line-height:1.25 !important;font-weight:800 !important;color:var(--lsx-ink) !important;margin:0 0 18px !important;text-align:left !important}
+.lsx-more-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.lsx-mcard{background:var(--lsx-card);border-radius:18px;padding:20px;text-decoration:none !important;display:flex;flex-direction:column;gap:12px;min-height:160px;transition:background .15s,transform .15s}
+.lsx-mcard:hover{background:var(--lsx-card-h);transform:translateY(-2px)}
+.lsx-mcard b{font-size:16px !important;line-height:1.3 !important;font-weight:700 !important;color:var(--lsx-ink) !important}
+.lsx-mcard span{margin-top:auto;font-size:14px !important;color:var(--lsx-muted) !important;font-weight:600 !important;line-height:1.4 !important}
+.lsx-all{display:inline-block;margin-top:16px;font-weight:700 !important;font-size:16px !important;color:var(--lsx-accent) !important;text-decoration:none !important}
+
+@media (max-width:700px){
+  .lsx-on .lite-page .lsx-hero>.lt-block-wrapper{padding:22px 16px !important}
+  .lsx-on .lsx-hero h1,.lsx-on .lsx-hero h1 *,.lsx-on .lsx-hero .f-header *{font-size:24px !important}
+  .lsx-on .lite-page .lsx-promo>.lt-block-wrapper{padding:10px 18px !important}
+  .lsx-on .lite-page .lsx-h,.lsx-on .lite-page .lsx-h *{font-size:22px !important}
+  .lsx-on .lsx-text p,.lsx-on .lsx-promo p{font-size:16px !important}
+  .lsx-more-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.lsx-mcard{transition:none}}
+</style>
+<script>
+(function(){
+  var CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vSKHV4QNiaqNHdDezYAl5F4RyY35pg4XNRaWx8UeCcug7s9pudH26A_zXuDGdAnfoebEmuT_VrjjfH6/pub?gid=1178025904&single=true&output=csv';
+  var LIBRARY_ID='934741030';                       /* корневой тренинг библиотеки */
+  var CATALOG='/teach/control/stream/view/id/934741030'; /* страница с каталогом */
+  var THEMES=['Травмы и кризисы','Подходы и методы','Зависимости и окружение','Специфика терапевтической работы','Личность клиента','Предприниматели и бизнес','Сложные эмоции','Отношения в паре','Клиническая психология','СДВГ и аутизм у взрослых','Психодрама и монодрама','Групповая работа','Профессиональный путь психолога','Тревога, панические атаки и фобии','Суицидальность и самоповреждение','Сексуальность','Психосоматика','Краткосрочная терапия'];
+  var MONTHS=['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+
+  if(window.__lsxDone)return;window.__lsxDone=true;
+  if(/[?&]editMode=1/.test(location.search)){document.documentElement.classList.add('lsx-ready');return}
+  var m=location.href.match(/lesson\/view(?:\/id\/|\?id=)(\d+)/);if(!m)return;
+  var lessonId=m[1];
+
+  /* HTML-сущности собираем из частей: редактор темы GC раскодирует их при сохранении */
+  var AMP=String.fromCharCode(38),NB=AMP+'nbsp;';
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return AMP+({'&':'amp','<':'lt','>':'gt','"':'quot'}[c])+';'})}
+  function nb(s){return esc(s).replace(/(^|\s)([а-яёА-ЯЁ]{1,2})\s/g,'$1$2'+NB)}
+  function monthLabel(v){var p=(v||'').split('-');if(p.length<2)return v||'';var s=MONTHS[+p[1]-1]||'';return s?s[0].toUpperCase()+s.slice(1)+' '+p[0]:v}
+  function parseCSV(t){var rows=[],row=[],f='',q=false;for(var i=0;i<t.length;i++){var c=t[i];
+    if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+    else if(c==='"')q=true;else if(c===','){row.push(f);f=''}else if(c==='\n'){row.push(f);rows.push(row);row=[];f=''}else if(c!=='\r')f+=c}
+    if(f||row.length){row.push(f);rows.push(row)}return rows}
+  function idOf(link){var x=(link||'').match(/(?:id=|\/id\/)(\d+)/);return x?x[1]:''}
+
+  /* таблица: сразу берём из кэша браузера, свежую подгружаем в фоне */
+  function cachedRows(){try{var c=JSON.parse(localStorage.getItem('lsx-csv')||'null');return c&&c.rows||null}catch(e){return null}}
+  function fetchRows(){
+    return fetch(CSV).then(function(r){return r.text()}).then(function(t){
+      var rows=parseCSV(t).slice(1).filter(function(r){return r[0]}).map(function(r){return{id:idOf(r[0]),url:r[0],title:r[1]||'',month:r[2]||'',theme:r[3]||'',speaker:r[4]||'',course:r[5]||'',type:r[6]||'',show:(r[7]||'').trim().toLowerCase()!=='нет'}});
+      try{localStorage.setItem('lsx-csv',JSON.stringify({t:Date.now(),rows:rows}))}catch(e){}
+      return rows});
+  }
+
+
+  function kind(b){var x=String(b.className).match(/lt-view (\S+)/);return x?x[1]:''}
+  function hasText(b){return (b.innerText||'').replace(/\s+/g,'').length>0}
+
+  var hero=null,promo=[],content=[];
+  function layout(){
+    var page0=document.querySelector('.lite-page.block-set');
+    if(page0){[].forEach.call(page0.querySelectorAll('[id^=ltBlock] p, [id^=ltBlock] h1, [id^=ltBlock] h2, [id^=ltBlock] h3'),function(p){
+      if(p.closest('.part-header, .part-subheader'))return;
+      var t=(p.textContent||'').replace(/[\s\u00a0]+/g,'');
+      if(!t&&!p.querySelector('img, iframe, audio, video')){p.classList.add('lsx-empty');return}
+      var fs=0;[p].concat([].slice.call(p.querySelectorAll('*'))).forEach(function(e){var f=parseFloat(getComputedStyle(e).fontSize);if(e.textContent.trim()&&f>fs)fs=f});
+      if(/^H\d$/.test(p.tagName)||fs>=19)p.dataset.lsxH=t.length>110?'lead':'1';
+    })}
+    var page=page0;if(!page)return;
+    document.documentElement.classList.add('lsx-on');
+
+    var i,all=[].slice.call(page.querySelectorAll('[id^=ltBlock]')).filter(function(b){return b.parentElement.closest('[id^=ltBlock]')===null});
+    content=all.filter(function(b){var k=kind(b);return !/^(lmb|lesson-|raw-)/.test(k)});
+    var heroIdx=-1;
+    for(i=0;i<content.length;i++)if(/^tcb/.test(kind(content[i]))){hero=content[i];heroIdx=i;break}
+    function isMedia(b){return /^(vid|aud)/.test(kind(b))||!!b.querySelector('audio, .vhi-root')}
+    /* первая группа видео/аудио подряд (пустые блоки между ними не считаем) */
+    var mediaEnd=-1;
+    for(var j0=0;j0<content.length;j0++)if(isMedia(content[j0])){mediaEnd=j0;
+      for(var j1=j0+1;j1<content.length;j1++){if(isMedia(content[j1]))mediaEnd=j1;else if(hasText(content[j1]))break}break}
+
+    content.forEach(function(b,j){
+      var k=kind(b);b.classList.add('lsx-block');
+      if(j<heroIdx&&b.querySelector('img')&&!hasText(b)){b.classList.add('lsx-hide');return}
+      if(b===hero){b.classList.add('lsx-hero');return}
+      if(mediaEnd>=0&&j>mediaEnd){b.classList.add('lsx-promo');if(isMedia(b))b.classList.add('lsx-media');return}
+      if(isMedia(b)){b.classList.add('lsx-media');return}
+      b.classList.add('lsx-text');
+    });
+    /* текст, стоящий над блоком спикера, переносим сразу под него */
+    if(hero){var pre=content.slice(0,heroIdx).filter(function(b){return b.classList.contains('lsx-text')});
+      for(var q=pre.length-1;q>=0;q--)hero.parentNode.insertBefore(pre[q],hero.nextSibling)}
+    promo=content.filter(function(b){return b.classList.contains('lsx-promo')&&!b.classList.contains('lsx-hide')});
+    if(promo.length){promo[0].classList.add('lsx-promo-first');promo[promo.length-1].classList.add('lsx-promo-last')}
+
+    /* крупные строки текста считаем подзаголовками */
+    [].forEach.call(page.querySelectorAll('.lsx-text [data-lsx-h], .lsx-promo [data-lsx-h]'),function(p){p.classList.add(p.dataset.lsxH==='lead'?'lsx-lead':'lsx-h')});
+  }
+
+  var enriched=false;
+  function enrich(rows){
+    if(enriched||!rows||!content.length)return;
+    var me=null;
+    for(var i=0;i<rows.length;i++)if(rows[i].id===lessonId){me=rows[i];break}
+    if(!me)return;
+    enriched=true;
+
+    /* чипсы в шапке: тема и тип встречи */
+    if(hero&&me&&(me.theme||me.type)){
+      var col=hero.querySelector('.builder.flex-column')||hero.querySelector('.lt-block-wrapper');
+      var ti=THEMES.indexOf(me.theme),h='';
+      if(me.theme)h+=ti>=0?'<a class="lsx-chip lsx-chip--theme" href="'+CATALOG+'#th='+(ti+1)+'">'+nb(me.theme)+'</a>':'<span class="lsx-chip lsx-chip--theme">'+nb(me.theme)+'</span>';
+      if(me.type)h+='<span class="lsx-chip">'+esc(me.type)+'</span>';
+      var d=document.createElement('div');d.className='lsx-chips';d.innerHTML=h;
+      var anchor=col.querySelector('.part-subheader')||col.firstElementChild;
+      col.insertBefore(d,anchor);
+    }
+
+    /* ещё по теме */
+    if(me&&me.theme){
+      var same=rows.filter(function(r){return r.show&&r.id!==lessonId&&r.theme===me.theme});
+      same.sort(function(a,b){return (b.month||'').localeCompare(a.month||'')});
+      if(same.length){
+        var ti2=THEMES.indexOf(me.theme);
+        var sec=document.createElement('section');sec.className='lsx-more';
+        sec.innerHTML='<h2>Ещё по'+NB+'теме «'+nb(me.theme)+'»</h2><div class="lsx-more-grid">'+same.slice(0,3).map(function(r){
+          return '<a class="lsx-mcard" href="'+esc(r.url)+'"><b>'+nb(r.title)+'</b><span>'+esc([r.speaker,monthLabel(r.month)].filter(Boolean).join(' · '))+'</span></a>'}).join('')+'</div>'+
+          (same.length>3?'<a class="lsx-all" href="'+CATALOG+(ti2>=0?'#th='+(ti2+1):'')+'">Все записи по'+NB+'теме ('+(same.length+1)+') →</a>':'<a class="lsx-all" href="'+CATALOG+'">Вся библиотека →</a>');
+        var after=promo.length?promo[promo.length-1]:content[content.length-1];
+        after.parentNode.insertBefore(sec,after.nextSibling);
+      }
+    }
+  }
+
+  function show(){document.documentElement.classList.add('lsx-ready')}
+  function start(){
+    try{layout()}catch(e){}
+    show();
+    var c=cachedRows();if(c)enrich(c);
+    fetchRows().then(enrich,function(){});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+</script>

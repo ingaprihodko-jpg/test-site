@@ -1,0 +1,90 @@
+<!-- GC: один HTML-блок внутри контейнера .custom-support (фон и скругление даёт контейнер).
+     Номера билетов берутся из Google-скрипта «Билеты розыгрыша GC» по email ученика.
+     В скрипте и стилях нет амперсанда и угловых скобок: GC их экранирует и ломает код.
+     Никаких отметок в DOM: редактор GC сохраняет их в блок. -->
+<style>
+.rt-raffle { text-align: center; font-family: inherit; color: #2e2e2e; }
+.rt-raffle-title { margin: 0 0 16px; font-size: 18px; line-height: 1.3; font-weight: 700; color: #c4532f; }
+.rt-raffle-label { margin: 0 0 8px; font-size: 14px; line-height: 1.4; }
+.rt-raffle-nums { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 0 0 16px; min-height: 30px; }
+.rt-raffle-num { display: inline-block; padding: 5px 10px; border: 1px dashed #c4532f; border-radius: 8px; background: #fff; font-size: 14px; line-height: 18px; font-weight: 700; letter-spacing: 0.5px; font-variant-numeric: tabular-nums; color: #2e2e2e; }
+.rt-raffle-skel { display: inline-block; width: 84px; height: 30px; border: 1px dashed rgba(196, 83, 47, 0.4); border-radius: 8px; background: linear-gradient(90deg, #fff 0%, #f5e6df 50%, #fff 100%); background-size: 200% 100%; animation: rt-raffle-shimmer 1.2s ease-in-out infinite; }
+.rt-raffle-wait { flex-basis: 100%; font-size: 12px; line-height: 1.4; color: rgba(46, 46, 46, 0.5); }
+@keyframes rt-raffle-shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce) { .rt-raffle-skel { animation: none; } }
+.rt-raffle-date { margin: 0 0 16px; font-size: 14px; line-height: 1.4; }
+.rt-raffle-date b { display: block; font-size: 16px; }
+.rt-raffle-btn { display: block; padding: 14px 16px; border-radius: 20px; background: #2e2e2e; color: #fff !important; font-size: 15px; line-height: 1.2; font-weight: 700; text-decoration: none !important; transition: background-color 0.2s ease; }
+.rt-raffle-btn:hover { background: #c4532f; }
+.rt-raffle-legal { margin: 14px 0 0; font-size: 11px; line-height: 1.4; color: rgba(46, 46, 46, 0.5); }
+.rt-raffle-legal a { color: inherit !important; text-decoration: underline !important; }
+</style>
+
+<div class="rt-raffle">
+  <p class="rt-raffle-title">Поздравляем! Вы&nbsp;участник розыгрыша призов!</p>
+  <p class="rt-raffle-label">Ваши номера билетов:</p>
+  <div class="rt-raffle-nums"><span class="rt-raffle-skel"></span><span class="rt-raffle-wait">Номера загружаются…</span></div>
+  <p class="rt-raffle-date">Розыгрыш призов состоится <b>30&nbsp;ноября в&nbsp;12:00</b></p>
+  <a class="rt-raffle-btn" href="https://iscelenie-course.ru/raffle/ov" target="_blank">Присоединиться к&nbsp;эфиру</a>
+  <p class="rt-raffle-legal">Акция с&nbsp;розыгрышем призов проводится ООО&nbsp;«Институт Лайф Практик»; полные правила акции, сведения об&nbsp;организаторе, количестве призов, сроках, месте и&nbsp;порядке их&nbsp;получения указаны <a href="https://iscelenie-course.ru/raffle/rules" target="_blank">по&nbsp;ссылке</a></p>
+</div>
+
+<script>
+(function () {
+  var URL = 'https://script.google.com/macros/s/AKfycbyAucSygIIGXerRvRnIybNE68rlcXd-nNMdDOjOUnWa67EBm4ywUMqRYQAn8ntECbqxVQ/exec';
+  if (location.search.indexOf('editMode=1') !== -1) return;
+  if (window.rtTicketsStarted) return;
+  window.rtTicketsStarted = true;
+  var boxes = document.querySelectorAll('.rt-raffle-nums');
+  if (!boxes.length) return;
+
+  function show(list) {
+    Array.prototype.forEach.call(boxes, function (box) {
+      box.textContent = '';
+      if (!list.length) list = ['—'];
+      list.forEach(function (n) {
+        var chip = document.createElement('span');
+        chip.className = 'rt-raffle-num';
+        chip.textContent = n;
+        box.appendChild(chip);
+      });
+    });
+  }
+
+  function isEmail(v) { return /^[^\s@{}]+@[^\s@{}]+$/.test(v || ''); }
+
+  function load(email) {
+    if (!isEmail(email)) { show([]); return; }
+    email = email.toLowerCase();
+    var key = 'rtTickets:' + email;
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem(key) || 'null'); } catch (e) {}
+    if (cached) show(cached);
+    var cb = 'rtTickets' + Date.now() + Math.floor(Math.random() * 1000);
+    var s = document.createElement('script');
+    window[cb] = function (list) {
+      list = list || [];
+      show(list);
+      try { localStorage.setItem(key, JSON.stringify(list)); } catch (e) {}
+      window[cb] = undefined;
+      if (s.parentNode) s.parentNode.removeChild(s);
+    };
+    s.onerror = function () { if (!cached) show([]); };
+    s.src = URL + '?tickets=1\x26callback=' + cb + '\x26email=' + encodeURIComponent(email);
+    document.head.appendChild(s);
+  }
+
+  var onPage = document.querySelector('.user_email');
+  var pageEmail = onPage ? onPage.textContent.trim() : '';
+  if (isEmail(pageEmail)) { load(pageEmail); return; }
+
+  fetch('/user/my/profile')
+    .then(function (r) { return r.text(); })
+    .then(function (html) {
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var m = (doc.body ? doc.body.textContent : '').replace(/\s+/g, ' ').match(/E-mail:\s*(\S+@\S+)/);
+      load(m ? m[1] : '');
+    })
+    .catch(function () { show([]); });
+})();
+</script>

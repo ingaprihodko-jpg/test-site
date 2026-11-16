@@ -1,0 +1,446 @@
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Прототип каталога. Все размеры в px (на GetCourse html{font-size:10px}), классы с префиксом lbx- */
+.lbx{
+  --bg:#ffffff; --hero:#d9e6fb; --card:#f4f0e8; --card-h:#efe9de;
+  --ink:#1c2230; --muted:#5d6577; --line:#e3ddd2; --accent:#2f5fd0; --accent-soft:#e6eefd;
+  --dark:#1f1f1f;
+  font-family:'Manrope',system-ui,sans-serif !important;
+  color:var(--ink); background:var(--bg); font-size:16px; line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+}
+.lbx *{box-sizing:border-box}
+.lbx button,.lbx input,.lbx select{font:inherit;color:inherit}
+.lbx .lbx-jump,.lbx .lbx-more{color:#fff}
+.lbx-wrap{padding:0}
+
+/* hero */
+.lbx-hero{background:var(--hero);border-radius:24px;padding:32px 32px 28px;margin:0}
+.lbx-eyebrow{font-size:14px;font-weight:600;color:var(--muted);margin:0 0 8px}
+.lbx-h1{font-size:40px;line-height:1.1;font-weight:700;margin:0 0 24px;letter-spacing:-.01em;text-wrap:balance}
+.lbx-search{position:relative;max-width:640px}
+.lbx-search input{width:100%;height:56px;border:0;border-radius:16px;padding:0 20px 0 52px;font-size:17px;background:#fff;outline:none;box-shadow:0 1px 0 rgba(0,0,0,.04)}
+.lbx-search input:focus{box-shadow:0 0 0 3px rgba(47,95,208,.25)}
+.lbx-search svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--muted)}
+.lbx-stats{display:flex;gap:28px;margin-top:24px;flex-wrap:wrap}
+.lbx-found{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:15px;font-weight:600}
+.lbx-found[hidden]{display:none}
+.lbx-jump{border:0;background:var(--dark);color:#fff;font-weight:600;font-size:14px;padding:9px 16px;border-radius:10px;cursor:pointer}
+.lbx-stat b{display:block;font-size:24px;font-weight:700;line-height:1.1}
+.lbx-stat span{font-size:14px;color:var(--muted)}
+
+/* views */
+.lbx-tabs{display:flex;gap:6px;margin:28px 0 18px;background:var(--card);padding:5px;border-radius:14px;width:max-content;max-width:100%}
+.lbx-tab{border:0;background:transparent;padding:10px 18px;border-radius:10px;font-weight:600;font-size:15px;cursor:pointer;color:var(--muted);transition:background .15s,color .15s}
+.lbx-tab[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+
+/* filters */
+.lbx-chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:thin}
+.lbx-chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s}
+.lbx-chip:hover{border-color:#c9c1b3}
+.lbx-chip[aria-pressed="true"]{background:var(--dark);border-color:var(--dark);color:#fff}
+.lbx-chip small{opacity:.6;margin-left:4px;font-size:13px}
+.lbx-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.lbx-select{height:42px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:0 34px 0 14px;font-size:14px;font-weight:500;appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%235d6577' stroke-width='1.6'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;width:200px;text-overflow:ellipsis}
+.lbx-select.is-set{border-color:var(--dark);box-shadow:inset 0 0 0 1px var(--dark)}
+.lbx-reset{border:0;background:none;color:var(--accent);font-weight:600;font-size:14px;cursor:pointer;padding:8px 4px}
+.lbx-count{margin-left:auto;font-size:14px;color:var(--muted)}
+
+/* list */
+.lbx-month{font-size:22px;font-weight:700;margin:32px 0 14px;display:flex;align-items:baseline;gap:10px}
+.lbx-month small{font-size:14px;font-weight:500;color:var(--muted)}
+.lbx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.lbx-card{display:flex;flex-direction:column;gap:12px;background:var(--card);border-radius:18px;padding:20px;text-decoration:none;color:inherit;min-height:200px;transition:background .15s,transform .15s}
+.lbx-card:hover{background:var(--card-h);transform:translateY(-2px)}
+.lbx-meta{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}
+.lbx-fmt{font-weight:600;padding:3px 9px;border-radius:999px;background:#fff;color:var(--ink)}
+.lbx-fmt[data-f="S"]{background:#fde7d6}
+.lbx-fmt[data-f="L"]{background:var(--accent-soft)}
+.lbx-fmt[data-f="D"]{background:#e2f3e6}
+.lbx-title{font-size:17px;font-weight:700;line-height:1.3;margin:0;text-wrap:pretty}
+.lbx-people{margin-top:auto;display:flex;flex-direction:column;gap:6px}
+.lbx-person{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+.lbx-person.is-none{color:var(--muted);font-weight:500}
+.lbx-ava{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;color:#fff}
+.lbx-theme{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+
+/* speakers & themes */
+.lbx-sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-top:8px}
+.lbx-scard{border:0;text-align:left;cursor:pointer;background:var(--card);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:background .15s,transform .15s}
+.lbx-scard:hover{background:var(--card-h);transform:translateY(-2px)}
+.lbx-scard .lbx-ava{width:56px;height:56px;font-size:18px}
+.lbx-sname{font-size:17px;font-weight:700;line-height:1.25}
+.lbx-ssub{font-size:13px;color:var(--muted)}
+.lbx-tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:8px}
+.lbx-tcard{border:0;text-align:left;cursor:pointer;border-radius:18px;padding:24px;min-height:170px;display:flex;flex-direction:column;gap:8px;transition:transform .15s,filter .15s}
+.lbx-tcard:hover{transform:translateY(-2px);filter:brightness(.98)}
+.lbx-tcard b{font-size:20px;line-height:1.2;font-weight:700;text-wrap:balance}
+.lbx-tcard .n{font-size:14px;font-weight:600}
+.lbx-tcard .who{margin-top:auto;font-size:13px;color:var(--muted)}
+
+.lbx-empty{padding:60px 20px;text-align:center;color:var(--muted);background:var(--card);border-radius:18px;margin-top:16px}
+.lbx-more{display:block;margin:28px auto 0;border:0;background:var(--dark);color:#fff;font-weight:600;padding:14px 28px;border-radius:14px;cursor:pointer}
+.lbx-foot{height:48px}
+
+@media (max-width:600px){
+  .lbx-hero{padding:24px 18px;border-radius:18px}
+  .lbx-h1{font-size:28px}
+  .lbx-card{min-height:0}
+  .lbx-count{margin-left:0;width:100%}
+  .lbx-select{flex:1 1 140px;width:auto;min-width:0}
+}
+@media (prefers-reduced-motion:reduce){.lbx *{transition:none!important}}
+
+/* защита от стилей GetCourse */
+.lbx,.lbx h1,.lbx h2,.lbx h3,.lbx p,.lbx a,.lbx span,.lbx b,.lbx small,.lbx button,.lbx input,.lbx select,.lbx option,.lbx label{font-family:'Manrope',system-ui,sans-serif !important;letter-spacing:normal}
+.lbx h1,.lbx h2,.lbx h3,.lbx p{padding:0;text-transform:none}
+.lbx .lbx-h1{margin:0 0 24px !important;font-size:36px !important;line-height:1.1 !important;font-weight:700 !important;color:var(--ink) !important}
+.lbx .lbx-month{margin:32px 0 14px !important;font-size:22px !important;line-height:1.3 !important;font-weight:700 !important;color:var(--ink) !important}
+.lbx .lbx-title{margin:0 !important;font-size:17px !important;line-height:1.3 !important;font-weight:700 !important;color:var(--ink) !important}
+.lbx .lbx-eyebrow{margin:0 0 8px !important;font-size:14px !important}
+.lbx a.lbx-card,.lbx a.lbx-card:hover,.lbx a.lbx-card:focus{text-decoration:none !important;color:var(--ink) !important}
+.lbx .lbx-search{display:block !important;max-width:640px;margin:0 !important;font-weight:400}
+.lbx .lbx-search input{height:56px !important;font-size:17px !important;border:0 !important;margin:0 !important}
+.lbx .lbx-select{height:42px !important;font-size:14px !important;margin:0 !important;line-height:normal}
+.lbx button{line-height:1.3;text-transform:none;box-shadow:none}
+.lbx .lbx-tab[aria-selected="true"]{box-shadow:0 1px 3px rgba(0,0,0,.08)}
+@media (max-width:600px){.lbx .lbx-h1{font-size:28px !important}.lbx-hero{padding:24px 18px}}
+</style>
+<div class="lbx" id="lbx">
+  <div class="lbx-wrap">
+    <section class="lbx-hero">
+      <p class="lbx-eyebrow">LifePractic</p>
+      <h1 class="lbx-h1">Библиотека встреч с&nbsp;экспертами</h1>
+      <label class="lbx-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="lbx-q" type="search" placeholder="Тема, спикер или ключевое слово" aria-label="Поиск по библиотеке">
+      </label>
+      <div class="lbx-found" id="lbx-found" hidden><span id="lbx-found-n"></span><button class="lbx-jump" data-act="jump">Показать ↓</button></div>
+      <div class="lbx-stats" id="lbx-stats"></div>
+    </section>
+
+    <div class="lbx-tabs" role="tablist">
+      <button class="lbx-tab" role="tab" data-view="list">Все записи</button>
+      <button class="lbx-tab" role="tab" data-view="speakers">Спикеры</button>
+      <button class="lbx-tab" role="tab" data-view="themes">Темы</button>
+    </div>
+
+    <div id="lbx-filters">
+      <div class="lbx-chips" id="lbx-chips"></div>
+      <div class="lbx-bar">
+        <select class="lbx-select" id="lbx-sp" aria-label="Спикер"></select>
+        <select class="lbx-select" id="lbx-course" aria-label="Курс"></select>
+        <select class="lbx-select" id="lbx-fmt" aria-label="Формат"></select>
+        <select class="lbx-select" id="lbx-year" aria-label="Год"></select>
+        <select class="lbx-select" id="lbx-sort" aria-label="Сортировка">
+          <option value="new">Сначала новые</option>
+          <option value="old">Сначала старые</option>
+          <option value="az">По алфавиту</option>
+        </select>
+        <button class="lbx-reset" id="lbx-reset" hidden>Сбросить</button>
+        <span class="lbx-count" id="lbx-count"></span>
+      </div>
+    </div>
+
+    <div id="lbx-out"></div>
+    <div class="lbx-foot"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+if(!/\/stream\/view\/id\/935931538(\/|$)/.test(location.pathname)){var _r=document.getElementById('lbx');if(_r)_r.style.display='none';return;}
+/* ===== ДАННЫЕ =====
+   В рабочей версии эти строки приходят из Google-таблицы (опубликованный CSV).
+   [id урока, месяц, название, [спикеры], тема 1–9 (0 — нет), курс, формат L/V/S/D] */
+var THEMES=['','Травмы и кризисы','Подходы и методы','Зависимости и окружение','Специфика терапевтической работы','Личность клиента','Предприниматели и бизнес','Сложные эмоции','Отношения в паре','Клиническая психология','СДВГ и аутизм у взрослых','Психодрама и монодрама','Групповая работа','Профессиональный путь психолога','Тревога, панические атаки и фобии','Суицидальность и самоповреждение','Сексуальность'];
+var THEME_BG=['','#fbe3dc','#e3ecfb','#efe3f7','#f4ecd9','#e0f1ea','#e9eef3','#fdeccf','#f9e1ea','#e2eef7','#e6f0dc','#f6e4f1','#dff0f2','#f1e9dc','#e8e4f8','#f6dede','#fbe6f0'];
+var FMT={L:'Лекция',V:'Встреча',S:'Супервизия',D:'Демо-сессия',P:'Практикум'};
+var MONTHS=['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+var R=[
+['350397684','2024','Исцеление травмы на пути к восстановлению',['Рафаэль Кортина'],1,'Терапия травмы','L'],
+['350397685','2024','Обретая целостность: исцеляющие терапевтические отношения',['Рафаэль Кортина'],1,'Терапия травмы','L'],
+['350397686','2024','Что такое инцест? Возрастные особенности развития детей и подростков при инцесте',['Ирина Исаева'],1,'Терапия инцеста','L'],
+['350397687','2024','Инцест, зависимость и созависимость. Общие черты и главные отличия',['Ирина Исаева'],1,'Терапия инцеста','L'],
+['350397688','2024','Базовые концепты кризисной динамики. Определяющая феноменология кризисов',['Андрей Валамин'],1,'Кризисы современности','L'],
+['350397689','2024','EMDR как эффективный метод психотерапии',['Рафаэль Кортина'],4,'Терапевтические отношения','L'],
+['350397690','2024','Что такое психологическая защита и как с ней работать',['Денис Сенников'],4,'Основы психоанализа и психологические защиты','L'],
+['350397691','2024','Жизнь для других и поиск одобрения. Что нужно знать о терапии ВДА',['Ирина Исаева','Татьяна Ружанец','Елена Станковская'],3,'Взрослые дети зависимых родителей (ВДА)','S'],
+['350397692','2024','Трудности в терапевтических отношениях',['Рафаэль Кортина'],4,'Терапевтические отношения','S'],
+['350397693','2024','Терапевтическая идентичность: роль в терапии и способы укрепления',['Елена Тяпченко'],4,'Терапевтические отношения','S'],
+['350397694','2025-01','Ид, Эго, СуперЭго',['Денис Сенников'],4,'Основы психоанализа и психологические защиты','L'],
+['350397695','2025-01','Введение в экзистенциальный подход к пониманию и лечению зависимости: свобода, воля и путь к восстановлению',['Альфрид Лэнгле'],3,'Экзистенциальный подход в терапии зависимости','L'],
+['350397696','2025-01','Теоретические основы терапии отношениями (ИПТ)',['Никита Чернов'],2,'Интерперсональная терапия','L'],
+['350397697','2025-01','Отрицание травматического опыта у ВДА',['Ирина Исаева'],3,'Взрослые дети зависимых родителей (ВДА)','L'],
+['350397698','2025-01','Почему с клиентом сложно',['Елена Тяпченко'],4,'Трудные клиенты','S'],
+['350397699','2025-02','Любовь или психологическая защита?',['Елена Тришкина'],4,'Основы психоанализа и психологические защиты','S'],
+['350397700','2025-02','Что определяет поведение человека?',['Денис Сенников'],4,'Основы психоанализа и психологические защиты','L'],
+['350397701','2025-02','Поддержка семей зависимых: эффективные методы и практики',['Ирина Андреева-Чадаева'],3,'Экзистенциальный подход в терапии зависимости','L'],
+['350397702','2025-02','Выход из зависимости: как помочь клиенту бросить и не начинать снова',['Альфрид Лэнгле'],3,'Экзистенциальный подход в терапии зависимости','L'],
+['350397703','2025-02','Демосессия «Диагностика на первой сессии в методе ИПТ»',['Никита Чернов'],2,'Интерперсональная терапия','D'],
+['350397704','2025-02','Ошибки первичного контакта с трудными клиентами',['Андрей Валамин'],4,'Трудные клиенты','L'],
+['350397705','2025-02','Как устанавливать и удерживать границы в терапии трудных клиентов',['Андрей Валамин'],4,'Трудные клиенты','L'],
+['350397706','2025-03','Киноразбор «Реальность или иллюзия: внутренние конфликты женщин»',['Елена Тришкина'],4,'Основы психоанализа и психологические защиты','S'],
+['350397707','2025-03','Психосоматика панических атак',['Галина Шаталова'],5,'Психосоматика','L'],
+['350397708','2025-03','8 мифов о психиатрах, в которые верят психологи',['Александр Чомский','Анна Риттер'],9,'Психиатрия для психологов','L'],
+['350397709','2025-03','Меня нельзя любить',['Елена Станковская'],1,'Нелюбимые с детства','L'],
+['350397710','2025-04','Заболевание не проходит: как работать психологу',['Галина Шаталова'],5,'Психосоматика','L'],
+['350397711','2025-04','Работа с суицидальными мыслями',['Александр Чомский','Анна Риттер'],15,'Психиатрия для психологов','L'],
+['350397712','2025-04','Ловушки в терапии клиентов с дефицитом любви',['Елена Станковская'],1,'Нелюбимые с детства','L'],
+['350397713','2025-04','Психодрама в работе с самооценкой',['Ольга Малинина'],5,'Самооценка','L'],
+['350397714','2025-05','Внутренний критик: как страх ошибки разрушает любовь и карьеру',['Ольга Малинина'],5,'Самооценка','L'],
+['350397715','2025-05','Мишени терапии в теме отношений',['Ольга Малинина','Елена Тяпченко'],8,'Психология отношений','S'],
+['350397716','2025-06','Психические нарушения в семье. Как работать психологу',['Константин Логинов','Галина Каменецкая'],8,'Психология отношений','S'],
+['350397717','2025-06','Консультирование предпринимателей и руководителей',['Илья Шмелев'],6,'Психологическое консультирование предпринимателей','L'],
+['350397718','2025-06','Лекция + демосессия «Как работать с профессиональным выгоранием»',['Илья Шмелев'],6,'Психологическое консультирование предпринимателей','D'],
+['350397719','2025-06','Ошибки психолога при работе с травмой',['Ирина Исаева'],1,'Терапия травмы','L'],
+['350397720','2025-06','Тревога: признаки, функции, смысл',['Федор Коноров'],14,'Понимание тревоги в гештальт-терапии','L'],
+['350397721','2025-07','Как вести парную терапию?',['Елена Тяпченко','Дмитрий Басович'],8,'Психология отношений','S'],
+['350397722','2025-07','Ретравматизация. Что делать, если это произошло',['Ирина Исаева'],1,'Терапия травмы','L'],
+['350397723','2025-08','Разблокировать травму',['Ирина Исаева'],1,'Терапия травмы','L'],
+['350397724','2025-08','Тревога: нормальная и патологическая',['Федор Коноров'],14,'Понимание тревоги в гештальт-терапии','L'],
+['350397725','2025-08','Жизнь после утраты',['Елена Станковская'],1,'Утраты','L'],
+['350397726','2025-08','Мать как сценарий: почему материнская фигура — основа психологии?',['Денис Сенников'],4,'Фигура матери в терапии','L'],
+['350397727','2025-08','«Достаточно хорошая», «нарциссическая» и «отсутствующая» мать',['Денис Сенников'],4,'Фигура матери в терапии','L'],
+['350397728','2025-08','Тело, удовольствие и оргазм',['Жан-Франсуа Жерве'],16,'Работа с сексуальными трудностями в терапии','L'],
+['350397729','2025-09','Работа с потерей в интегративном подходе',['Ричард Эрскин','Елена Станковская'],1,'Утраты','V'],
+['350397730','2025-09','Высокофункциональная депрессия и выгорание: когда эффективность становится маской',['Ирина Андреева-Чадаева'],9,'Депрессия','V'],
+['350397731','2025-09','Разговор о близости. Пара и различия в желаниях',['Жан-Франсуа Жерве'],16,'Работа с сексуальными трудностями в терапии','V'],
+['350397732','2025-09','Восприятие мира клиентом с нарциссическим опытом',['Константин Логинов'],5,'Глубинная работа с нарциссическим опытом','V'],
+['350397733','2025-09','Как работает метод EMDR: теория и практика',['Ольга Наливаева'],1,'EMDR','V'],
+['350397734','2025-09','«Не могу это пережить»: как работать с хроническим гореванием',['Ричард Эрскин','Ольга Наливаева'],1,'Утраты','V'],
+['350397735','2025-10','Нарциссическая ярость в отношениях',['Константин Логинов'],5,'Глубинная работа с нарциссическим опытом','V'],
+['350397736','2025-10','Терапевтический тупик. Как помочь найти выход',['Алла Далит'],4,'Терапевтические отношения','V'],
+['350397737','2025-10','Трудности в терапии пограничных клиентов',['Елена Тяпченко','Андрей Валамин'],4,'Трудные клиенты','V'],
+['350397738','2025-10','EMDR и групповая работа с тревогой и стрессом',['Ольга Наливаева'],1,'EMDR','V'],
+['350397739','2025-10','Терапевтический тупик. Как понять, что мы там?',['Алла Далит'],4,'Терапевтические отношения','V'],
+['350397740','2025-11','Фигура отца: влияние на судьбу и сценарий жизни',['Денис Сенников'],4,'Фигура отца в терапии','S'],
+['350397741','2025-11','Что мы называем пограничностью',['Андрей Валамин'],4,'Трудные клиенты','V'],
+['350397742','2025-11','Терапия мужчин: чувства и близость',['Анна Риттер','Андрей Валамин'],8,'','V'],
+['350397743','2025-12','Зависимости как симптом времени: шопоголизм, игромания, трудоголизм',['Елена Тяпченко'],1,'Травма и зависимости','S'],
+['350397744','2025-12','Пограничные клиенты в кабинете психолога',['Андрей Валамин'],4,'Трудные клиенты','V'],
+['350397745','2025-12','Расширяя горизонты: работа психолога с предпринимателями',[],6,'Психологическое консультирование предпринимателей','V'],
+['350397746','2026-01','Работа с психотравмой в гештальт-подходе: как терапия влияет на мозг и тело',['Елена Перепелицына'],1,'Терапия травмы','S'],
+['350397747','2026-01','(Не)любовь: признаки здоровой близости',['Арман Бекенов'],8,'','V'],
+['350397748','2026-01','Как заметить зависимое поведение подростка',['Ирина Андреева-Чадаева'],3,'','V'],
+['350397749','2026-01','Работа с хроническим стрессом и выгоранием предпринимателей',['Илья Шмелев'],6,'','V'],
+['350397750','2026-01','СДВГ и отношения: измены, скука и поиск любви',['Евгения Дашкова'],10,'СДВГ','V'],
+['350397751','2026-02','Мать и отец как ядро семейной системы',['Денис Сенников'],4,'Семейная система','S'],
+['350397752','2026-02','Психодрама один на один. Техники, которые продвигают терапию',[],11,'','V'],
+['350397753','2026-02','Слияние в отношениях и в терапии',['Арман Бекенов'],8,'','V'],
+['350397754','2026-02','Мифы об изменах, которые мешают терапии',['Марина Травкова'],8,'Измены и неверность','V'],
+['350397755','2026-02','Эмоциональная дисрегуляция у взрослых с СДВГ',['Анастасия Кудрявцева'],10,'СДВГ','V'],
+['350397756','2026-02','Депрессивное расстройство в рамках биопсихосоциальной модели',['Никита Чернов'],9,'','V'],
+['350397757','2026-02','Знакомство с методом психодрамы через работу со сложным выбором',[],11,'','S'],
+['350397758','2026-02','Тайная система семьи. Супервизия',['Денис Сенников'],4,'Семейная система','S'],
+['350397759','2026-02','СДВГ: мода или диагноз',['Юлия Морозова'],10,'СДВГ','S'],
+['350397760','2026-03','Мозг с СДВГ: почему он работает иначе',['Екатерина Винник'],10,'СДВГ','V'],
+['350397761','2026-03','Диагностика депрессии и введение',['Никита Чернов'],9,'','V'],
+['350397762','2026-03','РПП и СДВГ: почему пищевые расстройства — частый спутник нейроотличных людей',['Инна Гуткина'],10,'СДВГ','V'],
+['350397763','2026-03','Измена как терапевтический запрос. Границы пары и типичные сценарии',['Марина Травкова'],8,'Измены и неверность','V'],
+['350397764','2026-03','Работа с самоценностью и стыдом при СДВГ',['Юлия Морозова'],10,'СДВГ','V'],
+['350397765','2026-03','Что такое СДВГ у взрослых',[],10,'СДВГ','V'],
+['350397766','2026-03','Как начать практику психолога, если очень страшно',['Елена Тяпченко'],13,'','S'],
+['350397767','2026-03','Работа с любовным сценарием в психодраме',[],11,'','V'],
+['350397768','2026-03','Неверность: как психологу работать с изменой',['Марина Травкова'],8,'Измены и неверность','V'],
+['350397769','2026-03','Сложности работы с любовным сценарием в монодраме: ролевые ожидания клиента',[],11,'','V'],
+['350397770','2026-03','От страха к действию. Выход из финансового тупика',[],5,'','V'],
+['350397771','2026-04','Стыд, который удерживает тайну инцеста',[],1,'Терапия инцеста','V'],
+['350397772','2026-04','Я самозванец или показалось?',['Елена Тяпченко'],13,'','S'],
+['350397773','2026-04','Особенности семей участников СВО: о чём редко говорят психологам',['Анастасия Татару'],1,'Семьи участников СВО','V'],
+['350397774','2026-04','Как через влияние на семейную систему помогать конкретному клиенту. Демосессия',['Денис Сенников'],4,'Семейная система','D'],
+['350397775','2026-04','Психодрама при терапевтических тупиках',[],11,'','V'],
+['350397776','2026-04','Жизнь для других. Терапия эмоциональной зависимости у ВДД',['Анна Риттер'],3,'Взрослые дети зависимых родителей (ВДА)','V'],
+['350397777','2026-04','Консультирование травмы инцеста',[],1,'Терапия инцеста','S'],
+['350397778','2026-04','Специфика работы со стрессом и шоковой травмой. Супервизия',[],1,'Терапия травмы','S'],
+['P935931557','2026-04','Трёхдневный практикум «Монодрама в работе психолога»',['Екатерина Коренченко'],11,'','P'],
+['350397784','2026-05','Самые частые запросы в работе с инцестом: как психологу не пропустить?',[],1,'Терапия инцеста','V'],
+['350397785','2026-05','Терапия клиентов с инфантильными стратегиями',['Антон Сорин'],5,'Детские стратегии','V'],
+['350397786','2026-05','Стресс-реакции на агрессию. Как изменить привычный сценарий?',[],7,'','V'],
+['350397787','2026-05','Кризисы, тревога, нестабильность: ресурсы монодрамы для психолога и клиента',[],11,'','V'],
+['350397788','2026-05','Недолюбленность, ВДА, насилие',['Елена Станковская'],1,'','V'],
+['350397789','2026-05','Два эфира о работе с детскими стратегиями',['Антон Сорин'],5,'Детские стратегии','V'],
+['350397790','2026-05','Помощь психолога семьям участников СВО',['Анастасия Татару'],1,'Семьи участников СВО','S'],
+['350397791','2026-05','Как изменить детские стратегии в близких отношениях',['Анастасия Татару'],5,'Детские стратегии','S'],
+['350397792','2026-05','Как изменить детские стратегии в близких отношениях',['Антон Сорин'],5,'Детские стратегии','V'],
+['350397793','2026-06','Зеркало нарциссической личности: почему мне так важно, что обо мне думают',['Денис Сенников'],5,'Глубинная работа с нарциссическим опытом','S'],
+['350397794','2026-06','Терапия ВДА. Работа с ощущением внутренней дефектности',['Ирина Исаева'],3,'Взрослые дети зависимых родителей (ВДА)','V'],
+['350397795','2026-06','Хорошая девочка: работа со страхом отвержения',['Анна Риттер'],5,'','V'],
+['350397796','2026-06','Заблокированная злость: как не дать ей разрушить отношения',['Елена Станковская'],7,'','V'],
+['350397797','2026-06','Ловушки терапии избегающего стиля привязанности',['Константин Клейн'],8,'','V'],
+['350397798','2026-06','Кокон шизоидной личности: «Я устал от одиночества»',['Денис Сенников'],5,'Глубинная работа с нарциссическим опытом','S'],
+['350397799','2026-06','Механизмы мести у взрослых из дисфункциональных семей',['Константин Логинов'],3,'','V'],
+['350397800','2026-07','Когда сложно выбирать: я или другие',['Анна Риттер'],5,'','V'],
+['350397801','2026-07','Сила принимать бессилие. Как терапевту работать в ситуации неопределённости и оставаться устойчивым',['Альфрид Лэнгле'],2,'Экзистенциальный анализ','V'],
+['350397802','2026-07','Типы личности: от диагностики до точной помощи',[],5,'','V'],
+['350397803','2026-07','5 ошибок, которые мешают психологу успешно запускать группы',['Ирина Исаева'],12,'','V'],
+['350397804','2026-07','Ресурсы злости в терапевтическом процессе',['Елена Станковская'],7,'','V'],
+['350397805','2026-07','Пограничный, психотический или невротический уровень?',[],9,'','V'],
+['350397806','2026-07','Бегущий от близости. Как помочь избегающему клиенту строить надёжные отношения',['Константин Клейн'],8,'','V'],
+['350397807','2026-07','Невыносимая тревога. Как ускорить терапию',[],14,'Понимание тревоги в гештальт-терапии','V'],
+['350397808','2026-08','Экзистенциальный анализ в действии: методы практической работы',['Екатерина Евстигнеева','Альфрид Лэнгле'],2,'Экзистенциальный анализ','V'],
+['350397809','2026-08','Экзистенциальная терапия: как помочь клиенту выстроить аутентичные отношения',['Ирина Андреева-Чадаева','Альфрид Лэнгле'],2,'Экзистенциальный анализ','V'],
+['350397810','2026-08','Конфликты в группе: как ведущему удержать процесс, когда всё идёт не по плану',['Ирина Исаева'],12,'','S'],
+['350397811','2026-08','Это паническая атака? Как верно диагностировать и выбрать стратегию работы',[],14,'Понимание тревоги в гештальт-терапии','V'],
+['350397812','2026-08','Как перестать выгорать и снова почувствовать смысл в своей работе',['Виталина Скворцова-Охрицкая'],13,'','V'],
+['350397813','2026-08','Когда психолог может навредить: ошибки в работе с суицидальным риском',['Никита Чернов'],15,'Суицидальный риск','V'],
+['350397814','2026-09','«Невидимый аутизм»: почему женщины с РАС годами остаются без диагноза',['Зоя Соколова'],10,'Аутизм (РАС)','V'],
+['350397815','2026-09','Сексуализированная травма: распознать и не навредить',[],16,'Терапия травмы','S'],
+['350397816','2026-09','Аутизм изнутри: 10 вопросов человеку с РАС',['Юлия Морозова'],10,'Аутизм (РАС)','V'],
+['350397817','2026-09','Быстрая помощь без потери глубины',[],14,'','V'],
+['350397818','2026-09','Родительство как экзистенциальный вызов: как оставаться собой рядом с ребёнком',['Юлия Морозова'],5,'','V'],
+['350397819','2026-09','От самоповреждения к суицидальному риску: как распознать опасную динамику',['Никита Чернов'],15,'Суицидальный риск','V'],
+['350397820','2026-09','Клиент ходит по кругу. Как работать психологу',['Елена Станковская'],4,'','V'],
+['350397821','2026-09','Группа глазами участников: механизмы изменений, которые недоступны в индивидуальной работе',[],12,'','V'],
+['350397822','2026-09','Поздняя диагностика аутизма: зачем ставить диагноз, если клиенту уже за 30?',['Зоя Соколова'],10,'Аутизм (РАС)','V'],
+['350397823','2026-09','Стыд в терапии: как помочь клиенту вернуть право быть собой',['Альфрид Лэнгле'],2,'Экзистенциальный анализ','V'],
+['350397824','2026-09','Тревога, ПА и фобии: как помочь быстро. Разбор кейсов и особенностей метода',[],14,'Понимание тревоги в гештальт-терапии','V'],
+['350397825','2026-09','Привычка быть удобным. Как вернуть себе право быть собой',[],5,'','V'],
+['350397826','2026-09','Аутизм изнутри: что происходит с телом? О боли, сне, гормонах и физических состояниях аутичных клиентов',['Юлия Морозова'],10,'Аутизм (РАС)','V']
+];
+var LESSON_URL='/pl/teach/control/lesson/view?id=';
+var STREAM_URL='/teach/control/stream/view/id/';
+var NOSP='Спикер не указан';
+
+var items=R.map(function(r,i){return {id:r[0],m:r[1],t:r[2],sp:r[3],th:r[4],c:r[5],f:r[6],o:i,
+  y:r[1].slice(0,4),q:(r[2]+' '+r[3].join(' ')+' '+THEMES[r[4]]+' '+r[5]).toLowerCase().replace(/ё/g,'е')};});
+
+/* ===== helpers ===== */
+var $=function(id){return document.getElementById(id)};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+/* неразрывный пробел после коротких слов */
+function typo(s){return esc(s).replace(/(^|[\s(«])([а-яёА-ЯЁ]{1,2}|для|без|над|под|про|при|что|или|как|это|если|когда)\s/g,'$1$2&nbsp;')}
+var PAL=['#2f5fd0','#c2573a','#7a4fb3','#2e8b6a','#b07a14','#c23f6d','#3d7f9f','#5a6b2f'];
+function hash(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return Math.abs(h)}
+function ava(name){var p=name.split(' ');return '<span class="lbx-ava" style="background:'+PAL[hash(name)%PAL.length]+'">'+esc((p[0][0]||'')+(p[1]?p[1][0]:''))+'</span>'}
+function monthLabel(m){if(m.length===4)return 'Архив '+m;var p=m.split('-');var s=MONTHS[+p[1]-1];return s[0].toUpperCase()+s.slice(1)+' '+p[0]}
+function plural(n,a,b,c){var m=n%10,h=n%100;return n+' '+(m===1&&h!==11?a:m>=2&&m<=4&&(h<10||h>=20)?b:c)}
+function countBy(list,fn){var o={};list.forEach(function(x){[].concat(fn(x)).forEach(function(k){o[k]=(o[k]||0)+1})});return o}
+
+/* поиск без учёта окончаний: «травма» найдёт «травмы», «травмой» */
+function stem(w){return w.length>=6?w.slice(0,-2):w.length===5?w.slice(0,-1):w}
+/* мгновенная прокрутка: плавную GetCourse глушит */
+function jump(){var t=document.querySelector('.lbx-tabs');if(t)window.scrollTo(0,Math.max(0,t.getBoundingClientRect().top+window.pageYOffset-16))}
+
+/* ===== state (в адресе страницы, чтобы фильтром можно было поделиться) ===== */
+var S={view:'list',q:'',th:'',sp:'',c:'',f:'',y:'',sort:'new',lim:24};
+function readHash(){var h=location.hash.slice(1);if(!h)return;h.split('&').forEach(function(kv){var p=kv.split('=');if(p[0] in S)S[p[0]]=decodeURIComponent(p[1]||'')})}
+function writeHash(){var o=[];['view','q','th','sp','c','f','y','sort'].forEach(function(k){var d={view:'list',sort:'new'}[k]||'';if(S[k]&&S[k]!==d)o.push(k+'='+encodeURIComponent(S[k]))});try{history.replaceState(null,'',o.length?'#'+o.join('&'):location.pathname+location.search)}catch(e){}}
+
+function filtered(skip){
+  var q=S.q.trim().toLowerCase().replace(/ё/g,'е').split(/[\s,.;:!?«»"()–—-]+/).filter(Boolean).map(stem);
+  return items.filter(function(x){
+    if(q.length&&q.some(function(w){return x.q.indexOf(w)<0}))return false;
+    if(skip!=='th'&&S.th&&String(x.th)!==S.th)return false;
+    if(skip!=='sp'&&S.sp&&(S.sp===NOSP?x.sp.length:x.sp.indexOf(S.sp)<0))return false;
+    if(skip!=='c'&&S.c&&x.c!==S.c)return false;
+    if(skip!=='f'&&S.f&&x.f!==S.f)return false;
+    if(skip!=='y'&&S.y&&x.y!==S.y)return false;
+    return true;
+  });
+}
+
+/* ===== controls ===== */
+function fillSelect(el,label,counts,cur,labelFn,order){
+  var keys=order||Object.keys(counts).sort(function(a,b){return a.localeCompare(b,'ru')});
+  var h='<option value="">'+label+'</option>';
+  keys.forEach(function(k){if(!counts[k]&&k!==cur)return;h+='<option value="'+esc(k)+'"'+(k===cur?' selected':'')+'>'+esc(labelFn?labelFn(k):k)+' · '+(counts[k]||0)+'</option>'});
+  el.innerHTML=h;el.classList.toggle('is-set',!!cur);
+}
+function renderControls(){
+  var base=filtered('th'),tc=countBy(base,function(x){return x.th});
+  var h='<button class="lbx-chip" data-th="" aria-pressed="'+(!S.th)+'">Все темы<small>'+base.length+'</small></button>';
+  for(var i=1;i<THEMES.length;i++){if(!tc[i]&&String(i)!==S.th)continue;h+='<button class="lbx-chip" data-th="'+i+'" aria-pressed="'+(S.th===String(i))+'">'+THEMES[i]+'<small>'+(tc[i]||0)+'</small></button>'}
+  $('lbx-chips').innerHTML=h;
+  fillSelect($('lbx-sp'),'Все спикеры',countBy(filtered('sp'),function(x){return x.sp.length?x.sp:NOSP}),S.sp);
+  fillSelect($('lbx-course'),'Все курсы',countBy(filtered('c').filter(function(x){return x.c}),function(x){return x.c}),S.c);
+  fillSelect($('lbx-fmt'),'Любой формат',countBy(filtered('f'),function(x){return x.f}),S.f,function(k){return FMT[k]},['L','V','S','D','P']);
+  fillSelect($('lbx-year'),'Все годы',countBy(filtered('y'),function(x){return x.y}),S.y,null,['2026','2025','2024']);
+  $('lbx-sort').value=S.sort;
+  $('lbx-reset').hidden=!(S.q||S.th||S.sp||S.c||S.f||S.y);
+  [].forEach.call(document.querySelectorAll('.lbx-tab'),function(b){b.setAttribute('aria-selected',b.dataset.view===S.view)});
+  $('lbx-filters').style.display=S.view==='list'?'':'none';
+}
+
+function card(x){
+  var people=x.sp.length?x.sp.map(function(n){return '<span class="lbx-person">'+ava(n)+esc(n)+'</span>'}).join(''):'<span class="lbx-person is-none">'+NOSP+'</span>';
+  return '<a class="lbx-card" href="'+(x.id[0]==='P'?STREAM_URL+x.id.slice(1):LESSON_URL+x.id)+'" target="_top">'+
+    '<div class="lbx-meta"><span class="lbx-fmt" data-f="'+x.f+'">'+FMT[x.f]+'</span><span>'+monthLabel(x.m)+'</span></div>'+
+    '<h3 class="lbx-title">'+typo(x.t)+'</h3>'+
+    '<div class="lbx-people">'+people+'</div>'+
+    '<div class="lbx-theme">'+(x.th?THEMES[x.th]:'Без темы')+(x.c?' · '+esc(x.c):'')+'</div></a>';
+}
+
+function renderList(){
+  var list=filtered();
+  list.sort(S.sort==='az'?function(a,b){return a.t.replace(/^[«"(]/,'').localeCompare(b.t.replace(/^[«"(]/,''),'ru')}:
+    S.sort==='old'?function(a,b){return a.m.localeCompare(b.m)||a.o-b.o}:function(a,b){return b.m.localeCompare(a.m)||b.o-a.o});
+  $('lbx-count').textContent=plural(list.length,'запись','записи','записей');
+  if(!list.length)return '<div class="lbx-empty">Ничего не нашлось. Попробуйте другое слово или <button class="lbx-reset" data-act="reset">сбросьте фильтры</button></div>';
+  var shown=list.slice(0,S.lim),h='';
+  if(S.sort==='az'){h='<div class="lbx-grid" style="margin-top:16px">'+shown.map(card).join('')+'</div>'}
+  else{
+    var groups=[],cur=null,total=countBy(list,function(x){return x.m});
+    shown.forEach(function(x){if(!cur||cur.m!==x.m){cur={m:x.m,a:[]};groups.push(cur)}cur.a.push(x)});
+    h=groups.map(function(g){return '<h2 class="lbx-month">'+monthLabel(g.m)+'<small>'+plural(total[g.m],'запись','записи','записей')+'</small></h2><div class="lbx-grid">'+g.a.map(card).join('')+'</div>'}).join('');
+  }
+  if(list.length>S.lim)h+='<button class="lbx-more" data-act="more">Показать ещё · '+(list.length-S.lim)+'</button>';
+  return h;
+}
+
+function renderSpeakers(){
+  var c=countBy(items,function(x){return x.sp}),th={};
+  items.forEach(function(x){x.sp.forEach(function(n){(th[n]=th[n]||{})[x.th]=((th[n]||{})[x.th]||0)+1})});
+  var names=Object.keys(c).sort(function(a,b){return c[b]-c[a]||a.localeCompare(b,'ru')});
+  return '<div class="lbx-sgrid">'+names.map(function(n){
+    var top=Object.keys(th[n]).filter(function(k){return +k}).sort(function(a,b){return th[n][b]-th[n][a]}).slice(0,2).map(function(k){return THEMES[k]}).join(', ');
+    return '<button class="lbx-scard" data-sp="'+esc(n)+'">'+ava(n)+'<span class="lbx-sname">'+esc(n)+'</span><span class="lbx-ssub">'+plural(c[n],'запись','записи','записей')+(top?' · '+top:'')+'</span></button>'}).join('')+'</div>';
+}
+
+function renderThemes(){
+  var h='<div class="lbx-tgrid">';
+  for(var i=1;i<THEMES.length;i++){
+    var list=items.filter(function(x){return x.th===i}),sc=countBy(list,function(x){return x.sp});
+    var who=Object.keys(sc).sort(function(a,b){return sc[b]-sc[a]}).slice(0,3).join(', ');
+    h+='<button class="lbx-tcard" style="background:'+THEME_BG[i]+'" data-th="'+i+'"><b>'+THEMES[i]+'</b><span class="n">'+plural(list.length,'запись','записи','записей')+'</span><span class="who">'+esc(who)+'</span></button>';
+  }
+  return h+'</div>';
+}
+
+function render(){
+  renderControls();
+  var hasQ=!!S.q.trim(),n=hasQ?filtered().length:0;
+  $('lbx-found').hidden=!hasQ;
+  $('lbx-found-n').textContent=n?'Найдено: '+plural(n,'запись','записи','записей'):'Ничего не нашлось';
+  $('lbx-found').querySelector('.lbx-jump').hidden=!n;
+  $('lbx-out').innerHTML=S.view==='speakers'?renderSpeakers():S.view==='themes'?renderThemes():renderList();
+  writeHash();
+}
+
+/* stats */
+(function(){var sp=countBy(items,function(x){return x.sp});
+  $('lbx-stats').innerHTML=[[items.length,'записей'],[Object.keys(sp).length,'спикеров'],[THEMES.length-1,'тем'],['2024–2026','годы']].map(function(s){return '<div class="lbx-stat"><b>'+s[0]+'</b><span>'+s[1]+'</span></div>'}).join('');})();
+
+/* events */
+var root=$('lbx');
+root.addEventListener('click',function(e){
+  var t=e.target.closest('[data-view],[data-th],[data-sp],[data-act]');if(!t)return;
+  if(t.dataset.view){S.view=t.dataset.view}
+  else if(t.dataset.sp!==undefined&&t.classList.contains('lbx-scard')){S.view='list';S.sp=t.dataset.sp;S.th='';setTimeout(jump,0)}
+  else if(t.dataset.th!==undefined){if(t.classList.contains('lbx-tcard')){S.view='list';setTimeout(jump,0)}S.th=(S.th===t.dataset.th&&t.dataset.th)?'':t.dataset.th}
+  else if(t.dataset.act==='more'){S.lim+=24}
+  else if(t.dataset.act==='reset'){resetAll()}
+  else if(t.dataset.act==='jump'){S.view='list';setTimeout(jump,0)}
+  if(t.dataset.act!=='more'&&t.dataset.act!=='jump')S.lim=24;
+  render();
+});
+function resetAll(){S.q='';S.th='';S.sp='';S.c='';S.f='';S.y='';S.lim=24;$('lbx-q').value=''}
+$('lbx-reset').addEventListener('click',function(){resetAll();render()});
+var tm;$('lbx-q').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();clearTimeout(tm);S.q=e.target.value;S.view='list';render();jump()}});
+$('lbx-q').addEventListener('input',function(e){clearTimeout(tm);tm=setTimeout(function(){S.q=e.target.value;S.lim=24;if(S.view!=='list'&&S.q)S.view='list';render()},150)});
+[['lbx-sp','sp'],['lbx-course','c'],['lbx-fmt','f'],['lbx-year','y'],['lbx-sort','sort']].forEach(function(p){$(p[0]).addEventListener('change',function(e){S[p[1]]=e.target.value;S.lim=24;render()})});
+
+readHash();$('lbx-q').value=S.q;S.lim=+S.lim||24;render();
+})();
+</script>

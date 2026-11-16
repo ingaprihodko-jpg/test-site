@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок библиотеки</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Прототип оформления урока библиотеки. Размеры в px (на GC html{font-size:10px}), классы с префиксом lsn- */
+.lsn{
+  --hero:#d9e6fb; --card:#f4f0e8; --card-h:#efe9de; --ink:#1c2230; --muted:#5d6577;
+  --line:#e3ddd2; --accent:#2f5fd0; --dark:#1f1f1f; --theme:#e6f0dc;
+  font-family:'Manrope',system-ui,sans-serif !important;
+  color:var(--ink); background:#fff; font-size:17px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.lsn *{box-sizing:border-box}
+.lsn a{color:inherit}
+.lsn-wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+.lsn h1,.lsn h2,.lsn h3,.lsn p,.lsn ul{margin:0}
+
+/* навигация */
+.lsn-crumbs{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin:20px 0 16px}
+.lsn-crumbs a{text-decoration:none;font-weight:600;color:var(--accent)}
+.lsn-crumbs a:hover{text-decoration:underline}
+.lsn-step{margin-left:auto;font-weight:600;color:var(--ink);background:var(--card);padding:4px 12px;border-radius:999px}
+
+/* hero */
+.lsn-hero{background:var(--hero);border-radius:24px;padding:36px;display:grid;grid-template-columns:1fr 300px;gap:36px;align-items:center}
+.lsn-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.lsn-chip{font-size:13px;font-weight:600;background:#fff;border-radius:999px;padding:5px 12px;text-decoration:none}
+.lsn-chip--theme{background:var(--theme)}
+.lsn-h1{font-size:36px;line-height:1.15;font-weight:800;letter-spacing:-.01em;text-wrap:balance;margin-bottom:16px !important}
+.lsn-lead{font-size:18px;line-height:1.55;color:#2b3242;text-wrap:pretty}
+.lsn-speaker{display:flex;align-items:center;gap:14px;margin-top:24px;padding-top:20px;border-top:1px solid rgba(28,34,48,.12)}
+.lsn-speaker b{display:block;font-size:17px}
+.lsn-speaker span{font-size:15px;color:var(--muted);line-height:1.4;display:block}
+.lsn-photo{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/5;background:#c9d8f3}
+.lsn-photo img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* видео */
+.lsn-video{margin-top:16px;border-radius:20px;overflow:hidden;aspect-ratio:16/9;background:linear-gradient(135deg,#1f2a44,#2f3d5e);position:relative;display:grid;place-items:center;color:#fff}
+.lsn-video-note{position:absolute;left:24px;bottom:20px;font-size:14px;opacity:.8}
+.lsn-play{width:84px;height:84px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.lsn-play svg{width:30px;height:30px;margin-left:5px}
+.lsn-video-title{position:absolute;left:24px;top:20px;font-size:15px;font-weight:600;opacity:.9}
+
+/* секции */
+.lsn-section{margin-top:56px}
+.lsn-h2{font-size:28px;line-height:1.2;font-weight:800;margin-bottom:20px !important;text-wrap:balance}
+.lsn-prose{max-width:720px}
+.lsn-prose p+p{margin-top:16px}
+.lsn-quote{font-size:21px;line-height:1.45;font-weight:700;padding-left:20px;border-left:4px solid var(--accent);margin-bottom:24px !important;text-wrap:pretty}
+
+.lsn-topics{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;list-style:none;padding:0}
+.lsn-topic{background:var(--card);border-radius:18px;padding:22px 22px 24px}
+.lsn-num{font-size:14px;font-weight:800;color:var(--accent);margin-bottom:8px;display:block}
+.lsn-topic h3{font-size:18px;line-height:1.3;font-weight:700;margin-bottom:8px !important}
+.lsn-topic p{font-size:15.5px;line-height:1.55;color:#3a4152}
+
+/* курс */
+.lsn-course{background:var(--dark);color:#fff;border-radius:24px;padding:40px;display:grid;grid-template-columns:1.1fr 1fr;gap:40px}
+.lsn-course .lsn-eyebrow{font-size:14px;font-weight:600;opacity:.65;margin-bottom:10px;display:block}
+.lsn-course .lsn-h2{color:#fff}
+.lsn-course p{color:rgba(255,255,255,.82)}
+.lsn-for{margin-top:20px;display:grid;gap:10px}
+.lsn-for div{background:rgba(255,255,255,.08);border-radius:14px;padding:14px 16px;font-size:15.5px;line-height:1.5}
+.lsn-for b{color:#fff}
+.lsn-check{list-style:none;padding:0;display:grid;gap:12px;margin:18px 0 28px !important}
+.lsn-check li{display:flex;gap:12px;font-size:16px;line-height:1.45}
+.lsn-check li::before{content:"";flex:none;width:22px;height:22px;border-radius:50%;margin-top:1px;
+  background:#9fc0ff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f1f1f' stroke-width='3'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/14px no-repeat}
+.lsn-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:54px;padding:0 28px;border-radius:14px;font-weight:700;font-size:16px;text-decoration:none;border:0;cursor:pointer;transition:transform .15s,background .15s}
+.lsn-btn:hover{transform:translateY(-1px)}
+.lsn-btn--light{background:#fff;color:var(--dark) !important}
+.lsn-btn--dark{background:var(--dark);color:#fff !important}
+.lsn-btn--ghost{background:#fff;color:var(--ink) !important;height:46px;padding:0 20px;font-size:15px}
+.lsn-btns{display:flex;gap:12px;flex-wrap:wrap}
+
+/* telegram */
+.lsn-tg{background:var(--card);border-radius:24px;padding:32px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+.lsn-tg ul{margin-top:12px !important;padding-left:20px;font-size:15.5px;color:#3a4152}
+.lsn-tg li+li{margin-top:4px}
+.lsn-tg-icon{width:44px;height:44px;border-radius:12px;background:#2aabee;display:grid;place-items:center;margin-bottom:14px}
+
+/* ещё по теме */
+.lsn-more{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.lsn-mcard{background:var(--card);border-radius:18px;padding:20px;text-decoration:none;display:flex;flex-direction:column;gap:12px;min-height:170px;transition:background .15s,transform .15s}
+.lsn-mcard:hover{background:var(--card-h);transform:translateY(-2px)}
+.lsn-mcard b{font-size:16.5px;line-height:1.3}
+.lsn-mcard span{margin-top:auto;font-size:14px;color:var(--muted);font-weight:600}
+.lsn-allink{display:inline-block;margin-top:18px;font-weight:700;color:var(--accent);text-decoration:none}
+
+.lsn-pager{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:56px 0 64px}
+.lsn-pager a{border:1px solid var(--line);border-radius:18px;padding:18px 20px;text-decoration:none;transition:border-color .15s}
+.lsn-pager a:hover{border-color:#c9c1b3}
+.lsn-pager small{display:block;font-size:13px;color:var(--muted);font-weight:600;margin-bottom:4px}
+.lsn-pager b{font-size:16px;line-height:1.35}
+.lsn-pager a:last-child{text-align:right}
+
+@media (max-width:860px){
+  .lsn-hero{grid-template-columns:1fr;padding:24px}
+  .lsn-photo{max-width:260px;aspect-ratio:1/1;order:-1}
+  .lsn-course{grid-template-columns:1fr;padding:28px 22px;gap:28px}
+  .lsn-more{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .lsn{font-size:16px}
+  .lsn-h1{font-size:27px}
+  .lsn-lead{font-size:16.5px}
+  .lsn-h2{font-size:23px}
+  .lsn-quote{font-size:18px}
+  .lsn-topics{grid-template-columns:1fr}
+  .lsn-section{margin-top:40px}
+  .lsn-tg{grid-template-columns:1fr;padding:24px}
+  .lsn-pager{grid-template-columns:1fr}
+  .lsn-pager a:last-child{text-align:left}
+  .lsn-step{margin-left:0}
+  .lsn-play{width:64px;height:64px}
+  .lsn-btn{width:100%}
+}
+@media (prefers-reduced-motion:reduce){.lsn *{transition:none !important}}
+</style>
+</head>
+<body style="margin:0">
+<div class="lsn">
+<div class="lsn-wrap">
+
+  <nav class="lsn-crumbs" aria-label="Навигация">
+    <a href="#">Библиотека встреч</a><span>›</span><a href="#">Март 2026</a>
+    <span class="lsn-step">3 из&nbsp;11 уроков</span>
+  </nav>
+
+  <header class="lsn-hero">
+    <div>
+      <div class="lsn-chips">
+        <a class="lsn-chip lsn-chip--theme" href="#">СДВГ и&nbsp;аутизм у&nbsp;взрослых</a>
+        <span class="lsn-chip">Запись вебинара</span>
+      </div>
+      <h1 class="lsn-h1">РПП и&nbsp;СДВГ: почему пищевые расстройства — частый спутник нейроотличных людей</h1>
+      <p class="lsn-lead">На&nbsp;вебинаре вы&nbsp;узнаете, как СДВГ связан с&nbsp;расстройствами пищевого поведения, какие нейробиологические и&nbsp;поведенческие механизмы лежат в&nbsp;основе этой связи и&nbsp;как выстраивать эффективную помощь, работая не&nbsp;только с&nbsp;симптомами, но&nbsp;и&nbsp;с&nbsp;их&nbsp;причиной.</p>
+      <div class="lsn-speaker">
+        <div>
+          <b>Инна Гуткина</b>
+          <span>Ведущая — клинический психолог c&nbsp;опытом 10+ лет</span>
+        </div>
+      </div>
+    </div>
+    <div class="lsn-photo"><img src="https://fs19.getcourse.ru/fileservice/file/download/a/6110/sc/282/h/ecfb776bd4143d5c50201b88d33db9ad.jpg" alt="Инна Гуткина"></div>
+  </header>
+
+  <div class="lsn-video" role="img" aria-label="Здесь стоит видеоплеер урока">
+    <span class="lsn-video-title">Запись вебинара</span>
+    <span class="lsn-play"><svg viewBox="0 0 24 24" fill="#1f1f1f"><path d="M7 4.5v15l13-7.5z"/></svg></span>
+    <span class="lsn-video-note">В уроке здесь будет плеер GetCourse</span>
+  </div>
+
+  <section class="lsn-section lsn-prose">
+    <h2 class="lsn-h2">О&nbsp;вебинаре</h2>
+    <p class="lsn-quote">Тема, которая всё чаще возникает в&nbsp;практике специалистов: почему расстройства пищевого поведения так часто сопровождают СДВГ? И&nbsp;где проходит граница между «проблемами с&nbsp;дисциплиной» и&nbsp;нейробиологическими механизмами регуляции?</p>
+    <p>В&nbsp;формате открытого вебинара клинический психолог <b>Инна Гуткина (10+ лет практики)</b> разберёт, как связаны СДВГ и&nbsp;РПП на&nbsp;уровне нейробиологии и&nbsp;поведения: роль дофаминовой системы, импульсивности, нарушенной интероцепции и&nbsp;гиперфокуса. Мы&nbsp;обсудим, почему еда часто становится «быстрым дофамином», какие типы РПП чаще всего встречаются при СДВГ и&nbsp;как отличить симптом от&nbsp;его причины.</p>
+    <p>Также поговорим о&nbsp;практических стратегиях помощи: как выстраивать «внешний мозг» для питания, работать с&nbsp;интероцепцией, снижать чувство стыда и&nbsp;использовать подходы, которые действительно помогают людям с&nbsp;СДВГ стабилизировать пищевое поведение.</p>
+    <p>На&nbsp;примере клинического кейса разберём алгоритм, как заподозрить СДВГ у&nbsp;клиента с&nbsp;РПП и&nbsp;выстроить системную помощь.</p>
+  </section>
+
+  <section class="lsn-section">
+    <h2 class="lsn-h2">На&nbsp;вебинаре мы&nbsp;обсудим</h2>
+    <ul class="lsn-topics">
+      <li class="lsn-topic"><span class="lsn-num">01</span><h3>СДВГ и&nbsp;систему вознаграждения</h3><p>Как дефицит дофамина, импульсивность и&nbsp;трудности саморегуляции влияют на&nbsp;поведение и&nbsp;пищевые привычки.</p></li>
+      <li class="lsn-topic"><span class="lsn-num">02</span><h3>Почему РПП часто сопровождает СДВГ</h3><p>Еда как «быстрый дофамин»: механизм импульсивного переедания, гиперфокус с&nbsp;забыванием о&nbsp;еде и&nbsp;нарушенная интероцепция.</p></li>
+      <li class="lsn-topic"><span class="lsn-num">03</span><h3>Какие типы РПП чаще встречаются при СДВГ</h3><p>Компульсивное переедание, булимия, ограничительное питание и&nbsp;ARFID, связанный с&nbsp;сенсорной чувствительностью.</p></li>
+      <li class="lsn-topic"><span class="lsn-num">04</span><h3>Почему терапия РПП иногда не&nbsp;работает</h3><p>Если не&nbsp;учитывать СДВГ, лечение направлено на&nbsp;симптомы, а&nbsp;не&nbsp;на&nbsp;нейробиологическую причину.</p></li>
+      <li class="lsn-topic"><span class="lsn-num">05</span><h3>Практические стратегии помощи</h3><p>«Внешний мозг» для питания, работа с&nbsp;интероцепцией, дофаминовое меню, снижение чувства вины и&nbsp;роль медикаментозной поддержки.</p></li>
+      <li class="lsn-topic"><span class="lsn-num">06</span><h3>Алгоритм для специалиста</h3><p>Как заподозрить СДВГ у&nbsp;клиента с&nbsp;РПП, провести скрининг и&nbsp;выстроить системную помощь.</p></li>
+    </ul>
+  </section>
+
+  <section class="lsn-section lsn-course">
+    <div>
+      <span class="lsn-eyebrow">Вебинар является частью курса</span>
+      <h2 class="lsn-h2">«СДВГ у&nbsp;взрослых: нейроотличия и&nbsp;системный подход»</h2>
+      <p>Освойте инструменты для работы с&nbsp;СДВГ и&nbsp;расширьте практику в&nbsp;одной из&nbsp;самых востребованных тем современной психологии.</p>
+      <div class="lsn-for">
+        <div><b>Курс будет полезен</b> тем, кто сам живёт с&nbsp;этим нейроотличием или сталкивается с&nbsp;ним у&nbsp;близких</div>
+        <div><b>Специалистам</b>, которые хотят глубже понять причины трудностей и&nbsp;научиться действительно помогать — без вины, давления и&nbsp;работы «вслепую»</div>
+      </div>
+    </div>
+    <div>
+      <p>Вы&nbsp;получите ясную картину того, что происходит при СДВГ, и&nbsp;практические инструменты, которые помогают выстраивать жизнь, отношения и&nbsp;работу с&nbsp;учётом нейроособенностей.</p>
+      <ul class="lsn-check">
+        <li>Дифференциальная диагностика и&nbsp;терапия СДВГ у&nbsp;взрослых</li>
+        <li>Практические инструменты для работы с&nbsp;нейроотличными клиентами</li>
+        <li>Для психологов любых модальностей</li>
+        <li>Исследование нейробиологии и&nbsp;первопричин развития СДВГ</li>
+        <li>Удостоверение о&nbsp;повышении квалификации</li>
+      </ul>
+      <div class="lsn-btns">
+        <a class="lsn-btn lsn-btn--light" href="#">Оставить заявку</a>
+        <a class="lsn-btn lsn-btn--ghost" href="#" style="background:transparent;color:#fff !important;border:1px solid rgba(255,255,255,.35);height:54px">Программа курса</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="lsn-section lsn-tg">
+    <div>
+      <div class="lsn-tg-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M21.5 4.2 2.9 11.4c-1.3.5-1.2 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.5l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.4-1.5zM9.6 14.2l8.6-5.4c.4-.3.8-.1.5.2l-7.3 6.6-.3 3-1.5-4.4z"/></svg></div>
+      <h2 class="lsn-h2" style="margin-bottom:4px !important">Присоединяйтесь к&nbsp;нашему Telegram-каналу!</h2>
+      <p><b>Вас ждут:</b></p>
+      <ul>
+        <li>полезные материалы о&nbsp;работе с&nbsp;СДВГ у&nbsp;взрослых</li>
+        <li>разборы реальных кейсов и&nbsp;практические рекомендации</li>
+        <li>обсуждения с&nbsp;коллегами и&nbsp;экспертами</li>
+        <li>анонсы бесплатных вебинаров, лекций и&nbsp;образовательных мероприятий</li>
+        <li>записи эфиров и&nbsp;полезные методические материалы</li>
+      </ul>
+    </div>
+    <a class="lsn-btn lsn-btn--dark" href="#">Подписаться</a>
+  </section>
+
+  <section class="lsn-section">
+    <h2 class="lsn-h2">Ещё по&nbsp;теме «СДВГ и&nbsp;аутизм у&nbsp;взрослых»</h2>
+    <div class="lsn-more">
+      <a class="lsn-mcard" href="#"><b>Мозг с&nbsp;СДВГ: почему он&nbsp;работает иначе</b><span>Екатерина Винник · Март 2026</span></a>
+      <a class="lsn-mcard" href="#"><b>Работа с&nbsp;самоценностью и&nbsp;стыдом при СДВГ</b><span>Юлия Морозова · Март 2026</span></a>
+      <a class="lsn-mcard" href="#"><b>Эмоциональная дисрегуляция у&nbsp;взрослых с&nbsp;СДВГ</b><span>Анастасия Кудрявцева · Февраль 2026</span></a>
+    </div>
+    <a class="lsn-allink" href="#">Все 11 записей по&nbsp;теме →</a>
+  </section>
+
+  <nav class="lsn-pager" aria-label="Уроки">
+    <a href="#"><small>← Предыдущий урок</small><b>Диагностика депрессии и&nbsp;введение</b></a>
+    <a href="#"><small>Следующий урок →</small><b>Измена как терапевтический запрос. Границы пары и&nbsp;типичные сценарии</b></a>
+  </nav>
+
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!--
+  «Игровое поле» — главная личного кабинета (вариант B).
+  Страница: f5game.site/teach/control/stream («Список тренингов»).
+
+  Кабинет как доска настольной игры: по кругу 10 клеток (4 раздела
+  с вашими иллюстрациями, 3 события, 3 служебные ссылки), в центре —
+  ближайшее событие с фишкой. На телефоне поле складывается в дорожку
+  клеток сверху вниз.
+
+  Чистый HTML + CSS, без <script>. Размеры в px, классы с префиксом f5b-.
+
+  Обновление событий: центр (.f5b-center) — ближайшее событие, клетки
+  .f5b-ev — следующие. Данные — как в календаре (events-calendar-embed.html).
+
+  ЗАГЛУШКИ «#ССЫЛКА-…»: «Узнать о новых запусках», партнерская программа,
+  консультация, техподдержка.
+-->
+<div class="f5b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  .f5b{
+    --f5b-ink:#ffffff;
+    --f5b-ink-soft:rgba(255,255,255,0.78);
+    --f5b-board:#3a2266;
+    --f5b-pink:#ee0778;
+    --f5b-sun:#f6dd4a;
+    --f5b-blue:#2f6fed;
+    --f5b-card:#ffffff;
+    --f5b-card-ink:#1b1023;
+    --f5b-card-soft:#6b5a80;
+    --f5b-display:'Unbounded',-apple-system,'Segoe UI',sans-serif;
+    --f5b-body:'Manrope',-apple-system,'Segoe UI',sans-serif;
+    font-family:var(--f5b-body) !important;
+    color:var(--f5b-ink) !important;
+    font-size:16px;line-height:1.45;
+    max-width:1030px;margin:0 auto;padding:8px 0 24px;
+    display:grid;gap:20px;
+    -webkit-font-smoothing:antialiased;box-sizing:border-box;
+  }
+  .f5b *,.f5b *::before,.f5b *::after{box-sizing:border-box;}
+  .f5b p{margin:0 !important;}
+  .f5b a{text-decoration:none !important;}
+
+  .f5b .f5b-eyebrow{font-family:var(--f5b-display) !important;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--f5b-sun) !important;}
+  .f5b .f5b-title{font-family:var(--f5b-display) !important;font-weight:800;font-size:32px;line-height:1.15;margin:0 !important;color:var(--f5b-ink) !important;}
+
+  /* ---------- поле ---------- */
+  .f5b .f5b-board{
+    background:var(--f5b-board);
+    border-radius:28px;padding:16px;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+    grid-template-areas:
+      "c1 c2 c3 c4"
+      "c10 mid mid c5"
+      "c9 c8 c7 c6";
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,0.12);
+  }
+  .f5b .f5b-c1{grid-area:c1}.f5b .f5b-c2{grid-area:c2}.f5b .f5b-c3{grid-area:c3}.f5b .f5b-c4{grid-area:c4}
+  .f5b .f5b-c5{grid-area:c5}.f5b .f5b-c6{grid-area:c6}.f5b .f5b-c7{grid-area:c7}.f5b .f5b-c8{grid-area:c8}
+  .f5b .f5b-c9{grid-area:c9}.f5b .f5b-c10{grid-area:c10}.f5b .f5b-center{grid-area:mid}
+
+  .f5b .f5b-cell{
+    position:relative;display:grid;align-content:start;gap:6px;
+    background:var(--f5b-card);color:var(--f5b-card-ink) !important;
+    border-radius:16px;overflow:hidden;min-height:120px;
+    transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .f5b a.f5b-cell:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,0.3);}
+  /* номер клетки — как на игровом поле */
+  .f5b .f5b-n{
+    position:absolute;top:8px;right:8px;z-index:1;
+    width:24px;height:24px;border-radius:50%;
+    display:grid;place-items:center;
+    font-family:var(--f5b-display) !important;font-size:11px;font-weight:800;
+    background:var(--f5b-card-ink);color:#fff !important;font-variant-numeric:tabular-nums;
+  }
+  /* клетка-раздел: вся клетка — ваша иллюстрация */
+  .f5b .f5b-sec{background:transparent;padding:0;}
+  .f5b .f5b-sec img{display:block;width:100%;height:100%;object-fit:cover;border-radius:16px;}
+  /* цветная полоса сверху, как у клеток настольной игры */
+  .f5b .f5b-band{height:14px;}
+  .f5b .f5b-ev .f5b-band{background:var(--f5b-blue);}
+  .f5b .f5b-svc .f5b-band{background:var(--f5b-pink);}
+  .f5b .f5b-body{padding:6px 14px 16px;display:grid;gap:6px;}
+  .f5b .f5b-date{font-family:var(--f5b-display) !important;font-size:26px;font-weight:800;line-height:1;color:var(--f5b-blue) !important;font-variant-numeric:tabular-nums;}
+  .f5b .f5b-date small{font-size:12px;font-weight:700;margin-left:4px;}
+  .f5b .f5b-name{font-size:14px;font-weight:800;line-height:1.3;color:var(--f5b-card-ink) !important;}
+  .f5b .f5b-sub{font-size:12.5px;color:var(--f5b-card-soft) !important;}
+  .f5b .f5b-svc .f5b-name{font-family:var(--f5b-display) !important;font-size:14px;font-weight:700;padding-right:26px;}
+  .f5b .f5b-arrow{font-size:20px;font-weight:800;color:var(--f5b-pink) !important;}
+
+  /* центр поля */
+  .f5b .f5b-center{
+    border-radius:20px;padding:22px 24px;
+    background:radial-gradient(circle at 85% 20%,rgba(246,221,74,0.22),transparent 45%),#55348d;
+    border:2px dashed rgba(255,255,255,0.35);
+    display:grid;grid-template-columns:1fr auto;gap:14px 20px;align-items:center;
+  }
+  .f5b .f5b-center .f5b-k{font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--f5b-sun) !important;}
+  .f5b .f5b-center .f5b-big{font-family:var(--f5b-display) !important;font-size:26px;font-weight:800;line-height:1.15;color:#fff !important;margin:4px 0 6px !important;}
+  .f5b .f5b-center .f5b-when{font-size:14px;color:var(--f5b-ink-soft) !important;}
+  .f5b .f5b-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:15px;padding:12px 22px;border-radius:12px;
+    background:var(--f5b-sun);color:var(--f5b-card-ink) !important;white-space:nowrap;
+    transition:transform .15s ease;
+  }
+  .f5b .f5b-btn:hover{transform:translateY(-1px);}
+  /* фишка */
+  .f5b .f5b-token{
+    width:58px;height:58px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#ff6fb2,var(--f5b-pink) 60%,#a8004f);
+    border:4px solid #fff;box-shadow:0 8px 0 rgba(0,0,0,0.25);
+    grid-row:1 / span 2;grid-column:2;
+  }
+  .f5b .f5b-center .f5b-cta{grid-column:1 / -1;}
+
+  .f5b a:focus-visible{outline:3px solid var(--f5b-sun);outline-offset:3px;}
+
+  @media (max-width:820px){
+    .f5b .f5b-board{
+      grid-template-columns:repeat(2,1fr);
+      grid-template-areas:
+        "mid mid"
+        "c1 c2" "c3 c4" "c5 c6" "c7 c8" "c9 c10";
+    }
+    .f5b .f5b-title{font-size:26px;}
+  }
+  @media (max-width:520px){
+    .f5b .f5b-center{grid-template-columns:1fr;}
+    .f5b .f5b-token{display:none;}
+    .f5b .f5b-center .f5b-big{font-size:22px;}
+    .f5b .f5b-board{padding:10px;gap:8px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .f5b .f5b-cell,.f5b .f5b-btn{transition:none;}
+    .f5b a.f5b-cell:hover,.f5b .f5b-btn:hover{transform:none;}
+  }
+</style>
+
+  <div>
+    <div class="f5b-eyebrow">F5GAME.RU</div>
+    <h1 class="f5b-title">Мой кабинет</h1>
+  </div>
+
+  <div class="f5b-board">
+    <!-- центр: ближайшее событие -->
+    <div class="f5b-center">
+      <div>
+        <div class="f5b-k">Ближайшее · Интенсив</div>
+        <div class="f5b-big">Искусство влияния</div>
+        <p class="f5b-when">15 октября (чт) — обучение на&nbsp;интенсиве</p>
+      </div>
+      <span class="f5b-token" aria-hidden="true"></span>
+      <div class="f5b-cta"><a class="f5b-btn" href="https://f5game.site/vliyanie?utm_source=calendar">Подробнее</a></div>
+    </div>
+
+    <!-- 1–4: верхний ряд -->
+    <a class="f5b-cell f5b-sec f5b-c1" href="https://f5game.site/teach/control/stream/view/id/770384882"><span class="f5b-n">1</span><img src="https://f5game.site/pl/fileservice/user/file/download?h=c83a031182d8572d640becd5c4fc8d9f.png" alt="Обучающие курсы" loading="lazy"></a>
+
+    <a class="f5b-cell f5b-ev f5b-c2" href="https://f5game.site/vliyanie?utm_source=calendar"><span class="f5b-n">2</span><span class="f5b-band"></span>
+      <span class="f5b-body"><span class="f5b-date">24<small>окт</small></span><span class="f5b-name">Искусство влияния</span><span class="f5b-sub">24 октября (сб) — практика на&nbsp;интенсиве</span></span></a>
+
+    <a class="f5b-cell f5b-ev f5b-c3" href="https://f5game.site/expert-cabinet?utm_source=calendar"><span class="f5b-n">3</span><span class="f5b-band"></span>
+      <span class="f5b-body"><span class="f5b-date">29<small>окт</small></span><span class="f5b-name">Экспертный кабинет</span><span class="f5b-sub">29 октября (чт) · 18:00 МСК — 1&nbsp;день, создание концепции</span></span></a>
+
+    <a class="f5b-cell f5b-sec f5b-c4" href="https://f5game.site/teach/control/stream/view/id/934175109"><span class="f5b-n">4</span><img src="https://f5game.site/pl/fileservice/user/file/download?h=6f01f031a8a80fc559a700526f9e1523.png" alt="Мастер-классы" loading="lazy"></a>
+
+    <!-- 5: правая сторона -->
+    <a class="f5b-cell f5b-ev f5b-c5" href="https://f5game.site/expert-cabinet?utm_source=calendar"><span class="f5b-n">5</span><span class="f5b-band"></span>
+      <span class="f5b-body"><span class="f5b-date">5<small>ноя</small></span><span class="f5b-name">Экспертный кабинет</span><span class="f5b-sub">5 ноября (чт) · 18:00 МСК — 2&nbsp;день, реализация</span></span></a>
+
+    <!-- 6–9: нижний ряд справа налево -->
+    <a class="f5b-cell f5b-sec f5b-c6" href="https://f5game.site/teach/control/stream/view/id/889560098"><span class="f5b-n">6</span><img src="https://f5game.site/pl/fileservice/user/file/download?h=9b965904a1b074b1ec6cdd37a44c6190.png" alt="Бонусы и подарки" loading="lazy"></a>
+
+    <a class="f5b-cell f5b-svc f5b-c7" href="#ССЫЛКА-консультация"><span class="f5b-n">7</span><span class="f5b-band"></span>
+      <span class="f5b-body"><span class="f5b-name">Консультация по&nbsp;продукту</span><span class="f5b-arrow">→</span></span></a>
+
+    <a class="f5b-cell f5b-svc f5b-c8" href="#ССЫЛКА-партнерская-программа"><span class="f5b-n">8</span><span class="f5b-band"></span>
+      <span class="f5b-body"><span class="f5b-name">Партнерская программа</span><span class="f5b-arrow">→</span></span></a>
+
+    <a class="f5b-cell f5b-sec f5b-c9" href="#ССЫЛКА-новые-запуски"><span class="f5b-n">9</span><img src="https://f5game.site/pl/fileservice/user/file/download?h=160457c8ddaa84be3965f53737e06528.png" alt="Узнать о новых запусках" loading="lazy"></a>
+
+    <!-- 10: левая сторона -->
+    <a class="f5b-cell f5b-svc f5b-c10" href="#ССЫЛКА-техподдержка"><span class="f5b-n">10</span><span class="f5b-band"></span>
+      <span class="f5b-body"><span class="f5b-name">Техподдержка</span><span class="f5b-arrow">→</span></span></a>
+  </div>
+</div>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Запись вебинара — вариант B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F1E7}
+.f5-root{
+  --f5-bg:#F4F1E7;
+  --f5-card:#FFFFFF;
+  --f5-ink:#262626;
+  --f5-ink-soft:#555555;
+  --f5-red:#C82925;
+  --f5-red-soft:rgba(200,41,37,.1);
+  --f5-violet:#706C91;
+  --f5-violet-deep:#4E4A6E;
+  --f5-max:1140px;
+  font-family:Manrope,sans-serif;font-size:18px;line-height:1.5;color:var(--f5-ink);
+  background:var(--f5-bg);
+}
+.f5-root *{box-sizing:border-box}
+.f5-root .f5-wrap{max-width:var(--f5-max);margin:0 auto;padding:0 16px}
+.f5-root .f5-sec{padding:24px 0}
+.f5-root h1,.f5-root h2{font-weight:800;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.f5-root h1{font-size:28px;line-height:1.2}
+.f5-root h2{font-size:26px;line-height:1.2;text-align:center;margin-bottom:28px}
+.f5-root p{margin:0 0 16px;text-wrap:pretty}
+
+/* полоса с таймером */
+.f5-root .f5-bar{position:sticky;top:0;z-index:5;background:var(--f5-red);color:#fff}
+.f5-root .f5-bar .f5-wrap{display:flex;align-items:center;justify-content:center;gap:12px;min-height:52px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.f5-root .f5-bar p{margin:0;font-weight:700;font-size:16px}
+.f5-root .f5-bar-t{font-weight:800;font-size:20px;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* первый экран */
+.f5-root .f5-hero{background:linear-gradient(160deg,var(--f5-violet),var(--f5-violet-deep));color:#fff;padding:24px 0 32px;text-align:center}
+.f5-root .f5-logo{display:block;margin:0 auto 24px;height:36px;width:auto;filter:brightness(0) invert(1)}
+.f5-root .f5-video{margin:28px auto 0;max-width:900px;aspect-ratio:16/9;border-radius:20px;background:#1E1C2B;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.f5-root .f5-play{width:76px;height:76px;border-radius:50%;background:var(--f5-red);display:flex;align-items:center;justify-content:center}
+.f5-root .f5-play::after{content:"";border-left:24px solid #fff;border-top:15px solid transparent;border-bottom:15px solid transparent;margin-left:6px}
+
+/* эксперт */
+.f5-root .f5-expert{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:center}
+.f5-root .f5-photo{position:relative;max-width:360px;margin:0 auto;width:100%}
+.f5-root .f5-photo::before{content:"";position:absolute;left:8%;right:8%;bottom:0;top:18%;border-radius:50% 50% 24px 24px;background:var(--f5-violet);pointer-events:none}
+.f5-root .f5-photo img{position:relative;display:block;width:100%;height:auto}
+.f5-root .f5-facts{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;list-style:none;margin:0;padding:0}
+.f5-root .f5-facts li{background:var(--f5-card);border-radius:20px;padding:16px 20px;text-wrap:pretty}
+
+/* отзывы — бегущие ленты чата */
+.f5-root .f5-chat{background:linear-gradient(160deg,var(--f5-violet),var(--f5-violet-deep));padding:28px 0;overflow:hidden}
+.f5-root .f5-chat h2{color:#fff}
+.f5-root .f5-lane{overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.f5-root .f5-lane+.f5-lane{margin-top:16px}
+.f5-root .f5-track{display:flex;gap:16px;width:max-content;animation:f5-run 70s linear infinite}
+.f5-root .f5-lane-r .f5-track{animation-direction:reverse;animation-duration:60s}
+.f5-root .f5-lane:hover .f5-track{animation-play-state:paused}
+@keyframes f5-run{to{translate:calc(-50% - 8px) 0}}
+.f5-root .f5-rv{flex:0 0 300px;margin:0;background:var(--f5-card);border-radius:20px 20px 20px 6px;padding:18px 20px}
+.f5-root .f5-rv figcaption{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;color:var(--f5-violet);margin-bottom:8px}
+.f5-root .f5-ava{flex:0 0 36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;background:var(--f5-violet)}
+.f5-root .f5-rv-c1 .f5-ava{background:var(--f5-red)}
+.f5-root .f5-rv-c2 .f5-ava{background:#A08F66}
+.f5-root .f5-rv blockquote{margin:0;font-size:16px;text-wrap:pretty}
+@media (prefers-reduced-motion:reduce){.f5-root .f5-track{animation:none}.f5-root .f5-lane{overflow-x:auto}}
+@media (min-width:768px){.f5-root .f5-chat{padding:56px 0}.f5-root .f5-rv{flex-basis:360px}}
+/* курс */
+.f5-root .f5-course{background:var(--f5-card);border-radius:20px;padding:24px 16px;display:grid;grid-template-columns:minmax(0,1fr);gap:24px}
+.f5-root .f5-nums{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;align-content:start}
+.f5-root .f5-num{background:var(--f5-bg);border-radius:20px;padding:20px}
+.f5-root .f5-num b{display:block;font-size:48px;line-height:1;font-weight:800;color:var(--f5-red);margin-bottom:8px}
+.f5-root .f5-num p{margin:0}
+.f5-root .f5-btn{display:inline-flex;align-items:center;justify-content:center;min-height:60px;padding:0 40px;border-radius:20px;background:var(--f5-red);color:#fff;font-weight:700;font-size:18px;text-decoration:none;transition:transform .15s}
+.f5-root .f5-btn:active{transform:scale(.97)}
+@media (max-width:767px){
+  .f5-root .f5-btn{width:100%}
+}
+@media (min-width:768px){
+  .f5-root .f5-sec{padding:28px 0}
+  .f5-root .f5-hero{padding:40px 0 56px}
+  .f5-root h1{font-size:44px}
+  .f5-root h2{font-size:34px;margin-bottom:40px}
+  .f5-root .f5-video{margin-top:40px}
+  .f5-root .f5-expert{grid-template-columns:400px minmax(0,1fr);gap:56px}
+  .f5-root .f5-facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .f5-root .f5-course{padding:48px 56px;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:56px}
+}
+</style>
+</head>
+<body>
+<div class="f5-root">
+
+  <div class="f5-bar">
+    <div class="f5-wrap">
+      <p>До&nbsp;закрытия доступа&nbsp;осталось:</p>
+      <span class="f5-bar-t" data-deadline-days="5">5 дн 00:00:00</span>
+    </div>
+  </div>
+
+  <section class="f5-hero">
+    <div class="f5-wrap">
+      <img class="f5-logo" src="assets/images/lp-rec/logo.svg" alt="Life Practic">
+      <h1>Запись вебинара «Помощь за&nbsp;одну сессию без&nbsp;потери глубины»</h1>
+      <div class="f5-video"><div class="f5-play" aria-label="Видео"></div></div>
+    </div>
+  </section>
+
+  <section class="f5-sec">
+    <div class="f5-wrap">
+      <h2>Полина Гавердовская</h2>
+      <div class="f5-expert">
+      <div class="f5-photo"><img src="assets/images/lp-rec/polina-cutout.png" alt="Полина Гавердовская"></div>
+      <div>
+        <ul class="f5-facts">
+          <li>гештальт-терапевт и&nbsp;супервизор, 25+ лет практики, более 12 000 часов работы с&nbsp;клиентами и&nbsp;супервизантами</li>
+          <li>ведущий тренер Московского гештальт института, подготовила около 100 терапевтов и&nbsp;консультантов</li>
+          <li>сертифицированный медиатор, профайлер-верификатор, сертификат&nbsp;GATLA</li>
+          <li>автор шести книг, в&nbsp;том числе бестселлера «Страдаю, но&nbsp;остаюсь»</li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="f5-chat">
+    <div class="f5-wrap"><h2>Отзывы</h2></div>
+    <div class="f5-lane "><div class="f5-track">
+          <figure class="f5-rv f5-rv-c0"><figcaption><span class="f5-ava">OS</span>Oksana Sh</figcaption><blockquote>Полина, спасибо большое за&nbsp;материал, за&nbsp;комментарии, за&nbsp;подачу материала. Я&nbsp;очень рада, что&nbsp;эта лекция случилась.</blockquote></figure>
+          <figure class="f5-rv f5-rv-c1"><figcaption><span class="f5-ava">АО</span>Алла О.</figcaption><blockquote>Большое спасибо за&nbsp;доступное и&nbsp;одновременно глубокое изложение материала. Узнала много нового.</blockquote></figure>
+          <figure class="f5-rv f5-rv-c2"><figcaption><span class="f5-ava">Н</span>Наталья</figcaption><blockquote>Спасибо большое за&nbsp;прекрасную встречу) структурно, ёмко и&nbsp;наглядно) люблю нежно Полину&nbsp;Гавердовскую))</blockquote></figure>
+          <figure class="f5-rv f5-rv-c0"><figcaption><span class="f5-ava">ОС</span>Ольга Сиденко</figcaption><blockquote>Спасибо огромное за&nbsp;лекцию. Бесценный материал. Очень просто рассказываете очень сложные вещи!</blockquote></figure>
+          <figure class="f5-rv f5-rv-c1"><figcaption><span class="f5-ava">IN</span>Inna N</figcaption><blockquote>Спасибо Полина за&nbsp;доступность изложения, пример устойчивости и&nbsp;честность в&nbsp;ответах!</blockquote></figure>
+          <figure class="f5-rv f5-rv-c2"><figcaption><span class="f5-ava">ET</span>Elena Ts</figcaption><blockquote>Полина, спасибо за&nbsp;Ваш живой язык изложения, невероятно интересно было слушать. Очень понравилась лекция</blockquote></figure>
+          <figure class="f5-rv f5-rv-c0"><figcaption><span class="f5-ava">IK</span>Irina Kuzmitskaya</figcaption><blockquote>Полина, спасибо огромное!🔥🔥🔥</blockquote></figure>
+          <figure aria-hidden="true" class="f5-rv f5-rv-c0"><figcaption><span class="f5-ava">OS</span>Oksana Sh</figcaption><blockquote>Полина, спасибо большое за&nbsp;материал, за&nbsp;комментарии, за&nbsp;подачу материала. Я&nbsp;очень рада, что&nbsp;эта лекция случилась.</blockquote></figure>
+          <figure aria-hidden="true" class="f5-rv f5-rv-c1"><figcaption><span class="f5-ava">АО</span>Алла О.</figcaption><blockquote>Большое спасибо за&nbsp;доступное и&nbsp;одновременно глубокое изложение материала. Узнала много нового.</blockquote></figure>
+          <figure aria-hidden="true" class="f5-rv f5-rv-c2"><figcaption><span class="f5-ava">Н</span>Наталья</figcaption><blockquote>Спасибо большое за&nbsp;прекрасную встречу) структурно, ёмко и&nbsp;наглядно) люблю нежно Полину&nbsp;Гавердовскую))</blockquote></figure>
+          <figure aria-hidden="true" class="f5-rv f5-rv-c0"><figcaption><span class="f5-ava">ОС</span>Ольга Сиденко</figcaption><blockquote>Спасибо огромное за&nbsp;лекцию. Бесценный материал. Очень просто рассказываете очень сложные вещи!</blockquote></figure>
+          <figure aria-hidden="true" class="f5-rv f5-rv-c1"><figcaption><span class="f5-ava">IN</span>Inna N</figcaption><blockquote>Спасибо Полина за&nbsp;доступность изложения, пример устойчивости и&nbsp;честность в&nbsp;ответах!</blockquote></figure>
+          <figure aria-hidden="true" class="f5-rv f5-rv-c2"><figcaption><span class="f5-ava">ET</span>Elena Ts</figcaption><blockquote>Полина, спасибо за&nbsp;Ваш живой язык изложения, невероятно интересно было слушать. Очень понравилась лекция</blockquote></figure>
+          <figure aria-hidden="true" class="f5-rv f5-rv-c0"><figcaption><span class="f5-ava">IK</span>Irina Kuzmitskaya</figcaption><blockquote>Полина, спасибо огромное!🔥🔥🔥</blockquote></figure>
+        </div></div>
+    <div class="f5-lane f5-lane-r"><div class="f5-track">
+          <figure class="f5-rv f5-rv-c1"><figcaption><span class="f5-ava">ОК</span>Ольга Крючкова</figcaption><blockquote>Полина, спасибо за&nbsp;вашу ясную профессиональную позицию!</blockquote></figure>
+          <figure class="f5-rv f5-rv-c2"><figcaption><span class="f5-ava">IV</span>iPhone viktorovna</figcaption><blockquote>Прекрасная лекция!!!! Большое спасибо&nbsp;🙏🏻💗</blockquote></figure>
+          <figure class="f5-rv f5-rv-c0"><figcaption><span class="f5-ava">ЛБ</span>Любовь Бухаренко</figcaption><blockquote>Благодарю, Полина! Отличная лекция! Было очень&nbsp;познавательно</blockquote></figure>
+          <figure class="f5-rv f5-rv-c1"><figcaption><span class="f5-ava">ВБ</span>Виолетта Батраева</figcaption><blockquote>Огромная благодарность Полине за&nbsp;содержательную, интересную и&nbsp;полезную лекцию!</blockquote></figure>
+          <figure class="f5-rv f5-rv-c2"><figcaption><span class="f5-ava">ТТ</span>Татьяна Тетерина</figcaption><blockquote>Спасибо большое, Полина и&nbsp;спасибо за&nbsp;подарок!</blockquote></figure>
+          <figure class="f5-rv f5-rv-c0"><figcaption><span class="f5-ava">ЗЭ</span>Зухра Эшметова</figcaption><blockquote>Лекция великолепная, спасибо!!!!</blockquote></figure>
+          <figure class="f5-rv f5-rv-c1"><figcaption><span class="f5-ava">ВК</span>Виктория Кропанева</figcaption><blockquote>Полина! Спасибо большое за&nbsp;Ваш труд!</blockquote></figure>
+          <figure aria-hidden="true" class="f5-rv f5-rv-c1"><figcaption><span class="f5-ava">ОК</span>Ольга Крючкова</figcaption><blockquote>Полина, спасибо за&nbsp;вашу ясную профессиональную позицию!</blockquote></figure>
+          <figure aria-hidden="true" class="f5-rv f5-rv-c2"><figcaption><span class="f5-ava">IV</span>iPhone viktorovna</figcaption><blockquote>Прекрасная лекция!!!! Большое спасибо&nbsp;🙏🏻💗</blockquote></figure>
+          <figure aria-hidden="true" class="f5-rv f5-rv-c0"><figcaption><span class="f5-ava">ЛБ</span>Любовь Бухаренко</figcaption><blockquote>Благодарю, Полина! Отличная лекция! Было очень&nbsp;познавательно</blockquote></figure>
+          <figure aria-hidden="true" class="f5-rv f5-rv-c1"><figcaption><span class="f5-ava">ВБ</span>Виолетта Батраева</figcaption><blockquote>Огромная благодарность Полине за&nbsp;содержательную, интересную и&nbsp;полезную лекцию!</blockquote></figure>
+          <figure aria-hidden="true" class="f5-rv f5-rv-c2"><figcaption><span class="f5-ava">ТТ</span>Татьяна Тетерина</figcaption><blockquote>Спасибо большое, Полина и&nbsp;спасибо за&nbsp;подарок!</blockquote></figure>
+          <figure aria-hidden="true" class="f5-rv f5-rv-c0"><figcaption><span class="f5-ava">ЗЭ</span>Зухра Эшметова</figcaption><blockquote>Лекция великолепная, спасибо!!!!</blockquote></figure>
+          <figure aria-hidden="true" class="f5-rv f5-rv-c1"><figcaption><span class="f5-ava">ВК</span>Виктория Кропанева</figcaption><blockquote>Полина! Спасибо большое за&nbsp;Ваш труд!</blockquote></figure>
+        </div></div>
+  </section>
+
+  <section class="f5-sec">
+    <div class="f5-wrap">
+      <h2>Хотите научиться работать в&nbsp;коротком формате системно?</h2>
+      <div class="f5-course">
+        <div>
+          <p>Присоединяйтесь к&nbsp;курсу повышения квалификации Полины Гавердовской «Краткосрочное консультирование в&nbsp;мультимодальном подходе». Обучение стартует&nbsp;24&nbsp;февраля.</p>
+          <p>Вы&nbsp;освоите пошаговые алгоритмы: как&nbsp;быстро понять, что&nbsp;происходит с&nbsp;клиентом, выделить терапевтическую мишень на&nbsp;ограниченное время и&nbsp;помочь, сохраняя&nbsp;глубину.</p>
+          <a class="f5-btn" href="#" data-modal="b-xxxxx">Оставить заявку</a>
+        </div>
+        <div class="f5-nums">
+          <div class="f5-num"><b>12</b><p>лекций в&nbsp;трёх блоках: от&nbsp;гештальт-основы и&nbsp;диагностики 8 психотипов до&nbsp;работы с&nbsp;парами, травматическими переживаниями и&nbsp;срочной&nbsp;сессией</p></div>
+          <div class="f5-num"><b>12</b><p>практических встреч в&nbsp;тарифах «Практический с&nbsp;удостоверением» и&nbsp;«Мастерская Полина&nbsp;Гавердовской»</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script>
+(function(){
+  var KEY='lp_rec_deadline';
+  document.querySelectorAll('[data-deadline-days]').forEach(function(el){
+    var end;
+    try{end=+localStorage.getItem(KEY)}catch(e){}
+    if(!end){end=Date.now()+(+el.dataset.deadlineDays)*864e5;try{localStorage.setItem(KEY,end)}catch(e){}}
+    var pad=function(n){return(n<10?'0':'')+n};
+    (function tick(){
+      var s=Math.max(0,Math.floor((end-Date.now())/1000));
+      el.textContent=Math.floor(s/86400)+' дн '+pad(Math.floor(s%86400/3600))+':'+pad(Math.floor(s%3600/60))+':'+pad(s%60);
+      if(s>0)setTimeout(tick,1000);
+    })();
+  });
+  document.querySelectorAll('[data-modal]').forEach(function(a){
+    a.addEventListener('click',function(e){e.preventDefault();if(window.ltShowModalBlock)window.ltShowModalBlock(a.dataset.modal)});
+  });
+})();
+</script>
+</body>
+</html>

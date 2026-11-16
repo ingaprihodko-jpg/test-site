@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Чтец аудиокниг — курс-специализация TSSS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0f1a;
+  --bg-2:#0e1524;
+  --card:#121a2b;
+  --line:rgba(217,180,90,.22);
+  --gold:#d9b45a;
+  --gold-hi:#f0d690;
+  --gold-lo:#8c6a28;
+  --gold-grad:linear-gradient(180deg,#ecd38c 0%,#c9a24a 45%,#9a7630 100%);
+  --text:#f3f1ec;
+  --muted:#a6abb7;
+  --radius:18px;
+  --wrap:1520px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Montserrat',system-ui,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(20px,4vw,64px)}
+
+/* ---------- кнопка ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:60px;padding:0 48px;border-radius:999px;
+  background:var(--gold-grad);border:1px solid rgba(255,232,170,.65);
+  box-shadow:0 10px 30px -10px rgba(217,180,90,.55),inset 0 1px 0 rgba(255,255,255,.35);
+  color:#fff;text-shadow:0 1px 2px rgba(80,55,10,.55);font-weight:700;font-size:17px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;
+  transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 16px 36px -10px rgba(217,180,90,.7),inset 0 1px 0 rgba(255,255,255,.35)}
+.btn:active{transform:translateY(0)}
+
+/* ---------- общие заголовки ---------- */
+.sec{padding:52px 0;position:relative}
+.h2{font-size:clamp(30px,4vw,48px);font-weight:800;line-height:1.1;text-transform:uppercase;letter-spacing:.01em;text-align:center;margin-left:auto;margin-right:auto}
+.h2 em{font-style:normal;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:19px;max-width:720px;margin:20px auto 0;text-align:center}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:min(100vh,860px);display:flex;align-items:center;overflow:hidden;background:var(--bg)}
+.hero__photo{position:absolute;inset:0;background:url(assets/chtec-books.webp) right 3% bottom 0/auto 74% no-repeat;
+  -webkit-mask:linear-gradient(90deg,transparent 36%,#000 60%);mask:linear-gradient(90deg,transparent 36%,#000 60%)}
+.hero__rays{display:none}
+.hero__shade{position:absolute;inset:0;background:
+  linear-gradient(90deg,var(--bg) 0%,rgba(10,15,26,.92) 30%,rgba(10,15,26,.45) 58%,rgba(10,15,26,0) 80%),
+  linear-gradient(0deg,var(--bg) 0%,rgba(10,15,26,0) 22%)}
+.hero__dots{position:absolute;left:-60px;top:50%;width:420px;height:720px;transform:translateY(-50%);
+  background-image:radial-gradient(circle,var(--gold) 1.6px,transparent 2px);background-size:14px 14px;
+  -webkit-mask:radial-gradient(ellipse 60% 50% at 0% 50%,#000 0%,rgba(0,0,0,.5) 40%,transparent 75%);
+          mask:radial-gradient(ellipse 60% 50% at 0% 50%,#000 0%,rgba(0,0,0,.5) 40%,transparent 75%);opacity:.75}
+.hero__rays{position:absolute;right:-6%;top:50%;width:min(62vw,880px);aspect-ratio:1;transform:translateY(-50%);
+  background:repeating-conic-gradient(from 0deg,rgba(236,211,140,.9) 0 .35deg,transparent .35deg 2.4deg);
+  -webkit-mask:radial-gradient(circle,transparent 36%,#000 37%,rgba(0,0,0,.35) 48%,transparent 60%);
+          mask:radial-gradient(circle,transparent 36%,#000 37%,rgba(0,0,0,.35) 48%,transparent 60%);
+  opacity:.55;mix-blend-mode:screen;animation:pulse 6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:.65}}
+.hero .wrap{position:relative;z-index:2;width:100%;padding-top:56px;padding-bottom:72px}
+.brand{display:flex;align-items:center;gap:22px}
+.brand img{width:148px;height:auto}
+.brand p{font-size:clamp(14px,1.6vw,19px);line-height:1.35;color:#e4e3df;max-width:470px}
+.eyebrow{margin-top:64px;font-size:clamp(20px,2.6vw,34px);font-weight:600;letter-spacing:.02em;text-transform:uppercase}
+.hero h1{margin-top:6px;margin-bottom:0;font-weight:900;font-size:clamp(40px,11vw,128px);line-height:.92;text-transform:uppercase;letter-spacing:-.01em;
+  background:linear-gradient(180deg,#fff 55%,#c9ccd4 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero__sub{margin-top:36px;font-size:clamp(19px,2.2vw,28px);font-weight:500;line-height:1.3;max-width:560px}
+.hero .btn{margin-top:52px}
+.m-br{display:none}
+.d-br{display:inline}
+
+/* ---------- ЧЕМУ НАУЧИТЕСЬ ---------- */
+.skills{background:var(--bg)}
+.skills .h2{max-width:none}
+.skills__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:44px}
+.skill{position:relative;padding:32px 26px 30px;border-radius:var(--radius);background:var(--card);border:1px solid var(--line);overflow:hidden}
+.skill::after{content:"";position:absolute;right:-40px;top:-40px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(217,180,90,.18),transparent 70%)}
+.skill b{display:block;width:44px;height:4px;border-radius:2px;background:var(--gold-grad)}
+.skill p{margin-top:22px;font-size:19px;font-weight:600;line-height:1.3}
+.plus{display:flex;align-items:center;gap:22px;margin-top:20px;padding:28px 32px;border-radius:var(--radius);
+  background:linear-gradient(90deg,rgba(217,180,90,.16),rgba(217,180,90,.03));border:1px solid var(--line)}
+.plus i{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--gold-grad);color:#fff;font-style:normal;font-size:30px;font-weight:600;text-shadow:0 1px 2px rgba(80,55,10,.5)}
+.plus p{font-size:20px;font-weight:600;line-height:1.35}
+
+/* ---------- ПРОГРАММА ---------- */
+.program{background:linear-gradient(180deg,var(--bg) 0,var(--bg-2) 220px,var(--bg-2) calc(100% - 220px),var(--bg) 100%)}
+.program::before{content:"";position:absolute;right:0;top:80px;width:360px;height:520px;
+  background-image:radial-gradient(circle,var(--gold) 1.5px,transparent 2px);background-size:14px 14px;
+  -webkit-mask:radial-gradient(ellipse 70% 50% at 100% 50%,#000,transparent 75%);mask:radial-gradient(ellipse 70% 50% at 100% 50%,#000,transparent 75%);opacity:.35;pointer-events:none}
+.modules{margin-top:44px;display:flex;flex-direction:column;gap:14px;position:relative}
+.mod{border-radius:var(--radius);background:var(--card);border:1px solid rgba(255,255,255,.06);transition:border-color .25s ease}
+.mod[open]{border-color:var(--line)}
+.mod summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:120px 1fr 44px;align-items:center;gap:24px;padding:26px 30px}
+.mod summary::-webkit-details-marker{display:none}
+.mod__num{font-size:17px;font-weight:700;color:var(--gold)}
+.mod__title{font-size:21px;font-weight:700;line-height:1.3}
+.mod__ico{position:relative;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);transition:background .25s ease,transform .3s ease}
+.mod__ico::before,.mod__ico::after{content:"";position:absolute;left:50%;top:50%;width:16px;height:2px;background:var(--gold);border-radius:2px;transform:translate(-50%,-50%)}
+.mod__ico::after{transform:translate(-50%,-50%) rotate(90deg);transition:transform .3s ease}
+.mod[open] .mod__ico{background:rgba(217,180,90,.12)}
+.mod[open] .mod__ico::after{transform:translate(-50%,-50%) rotate(0)}
+.mod summary:hover .mod__title{color:var(--gold-hi)}
+.mod__body{padding:4px 30px 30px 174px;display:grid;gap:16px}
+.lesson,.result,.bonus{border-radius:14px;padding:26px 28px}
+.lesson{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.result{background:linear-gradient(135deg,rgba(217,180,90,.14),rgba(217,180,90,.04));border:1px solid var(--line)}
+.bonus{background:rgba(217,180,90,.06);border:1px dashed rgba(217,180,90,.55)}
+.blk-title{font-size:18px;font-weight:700;line-height:1.35}
+.result .blk-title,.bonus .blk-title{color:var(--gold-hi);text-transform:uppercase;letter-spacing:.05em;font-size:15px}
+.blk-list{list-style:none;margin-top:16px;display:grid;gap:12px}
+.blk-list li{position:relative;padding-left:22px;color:#d6d7db;font-size:16px}
+.blk-list li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.blk-list b{color:var(--text);font-weight:700}
+
+/* ---------- ФОРМАТ И СТОИМОСТЬ ---------- */
+.price{background:var(--bg)}
+.price__grid{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;margin-top:44px;align-items:stretch}
+.facts{display:grid;gap:14px}
+.fact{display:flex;gap:20px;align-items:flex-start;padding:24px 26px;border-radius:var(--radius);background:var(--card);border:1px solid rgba(255,255,255,.06)}
+.fact i{flex:none;width:12px;height:12px;margin-top:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 6px rgba(217,180,90,.15)}
+.fact p{font-size:18px;line-height:1.45}
+.fact--big p{font-size:26px;font-weight:800;text-transform:uppercase}
+.card-price{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;text-align:center;padding:44px 40px;border-radius:24px;
+  background:radial-gradient(120% 80% at 100% 0%,rgba(217,180,90,.28),transparent 60%),var(--card);border:1px solid var(--line)}
+.card-price::before{content:"";position:absolute;right:-180px;top:-180px;width:420px;height:420px;
+  background:repeating-conic-gradient(from 0deg,rgba(236,211,140,.8) 0 .4deg,transparent .4deg 3deg);
+  -webkit-mask:radial-gradient(circle,transparent 30%,#000 31%,transparent 60%);mask:radial-gradient(circle,transparent 30%,#000 31%,transparent 60%);opacity:.45}
+.card-price>*{position:relative}
+.card-price small{font-size:15px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.card-price .now{margin-top:12px;font-size:clamp(46px,5vw,64px);font-weight:900;line-height:1}
+.card-price .now span{font-size:.45em;font-weight:700}
+.card-price s{display:block;margin-top:12px;color:var(--muted);font-size:22px;font-weight:600;text-decoration-color:var(--gold);text-decoration-thickness:2px}
+.card-price .instal{display:inline-flex;align-items:center;justify-content:center;margin-top:22px;padding:14px 28px;border-radius:16px;background:#0a0f1a;border:1px solid rgba(217,180,90,.35);font-size:19px;font-weight:700;line-height:1.3;color:#f3f1ec}
+.card-price .instal a{color:#e9cf86 !important;text-decoration:underline !important;text-decoration-thickness:1.5px;text-underline-offset:3px}
+.card-price .btn{margin-top:36px;width:100%;padding:0 24px}
+
+/* ---------- ПРЕПОДАВАТЕЛЬ ---------- */
+.teacher{background:linear-gradient(180deg,var(--bg) 0,var(--bg-2) 220px);overflow:hidden}
+.teacher__grid{display:grid;grid-template-columns:420px 1fr;gap:64px;align-items:center;margin-top:44px}
+.photo{position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:linear-gradient(160deg,#1a2338,#0d1320);border:1px solid var(--line);display:grid;place-items:center}
+.photo::before{display:none;content:"";position:absolute;inset:-30%;background:repeating-conic-gradient(from 0deg,rgba(236,211,140,.7) 0 .35deg,transparent .35deg 2.6deg);
+  -webkit-mask:radial-gradient(circle,transparent 30%,#000 31%,transparent 55%);mask:radial-gradient(circle,transparent 30%,#000 31%,transparent 55%);opacity:.3}
+.photo img{position:relative;width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.photo span{position:relative;color:var(--muted);font-size:15px;letter-spacing:.12em;text-transform:uppercase}
+.teacher__name{font-size:clamp(34px,4.4vw,56px);font-weight:900;line-height:1;text-transform:uppercase}
+.teacher__role{display:inline-block;margin-top:20px;padding:8px 18px;border-radius:999px;border:1px solid var(--line);color:var(--gold-hi);font-weight:600;font-size:15px;letter-spacing:.04em}
+.teacher__list{list-style:none;margin-top:32px;display:grid;gap:16px}
+.teacher__list li{position:relative;padding-left:28px;font-size:19px;line-height:1.45}
+.teacher__list li::before{content:"";position:absolute;left:0;top:.55em;width:12px;height:2px;background:var(--gold)}
+
+/* ---------- появление ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .rv.in{opacity:1;transform:none}
+}
+
+/* ---------- адаптив ---------- */
+@media (max-width:1024px){
+  .skills__grid{grid-template-columns:repeat(2,1fr)}
+  .mod__body{padding-left:30px}
+  .price__grid{grid-template-columns:1fr}
+  .teacher__grid{grid-template-columns:1fr;gap:40px}
+  .sec{padding:48px 0}
+  .photo{max-width:420px}
+}
+@media (max-width:900px){
+  .hero{min-height:auto;align-items:flex-start;text-align:center}
+  .hero .wrap{padding-top:min(9vw,56px);padding-bottom:min(74vw,520px);display:flex;flex-direction:column;align-items:center}
+  .hero__photo{top:auto;bottom:0;height:min(76vw,532px);background-size:min(100%,720px) auto;background-position:center bottom;
+    -webkit-mask:linear-gradient(180deg,transparent 0,#000 30%);mask:linear-gradient(180deg,transparent 0,#000 30%)}
+  .hero__shade{background:radial-gradient(90% 45% at 12% 0%,rgba(30,56,104,.5),rgba(30,56,104,0) 70%),linear-gradient(0deg,var(--bg) 0,rgba(10,15,26,0) 10%)}
+  .hero__dots{display:none}
+  .brand{flex-direction:row;align-items:center;justify-content:center;gap:2.6vw;text-align:left}
+  .brand img{width:min(16vw,120px);min-width:58px}
+  .brand p{font-size:min(3.1vw,16px);line-height:1.3;max-width:min(66vw,440px)}
+  .eyebrow{margin-top:min(10vw,56px);font-size:min(4.9vw,30px);line-height:1.1}
+  .hero h1{margin-top:1vw;font-size:min(10.4vw,76px);line-height:.92}
+  .hero__sub{margin:min(7vw,36px) auto 0;font-size:min(4.9vw,26px);line-height:1.2;max-width:none}
+  .m-br{display:inline}
+  .d-br{display:none}
+  .hero .btn{margin-top:min(6vw,32px);width:auto;min-height:50px;padding:0 34px;font-size:14px}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  .sec{padding:36px 0}
+  .skills__grid,.modules,.price__grid,.teacher__grid{margin-top:28px}
+  .skills{padding-top:24px}
+  .h2{font-size:26px}
+  .btn{font-size:15px;letter-spacing:.04em;white-space:nowrap}
+  .skills__grid{grid-template-columns:1fr}
+  .plus{padding:22px 20px;gap:16px}
+  .plus p{font-size:17px}
+  .mod summary{grid-template-columns:1fr 40px;gap:14px;padding:22px 20px}
+  .mod__num{grid-column:1/-1}
+    .mod__title{font-size:18px}
+  .mod__ico{width:40px;height:40px}
+  .mod__body{padding:0 14px 16px}
+  .lesson,.result,.bonus{padding:20px 18px}
+  .fact--big p{font-size:22px}
+  .card-price{padding:32px 22px}
+  .teacher__list li{font-size:17px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero__photo" aria-hidden="true"></div>
+  <div class="hero__rays" aria-hidden="true"></div>
+  <div class="hero__shade" aria-hidden="true"></div>
+  <div class="hero__dots" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="brand">
+      <img src="assets/tsss-logo.png" alt="Tim Shtok Sound Studio">
+      <p>Дистанционное обучение озвучке книг, видеоконтента, рекламы и т.д</p>
+    </div>
+    <p class="eyebrow">Курс-специализация</p>
+    <h1>Чтец<br>аудиокниг</h1>
+    <p class="hero__sub">Программа для тех,<br class="m-br"> кто хочет озвучивать книги<br class="m-br"> на продвинутом уровне</p>
+    <a class="btn" href="#ltBlock2257225622">Забронировать участие</a>
+  </div>
+</header>
+
+<section class="sec skills">
+  <div class="wrap">
+    <h2 class="h2 rv">Специализация <em>«Чтец аудиокниг»</em> —<br class="d-br"> это 10 модулей обучения,<br class="d-br"> в рамках которых вы научитесь</h2>
+    <div class="skills__grid">
+      <div class="skill rv"><b aria-hidden="true"></b><p>Работать с многочасовой начиткой текста</p></div>
+      <div class="skill rv"><b aria-hidden="true"></b><p>Создавать и сохранять персонажей</p></div>
+      <div class="skill rv"><b aria-hidden="true"></b><p>Управлять драматургией</p></div>
+      <div class="skill rv"><b aria-hidden="true"></b><p>Организовывать запись и производство книги</p></div>
+    </div>
+    <div class="plus rv"><i>+</i><p>подготовите специализированные демо и портфолио для обращения к заказчикам</p></div>
+  </div>
+</section>
+
+<section class="sec program" id="program">
+  <div class="wrap">
+    <h2 class="h2 rv"><em>Программа</em></h2>
+    <p class="lead rv">Курс «Чтец аудиокниг» включает в себя 10 модулей обучения</p>
+    <div class="modules">
+<details class="mod rv" open>
+<summary><span class="mod__num">Модуль 1</span><span class="mod__title">Длинная форма: как выдержать многочасовую запись и сохранить голос</span><span class="mod__ico" aria-hidden="true"></span></summary>
+<div class="mod__body">
+<div class="lesson"><div class="blk-title">Урок 1.1. Голос на длинной дистанции: техника дыхания для многочасовой записи</div><ul class="blk-list"><li><b>Разберетесь,</b> почему даже хорошо поставленное дыхание начинает сдавать через 30–60 минут записи, и поймете, как определять признаки усталости</li><li><b>Научитесь</b> проверять дыхание по четырем точкам, поправлять позу и возвращать свободный выдох без нажима</li><li><b>Сможете</b> делать быструю проверку перед сессией и во время записи, замечать усталость раньше, чем она начнет портить материал</li></ul></div>
+<div class="lesson"><div class="blk-title">Урок 1.2. Длинные фразы без разрыва смысла: где и как брать воздух</div><ul class="blk-list"><li><b>Поймете,</b> как неудачный вдох ломает смысл фразы, почему запятая еще не повод для паузы, чем полный вдох отличается от короткого добора</li><li><b>Научитесь</b> делить сложное предложение на смысловые куски, заранее намечать вдохи, размечать текст знаками и добирать воздух так, чтобы этого не было слышно</li><li><b>Сможете</b> сразу видеть, где дышать в сложной авторской фразе, и подстраивать дыхание под смысл, а не наоборот</li></ul></div>
+<div class="result"><div class="blk-title">Итог модуля</div><ul class="blk-list"><li><b>Начнете</b> замечать, что техника начала сбиваться и вовремя возвращать свободную подачу, заранее находить места для добора воздуха в длинных предложениях</li><li><b>Научитесь</b> контролировать дыхание во время записи на длинной дистанции</li><li><b>Сможете реже</b> перезаписывать фразы из-за нехватки воздуха; в начале и в конце сессии голос будет звучать одинаково; длинные авторские фразы не придется рубить на куски</li></ul></div>
+</div>
+</details>
+<details class="mod rv">
+<summary><span class="mod__num">Модуль 2</span><span class="mod__title">Сложный текст без запинок: имена, термины и языковые ловушки</span><span class="mod__ico" aria-hidden="true"></span></summary>
+<div class="mod__body">
+<div class="lesson"><div class="blk-title">Урок 2.1. Разогрев перед главой: короткая настройка речевого аппарата на длинную запись</div><ul class="blk-list"><li><b>Поймете,</b> чем тренировка артикуляции отличается от подготовки к рабочей сессии, почему длинная разминка бывает лишней и зачем подбирать упражнения под текст</li><li><b>Научитесь</b> выполнять трехминутный комплекс, проверять четкость в рабочем темпе, понимать, какие сочетания в этой главе надо подготовить отдельно</li><li><b>Освоите</b> свой постоянный ритуал перед сессией и сможете делать быструю разминку артикуляции после перерыва</li></ul></div>
+<div class="lesson"><div class="blk-title">Урок 2.2. Слова, на которых ломается дубль: как работать со сложными сочетаниями, именами и терминами</div><ul class="blk-list"><li><b>Узнаете,</b> чем ошибка в произношении отличается от артикуляционной запинки; зачем проверять ударения до записи и готовить переходы между словами</li><li><b>Научитесь</b> находить трудное сочетание, разбирать слово на части и собирать его в рабочем темпе, проверять произношение, вести словарь книги</li><li><b>Сможете</b> работать с незнакомыми словами по одному порядку, фиксировать произношение повторяющихся имен и терминов, заранее снимать свои речевые трудности</li></ul></div>
+<div class="result"><div class="blk-title">Итог модуля</div><ul class="blk-list"><li><b>Поймете, как</b> находить свои речевые ловушки, подбирать разминку под конкретную главу, разбирать сложные слова, вести словарь имен и терминов книги.</li><li><b>Сможете</b> настраиваться перед сессией, заранее готовить трудные слова, держать одно произношение на всю книгу.</li><li><b>Научитесь</b> за несколько минут подготовки перед главой входить в запись с собранной дикцией, не тратя первые страницы на «раскачку» речевого аппарата</li></ul></div>
+</div>
+</details>
+<details class="mod rv">
+<summary><span class="mod__num">Модуль 3</span><span class="mod__title">Режиссура жанра: почему детектив нельзя читать как роман</span><span class="mod__ico" aria-hidden="true"></span></summary>
+<div class="mod__body">
+<div class="lesson"><div class="blk-title">Урок 3.1. Жанровый код книги: как найти подачу до начала записи</div><ul class="blk-list"><li><b>Узнаете,</b> чем отличается работа с детской литературой, нон-фикшн, художественной прозой и триллерами; почему у жанра нет одной правильной скорости чтения.</li><li><b>Научитесь</b> разбирать текст по четырем вопросам: зачем слушатель его слушает, насколько он плотный, как пишет автор, кто рассказывает историю.</li><li><b>Поймете,</b> как формулировать жанровую рамку и проверять ее пробной записью.</li><li><b>Сможете</b> выбирать подачу по смыслу и задаче текста, а не по привычной манере жанра.</li></ul></div>
+<div class="lesson"><div class="blk-title">Урок 3.2. Ритм внутри книги: диалог, описание, напряжение, экшен</div><ul class="blk-list"><li><b>Разберетесь,</b> чем темп отличается от ритма.</li><li><b>Узнаете</b> три инструмента ритма и зачем нужен контраст в длинном тексте.</li><li><b>Поймете, как</b> распознавать, где в сцене меняется действие.</li><li><b>Научитесь</b> строить ее ритмическую карту, переходить между состояниями без механического ускорения и замедления.</li><li><b>Сможете</b> вести сцену без провалов и держать интерес слушателя с помощью ритма.</li></ul></div>
+<div class="result"><div class="blk-title">Итог модуля</div><ul class="blk-list"><li><b>Поймете, как</b> разбирать и формулировать жанровые особенности книги, как она должна звучать, где менять скорость, паузы и энергию вслед за действием</li><li><b>Освоите</b> режиссуру ритма: научитесь создавать напряжение без обязательного ускорения, делать диалоги живыми, а описания — частью действия, чтобы слушатель оставался внутри истории</li></ul></div>
+<div class="bonus"><div class="blk-title">Бонус. Эталонные дубли: как не потерять звучание книги между сессиями</div><ul class="blk-list"><li><b>Поймете,</b> почему подача незаметно меняется от сессии к сессии; как отличить развитие истории от случайного сдвига голоса, темпа и эмоций</li><li><b>Сможете</b> выбирать и записывать эталоны повествования, диалога и кульминации; сравнивать с ними новые записи; возвращать звучание после перерыва и при точечных перезаписях</li></ul></div>
+</div>
+</details>
+<details class="mod rv">
+<summary><span class="mod__num">Модуль 4</span><span class="mod__title">Партитура книги: как подготовить текст к записи</span><span class="mod__ico" aria-hidden="true"></span></summary>
+<div class="mod__body">
+<div class="lesson"><div class="blk-title">Урок 4.1. Разметка главы: как увидеть смысл до того, как включил микрофон</div><ul class="blk-list"><li><b>Узнаете</b> четыре ориентира для разбора смысла и поймете почему не каждое важное слово надо выделять голосом</li><li><b>Научитесь</b> прослеживать, как движется информация внутри абзаца, делать рабочую разметку, расставлять акценты и раскрывать замысел автора в том порядке, в каком он его выстроил</li><li><b>Сможете</b> заранее видеть, как устроен сложный фрагмент, и не подсвечивать важные для сюжета детали раньше времени</li></ul></div>
+<div class="lesson"><div class="blk-title">Урок 4.2. Пауза как режиссерский инструмент: управляем вниманием слушателя</div><ul class="blk-list"><li><b>Разберетесь,</b> какие бывают паузы; как пауза усиливает ожидание, дает время усвоить мысль или, наоборот, выдает информацию раньше времени</li><li><b>Научитесь</b> выбирать место и длину паузы по смыслу, отличать намеренную паузу от технической остановки, размечать сложные фрагменты</li><li><b>Сможете</b> паузами вести мысль и удерживать внимание слушателя, не разбивая текст на куски</li></ul></div>
+<div class="result"><div class="blk-title">Итог модуля</div><ul class="blk-list"><li><b>Узнаете,</b> как размечать длинные фрагменты по смыслу, зачем нужны логические акценты и паузы, как интонация меняет восприятие информации и подтекста</li><li><b>Поймете, как</b> готовить рабочую партитуру главы, находить смысловые центры и повороты, ставить акценты и паузы так, чтобы они работали на драматургию</li><li><b>Научитесь</b> видеть смысловую конструкцию главы заранее, чтобы не терять важные акценты, не переигрывать и не выдавать слушателю сюжетные повороты раньше автора</li><li><b>Сможете</b> управлять вниманием слушателя с помощью пауз: усиливать напряжение, давать время на осмысление и создавать выразительное чтение без нарочитой актерской подачи</li></ul></div>
+</div>
+</details>
+<details class="mod rv">
+<summary><span class="mod__num">Модуль 5</span><span class="mod__title">Одна книга, много героев: как создать систему персонажей книги</span><span class="mod__ico" aria-hidden="true"></span></summary>
+<div class="mod__body">
+<div class="lesson"><div class="blk-title">Урок 5.1. Голосовой паспорт персонажа: как создать героя и не потерять его через 15 глав</div><ul class="blk-list"><li><b>Разберетесь, что</b> персонажа делает узнаваемым</li><li><b>Научитесь</b> разбирать героя, составлять голосовой паспорт, выбирать решение, которое можно повторить, записывать короткий эталон персонажа</li><li><b>Сможете</b> возвращаться к найденному образу в следующих главах и менять состояние героя так, чтобы он оставался собой</li></ul></div>
+<div class="lesson"><div class="blk-title">Урок 5.2. Сцена на троих: техника мгновенного переключения между персонажами</div><ul class="blk-list"><li><b>Узнаете,</b> почему переключение между персонажами строится на их намерениях и отношениях, а не на быстрой смене тембра; какую роль играет рассказчик в сцене с несколькими героями</li><li><b>Научитесь</b> разбирать, чего хочет каждый участник диалога, строить разные речевые реакции, переключаться между двумя-тремя персонажами и авторским текстом</li><li><b>Сможете</b> вести диалог на несколько голосов целиком, не теряя ни особенностей героев, ни ритма их разговора</li></ul></div>
+<div class="result"><div class="blk-title">Итог модуля</div><ul class="blk-list"><li><b>Узнаете,</b> как характер, мотивация, положение в сцене и отношения с другими героями сказываются на том, как персонаж говорит</li><li><b>Поймете, как</b> составлять голосовые паспорта героев, записывать их речевые особенности, переключаться между персонажами и рассказчиком в сложном диалоге</li><li><b>Научитесь</b> создавать персонажей, которых слушатель узнает не по карикатурному голосу, а по характерной манере речи, и сможете сохранять их узнаваемость на протяжении всей книги</li></ul></div>
+</div>
+</details>
+<details class="mod rv">
+<summary><span class="mod__num">Модуль 6</span><span class="mod__title">Эмоциональная режиссура: как проживать сцену и не переигрывать</span><span class="mod__ico" aria-hidden="true"></span></summary>
+<div class="mod__body">
+<div class="lesson"><div class="blk-title">Урок 6.1. Эмоция без театральности: как создать состояние, а не «сыграть голосом»</div><ul class="blk-list"><li><b>Узнаете, как</b> обстоятельство, действие, состояние тела, голос влияют на эмоцию в голосе. Чем настоящее состояние отличается от сыгранной эмоции</li><li><b>Научитесь</b> находить скрытые мотивы героя, менять подачу вслед за обстоятельствами, передавать оттенки чувств без потери разборчивости и лишнего напряжения</li><li><b>Сможете</b> звучать естественно в эмоциональных сценах и сохранять характер персонажа в любом состоянии</li></ul></div>
+<div class="lesson"><div class="blk-title">Урок 6.2. Эмоциональные переходы: от ссоры до тишины за несколько реплик</div><ul class="blk-list"><li><b>Поймете</b> что меняет состояние по сравнению с исходным. Зачем в эмоциональной сцене паузы, молчание и контроль тела</li><li><b>Научитесь</b> находить триггеры, проводить персонажа через несколько смен состояния, управлять энергией и речью без перенапряжения</li><li><b>Сможете</b> вести эмоцию непрерывно, без механических «кнопок», сохраняя характер героя и ясность текста</li></ul></div>
+<div class="result"><div class="blk-title">Итог модуля</div><ul class="blk-list"><li><b>Узнаете</b> как обстоятельства, намерения и внутреннее состояние персонажа определяют эмоциональную подачу; как строятся плавные и резкие переходы</li><li><b>Освоите</b> сложные эмоциональные сцены, в которых герой за несколько реплик проходит путь от злости к растерянности, страху или облегчению, — без переигрывания и потери контроля над голосом</li><li><b>Научитесь</b> создавать эмоции, которым верит слушатель: передавать страх, боль, радость или гнев через внутреннее состояние героя, а не через искусственный шепот, надрыв и преувеличенные интонации</li></ul></div>
+</div>
+</details>
+<details class="mod rv">
+<summary><span class="mod__num">Модуль 7</span><span class="mod__title">Как устроена профессия чтеца: от первой книги до издательства</span><span class="mod__ico" aria-hidden="true"></span></summary>
+<div class="mod__body">
+<div class="lesson"><div class="blk-title">Урок 7.1. Кто на самом деле нанимает чтецов: карта рынка аудиокниг</div><ul class="blk-list"><li><b>Погрузитесь в</b> три части рынка (проекты площадок; независимые авторы и прямые заказчики; аудиопродакшн)</li><li><b>Узнаете,</b> чем правообладатель отличается от производителя аудиокниги и от площадки, где она продается</li><li><b>Научитесь</b> изучать заказчиков, находить рабочие каналы связи, разбирать карточки аудиокниг и данные о производстве, понимать, где легче войти</li><li><b>Сможете</b> составлять свою карту рынка и сверять требования разных заказчиков со своими навыками и работами</li></ul></div>
+<div class="lesson"><div class="blk-title">Урок 7.2. От первой книги к издательству: как действующий чтец получает заказы</div><ul class="blk-list"><li><b>Поймете,</b> как сделанная работа становится доказательством опыта; как писать издательствам, студиям и независимым заказчикам и что делать после первого письма</li><li><b>Научитесь</b> писать под конкретного получателя, выбирать, что приложить к первому письму, формулировать предложение, вести таблицу контактов и план действий</li><li><b>Сможете</b> искать заказы по кругу: выбрать адресата → подготовить материалы → написать → записать результат → учесть опыт в следующем письме</li></ul></div>
+<div class="result"><div class="blk-title">Итог модуля</div><ul class="blk-list"><li><b>Получите</b> понятную систему поиска первых и следующих проектов: от выбора подходящего издательства или студии до адресного обращения, отслеживания ответов и формирования профессиональных связей</li><li><b>Поймете, как</b> выбирать каналы поиска работы, изучать заказчиков, писать каждому свое письмо и вести учет переписки</li><li><b>Сможете</b> искать проекты самостоятельно по одному порядку, подбирать материалы под каждое обращение, делать выводы из первых контактов</li></ul></div>
+</div>
+</details>
+<details class="mod rv">
+<summary><span class="mod__num">Модуль 8</span><span class="mod__title">Производство аудиокниги: от записи главы до файла для заказчика</span><span class="mod__ico" aria-hidden="true"></span></summary>
+<div class="mod__body">
+<div class="lesson"><div class="blk-title">Урок 8.1. Монтаж длинной формы: как чистить главы быстро и не утонуть в часах материала</div><ul class="blk-list"><li><b>Узнаете</b> три этапа работы с длинной записью. Почему не надо исправлять все, что видно на звуковой волне</li><li><b>Научитесь</b> находить и убирать неудачные дубли, собирать фразы в правильном порядке, править паузы и вдохи, проверять склейки и вовремя понимать, что проще перезаписать, чем исправлять</li><li><b>Сможете</b> монтировать проходами, пользоваться маркерами ошибок и базовыми операциями программ, решать на слух с оглядкой на художественную задачу</li></ul></div>
+<div class="lesson"><div class="blk-title">Урок 8.2. Стандарты сдачи: как подготовить главу так, чтобы заказчик ее принял</div><ul class="blk-list"><li><b>Поймете,</b> почему у заказчиков разные требования к обработке, уровню, формату и названию файлов; чем нормализация по пику отличается от контроля воспринимаемой громкости</li><li><b>Научитесь</b> разбирать ТЗ, делать нужную обработку, проверять уровень и пики, сравнивать соседние главы, настраивать экспорт и проверять готовый файл</li><li><b>Сможете</b> готовить аудио по требованиям заказчика и ничего не упускать перед сдачей</li></ul></div>
+<div class="result"><div class="blk-title">Итог модуля</div><ul class="blk-list"><li><b>Освоите</b> подготовку книжного аудио к сдаче: узнаете, как выполнять технические требования разных заказчиков, контролировать громкость и экспортировать главы без организационных и технических ошибок</li><li><b>Научитесь</b> монтировать длинные главы по профессиональному алгоритму: быстро находить ошибки, сохранять живую речь и не тратить время на исправления, которые слушатель даже не услышит</li></ul></div>
+<div class="bonus"><div class="blk-title">Бонус. Перед записью: профессиональный чек чтеца за 5 минут</div><ul class="blk-list"><li><b>Получите</b> пятиминутный профессиональный чек-лист перед записью, который поможет избежать ситуации, когда час прекрасно прочитанного текста приходится переделывать из-за незаметной технической ошибки.</li></ul></div>
+</div>
+</details>
+<details class="mod rv">
+<summary><span class="mod__num">Модуль 9</span><span class="mod__title">Демо чтеца: как показать редактору свой голос за 40 секунд</span><span class="mod__ico" aria-hidden="true"></span></summary>
+<div class="mod__body">
+<div class="lesson"><div class="blk-title">Урок 9.1. Четыре демо — четыре роли чтеца: что должен услышать редактор</div><ul class="blk-list"><li><b>Поймете</b> зачем нужны четыре демо (рассказчик, персонажи, эмоциональная сцена, нон-фикшн); почему короткий цельный кусок работает лучше нарезки из ярких моментов</li><li><b>Научитесь</b> подбирать фрагмент под задачу, находить сильное начало, делать короткие демо и оценивать, убедительны ли они художественно и технически</li><li><b>Сможете</b> отбирать материал по понятным критериям и показывать в демо то, что чтец повторит в любой книге, а не разовые голосовые трюки</li></ul></div>
+<div class="lesson"><div class="blk-title">Урок 9.2. Портфолио чтеца глазами заказчика: что открыть, услышать и понять за 2 минуты</div><ul class="blk-list"><li><b>Узнаете,</b> чем рабочий архив отличается от публичного портфолио; как выбрать первое демо, назвать файлы и настроить доступ</li><li><b>Научитесь</b> собирать все по одной ссылке, раскладывать четыре демо и вышедшие работы, если они есть, добавлять описание, контакты и ссылки, проверять, что все открывается</li><li><b>Сможете</b> держать портфолио свежим и подстраивать его под интересы конкретного получателя</li></ul></div>
+<div class="result"><div class="blk-title">Итог модуля</div><ul class="blk-list"><li><b>Поймете, как</b> выбирать и готовить четыре демо под разные задачи, оформлять их, собирать работы по одной ссылке, проверять, удобно ли их смотреть, менять порядок под адресата</li><li><b>Научитесь</b> смотреть на портфолио глазами заказчика, обновлять его и подбирать работы под конкретный запрос</li><li><b>Создадите</b> четыре коротких демо, которые показывают заказчику разные стороны вашего профессионализма: умение вести повествование, озвучивать персонажей, работать с драматической сценой и читать нон-фикшн</li><li><b>Соберете</b> профессиональное портфолио, в котором редактор за пару минут сможет найти подходящие демо, оценить ваши сильные стороны и понять, как связаться с вами</li></ul></div>
+</div>
+</details>
+<details class="mod rv">
+<summary><span class="mod__num">Модуль 10</span><span class="mod__title">Тестовое в издательство: как пройти реальный отбор</span><span class="mod__ico" aria-hidden="true"></span></summary>
+<div class="mod__body">
+<div class="lesson"><div class="blk-title">Урок 10.1. Почему хорошего голоса недостаточно: за что отклоняют тестовые чтецов</div><ul class="blk-list"><li><b>Узнаете</b> почему технически чистая запись еще не означает попадания в задачу; как на результат влияют понимание жанра, развитие сцены, персонажи, эмоции и точность чтения</li><li><b>Научитесь</b> разбирать тестовый текст до записи, находить смысловые и эмоциональные повороты, слышать переигрывание, раннее раскрытие информации, ошибки в произношении и отступления от инструкции</li><li><b>Сможете</b> слушать свое тестовое как редактор и отделять художественные решения от того, нравится ли тебе собственный голос</li></ul></div>
+<div class="lesson"><div class="blk-title">Урок 10.2. Перед кнопкой «Отправить»: профессиональная самопроверка тестового</div><ul class="blk-list"><li><b>Узнаете</b> четыре уровня финальной проверки: задача, чтение, техника, отправка. Почему проверять надо именно тот файл, который получит заказчик</li><li><b>Научитесь</b> сверять тестовое с заданием, проверять точность текста и монтажа, настройки экспорта, название, версию и доступ к файлу</li><li><b>Сможете</b> перед каждой отправкой проходить одну и ту же проверку и считать работу законченной только после нее</li></ul></div>
+<div class="result"><div class="blk-title">Итог модуля</div><ul class="blk-list"><li><b>Разберетесь</b> что могут оценивать на отборе чтеца с художественной, технической и организационной стороны</li><li><b>Поймете, как</b> разбирать тестовый фрагмент, замечать ошибки трактовки, проверять результат художественно и технически, сверять его с заданием</li><li><b>Получите</b> профессиональный чек-лист перед отправкой тестового, чтобы не потерять шанс из-за неправильного файла, ошибки в тексте, неудачной склейки или невыполненного требования</li><li><b>Сможете</b> готовить и проверять тестовое по одному порядку, разбирать обратную связь и учитывать ее в следующих работах</li></ul></div>
+</div>
+</details>
+    </div>
+  </div>
+</section>
+
+<section class="sec price" id="price">
+  <div class="wrap">
+    <h2 class="h2 rv"><em>Формат и стоимость участия</em></h2>
+    <div class="price__grid">
+      <div class="facts">
+        <div class="fact fact--big rv"><i></i><p>3 месяца обучения</p></div>
+        <div class="fact rv"><i></i><p>10 модулей, которые включают в себя 20 видеоуроков и практические задания для углубленного изучения и погружения в озвучку аудиокниг до уровня PRO</p></div>
+        <div class="fact rv"><i></i><p>Поддержка кураторов в процессе обучения</p></div>
+        <div class="fact rv"><i></i><p>При успешном выполнении домашних заданий курса выдается сертификат</p></div>
+        <div class="fact rv"><i></i><p>Доступ к материалам курса — 6 месяцев со дня старта обучения</p></div>
+      </div>
+      <div class="card-price rv">
+        <small>Стоимость</small>
+        <div class="now">25 900 <span>руб</span></div>
+        <s>42 000 руб</s>
+        <div class="instal">от 1080 ₽/месяц в <a href="#ltBlock2257225622">рассрочку</a></div>
+        <a class="btn" href="#ltBlock2257225622">Забронировать участие</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec teacher">
+  <div class="wrap">
+    <h2 class="h2 rv"><em>Преподаватель курса</em></h2>
+    <div class="teacher__grid">
+      <div class="photo rv"><img src="assets/chtec-teacher.webp" alt="Игорь Тимохин" loading="lazy"></div>
+      <div class="rv">
+        <div class="teacher__name">Игорь<br>Тимохин</div>
+        <span class="teacher__role">Преподаватель школы TSSS</span>
+        <ul class="teacher__list">
+          <li>Профессиональный диктор на площадках Литрес, Строки, Яндекс книги, Visit Tyumen</li>
+          <li>Актер дубляжа</li>
+          <li>Уже более десяти лет работает с рекламой, фильмами, сериалами, мультфильмами и аудиокнигами.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>

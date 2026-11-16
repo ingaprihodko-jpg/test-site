@@ -1,0 +1,58 @@
+- [Typography rules](feedback_typography_rules.md) — nbsp hanging words, no lone last word (not in headings), no period after headings, 1-2 fonts, ground illustrations
+- [Stick to ТЗ copy](feedback_stick_to_tz_copy.md) — never invent or embellish text, use only what the client's spec provided
+- [Expert Tests landing page](project_f5game_expert_tests_page.md) — two variants, feedback arrives as forwarded Telegram screenshots
+- [F5GAME mascot assets](reference_f5game_mascot_assets.md) — robot/gift illustrations source + local copies
+- [Optimize API cost](feedback_optimize_api_cost.md) — always propose cheap option, watch for dry-run/duplicate-run waste
+- [GetCourse rem bug](feedback_getcourse_rem_bug.md) — html{font-size:10px} on GetCourse shrinks all rem sizing, always convert rem→px in embed exports
+- [GetCourse block CSS workflow](feedback_getcourse_block_css.md) — builder* column ids are ephemeral, use stable ltBlock* id + nth-of-type; block's CSS field auto-prepends its own id; test live via Claude in Chrome before handing off
+- [GetCourse class-name collisions](feedback_getcourse_class_collision.md) — generic classes (.h1/.btn/.nav/...) and body font-family get overridden by platform CSS; needs renamed classes + !important on body AND .lite-page.block-set
+- [Chrome paste corrupts Cyrillic](feedback_chrome_paste_cyrillic_bug.md) — Cmd+V via claude-in-chrome mangles non-ASCII (decodes as mac_cyrillic); fix with a byte-remap script + SHA-256 verify
+- [GetCourse reveal + editor gotchas](feedback_getcourse_reveal_and_editor.md) — scroll-reveal hides most of the page (force [data-reveal] opacity:1), GC re-injects data-reveal (position with translate not transform), code editor ignores JS setValue (needs real keystrokes)
+- [Money Hypotheses page](project_money_hypotheses_page.md) — "Денежные гипотезы" page lives in its own repo ingaprihodko-jpg/test, not f5game-site
+- [«Какой скандал!» cards page](project_skandal_cards_page.md) — skandal.html, expert cards by Ольга Грищенко, copy from Google Doc «Сайт игры» section
+- [Expert Cabinet page](project_expert_cabinet_page.md) — two variants on separate page ids (4749923 ek/cream, 4749278 pj/project-colors), color-mapping used for colors-only edits
+- [Только по-русски](feedback_russian_only.md) — все сообщения, включая промежуточные статусы, на русском
+- [Агент рассылок GC](project_gc_mailing_agent.md) — скилл .claude/skills/gc-mailing: Google Docs → черновики рассылок GC, UTM ставит автор
+- [Рассылки GC: не трогать образец](feedback_gc_mailing_keep_sample.md) — сегменты и ссылки из образца сохранять, «следом» только по фразе в документе
+- [Формат тайминга встреч](feedback_meeting_timing_format.md) — чч:мм:сс, кейс → карты по порядку, алгоритм, всегда прикреплять чат Zoom (*RecordingnewChat.txt)
+- [Подборщик Life Practic](project_lifepractic_matcher.md) — тест на GC стр. 4779421: блоки, поле подборки, корзина, предложения с 4779420
+- [Лендинг «Чтец аудиокниг»](project_tsss_chtec_page.md) — tsss.site стр. 4785305 (/audiobook-narrator), embed export/chtec-embed.html, публиковать правки без вопроса
+- [Редизайн главной кабинета](project_cabinet_home_redesign.md) — 4 варианта блока A/B/C/D для teach/control/stream, только прототипы, ссылки-заглушки
+- [Каталог библиотеки встреч](project_library_catalog.md) — HTML-блок с фильтрами в «Настроить вид» тренинга, тест-копия 935931538, export/library-catalog-gc.html
+- [Таблица ссылок на рассылки](reference_gc_mailing_links_sheet.md) — Google-таблица, куда дописывать ссылки на все черновики GC
+- [Лендинг «Система продаж»](project_sales_system_page.md) — GC стр. 4775076, export/sales-system-embed.html, предоплата через ltShowModalBlock
+- [Тест ОВ3 «Отвержение»](project_ov3_rejection_test.md) — GC стр. 4795563 /scenarios/test, авто-смена призыва 30.10, ссылка регистрации freeweb3 c UTM ov3
+- [Проверка рассылок tsss](project_tsss_mailing_check.md) — агент-проверяльщик рассылок tsss.site: паттерны сегментов, UTM, каналы
+- [Верстальщик рассылок tsss](project_tsss_mailing_agent.md) — скилл .claude/skills/tsss-mailing, сам собирает сегмент; config.md ждёт образцы
+- [МК «Персонажность» tsss](project_tsss_mk_personazhnost.md) — вар. А GC 4802204 (tsss.site/directing, опубл.), вар. Б выбран и стоит на /directing с фото и формой ltBlock2259170693; 4802775 (/page543) — старая копия
+- [Отступы и заголовки tsss](feedback_tsss_landing_spacing.md) — лендинги tsss: секции ~24px моб/56px деск (зазор ≤48px), все h2 по центру; клиент повторно ловит
+- [Корректура без смысла](feedback_proofread_no_meaning.md) — при вычитке не править смысл, только опечатки/пунктуацию/типографику
+- [Гайды Ольги PDF](project_olga_guides_pdf.md) — guide/: гайд 1 «Гений общения» закрыт, не трогать; в работе гайды 2 «Гений вопросов» и 3 «Страшные манипуляторы»
+- [Воронка «УТЕЧКА» Salebot](project_salebot_utechka_funnel.md) — проект 275778, лист 506520, блок с PDF не удалять, профиль для подписки megamama17
+- [Потеря UTM ОВ3](project_freeweb3_utm_loss.md) — freeweb3→/reg/ теряет метки (клик до DOMContentLoaded), 194 заказа восстановлены, фикс export/freeweb3-utm-forward.html
+- [Документация Salebot](reference_salebot_docs_archive.md) — docs.salebot.pro отдаёт 404, читать через web.archive.org
+- [Никогда «Готово к отправке»](feedback_never_ready_to_send.md) — в рассылках GC не нажимать никогда, даже если пользователь сам попросит
+- [Массовая правка дашбордов GC](reference_gc_dashboard_bulk_edit.md) — форма update-segment, базовый сегмент и причина задвоения, проверка блоков, группа исключения воронки 4397610
+- [Дашборды GC: правка через «Воронку»](feedback_gc_dashboard_funnel_tab.md) — если есть вкладка «Воронка», править только там, с Панели условия задваиваются
+- [Распродажа tsss, первый экран](project_tsss_sale_hero.md) — 3 варианта, черновик Tilda 352984709, лимит размера T123, вход только в Chrome
+- [ДГК: только почта и ТГ](feedback_gc_mailing_dgk_channels.md) — без ВК/МАХ (кнопки есть), планировать сразу вместе с основным аккаунтом
+- [Агент по сайтам](project_gc_site_agent.md) — скилл .claude/skills/gc-site, проверка qa.js, цвета по умолчанию с pariscreatorweek.com
+- [Лендинг «Незаменимые»](project_irreplaceable_page.md) — GC стр. 4599947 = /irreplaceable, Redactor-элемент: не печатать с клавиатуры, сохраняется на blur
+- [Запись ОВ0 Гавердовская](project_lp_rec_gaverdovskaya.md) — GC стр. 4813210, вариант B блоками GC, группа видимости ещё Станковской
+- [API блоков GC](reference_gc_block_api.md) — update-param, add/delete item, rawValue, видимость — правка без кликов и буфера
+- [Нижний баннер tsss](project_tsss_bottom_banner.md) — стр. 3984294 (/page121) + тема 57651, баннеры по сегментам, загрузка картинки
+- [Рассрочка от 30 000 в виджете](project_installment_threshold_widget.md) — 1675879: всё убрано 12.11 (элемент, копии в акции, копии неактуальны), рассрочка GC Pay теряет скидку промокода
+- [Отрывок ОВ4 Станковская](project_lp_ov4_excerpt.md) — GC стр. 4818800, 2 HTML-блока вокруг видео, старые блоки 9409/9410/9413 удалить вручную
+- [GC рассылки: форматирование и макросы](feedback_gc_mailing_formatting_macros.md) — жирный в h3 ТЗ, подчёркивания, таблицы HTML, макросы ставить, сверка скриптом
+- [Таблица ссылок: вкладки и цвета](feedback_gc_mailing_table_tabs_colors.md) — спикер/курс на отдельной вкладке, цвет ОВ0/ОВ4/курс; пока не применять
+- [Модуль «Воронки» GC](reference_gc_funnels_module.md) — шаблон «по тренингу» = продажа, «Факт» без истории, события прохождения курса
+- [Подарок ОП Гавердовская](project_gift_gaverdovskaya_short.md) — GC стр. 4822547, HTML+видео+HTML, кнопка курса без ссылки
+- [Воронка ОВ1 Гавердовская](project_ov1_gaverdovskaya_funnel.md) — ТЗ 1TM26Il…, баннеры с лого/без лого, собрано 10.11, что осталось
+- [Сгорание бонусов ЧЧ26 tsss](project_tsss_ch26_bonus_writeoff.md) — 1 марта списать остаток ЧЧ26, сначала тратятся ЧЧ26, скрипт export/tsss-ch26-bonus-writeoff.py
+- [Буфер обмена общий](feedback_clipboard_shared_verify.md) — после вставки в CSS темы GC проверять содержимое до «Сохранить»; кэш темы 1–3 мин
+- [Дашборд «Форум приёмных семей»](project_forum_dashboard_krasnikova.md) — valentina-krasnikova.ru дашборд 1711511, id предложения/ботов/рассылок, ограничения
+- [Tilda Zero: правка через буфер](reference_tilda_zero_buffer_paste.md) — localStorage tn_store_buffer + elem__paste(), SBS по брейкпоинтам, animmobile для мобильных
+- [Цепочка УДО Станковская](project_udo_certificate_chain.md) — 11 писем + 10 ТГ-ботов, id, что допустила от себя
+- [Родословная Инги](project_family_genealogy.md) — данные из свидетельств: Голоденко, Кожичин/Титова, Приходько, что искать дальше
+- [Уроки Мегапятницы 2026](project_mp26_lessons_krasnikova.md) — valentina-krasnikova.ru, 4 урока: HTML сверху/снизу видео, кнопки на /MP_26, 5-й урок ждёт
+- [Теги предложений в правилах GC](feedback_gc_offer_tags_in_rules.md) — фильтровать по тегам предложений, а не списком id

@@ -1,0 +1,251 @@
+<!-- Лендинг «Экспертный кабинет» · интенсив Ольги Грищенко. Вставляется в HTML-блок редактора GetCourse. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+.ek{--cream:#f8f3ea;--paper:#fffdf8;--ink:#1b1023;--ink-soft:#3a2c46;--brass:#E31C79;--brass-dark:#b12d75;--blush:#b79cff;--purple:#4b2c82;--purple-vivid:#7B2FF7;--purple-deep:#221040;--lime:#c7ea3f;--pink:#d6408c;--gold:#FFD23F;--line:rgba(27,16,35,.14);
+  font-family:'Manrope',system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.ek *,.ek *::before,.ek *::after{box-sizing:border-box}
+.ek h1,.ek h2,.ek h3,.ek p,.ek ul{margin:0;padding:0}
+.ek ul{list-style:none}
+.ek a{color:inherit;text-decoration:none}
+.ek img{max-width:100%;height:auto;display:block}
+.ek .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.ek .serif{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500}
+.ek .eyebrow{font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--brass)}
+.ek .btn{display:inline-block;background:var(--brass);color:#fffdf8;font-weight:700;font-size:16px;letter-spacing:.06em;text-transform:uppercase;padding:18px 44px;border-radius:999px;transition:background .2s,transform .2s;cursor:pointer}
+.ek .btn:hover{background:var(--brass-dark);transform:translateY(-2px)}
+.ek .btn:focus-visible{outline:3px solid var(--blush);outline-offset:3px}
+
+/* hero */
+.ek .hero{background:radial-gradient(ellipse 130% 90% at 50% -15%,var(--purple),var(--purple-deep) 60%);color:var(--cream);padding:80px 0 96px;position:relative;text-align:center}
+.ek .hero .wrap{display:flex;flex-direction:column;align-items:center;gap:44px}
+.ek .hero .eyebrow{color:var(--gold)}
+.ek .hero .dates{font-size:15px;font-weight:600;letter-spacing:.04em;color:#d8cdf0;margin-top:8px}
+.ek .hero h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:clamp(46px,7vw,92px);line-height:.98;margin:18px 0 24px;letter-spacing:-.01em}
+.ek .hero h1 em{font-style:italic;color:var(--brass)}
+.ek .hero .lead{font-size:20px;color:#D8D2C6;white-space:nowrap;margin:0 auto 36px}
+
+/* картинка в hero */
+.ek .hero-img{max-width:640px;margin:0 auto}
+.ek .hero-img img{width:100%;border-radius:20px;box-shadow:0 30px 60px rgba(0,0,0,.35)}
+
+/* секции */
+.ek section{padding:96px 0}
+.ek h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;font-size:clamp(34px,4.6vw,56px);line-height:1.08;letter-spacing:-.005em}
+.ek .prose p{font-size:19px;color:var(--ink-soft);max-width:44em}
+.ek .prose p+p{margin-top:18px}
+
+.ek .problem .wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:64px;align-items:start}
+.ek .problem h2{color:var(--purple)}
+.ek .bridge{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);text-align:center;padding:80px 0}
+.ek .bridge p{font-size:20px;color:var(--ink-soft)}
+.ek .bridge .big{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,6.4vw,80px);line-height:1;margin:16px 0;color:var(--ink);font-weight:600;letter-spacing:.02em}
+.ek .bridge .big em{font-style:italic;color:var(--brass)}
+.ek .bridge p.sm{max-width:36em;margin:0 auto}
+
+/* что это */
+.ek .what .head{margin:0 auto 48px;max-width:34em;text-align:center}
+.ek .what .head .eyebrow{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:28px;font-weight:500;letter-spacing:normal;text-transform:none;color:var(--purple)}
+.ek .what .head p{margin-top:16px;font-size:17px;font-weight:400}
+.ek .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.ek .feat li{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:28px 28px 60px;font-size:17px;position:relative;transition:background .25s ease,color .25s ease}
+.ek .feat li b{position:absolute;right:24px;bottom:16px;font-family:'Cormorant Garamond',serif;font-size:44px;line-height:1;color:var(--purple);font-weight:500;transition:color .25s ease}
+.ek .feat li:not(:last-child):hover{background:var(--brass);color:#fffdf8}
+.ek .feat li:not(:last-child):hover b{color:#fffdf8}
+.ek .feat li:last-child{background:var(--brass);color:#fffdf8;grid-column:span 1}
+.ek .feat li:last-child b{color:#fffdf8}
+
+/* новый уровень */
+.ek .level{background:radial-gradient(ellipse 120% 90% at 20% -10%,var(--purple),var(--purple-deep) 60%);color:var(--cream)}
+.ek .level .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:end}
+.ek .level-title{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(34px,4.4vw,54px);line-height:1.15;letter-spacing:-.005em;text-align:left;margin:0 0 22px;color:var(--cream)}
+.ek .level-title em{font-style:italic;color:var(--brass)}
+.ek .level-copy p{font-family:'Manrope',sans-serif;font-weight:400;font-size:19px;line-height:1.6;text-align:left;margin:0;max-width:42em;color:#e7defa}
+.ek .level-img{display:flex;justify-content:center;align-self:end;margin-bottom:-96px}
+.ek .level-img img{width:100%;max-width:340px;display:block;filter:drop-shadow(0 24px 34px rgba(0,0,0,.25))}
+
+/* программа */
+.ek .program h2{margin:12px 0 48px}
+.ek .days{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.ek .day{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:36px}
+.ek .day .n{font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--brass)}
+.ek .day h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:36px;line-height:1.1;margin:10px 0 6px}
+.ek .day .date{display:inline-block;font-weight:700;font-size:15px;background:var(--lime);color:var(--ink);padding:6px 16px;border-radius:999px;margin-bottom:24px}
+.ek .day li{padding:10px 0 10px 26px;position:relative;border-top:1px solid var(--line);color:var(--ink-soft)}
+.ek .day li::before{content:"";position:absolute;left:0;top:20px;width:12px;height:2px;background:var(--brass)}
+.ek .day p{color:var(--ink-soft)}
+.ek .day .who{margin-top:20px;font-weight:600;color:var(--purple)}
+.ek .day:last-child{background:var(--purple-deep);border-color:var(--purple-deep);color:var(--cream)}
+.ek .day:last-child li{color:var(--cream);border-top-color:rgba(248,243,234,.18)}
+.ek .day:last-child li::before{background:var(--brass)}
+.ek .day:last-child p{color:var(--cream)}
+.ek .day:last-child .who{color:var(--blush)}
+
+/* подарок */
+.ek .gift{padding:0;background:linear-gradient(135deg,var(--pink),var(--brass-dark));color:var(--cream)}
+.ek .gift .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:end}
+.ek .gift-text{align-self:center;padding:80px 0}
+.ek .gift-text .eyebrow{color:var(--cream);opacity:.85;font-size:19px}
+.ek .gift-text h2{color:var(--cream);font-size:clamp(40px,5.4vw,64px)}
+.ek .gift-img{justify-self:end}
+.ek .gift-img img{width:100%;max-width:480px;display:block}
+
+/* оффер */
+.ek .offer{background:var(--paper);border-top:1px solid var(--line);text-align:center}
+.ek .offer .kicker{margin-bottom:12px}
+.ek .offer h2{margin-bottom:40px;color:var(--purple)}
+.ek .card{max-width:640px;margin:0 auto;background:#fffdf8;border:1px solid var(--line);border-radius:28px;padding:44px 40px;text-align:left;box-shadow:0 20px 50px rgba(30,42,38,.08)}
+.ek .card .line{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.ek .card .line span:first-child{color:var(--ink-soft)}
+.ek .card .line span:last-child{font-weight:700;text-align:right;color:var(--purple)}
+.ek .card .price{display:flex;justify-content:space-between;align-items:baseline;padding:28px 0 32px}
+.ek .card .price span:first-child{font-size:15px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--ink-soft)}
+.ek .card .price b{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:600;line-height:1}
+.ek .card .btn{display:block;text-align:center;width:100%;background:var(--brass)}
+.ek .card .btn:hover{background:var(--brass-dark)}
+
+@media (max-width:860px){
+  .ek{font-size:16px}
+  .ek section{padding:64px 0}
+  .ek .hero{padding:40px 0 64px}
+  .ek .hero .lead{white-space:normal;max-width:26em}
+  .ek .hero .wrap,.ek .problem .wrap,.ek .days,.ek .level .wrap{grid-template-columns:1fr}
+  .ek .hero .wrap{gap:40px}
+  .ek .problem .wrap{gap:28px}
+  .ek .feat{grid-template-columns:1fr}
+  .ek .level-title,.ek .level-copy p{text-align:center}
+  .ek .level-img{order:-1;margin-bottom:0;align-self:center}
+  .ek .level-img img{max-width:280px}
+  .ek .gift .wrap{grid-template-columns:1fr;text-align:center}
+  .ek .gift-text{padding:48px 0 0}
+  .ek .gift-img{justify-self:center;order:-1}
+  .ek .gift-img img{max-width:280px}
+  .ek .card{padding:32px 24px}
+  .ek .card .price b{font-size:44px}
+  .ek .btn{width:100%;text-align:center;padding:18px 24px}
+}
+@media (prefers-reduced-motion:reduce){.ek .btn{transition:none}.ek .btn:hover{transform:none}}
+</style>
+
+<div class="ek">
+
+  <header class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">интенсив Ольги Грищенко</div>
+        <div class="dates">29 октября и 5 ноября · 18:00 мск</div>
+        <h1>Экспертный <em>кабинет</em></h1>
+        <p class="lead">создаем красивое виртуальное пространство для онлайн консультаций</p>
+        <a class="btn" href="#order">Купить</a>
+      </div>
+      <div class="hero-img">
+        <img src="https://ingaprihodko-jpg.github.io/test-site/assets/images/hero-two-experts.webp" alt="Два эксперта обсуждают виртуальный кабинет для консультаций" width="1448" height="1086">
+      </div>
+    </div>
+  </header>
+
+  <section class="problem">
+    <div class="wrap">
+      <h2>Какой инструмент вам необходим, чтобы ваши консультации стоили дорого?</h2>
+      <div class="prose">
+        <p>Личные консультации сегодня – это один из продуктов, на которые стоит сделать ставку. При этом, подавляющее большинство экспертов проводят консультации по очень низким ценам – все потому, что клиенты зачастую не видят ее ценности.</p>
+        <p>Почему так происходит? Потому что чаще всего у эксперта нет инструмента, через который можно было бы донести практическую ценность консультации, сформировать видимый результат и отдать его клиенту для практического использования.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="bridge">
+    <div class="wrap">
+      <p>И мы придумали такой инструмент – виртуальный</p>
+      <div class="big">ЭКСПЕРТНЫЙ <em>КАБИНЕТ</em></div>
+      <p class="sm">который мы будем учиться разрабатывать и реализовывать с помощью вайбкодинга на новом интенсиве</p>
+    </div>
+  </div>
+
+  <section class="what">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow">что такое</div>
+        <h2>ЭКСПЕРТНЫЙ КАБИНЕТ</h2>
+        <p>это виртуальное пространство для консультаций:</p>
+      </div>
+      <ul class="feat">
+        <li><b>1</b>С необходимой эксперту схемой для ведения консультации</li>
+        <li><b>2</b>С возможностью отдать клиенту конкретный инструмент с собой</li>
+        <li><b>3</b>С видимым путем клиента, который он проходит для решения своей задачи</li>
+        <li><b>4</b>С визуальными подсказками, приемами, техниками, инструментами – наполнением, которое необходимо для получения супер результата</li>
+        <li><b>5</b>И конечно, с очень красивым оформлением – потому что эстетика существенно поднимает стоимость продукта</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="level">
+    <div class="wrap">
+      <div class="level-copy">
+        <h2 class="level-title">Наши интенсивы по разработке инструментов <em>выходят на новый уровень</em></h2>
+        <p>Теперь это двухдневный интенсив, где мы даем еще больше системы, формируем супер навыки и прокачиваем экспертное мышление для яркой проявленности и роста дохода.</p>
+      </div>
+      <div class="level-img">
+        <img src="https://ingaprihodko-jpg.github.io/test-site/assets/images/hero-woman-growth.png" alt="Эксперт с зелёной стрелкой роста дохода" width="1024" height="1536">
+      </div>
+    </div>
+  </section>
+
+  <section class="program">
+    <div class="wrap">
+      <div class="eyebrow">Программа интенсива</div>
+      <h2>Два дня – от идеи до готового кабинета</h2>
+      <div class="days">
+        <article class="day">
+          <div class="n">1 день</div>
+          <h3>Создание концепции</h3>
+          <div class="date">29 октября, 18:00 мск</div>
+          <ul>
+            <li>Находим идею вашего экспертного кабинета</li>
+            <li>Разрабатываем схему ведения консультации</li>
+            <li>Добавляем авторские инструменты</li>
+            <li>Придумываем идеи для оформления</li>
+          </ul>
+          <p class="who">Ольга Грищенко помогает каждому индивидуально создать концепцию своего экспертного кабинета.</p>
+        </article>
+        <article class="day">
+          <div class="n">2 день</div>
+          <h3>Реализация</h3>
+          <div class="date">5 ноября, 18:00 мск</div>
+          <p>С помощью вайбкодинга вы создадите ваш экспертный кабинет.</p>
+          <p class="who">Ольга Грищенко будет создавать свой кабинет, вы будете наблюдать за пошаговым процессом и сможете задавать вопросы.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="gift">
+    <div class="wrap">
+      <div class="gift-text">
+        <div class="eyebrow">Подарок</div>
+        <h2>Набор всех пазлов для создания Экспертного кабинета</h2>
+      </div>
+      <div class="gift-img">
+        <img src="https://ingaprihodko-jpg.github.io/test-site/assets/images/olga-gift.png" alt="Ольга Грищенко с подарочной коробкой" width="1052" height="1494">
+      </div>
+    </div>
+  </section>
+
+  <section class="offer" id="order">
+    <div class="wrap">
+      <div class="eyebrow kicker">интенсив</div>
+      <h2>ЭКСПЕРТНЫЙ КАБИНЕТ</h2>
+      <div class="card">
+        <div class="line"><span>1 день · Создание концепции</span><span>29 октября, 18:00 мск</span></div>
+        <div class="line"><span>2 день · Реализация</span><span>5 ноября, 18:00 мск</span></div>
+        <div class="line"><span>Подарок</span><span>набор всех пазлов для создания Экспертного кабинета</span></div>
+        <div class="line"><span>Доступ к записи</span><span>3 месяца</span></div>
+        <div class="price"><span>Стоимость</span><b>31 950 ₽</b></div>
+        <!-- TODO: заменить href на ссылку предложения GetCourse -->
+        <a class="btn" href="#order">Купить</a>
+      </div>
+    </div>
+  </section>
+
+</div>

@@ -1,0 +1,92 @@
+/* Блок тарифов (tsr01) на странице «СИСТЕМА ПРОДАЖ в новой реальности», f5game.site, page id=4753904.
+   Вставлять в «Стиль» → «Подробные настройки» → поле CSS самого блока.
+   GetCourse сам добавит #ltBlockNNN перед каждым селектором, поэтому здесь его нет.
+   Все размеры в px: на GetCourse html{font-size:10px}, rem там уменьшается.
+   Шрифт не задаём — наследуется Montserrat, как у остальных блоков этой страницы. */
+
+.lt-block-wrapper { background: #1e142f !important; padding: 24px 0 56px !important; }
+.block-box { background: transparent !important; box-shadow: none !important; }
+
+.flex-row { gap: 20px; align-items: stretch !important; }
+
+.lt-tsr-block {
+  background: #fff !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .28) !important;
+  padding: 32px 24px 28px !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column;
+  border: 2px solid transparent;
+}
+/* средний тариф — акцент */
+.lt-tsr-block:nth-of-type(2) { border-color: #7b2ff7; box-shadow: 0 16px 40px rgba(123, 47, 247, .45) !important; }
+
+.lt-tsr-content { display: flex; flex-direction: column; flex: 1; }
+
+.lt-tsr-block .header { order: 0; }
+.lt-tsr-block .header p {
+  display: inline-block;
+  margin: 0 !important;
+  padding: 10px 24px;
+  border-radius: 999px;
+  background: #f0e8fe;
+  color: #5a1fd6 !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+}
+
+/* цена под описанием, над кнопкой */
+.lt-tsr-block .price { order: 2; margin-top: 20px !important; }
+.lt-tsr-block .price p {
+  margin: 0 !important;
+  color: #e0112b !important;
+  font-size: 24px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+}
+/* старая цена (зачеркнуть в редакторе) — крупнее, жирная, чёрная */
+.lt-tsr-block .price p s,
+.lt-tsr-block .price p del,
+.lt-tsr-block .price p strike {
+  display: block;
+  margin-top: 4px;
+  color: #16151f !important;
+  font-size: 32px !important;
+  font-weight: 800 !important;
+  text-decoration-thickness: 3px;
+}
+
+.lt-tsr-block .description { order: 1; margin-top: 16px !important; flex: 1; }
+.lt-tsr-block .description p {
+  margin: 0 0 8px !important;
+  color: #5b5a6e !important;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+}
+
+.lt-tsr-block .button { order: 3; margin-top: 16px !important; }
+.lt-tsr-block .btn {
+  width: 100%;
+  max-width: 280px;
+  padding: 14px 24px !important;
+  height: auto !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: #fe0174 !important;
+  color: #fff !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+  transition: background-color .2s ease, transform .2s ease;
+}
+.lt-tsr-block .btn:hover { background: #d8005f !important; transform: translateY(-2px); }
+
+@media (max-width: 767px) {
+  .flex-row { flex-direction: column; gap: 16px; }
+  .lt-tsr-block { padding: 28px 20px 24px !important; }
+  .lt-tsr-block .price p { font-size: 20px !important; }
+  .lt-tsr-block .price p s, .lt-tsr-block .price p del, .lt-tsr-block .price p strike { font-size: 26px !important; }
+  .lt-tsr-block .header p { font-size: 20px !important; }
+}

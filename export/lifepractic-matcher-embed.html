@@ -1,0 +1,446 @@
+<!-- Подборщик программ Life Practic · копия теста lifepractic-program-matcher. Вставляется в HTML-блок GetCourse.
+     Сохранение в карточку пользователя: ниже на той же странице поставьте стандартную форму GetCourse
+     с доп. полем пользователя «Распродажа_Подборка теста_результаты» (плейсхолдер lpm_result).
+     Скрипт сам найдёт форму, спрячет это поле, впишет туда подборку и покажет форму перед результатами —
+     подборка открывается после отправки формы. Если формы на странице нет, результаты показываются сразу.
+     Корзина: на странице должна быть хотя бы одна кнопка GetCourse «Добавить в корзину» (здесь — скрытый блок b-33cb3). -->
+<style>
+.lpm{--navy:#13283c;--navy2:#0c1e30;--orange:#f4783a;--cream:#f8f3ec;--ink:#172337;--line:#d8d6d0;--muted:#667080;
+  background:var(--cream);color:var(--ink);margin:0;font-family:Arial,Helvetica,sans-serif !important;font-size:16px;line-height:1.4;text-align:left}
+.lpm *{box-sizing:border-box;font-family:inherit}
+.lpm h1,.lpm h2,.lpm h3,.lpm p{margin-top:0}
+.lpm button{font-family:Arial,Helvetica,sans-serif !important}
+.lpm .lpm-serif,.lpm h1,.lpm h2,.lpm .lpm-course h3,.lpm .lpm-manager h3,.lpm .lpm-num{font-family:Georgia,serif !important}
+.lpm [hidden]{display:none !important}
+
+.lpm-topbar{background:var(--navy2);color:#fff;justify-content:space-between;align-items:center;height:76px;padding:0 max(28px,calc(50vw - 590px));font-size:14px;display:flex}
+.lpm-topbar a{color:#fff !important;text-decoration:none !important}
+.lpm-brand{letter-spacing:2px;font-size:16px;font-weight:800}
+.lpm-brand span{color:var(--orange)}
+
+.lpm-hero{background:var(--navy);color:#fff;text-align:center;padding:94px 24px 108px}
+.lpm-eyebrow,.lpm-label{letter-spacing:1.8px;color:var(--orange);font-size:12px;font-weight:700}
+.lpm-hero h1{letter-spacing:-2.5px;margin:18px 0 24px;font-size:clamp(42px,6vw,73px);line-height:1.05;color:#fff;font-weight:700}
+.lpm-hero h1 em,.lpm-result-intro em{color:#f6a273;font-style:normal}
+.lpm-hero p{color:#e4eaf0;max-width:610px;margin:0 auto 28px;font-size:18px;line-height:1.5}
+.lpm-facts{color:#d6e0e7;flex-wrap:wrap;justify-content:center;gap:22px;margin:0 0 38px;font-size:14px;display:flex}
+.lpm-facts span+span:before{content:"•";color:var(--orange);margin-right:22px}
+
+.lpm-primary{background:var(--orange) !important;color:#fff !important;cursor:pointer;border:0;border-radius:3px;padding:16px 24px;font-size:16px;font-weight:700;line-height:1.2}
+.lpm-primary b{margin-left:20px;font-size:20px}
+
+.lpm-quiz{max-width:800px;margin:auto;padding:60px 24px 80px}
+.lpm-progress{color:var(--muted);align-items:center;gap:18px;margin-bottom:48px;font-size:13px;font-weight:700;display:flex}
+.lpm-progress>div{background:#dedbd4;flex:1;height:4px}
+.lpm-progress i{background:var(--orange);height:100%;transition:all .3s;display:block}
+.lpm-question h2,.lpm-result-intro h2{letter-spacing:-1.3px;margin:10px 0 12px;font-size:clamp(31px,4vw,49px);line-height:1.08;color:var(--ink);font-weight:700}
+.lpm-question>p{color:var(--muted);margin-bottom:28px;font-size:17px;line-height:1.45}
+.lpm-choices{grid-template-columns:1fr 1fr;gap:12px;display:grid}
+.lpm-choices.lpm-single,.lpm-choices.lpm-compact{grid-template-columns:1fr}
+.lpm-choice{border:1px solid var(--line);text-align:left;min-height:70px;color:var(--ink);cursor:pointer;background:#fff;border-radius:4px;padding:16px 18px;font-size:16px;line-height:1.35;transition:all .15s}
+.lpm-choice:hover{border-color:#efaa84}
+.lpm-choice.lpm-active{border:2px solid var(--orange);background:#fff9f5;padding:15px 17px}
+.lpm-choice:disabled{opacity:.45;cursor:not-allowed}
+.lpm-check{color:var(--orange);margin-right:9px;font-weight:700}
+.lpm-question h3{margin:32px 0 12px;font-size:15px;font-weight:700;color:var(--ink)}
+.lpm-chips{flex-wrap:wrap;gap:8px;display:flex}
+.lpm-chip{border:1px solid var(--line);color:var(--ink);cursor:pointer;background:#fff;border-radius:30px;padding:9px 13px;font-size:14px}
+.lpm-chip.lpm-active{border-color:var(--orange);color:#b64917;background:#fff4ee}
+.lpm-choices.lpm-compact .lpm-choice{min-height:54px;font-size:15px}
+.lpm-quiz-nav{justify-content:space-between;align-items:center;margin-top:42px;display:flex}
+.lpm-back{color:var(--muted);cursor:pointer;background:0 0;border:0;font-size:15px}
+
+.lpm-results{max-width:1120px;margin:auto;padding:66px 24px 104px}
+.lpm-result-intro{max-width:780px;margin-bottom:42px}
+.lpm-result-intro p{color:var(--muted);max-width:650px;font-size:17px;line-height:1.5}
+.lpm-results-grid{grid-template-columns:1fr 1fr;gap:16px;display:grid}
+.lpm-course{background:#fff;border:1px solid #e2ded7;flex-direction:column;min-height:280px;padding:26px;display:flex}
+.lpm-course-top{align-items:center;gap:18px;margin-bottom:30px;display:flex}
+.lpm-course-top .lpm-num{color:var(--orange);font-size:27px}
+.lpm-course-top small{color:#a34d26;background:#fff2ea;padding:6px 8px;font-size:12px}
+.lpm-course h3{letter-spacing:-.8px;margin-bottom:7px;font-size:27px;line-height:1.08;color:var(--ink);font-weight:700}
+.lpm-speaker{color:var(--muted);margin-bottom:14px;font-size:14px;font-weight:700}
+.lpm-course p{color:#566171;font-size:15px;line-height:1.45}
+.lpm-course-bottom{justify-content:space-between;align-items:center;margin-top:auto;padding-top:16px;display:flex}
+.lpm-course-bottom strong{font-size:14px}
+.lpm-course-bottom button{border:1px solid var(--orange);color:#c9531f;cursor:pointer;background:#fff;border-radius:2px;padding:10px 14px;font-weight:700;font-size:14px}
+.lpm-result-actions{justify-content:center;align-items:center;gap:14px;margin:42px 0;display:flex}
+.lpm-outline{border:1px solid var(--ink);color:var(--ink);cursor:pointer;background:0 0;padding:15px 20px;font-size:15px}
+
+.lpm-gate{max-width:800px;margin:auto;padding:60px 24px 80px}
+/* форма GetCourse внутри теста — в оформлении теста */
+#lpm-gate .lt-block,#lpm-gate .lt-block-wrapper{background:transparent !important;padding:0 !important;margin:0 !important;box-shadow:none !important}
+#lpm-gate .container,#lpm-gate .row,#lpm-gate .block-box{width:auto !important;max-width:none !important;margin:0 !important;padding:0 !important;float:none !important}
+#lpm-gate .lt-form,#lpm-gate .lt-form *{font-family:Arial,Helvetica,sans-serif !important}
+#lpm-gate .builder-item{margin:0 0 12px !important;text-align:left !important}
+#lpm-gate .part-header{margin-bottom:28px !important}
+#lpm-gate .f-header,#lpm-gate .f-header p{font-family:Georgia,serif !important;font-size:clamp(31px,4vw,49px) !important;line-height:1.08 !important;letter-spacing:-1.3px !important;font-weight:700 !important;color:var(--ink) !important;text-align:left !important;margin:0 !important}
+#lpm-gate input.form-control,#lpm-gate input.f-input,#lpm-gate .lt-form input[type=text],#lpm-gate .lt-form input[type=email]{height:auto !important;width:100% !important;display:block !important;box-sizing:border-box !important;min-height:56px !important;border:1px solid var(--line) !important;border-radius:4px !important;background:#fff !important;padding:16px 18px !important;font-size:16px !important;line-height:1.35 !important;color:var(--ink) !important;box-shadow:none !important;transition:border-color .15s}
+#lpm-gate .lt-form input:focus{border-color:var(--orange) !important;outline:none !important}
+#lpm-gate .part-button{margin-top:28px !important}
+#lpm-gate .f-btn,#lpm-gate .lt-form button[type=submit],#lpm-gate .lt-form .btn{background:var(--orange) !important;border:0 !important;border-radius:3px !important;color:#fff !important;padding:16px 24px !important;font-size:16px !important;font-weight:700 !important;line-height:1.2 !important;width:auto !important;height:auto !important;box-shadow:none !important;text-transform:none !important}
+#lpm-gate .form-result-block{font-size:15px;color:var(--muted)}
+.lpm-sale{border:1px solid var(--orange);color:#c9531f !important;background:#fff;padding:15px 20px;font-size:15px;font-weight:700;text-decoration:none !important;text-align:center}
+.lpm-manager{background:var(--navy);color:#fff;justify-content:space-between;align-items:center;gap:25px;padding:34px 36px;display:flex}
+.lpm-manager span{letter-spacing:1.5px;color:#f2a078;font-size:11px;font-weight:700}
+.lpm-manager h3{margin:8px 0;font-size:28px;line-height:1.08;color:#fff;font-weight:700}
+.lpm-manager p{color:#cfdae2;max-width:600px;margin:0;line-height:1.4}
+.lpm-manager a{white-space:nowrap;color:#fff !important;background:var(--orange);padding:14px 17px;font-weight:700;text-decoration:none !important}
+.lpm-cart-note{z-index:40;background:#fff;border:1px solid #e2ded7;align-items:center;gap:12px;padding:14px 18px;font-size:14px;display:flex;position:fixed;bottom:20px;left:50%;transform:translate(-50%);box-shadow:0 8px 28px #13283c33}
+.lpm-cart-note a{color:#b84917 !important;white-space:nowrap;font-weight:700;text-decoration:none !important}
+
+@media (max-width:680px){
+  .lpm-topbar{height:64px;padding:0 18px}
+  .lpm-hero{padding:66px 20px 78px}
+  .lpm-hero h1{letter-spacing:-1.4px}
+  .lpm-facts{gap:9px;display:grid}
+  .lpm-facts span+span:before{display:none}
+  .lpm-quiz,.lpm-results{padding:42px 18px 72px}
+  .lpm-choices,.lpm-results-grid{grid-template-columns:1fr}
+  .lpm-question h2,.lpm-result-intro h2{font-size:35px}
+  .lpm-quiz-nav{margin-top:32px}
+  .lpm-quiz-nav .lpm-primary{padding:14px 18px}
+  .lpm-manager{padding:28px 24px;display:block}
+  .lpm-manager a{margin-top:18px;display:inline-block}
+  .lpm-result-actions{flex-direction:column}
+  .lpm-result-actions>*{width:100%}
+  .lpm-cart-note{justify-content:space-between;width:calc(100% - 30px)}
+  .lpm-course{min-height:250px}
+}
+[data-reveal]{opacity:1 !important;transform:translateY(0) !important}
+/* служебная кнопка «Добавить в корзину» — нужна только чтобы GetCourse подключил корзину на странице */
+.lt-block[data-code="b-33cb3"]{display:none !important}
+</style>
+
+<div class="lpm" id="lpm">
+  <header class="lpm-topbar">
+    <a href="#lpm-start" class="lpm-brand">LIFE<span>PRACTIC</span></a>
+    <a href="https://iscelenie-course.ru/_sale2026_copy" data-sale-link target="_blank" rel="noreferrer">К распродаже ↗</a>
+  </header>
+
+  <section class="lpm-hero" id="lpm-start">
+    <div class="lpm-eyebrow">ПОДБОРЩИК ПРОГРАММ</div>
+    <h1>Обучение, которое<br><em>нужно вашей практике</em></h1>
+    <p>Ответьте на&nbsp;несколько вопросов&nbsp;— и&nbsp;получите персональную подборку программ из&nbsp;распродажи Life Practic.</p>
+    <div class="lpm-facts"><span>1–2 минуты</span><span>3–5 программ</span><span>по темам, опыту и&nbsp;авторам</span></div>
+    <button class="lpm-primary" data-act="start">Подобрать программы <b>→</b></button>
+  </section>
+
+  <section class="lpm-quiz" id="lpm-quiz" aria-live="polite" hidden>
+    <div class="lpm-progress"><span>Вопрос <span id="lpm-step">1</span> из 3</span><div><i id="lpm-bar"></i></div></div>
+
+    <div class="lpm-question" data-q="1">
+      <div class="lpm-label">ВАША ПРАКТИКА</div>
+      <h2>Что сейчас чаще всего мешает вам чувствовать уверенность в&nbsp;работе?</h2>
+      <p>Выберите один вариант. Он&nbsp;поможет подобрать не&nbsp;просто интересный курс, а&nbsp;обучение под вашу профессиональную точку роста.</p>
+      <div class="lpm-choices lpm-single" id="lpm-problems"></div>
+    </div>
+
+    <div class="lpm-question" data-q="2">
+      <div class="lpm-label">ЗАПРОСЫ КЛИЕНТОВ</div>
+      <h2>С&nbsp;какими темами вы&nbsp;работаете?</h2>
+      <p>Выберите до&nbsp;двух&nbsp;— так подборка будет точнее.</p>
+      <div class="lpm-choices" id="lpm-topics"></div>
+    </div>
+
+    <div class="lpm-question" data-q="3">
+      <div class="lpm-label">ТОЧНАЯ НАСТРОЙКА</div>
+      <h2>Что ещё важно для вас?</h2>
+      <p>Можно отметить любимых авторов и&nbsp;профессиональную тему, которая сейчас откликается. Оба пункта&nbsp;— по&nbsp;желанию.</p>
+      <h3>Интересные вам спикеры</h3>
+      <div class="lpm-chips" id="lpm-speakers"></div>
+      <h3>Что хочется укрепить в&nbsp;профессии</h3>
+      <div class="lpm-choices lpm-compact" id="lpm-growth"></div>
+    </div>
+
+    <div class="lpm-quiz-nav">
+      <button class="lpm-back" data-act="back">← Назад</button>
+      <button class="lpm-primary" data-act="next"><span id="lpm-next-label">Дальше</span> <b>→</b></button>
+    </div>
+  </section>
+
+  <!-- форма GetCourse перед результатами: подборка открывается после отправки email -->
+  <section class="lpm-gate" id="lpm-gate" hidden></section>
+
+  <section class="lpm-results" id="lpm-results" hidden>
+    <div class="lpm-result-intro">
+      <div class="lpm-label">ВАША ПОДБОРКА</div>
+      <h2>Не&nbsp;просто популярные курсы&nbsp;—<br>а&nbsp;то, что <em>подходит вам сейчас</em></h2>
+      <p>Выдача учитывает темы клиентов, уровень практики, интерес к&nbsp;авторам и&nbsp;профессиональные задачи.</p>
+    </div>
+    <div class="lpm-results-grid" id="lpm-grid"></div>
+    <div class="lpm-result-actions">
+      <button class="lpm-primary" data-act="add-all">Добавить всю подборку <b>→</b></button>
+      <a class="lpm-sale" href="https://iscelenie-course.ru/_sale2026_copy" data-sale-link>Перейти к распродаже →</a>
+      <button class="lpm-outline" data-act="restart">Пройти тест ещё раз</button>
+    </div>
+    <aside class="lpm-manager">
+      <div>
+        <span>НЕ УВЕРЕНЫ В ВЫБОРЕ?</span>
+        <h3>Поможем собрать обучение под вашу практику</h3>
+        <p>Напишите менеджеру&nbsp;— он&nbsp;сориентирует по&nbsp;программам и&nbsp;выгоде от&nbsp;общей корзины.</p>
+      </div>
+      <a href="https://iscelenie-course.ru/_sale2026_copy" data-sale-link target="_blank" rel="noreferrer">Получить помощь →</a>
+    </aside>
+    <div class="lpm-cart-note" id="lpm-cart" hidden>
+      В&nbsp;подборке: <b id="lpm-cart-n">0</b> <span id="lpm-cart-word">программ</span>
+      <a href="https://iscelenie-course.ru/_sale2026_copy" data-sale-link target="_blank" rel="noreferrer">Перейти к распродаже →</a>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  var root=document.getElementById('lpm'); if(!root||root.dataset.init) return; root.dataset.init='1';
+
+  var COURSES=[
+    {id:'anxiety',price:15600,title:'Тревога: мучительная и необходимая',speaker:'Фёдор Коноров',description:'Понимание тревоги в гештальт-терапии: как видеть её функцию и работать с ней бережно.',topics:['anxiety'],personal:['anxiety']},
+    {id:'crises',price:11450,title:'Современные кризисы и терапия',speaker:'Андрей Валамин',description:'Как оставаться в контакте и поддерживать клиента, когда внешняя реальность нестабильна.',topics:['anxiety','hard'],personal:['anxiety','confidence']},
+    {id:'support',price:7250,title:'У тебя есть ты',speaker:'Денис Сенников',description:'Самоподдержка в сложных ситуациях — для личной и профессиональной устойчивости.',topics:['anxiety','self'],personal:['anxiety','confidence','selfworth']},
+    {id:'neurotic',price:11400,title:'Понимание и психотерапия невротического поведения',speaker:'Виктория Дубинская',description:'Пять основных симптомов: как замечать логику невротических проявлений в терапии.',topics:['anxiety','hard'],personal:['confidence']},
+    {id:'couple',price:19250,title:'Терапия отношений: парная и индивидуальная работа',speaker:'Лев Черняев',description:'Оптика для работы с отношениями — в паре и в индивидуальной терапии.',topics:['relationships','sex'],personal:['boundaries']},
+    {id:'romantic',price:9350,title:'Невозможность разлюбить',speaker:'Марина Травкова',description:'Работа со склонными к романтической созависимости — от понимания динамики к терапии.',topics:['relationships'],personal:['boundaries','selfworth']},
+    {id:'codependence',price:19350,title:'Терапия созависимости',speaker:'Ирина Андреева-Чадаева',description:'Курс для психологов и близких зависимых: как работать с созависимыми отношениями.',topics:['relationships','trauma'],personal:['boundaries']},
+    {id:'psychoanalysis',price:11150,title:'Терапия отношений: психоаналитический подход',speaker:'Елена Змановская',description:'Психоаналитическая оптика для понимания отношений и повторяющихся сценариев.',topics:['relationships'],personal:['boundaries']},
+    {id:'marriage',price:11750,title:'Психотерапия интимной супружеской жизни',speaker:'Денис Сенников',description:'Как говорить с парами о близости, конфликтах и супружеских отношениях.',topics:['relationships','sex'],personal:['boundaries','sexuality']},
+    {id:'emotions',price:7250,title:'Осознавая эмоции',speaker:'Денис Сенников',description:'Психология эмоциональных состояний: как работать с грустью, злостью и страхом у клиента.',topics:['anxiety','self'],personal:['anger','confidence']},
+    {id:'defenses',price:30750,title:'Основы психоанализа и психологические защиты',speaker:'Денис Сенников',description:'Как распознавать психологические защиты и выстраивать терапевтическую работу с учётом них.',topics:['hard','self'],personal:['confidence']},
+    {id:'selfesteem',price:17850,title:'Я недо…',speaker:'Ольга Малинина',description:'Работа с самооценкой в методе психодрамы: от стыда и дефицита к опоре.',topics:['self'],personal:['selfworth']},
+    {id:'anger',price:11250,title:'50 оттенков злости',speaker:'Анна Риттер',description:'Как понимать, выдерживать и использовать злость в терапевтической работе.',topics:['self'],personal:['anger']},
+    {id:'selfvalue',price:14650,title:'Самооценка. Дар быть собой',speaker:'Анна Риттер',description:'Работа с самоотношением, уязвимостью и правом быть собой.',topics:['self'],personal:['selfworth']},
+    {id:'awareness',price:8850,title:'Быстрый путь к осознаванию',speaker:'Регина Лорд',description:'Инструменты, которые помогают замечать процессы клиента и опираться на контакт.',topics:['self','hard'],personal:['confidence']},
+    {id:'attachment',price:14750,title:'Нелюбимые с детства',speaker:'Елена Станковская',description:'Терапия травмы привязанности: как видеть её следы во взрослом опыте клиента.',topics:['trauma'],personal:['selfworth','boundaries']},
+    {id:'vda',price:19100,title:'Терапия ВДА',speaker:'Елена Станковская',description:'Работа со взрослыми детьми зависимых родителей: травма, лояльности, новые опоры.',topics:['trauma'],personal:['selfworth','boundaries']},
+    {id:'traumaaddict',price:13750,title:'Травма и зависимость',speaker:'Рафаэль Кортина',description:'Невидимая связь и комплексная терапия: взгляд на зависимость через опыт травмы.',topics:['trauma'],personal:['confidence']},
+    {id:'difficult',price:12250,title:'Трудные клиенты в терапевтической практике',speaker:'Андрей Валамин',description:'Как оставаться в работе, когда клиент вызывает бессилие, тревогу или сопротивление.',topics:['hard'],personal:['confidence','anxiety']},
+    {id:'deadends',price:16600,title:'Тупики терапии',speaker:'Алла Далит',description:'Как услышать, где застрял клиент, и найти следующий терапевтический шаг.',topics:['hard'],personal:['confidence']},
+    {id:'therapeutic',price:6250,title:'Терапевтические отношения',speaker:'Анна Риттер',description:'Как выстраивать глубокие и целительные отношения с клиентом, чтобы усиливать работу на сессиях.',topics:['hard','relationships'],personal:['confidence','boundaries']},
+    {id:'sexual',price:20850,title:'Работа с сексуальными трудностями в терапии',speaker:'Жан-Франсуа Жерве',description:'Как уверенно и этично сопровождать разговор о сексуальности и трудностях близости.',topics:['sex'],personal:['sexuality','confidence']},
+    {id:'pleasure',price:9450,title:'Искусство удовольствия',speaker:'Анна Риттер',description:'Телесность и сексуальность: как возвращать клиенту чувствительность и право на удовольствие.',topics:['sex'],personal:['sexuality']},
+    {id:'money',price:7250,title:'Поговорим про деньги по-настоящему',speaker:'Анна Риттер',description:'Личные и профессиональные отношения с деньгами, ценностью и оплатой своего труда.',topics:['self'],personal:['selfworth']},
+    {id:'emotional-dependence',price:9250,title:'Психотерапия эмоциональной зависимости',speaker:'Анна Риттер',description:'Алгоритм и инструменты помощи для выхода из созависимого поведения и болезненных отношений.',topics:['relationships'],personal:['boundaries','selfworth']},
+    {id:'losses',price:7400,title:'Психотерапия утрат',speaker:'Анна Риттер',description:'Работа со смертью близких, перинатальными потерями и другими кризисами.',topics:['anxiety','trauma'],personal:['confidence','anxiety']},
+    {id:'men',price:16850,title:'Особенности терапии мужчин',speaker:'Анна Риттер',description:'Техники для работы с агрессией, эротическим переносом и страхом уязвимости в контакте.',topics:['relationships','self'],personal:['anger','boundaries']},
+    {id:'kortina-relations',price:14200,title:'Терапевтические отношения через призму сострадательно-реляционного гештальт-подхода',speaker:'Рафаэль Кортина',description:'Как создавать безопасное терапевтическое пространство для работы со сложными запросами.',topics:['hard','relationships'],personal:['confidence','boundaries']}
+  ];
+  var PROBLEMS=[
+    ['structure','Не хватает понятной оптики и структуры работы с клиентом'],
+    ['complex','Теряюсь, когда клиент сопротивляется, застревает или вызывает сильные чувства'],
+    ['loss','Хочу увереннее брать темы утраты, кризисов и сложных жизненных событий'],
+    ['boundaries','Сложно удерживать границы и терапевтическую позицию'],
+    ['trauma','Не хватает опоры для работы с травмой, зависимостями или тяжёлой симптоматикой'],
+    ['intimacy','Не всегда понимаю, как заходить в темы отношений, близости и сексуальности']
+  ];
+  var PROBLEM_MAP={anxiety:['structure','complex'],crises:['loss','complex'],support:['complex'],neurotic:['structure','complex'],couple:['intimacy','boundaries'],romantic:['intimacy','boundaries'],codependence:['boundaries','trauma'],psychoanalysis:['structure'],marriage:['intimacy'],emotions:['structure','complex'],defenses:['structure','complex'],selfesteem:['structure'],anger:['complex'],selfvalue:['structure'],awareness:['structure'],attachment:['trauma'],vda:['trauma'],traumaaddict:['trauma'],difficult:['complex'],deadends:['complex'],therapeutic:['boundaries','complex'],sexual:['intimacy'],pleasure:['intimacy'],money:['structure'],'emotional-dependence':['boundaries','intimacy'],losses:['loss','trauma'],men:['intimacy','boundaries'],'kortina-relations':['complex','boundaries']};
+  var TOPICS=[
+    ['anxiety','Тревога, кризисы, эмоциональная нестабильность'],
+    ['relationships','Отношения, пары, созависимость, расставания'],
+    ['self','Самооценка, стыд, злость, внутренний критик'],
+    ['trauma','Детские травмы, привязанность, ВДА, зависимость'],
+    ['hard','Сложные случаи и тупики в терапии'],
+    ['sex','Сексуальность, близость, интимные отношения']
+  ];
+  var GROWTH=[
+    ['confidence','Чувствовать больше уверенности в сложных сессиях'],
+    ['anxiety','Лучше выдерживать тревогу, неопределённость и кризисы'],
+    ['boundaries','Увереннее работать с границами и отношениями'],
+    ['selfworth','Разобраться с самоценностью, деньгами и профессиональной ролью'],
+    ['anger','Лучше понимать злость, стыд и сильные чувства'],
+    ['sexuality','Углубиться в тему близости, телесности и сексуальности']
+  ];
+  var SPEAKERS=[]; COURSES.forEach(function(c){ if(SPEAKERS.indexOf(c.speaker)<0) SPEAKERS.push(c.speaker); });
+
+  // Поле формы GetCourse, куда пишется подборка (ищется по плейсхолдеру)
+  var GC_FIELDS={result:'lpm_result'};
+
+  // Цена «от» со страницы распродажи — поле price в COURSES; DEFAULT_PRICE — если цена не указана
+  var DEFAULT_PRICE=1000;
+  function fmtPrice(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0')}
+
+  // Корзина GetCourse: id программы → номер предложения (offer ID). Пустые — кнопка работает как в оригинале, без корзины
+  var OFFERS={
+    'anxiety':'8555766','crises':'8555779','support':'8556018','neurotic':'8555696','couple':'8555726',
+    'romantic':'8555517','codependence':'8555749','psychoanalysis':'8555514','marriage':'8555993','emotions':'8556046',
+    'defenses':'8556192','selfesteem':'8555778','anger':'8555822','selfvalue':'8555874','awareness':'8555708',
+    'attachment':'8555485','vda':'8555705','traumaaddict':'8555497','difficult':'8555788','deadends':'8555786',
+    'therapeutic':'8555942','sexual':'8555745','pleasure':'8555908','money':'8555861','emotional-dependence':'8555789',
+    'losses':'8555796','men':'8555964','kortina-relations':'8555502'
+  };
+  // Код блока формы оформления корзины на этой странице; пусто — GetCourse показывает свою стандартную форму заказа
+  var BASKET_FORM_CODE='';
+  // Страница распродажи: корзина GetCourse общая для всех страниц сайта, добавленное в тесте там сохранится
+  var SALE_URL='https://iscelenie-course.ru/_sale2026_copy';
+  [].forEach.call(root.querySelectorAll('[data-sale-link]'),function(a){ a.href=SALE_URL; });
+  // показать виджет корзины, если в ней уже что-то лежит (например, добавленное на распродаже)
+  window.addEventListener('load',function(){ if(typeof window.ltCheckBasket==='function') window.ltCheckBasket(true); });
+  function gcAddToBasket(id){
+    var offer=OFFERS[id]; if(!offer||typeof window.ltAddToBasket!=='function') return false;
+    if(BASKET_FORM_CODE&&typeof window.ltBasketSetFormCode==='function') window.ltBasketSetFormCode(BASKET_FORM_CODE);
+    window.ltAddToBasket(offer); return true;
+  }
+
+  var st={unlocked:false,step:0,problem:'',topics:[],speakers:[],growth:[],cart:[]};
+  var $=function(id){return document.getElementById(id)};
+  var has=function(a,v){return a.indexOf(v)>=0};
+  var labelOf=function(list,id){for(var i=0;i<list.length;i++) if(list[i][0]===id) return list[i][1]; return ''};
+
+  function toggle(arr,v,max){ var i=arr.indexOf(v); if(i>=0) arr.splice(i,1); else if(arr.length<(max||99)) arr.push(v); }
+
+  function choiceBtn(active,disabled,text){
+    var b=document.createElement('button'); b.type='button';
+    b.className='lpm-choice'+(active?' lpm-active':''); b.disabled=!!disabled;
+    if(active){ var s=document.createElement('span'); s.className='lpm-check'; s.textContent='✓'; b.appendChild(s); }
+    b.appendChild(document.createTextNode(text)); return b;
+  }
+
+  function renderQuestions(){
+    var p=$('lpm-problems'); p.innerHTML='';
+    PROBLEMS.forEach(function(o){ var b=choiceBtn(st.problem===o[0],false,o[1]); b.onclick=function(){st.problem=o[0];renderQuestions();}; p.appendChild(b); });
+    var t=$('lpm-topics'); t.innerHTML='';
+    TOPICS.forEach(function(o){ var on=has(st.topics,o[0]); var b=choiceBtn(on,!on&&st.topics.length===2,o[1]); b.onclick=function(){toggle(st.topics,o[0],2);renderQuestions();}; t.appendChild(b); });
+    var s=$('lpm-speakers'); s.innerHTML='';
+    SPEAKERS.forEach(function(n){ var b=document.createElement('button'); b.type='button'; b.className='lpm-chip'+(has(st.speakers,n)?' lpm-active':''); b.textContent=n; b.onclick=function(){toggle(st.speakers,n);renderQuestions();}; s.appendChild(b); });
+    var g=$('lpm-growth'); g.innerHTML='';
+    GROWTH.forEach(function(o){ var on=has(st.growth,o[0]); var b=choiceBtn(on,!on&&st.growth.length===2,o[1]); b.onclick=function(){toggle(st.growth,o[0],2);renderQuestions();}; g.appendChild(b); });
+  }
+
+  function match(){
+    return COURSES.map(function(c){
+      var score=0, mt=c.topics.filter(function(x){return has(st.topics,x)}), mp=c.personal.filter(function(x){return has(st.growth,x)});
+      score+=mt.length*5; score+=mp.length*3;
+      if(st.problem && PROBLEM_MAP[c.id] && has(PROBLEM_MAP[c.id],st.problem)) score+=4;
+      if(has(st.speakers,c.speaker)) score+=4;
+      if(!st.topics.length && !st.problem) score+=(c.id==='support'||c.id==='defenses')?2:0;
+      return {course:c,score:score,mt:mt,mp:mp};
+    }).sort(function(a,b){return b.score-a.score||a.course.title.localeCompare(b.course.title)}).slice(0,5);
+  }
+
+  function renderResults(){
+    var list=match(), grid=$('lpm-grid'); grid.innerHTML='';
+    list.forEach(function(r,i){
+      var c=r.course, a=document.createElement('article'); a.className='lpm-course';
+      var tag=r.mt.length?'По теме: '+(labelOf(TOPICS,r.mt[0])||'ваш запрос'):r.mp.length?'Под ваш профессиональный запрос':'Под ваш уровень практики';
+      a.innerHTML='<div class="lpm-course-top"><span class="lpm-num"></span><small></small></div><h3></h3><div class="lpm-speaker"></div><p></p><div class="lpm-course-bottom"><strong></strong><button type="button"></button></div>';
+      a.querySelector('.lpm-num').textContent='0'+(i+1);
+      a.querySelector('.lpm-course-bottom strong').textContent='Цена от '+fmtPrice(c.price||DEFAULT_PRICE)+'\u00a0₽';
+      a.querySelector('small').textContent=tag;
+      a.querySelector('h3').textContent=c.title;
+      a.querySelector('.lpm-speaker').textContent=c.speaker;
+      a.querySelector('p').textContent=c.description;
+      var btn=a.querySelector('button');
+      btn.textContent=has(st.cart,c.id)?'Добавлено ✓':'Добавить';
+      btn.onclick=function(){
+        if(OFFERS[c.id]){ if(!has(st.cart,c.id)&&gcAddToBasket(c.id)) st.cart.push(c.id); }
+        else toggle(st.cart,c.id);
+        renderResults();
+      };
+      grid.appendChild(a);
+    });
+    // если на странице есть корзина GetCourse, она сама показывает свой виджет — своя плашка не нужна
+    var n=st.cart.length; $('lpm-cart').hidden=!n||typeof window.ltAddToBasket==='function'; $('lpm-cart-n').textContent=n;
+    $('lpm-cart-word').textContent=n===1?'программа':'программ';
+    return list;
+  }
+
+  // ---------- Запись ответов в карточку пользователя через форму GetCourse ----------
+  function findGcForm(){
+    var inp=document.querySelector('input[placeholder="'+GC_FIELDS.result+'"],textarea[placeholder="'+GC_FIELDS.result+'"]');
+    return inp?inp.closest('form'):null;
+  }
+  function gcInput(form,key){ return form.querySelector('input[placeholder="'+GC_FIELDS[key]+'"],textarea[placeholder="'+GC_FIELDS[key]+'"]'); }
+  function hideServiceFields(form){
+    Object.keys(GC_FIELDS).forEach(function(k){
+      var el=gcInput(form,k); if(!el) return;
+      var box=el.closest('.f-input-wrapper,.form-group,.field-content')||el.parentElement;
+      box.style.display='none';
+    });
+  }
+  function setVal(el,v){
+    if(!el) return;
+    // у доп. полей GetCourse видимый input без name, а отправляется скрытый formParams[userCustomFields][id] рядом
+    var wrap=el.closest('.custom-field'), hid=wrap&&wrap.querySelector('[name*="userCustomFields"]');
+    [el,hid].forEach(function(x){ if(!x) return; x.value=v; x.dispatchEvent(new Event('input',{bubbles:true})); x.dispatchEvent(new Event('change',{bubbles:true})); });
+  }
+  function fillGcForm(list){
+    var form=findGcForm(); if(!form) return;
+    hideServiceFields(form);
+    // поле «Строка» в GetCourse короткое — пишем только названия программ
+    setVal(gcInput(form,'result'),list.map(function(r){return r.course.title}).join('; ').slice(0,250));
+    // показываем форму GetCourse вместо результатов, пока её не отправят
+    if(!st.unlocked) restoreForm(form);
+    var block=form.closest('.lt-block')||form;
+    $('lpm-gate').appendChild(block); block.style.display='';
+    watchSubmit(form);
+    return true;
+  }
+  // после отправки GetCourse может спрятать поля или показать сообщение — возвращаем форму для повторной отправки
+  function restoreForm(form){
+    var service=[]; Object.keys(GC_FIELDS).forEach(function(k){ var el=gcInput(form,k); if(el) service.push(el.closest('.f-input-wrapper,.form-group,.field-content')||el.parentElement); });
+    [].forEach.call(form.querySelectorAll('[style*="display: none"],[style*="display:none"]'),function(el){
+      if(service.some(function(w){ return w===el||w.contains(el); })) return;
+      el.style.display='';
+    });
+    [].forEach.call(form.querySelectorAll('.form-result-block'),function(el){ el.innerHTML=''; });
+    [].forEach.call(form.querySelectorAll('button,[type=submit]'),function(el){ el.disabled=false; el.classList.remove('disabled'); });
+  }
+  // результаты открываются после успешной отправки формы
+  function unlock(){ if(st.unlocked) return; st.unlocked=true; if(st.step===4) show(); }
+  function watchSubmit(form){
+    if(form.dataset.lpmWatch) return; form.dataset.lpmWatch='1';
+    var hasErrors=function(){ return !!form.querySelector('.has-error,.error,.field-error:not(:empty)'); };
+    if(window.jQuery){
+      jQuery(document).ajaxComplete(function(e,xhr,opt){
+        if(!opt||!/block-public\/process/.test(opt.url||'')||xhr.status!==200) return;
+        var r=xhr.responseJSON; if(!r){ try{ r=JSON.parse(xhr.responseText); }catch(err){} }
+        if(r&&(r.success===false||r.errorMessage||r.errors)) return;
+        setTimeout(function(){ if(!hasErrors()) unlock(); },300);
+      });
+    } else {
+      form.addEventListener('submit',function(){ setTimeout(function(){ if(!hasErrors()) unlock(); },2000); });
+    }
+  }
+  function prepareGcForm(){
+    var form=findGcForm(); if(!form||root.contains(form)) return;
+    hideServiceFields(form);
+    var block=form.closest('.lt-block')||form; block.style.display='none';
+  }
+  prepareGcForm();
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',prepareGcForm);
+  window.addEventListener('load',prepareGcForm);
+
+  // ---------- Навигация ----------
+  function show(){
+    var s=st.step;
+    root.querySelector('.lpm-hero').hidden=s>0;
+    $('lpm-quiz').hidden=!(s>0&&s<4);
+    if(s>0&&s<4){
+      $('lpm-step').textContent=s; $('lpm-bar').style.width=(s*33.33)+'%';
+      [].forEach.call(root.querySelectorAll('.lpm-question'),function(q){q.hidden=+q.dataset.q!==s});
+      $('lpm-next-label').textContent=s===3?'Посмотреть подборку':'Дальше';
+      renderQuestions();
+    }
+    var gate=false;
+    if(s===4){ var list=renderResults(); gate=!!fillGcForm(list)&&!st.unlocked; } else { $('lpm-cart').hidden=true; }
+    $('lpm-gate').hidden=!gate;
+    $('lpm-results').hidden=!(s===4&&!gate);
+    if(gate) $('lpm-cart').hidden=true;
+    var target=gate?$('lpm-gate'):s===4?$('lpm-results'):s>0?$('lpm-quiz'):null;
+    if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  root.addEventListener('click',function(e){
+    var b=e.target.closest('[data-act]'); if(!b) return;
+    var a=b.dataset.act;
+    if(a==='start'){st.step=1;}
+    else if(a==='next'){st.step=Math.min(st.step+1,4);}
+    else if(a==='back'){st.step=Math.max(st.step-1,0);}
+    // новый проход — новая подборка: снова просим отправить форму, чтобы перезаписать поле в карточке
+    else if(a==='restart'){st.step=1; st.unlocked=false;}
+    else if(a==='add-all'){
+      match().forEach(function(r){ var id=r.course.id; if(has(st.cart,id)) return; if(!OFFERS[id]||gcAddToBasket(id)) st.cart.push(id); });
+      renderResults(); return;
+    }
+    show();
+  });
+})();
+</script>

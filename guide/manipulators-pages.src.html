@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Страшные манипуляторы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --purple:#7B2FF7; --purple-deep:#221040;
+  --pink:#E31C79; --lime:#c7ea3f;
+  --ink:#16151F;
+}
+@page{ size:A4; margin:20mm 20mm 22mm;
+  @bottom-right{ content:counter(page); font:600 10pt Manrope,sans-serif; color:#9a97ab; }
+  @bottom-left{ content:"Страшные манипуляторы · F5GAME.RU"; font:600 9pt Manrope,sans-serif; color:#b4b1c4; letter-spacing:.04em; }
+}
+@page cover{ margin:0; @bottom-right{content:none} @bottom-left{content:none} }
+*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html,body{margin:0;background:#fff}
+/* один размер и один интервал для всего текста, кроме заголовков уроков */
+body{font:400 14pt/1.6 Manrope,sans-serif;color:var(--ink)}
+p,li{margin:0 0 3.2mm;text-wrap:pretty}
+b{font-weight:800}
+ul{margin:0 0 3.2mm;padding:0;list-style:none}
+li{position:relative;padding-left:7mm}
+li::before{content:"";position:absolute;left:1mm;top:.62em;width:2.2mm;height:2.2mm;border-radius:50%;background:var(--pink)}
+
+.cover{page:cover;height:297mm;overflow:hidden}
+.cover img{display:block;width:210mm;height:297mm;object-fit:cover}
+
+.page{break-before:page}
+.head{position:relative;overflow:hidden;border-radius:6mm;background:var(--purple);color:#fff;
+  padding:12mm 12mm 0;min-height:92mm;margin-bottom:9mm}
+.head.pink{background:var(--pink)}
+.head.deep{background:var(--purple-deep)}
+.head::before{content:"";position:absolute;right:-22mm;bottom:-34mm;width:110mm;height:110mm;border-radius:50%;background:rgba(255,255,255,.1)}
+.head .lvl{position:relative;font:800 13pt Unbounded,sans-serif;letter-spacing:.06em;color:var(--lime)}
+.head h2{position:relative;font:800 24pt/1.12 Unbounded,sans-serif;margin:5mm 0 0;max-width:92mm;text-wrap:balance}
+.head img{position:absolute;right:8mm;bottom:0;height:84mm;max-width:68mm;object-fit:contain;object-position:bottom}
+.head.small{min-height:62mm;padding-top:9mm;margin-bottom:7mm}
+.head.small img{height:58mm}
+.fin{display:block;margin:6mm 0 0 auto;height:110mm}
+</style>
+</head>
+<body>
+<section class="cover"><img src="img/m-cover.jpg" alt="Страшные манипуляторы. Автор: Ольга Грищенко"></section>
+<!--PAGES-->
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!--
+  «Игровое поле: доска» — главная личного кабинета (вариант B7).
+  Страница: f5game.site/teach/control/stream («Список тренингов»).
+
+  Настоящее поле настольной игры: по кругу 20 клеток-тренингов
+  с цветными полосами тем (как «улицы» в Монополии) и 4 угла:
+  СТАРТ (Бонусы и подарки) · Мастер-классы · Клубы · Помощь.
+  Темы — те же 5, что в варианте B5. Названия тем, углов и блоков
+  («Старт», «Помощь», «Бросить кубик», «Мой уровень») — предложение, не из ТЗ.
+
+  В центре поля — блоки для ученика:
+  1) «Ваш ход» — ближайшее событие и следующие даты;
+  2) «Бросить кубик» — случайный мастер-класс. Без <script>: кубик
+     постоянно «крутится» под шторкой, нажатие кнопки останавливает
+     анимацию на той грани, что была в этот момент. Нужен <input> —
+     ПРОВЕРИТЬ, что GetCourse его не вырезает.
+  3) «Мой уровень» — ДЕМО-ДАННЫЕ. Перед вставкой заменить системным
+     блоком GetCourse «Рейтинг пользователя по шкале достижений»
+     или удалить (.f5g-lvl).
+  4) Легенда цветов тем.
+
+  Список статичный: ученик без доступа при клике увидит экран GetCourse.
+  Чистый HTML + CSS. Размеры в px, классы с префиксом f5g-.
+  ЗАГЛУШКИ «#ССЫЛКА-…»: техподдержка, консультация, партнерская программа.
+-->
+<div class="f5g">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800;900&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  .f5g{
+    --f5g-ink:#ffffff;--f5g-ink-soft:rgba(255,255,255,0.78);--f5g-line:rgba(255,255,255,0.16);
+    --f5g-board:#2a1857;--f5g-felt:#3a2266;--f5g-pink:#ee0778;--f5g-sun:#f6dd4a;--f5g-blue:#2f6fed;--f5g-green:#22b07d;--f5g-orange:#ff7a2f;
+    --f5g-dark:#1b1023;--f5g-soft:#6b5a80;
+    --f5g-display:'Unbounded',-apple-system,'Segoe UI',sans-serif;
+    --f5g-body:'Manrope',-apple-system,'Segoe UI',sans-serif;
+    font-family:var(--f5g-body) !important;color:var(--f5g-ink) !important;
+    font-size:16px;line-height:1.4;max-width:1030px;margin:0 auto;padding:8px 0 24px;
+    display:grid;gap:20px;-webkit-font-smoothing:antialiased;box-sizing:border-box;
+  }
+  .f5g *,.f5g *::before,.f5g *::after{box-sizing:border-box;}
+  .f5g p{margin:0 !important;}
+  .f5g a{text-decoration:none !important;}
+  .f5g .f5g-eyebrow{font-family:var(--f5g-display) !important;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--f5g-sun) !important;}
+  .f5g .f5g-title{font-family:var(--f5g-display) !important;font-weight:800;font-size:32px;line-height:1.15;margin:0 !important;color:var(--f5g-ink) !important;}
+  .f5g .t-pink{--tc:var(--f5g-pink);--tt:#fff;} .f5g .t-sun{--tc:var(--f5g-sun);--tt:var(--f5g-dark);}
+  .f5g .t-blue{--tc:var(--f5g-blue);--tt:#fff;} .f5g .t-orange{--tc:var(--f5g-orange);--tt:var(--f5g-dark);}
+  .f5g .t-green{--tc:var(--f5g-green);--tt:#fff;}
+
+  /* ---------- доска ---------- */
+  .f5g .f5g-board{
+    display:grid;grid-template-columns:1.25fr repeat(5,1fr) 1.25fr;grid-template-rows:auto repeat(5,auto) auto;gap:6px;
+    padding:10px;border-radius:22px;background:var(--f5g-dark);
+    box-shadow:0 0 0 6px var(--f5g-board),0 22px 50px rgba(0,0,0,0.4);
+  }
+  /* клетка-тренинг, как карточка собственности */
+  .f5g .f5g-cell{
+    position:relative;display:grid;grid-template-rows:auto 1fr auto;gap:4px;min-height:132px;
+    background:#fff;border-radius:8px;overflow:hidden;color:var(--f5g-dark) !important;padding:0 0 8px;
+    transition:transform .15s ease,box-shadow .15s ease;
+  }
+  .f5g .f5g-cell:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(0,0,0,0.4);z-index:2;}
+  .f5g .f5g-band{background:var(--tc);color:var(--tt) !important;font-size:10px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;padding:6px 8px;}
+  .f5g .f5g-cn{position:absolute;top:5px;right:6px;font-family:var(--f5g-display) !important;font-size:10px;font-weight:800;color:var(--tt) !important;opacity:0.7;}
+  .f5g .f5g-name{font-size:12.5px;font-weight:800;line-height:1.25;padding:4px 8px 0;color:var(--f5g-dark) !important;}
+  .f5g .f5g-les{font-size:11px;font-weight:600;padding:0 8px;color:var(--f5g-soft) !important;}
+
+  /* углы */
+  .f5g .f5g-corner{
+    display:grid;align-content:center;justify-items:center;gap:6px;text-align:center;padding:12px 8px;min-height:132px;
+    border-radius:10px;color:var(--f5g-dark) !important;
+  }
+  .f5g .f5g-corner b{font-family:var(--f5g-display) !important;font-size:15px;font-weight:900;text-transform:uppercase;line-height:1.1;}
+  .f5g .f5g-corner small{font-size:11.5px;font-weight:700;line-height:1.3;}
+  .f5g .f5g-start{grid-row:1;grid-column:1;background:var(--f5g-sun);}
+  .f5g .f5g-start .f5g-arrow{font-family:var(--f5g-display) !important;font-size:26px;font-weight:900;color:var(--f5g-pink) !important;line-height:1;}
+  .f5g .f5g-mk{grid-row:1;grid-column:7;background:var(--f5g-pink);color:#fff !important;padding:0;overflow:hidden;}
+  .f5g .f5g-mk img{width:100%;height:100%;object-fit:cover;}
+  .f5g .f5g-club{grid-row:7;grid-column:7;background:#fff;}
+  .f5g .f5g-club a{display:block;font-size:12px;font-weight:800;line-height:1.25;color:var(--f5g-blue) !important;}
+  .f5g .f5g-help{grid-row:7;grid-column:1;background:var(--f5g-felt);color:#fff !important;border:2px dashed rgba(255,255,255,0.35);}
+  .f5g .f5g-help a{display:block;font-size:12px;font-weight:700;line-height:1.25;color:#fff !important;border-bottom:1px solid rgba(255,255,255,0.3);}
+  .f5g .f5g-club b,.f5g .f5g-help b{margin-bottom:2px;}
+  .f5g a.f5g-corner:hover{filter:brightness(1.06);}
+
+  /* ---------- центр поля ---------- */
+  .f5g .f5g-center{
+    grid-row:2 / 7;grid-column:2 / 7;border-radius:12px;padding:18px;
+    display:grid;grid-template-columns:1.15fr 1fr;gap:14px;align-content:start;
+    background:radial-gradient(rgba(255,255,255,0.08) 1.5px,transparent 1.6px) 0 0/16px 16px,
+      radial-gradient(circle at 50% 45%,#55348d,var(--f5g-felt) 70%);
+  }
+  .f5g .f5g-logo{grid-column:1 / -1;display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px 16px;}
+  .f5g .f5g-logo b{font-family:var(--f5g-display) !important;font-size:22px;font-weight:900;letter-spacing:0.02em;color:#fff !important;}
+  .f5g .f5g-logo span{font-size:12px;font-weight:700;color:var(--f5g-ink-soft) !important;}
+  .f5g .f5g-box{border-radius:16px;padding:16px;display:grid;gap:8px;align-content:start;}
+  .f5g .f5g-k{font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;}
+
+  /* ход: события */
+  .f5g .f5g-move{background:#fff;color:var(--f5g-dark) !important;}
+  .f5g .f5g-move .f5g-k{color:var(--f5g-pink) !important;}
+  .f5g .f5g-move .f5g-big{font-family:var(--f5g-display) !important;font-size:21px;font-weight:900;line-height:1.1;color:var(--f5g-dark) !important;}
+  .f5g .f5g-move .f5g-when{font-size:13px;color:var(--f5g-soft) !important;}
+  .f5g .f5g-btn{justify-self:start;display:inline-flex;font-weight:800;font-size:13.5px;padding:9px 16px;border-radius:10px;background:var(--f5g-pink);color:#fff !important;}
+  .f5g .f5g-later{display:grid;gap:4px;border-top:1px solid #eee;padding-top:8px;margin-top:2px;}
+  .f5g .f5g-later a{display:grid;grid-template-columns:52px 1fr;gap:8px;font-size:12.5px;font-weight:700;color:var(--f5g-dark) !important;}
+  .f5g .f5g-later a b{color:var(--f5g-blue) !important;font-weight:900;}
+
+  /* кубик */
+  .f5g .f5g-dice{background:var(--f5g-pink);position:relative;}
+  .f5g .f5g-dice .f5g-k{color:var(--f5g-sun) !important;}
+  .f5g .f5g-dice p{font-size:13px;color:rgba(255,255,255,0.9) !important;}
+  .f5g input.f5g-roll{position:absolute !important;opacity:0 !important;width:1px;height:1px;pointer-events:none;}
+  .f5g .f5g-win{position:relative;height:96px;overflow:hidden;border-radius:12px;background:rgba(0,0,0,0.15);}
+  .f5g .f5g-strip{display:grid;grid-auto-rows:96px;animation:f5g-spin 0.9s steps(6) infinite;}
+  @keyframes f5g-spin{from{transform:translateY(0)}to{transform:translateY(-576px)}}
+  .f5g .f5g-face{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center;padding:16px 12px;color:#fff !important;}
+  .f5g .f5g-die{width:64px;height:64px;border-radius:14px;background:#fff;padding:9px;display:grid;
+    grid-template-areas:"p1 p2 p3" "p4 p5 p6" "p7 p8 p9";grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);
+    box-shadow:0 5px 0 rgba(0,0,0,0.25);}
+  .f5g .f5g-pip{width:11px;height:11px;border-radius:50%;background:var(--f5g-dark);place-self:center;}
+  .f5g .f5g-ft{display:grid;gap:2px;min-width:0;}
+  .f5g .f5g-ft b{font-size:13.5px;font-weight:800;line-height:1.25;color:#fff !important;}
+  .f5g .f5g-ft small{font-size:11.5px;font-weight:700;color:var(--f5g-sun) !important;}
+  /* шторка до броска */
+  .f5g .f5g-cover{position:absolute;inset:0;display:grid;place-items:center;background:var(--f5g-pink);
+    font-family:var(--f5g-display) !important;font-size:44px;font-weight:900;color:#fff !important;}
+  .f5g .f5g-throw{justify-self:start;cursor:pointer;font-weight:800;font-size:13.5px;padding:9px 16px;border-radius:10px;
+    background:var(--f5g-sun);color:var(--f5g-dark) !important;margin:0 !important;box-shadow:0 4px 0 rgba(0,0,0,0.25);}
+  .f5g .f5g-throw .f5g-again{display:none;}
+  .f5g .f5g-roll:checked ~ .f5g-win .f5g-strip{animation-play-state:paused;}
+  .f5g .f5g-roll:checked ~ .f5g-win .f5g-cover{display:none;}
+  .f5g .f5g-roll:checked ~ .f5g-win{animation:f5g-shake .35s ease;}
+  .f5g .f5g-roll:checked ~ .f5g-throw .f5g-first{display:none;}
+  .f5g .f5g-roll:checked ~ .f5g-throw .f5g-again{display:inline;}
+  .f5g .f5g-roll:focus-visible ~ .f5g-throw{outline:3px solid var(--f5g-sun);outline-offset:3px;}
+  @keyframes f5g-shake{0%,100%{transform:none}25%{transform:rotate(-2deg)}75%{transform:rotate(2deg)}}
+
+  /* мой уровень (пример) */
+  .f5g .f5g-lvl{background:rgba(255,255,255,0.08);border:1px solid var(--f5g-line);}
+  .f5g .f5g-lvl .f5g-k{color:var(--f5g-sun) !important;}
+  .f5g .f5g-steps{display:flex;gap:4px;}
+  .f5g .f5g-steps i{flex:1;height:10px;border-radius:99px;background:rgba(255,255,255,0.15);}
+  .f5g .f5g-steps i.on{background:var(--f5g-sun);}
+  .f5g .f5g-lvl b{font-family:var(--f5g-display) !important;font-size:18px;font-weight:800;color:#fff !important;}
+  .f5g .f5g-demo{font-size:11px;font-style:italic;color:var(--f5g-ink-soft) !important;}
+
+  /* легенда */
+  .f5g .f5g-legend{background:rgba(255,255,255,0.08);border:1px solid var(--f5g-line);}
+  .f5g .f5g-legend .f5g-k{color:var(--f5g-sun) !important;}
+  .f5g .f5g-lgs{display:flex;flex-wrap:wrap;gap:6px 14px;}
+  .f5g .f5g-lg{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:#fff !important;}
+  .f5g .f5g-lg i{width:14px;height:14px;border-radius:4px;background:var(--tc);}
+  .f5g .f5g-legend p{font-size:12px;color:var(--f5g-ink-soft) !important;}
+
+  /* продолжить обучение */
+  .f5g .f5g-go{order:9;grid-column:1 / -1;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
+    background:var(--f5g-sun);border-radius:16px;padding:14px 18px;color:var(--f5g-dark) !important;box-shadow:0 6px 0 rgba(0,0,0,0.25);}
+  .f5g .f5g-play{width:44px;height:44px;border-radius:50%;background:var(--f5g-dark);display:grid;place-items:center;}
+  .f5g .f5g-play::after{content:"";border-left:13px solid var(--f5g-sun);border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:4px;}
+  .f5g .f5g-go b{font-family:var(--f5g-display) !important;font-size:16px;font-weight:800;color:var(--f5g-dark) !important;display:block;}
+  .f5g .f5g-go small{font-size:12.5px;font-weight:700;color:var(--f5g-dark) !important;}
+  .f5g .f5g-go em{font-style:normal;font-weight:800;font-size:13.5px;}
+  .f5g a:focus-visible{outline:3px solid var(--f5g-sun);outline-offset:2px;}
+
+  @media (max-width:900px){
+    .f5g .f5g-title{font-size:26px;}
+    .f5g .f5g-board{grid-template-columns:repeat(2,1fr);grid-template-rows:none;}
+    .f5g .f5g-board > *{grid-row:auto !important;grid-column:auto !important;}
+    .f5g .f5g-center{grid-column:1 / -1 !important;order:-2;grid-template-columns:1fr 1fr;}
+    .f5g .f5g-start{order:-1;}
+    .f5g .f5g-cell,.f5g .f5g-corner{min-height:110px;}
+  }
+  @media (max-width:560px){
+    .f5g .f5g-center{grid-template-columns:1fr;padding:12px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .f5g .f5g-cell{transition:none;}
+    .f5g .f5g-strip{animation-duration:3s;}
+    .f5g .f5g-roll:checked ~ .f5g-win{animation:none;}
+  }
+</style>
+
+  <div>
+    <div class="f5g-eyebrow">F5GAME.RU</div>
+    <h1 class="f5g-title">Мой кабинет</h1>
+  </div>
+
+  <div class="f5g-board">
+    <a class="f5g-corner f5g-start" href="https://f5game.site/teach/control/stream/view/id/889560098"><b>Старт</b><span class="f5g-arrow">→</span><small>Бонусы и&nbsp;подарки<br>126 уроков</small></a>
+    <a class="f5g-cell f5g-top t-pink" style="grid-row:1;grid-column:2" href="https://f5game.site/teach/control/stream/view/id/798162117"><span class="f5g-band">Переговоры</span><span class="f5g-cn">1</span><span class="f5g-name">Курс &quot;Гений переговоров&quot;</span><span class="f5g-les">13&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-top t-pink" style="grid-row:1;grid-column:3" href="https://f5game.site/teach/control/stream/view/id/929915480"><span class="f5g-band">Переговоры</span><span class="f5g-cn">2</span><span class="f5g-name">Курс Похитители сердец</span><span class="f5g-les">15&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-top t-pink" style="grid-row:1;grid-column:4" href="https://f5game.site/teach/control/stream/view/id/865795059"><span class="f5g-band">Переговоры</span><span class="f5g-cn">3</span><span class="f5g-name">Гений общения</span><span class="f5g-les">19&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-top t-pink" style="grid-row:1;grid-column:5" href="https://f5game.site/teach/control/stream/view/id/935890803"><span class="f5g-band">Переговоры</span><span class="f5g-cn">4</span><span class="f5g-name">Курс Управление конфликтами</span><span class="f5g-les">6&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-top t-sun" style="grid-row:1;grid-column:6" href="https://f5game.site/teach/control/stream/view/id/916961565"><span class="f5g-band">Бизнес-игры</span><span class="f5g-cn">5</span><span class="f5g-name">Экспертные игры 2024</span><span class="f5g-les">121&nbsp;урок</span></a>
+    <a class="f5g-cell f5g-side t-sun" style="grid-row:2;grid-column:7" href="https://f5game.site/teach/control/stream/view/id/754766871"><span class="f5g-band">Бизнес-игры</span><span class="f5g-cn">6</span><span class="f5g-name">Базовый курс &quot;Мастер бизнес игр&quot;</span><span class="f5g-les">16&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-side t-sun" style="grid-row:3;grid-column:7" href="https://f5game.site/teach/control/stream/view/id/933973723"><span class="f5g-band">Бизнес-игры</span><span class="f5g-cn">7</span><span class="f5g-name">Онлайн игры</span><span class="f5g-les">7&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-side t-sun" style="grid-row:4;grid-column:7" href="https://f5game.site/teach/control/stream/view/id/679042004"><span class="f5g-band">Бизнес-игры</span><span class="f5g-cn">8</span><span class="f5g-name">&quot;Гений игры&quot;- Лицензия</span><span class="f5g-les">11&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-side t-blue" style="grid-row:5;grid-column:7" href="https://f5game.site/teach/control/stream/view/id/934446540"><span class="f5g-band">Продукт</span><span class="f5g-cn">9</span><span class="f5g-name">Курс Авторский метод 2025</span><span class="f5g-les">59&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-side t-blue" style="grid-row:6;grid-column:7" href="https://f5game.site/teach/control/stream/view/id/935851175"><span class="f5g-band">Продукт</span><span class="f5g-cn">10</span><span class="f5g-name">Интенсив «Денежные гипотезы»</span><span class="f5g-les">3&nbsp;урока</span></a>
+    <a class="f5g-cell f5g-bot t-blue" style="grid-row:7;grid-column:6" href="https://f5game.site/teach/control/stream/view/id/816572584"><span class="f5g-band">Продукт</span><span class="f5g-cn">11</span><span class="f5g-name">Фантастические линейки продуктов</span><span class="f5g-les">15&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-bot t-blue" style="grid-row:7;grid-column:5" href="https://f5game.site/teach/control/stream/view/id/935349167"><span class="f5g-band">Продукт</span><span class="f5g-cn">12</span><span class="f5g-name">Курс «Консультации как метод»</span><span class="f5g-les">6&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-bot t-orange" style="grid-row:7;grid-column:4" href="https://f5game.site/teach/control/stream/view/id/934062756"><span class="f5g-band">Контент</span><span class="f5g-cn">13</span><span class="f5g-name">Курс Создай свой бренд</span><span class="f5g-les">19&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-bot t-orange" style="grid-row:7;grid-column:3" href="https://f5game.site/teach/control/stream/view/id/933806648"><span class="f5g-band">Контент</span><span class="f5g-cn">14</span><span class="f5g-name">Мастер-класс «Хай концепт»</span><span class="f5g-les">10&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-bot t-orange" style="grid-row:7;grid-column:2" href="https://f5game.site/teach/control/stream/view/id/934809339"><span class="f5g-band">Контент</span><span class="f5g-cn">15</span><span class="f5g-name">Курс Впечатляющий канал</span><span class="f5g-les">10&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-side t-orange" style="grid-row:6;grid-column:1" href="https://f5game.site/teach/control/stream/view/id/934871522"><span class="f5g-band">Контент</span><span class="f5g-cn">16</span><span class="f5g-name">Курс «Это мой бестселлер!»</span><span class="f5g-les">10&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-side t-green" style="grid-row:5;grid-column:1" href="https://f5game.site/teach/control/stream/view/id/934698665"><span class="f5g-band">Мышление</span><span class="f5g-cn">17</span><span class="f5g-name">Курс Карта смыслов</span><span class="f5g-les">20&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-side t-green" style="grid-row:4;grid-column:1" href="https://f5game.site/teach/control/stream/view/id/935383249"><span class="f5g-band">Мышление</span><span class="f5g-cn">18</span><span class="f5g-name">Курс Паттерны поведения</span><span class="f5g-les">17&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-side t-green" style="grid-row:3;grid-column:1" href="https://f5game.site/teach/control/stream/view/id/935448821"><span class="f5g-band">Мышление</span><span class="f5g-cn">19</span><span class="f5g-name">Курс Управление реальностью</span><span class="f5g-les">6&nbsp;уроков</span></a>
+    <a class="f5g-cell f5g-side t-green" style="grid-row:2;grid-column:1" href="https://f5game.site/teach/control/stream/view/id/935121873"><span class="f5g-band">Мышление</span><span class="f5g-cn">20</span><span class="f5g-name">Шоу субличностей</span><span class="f5g-les">5&nbsp;уроков</span></a>
+    <a class="f5g-corner f5g-mk" href="https://f5game.site/teach/control/stream/view/id/934175109"><img src="https://f5game.site/pl/fileservice/user/file/download?h=6f01f031a8a80fc559a700526f9e1523.png" alt="Мастер-классы, 243 урока" loading="lazy"></a>
+    <div class="f5g-corner f5g-club"><b>Клубы</b><a href="https://f5game.site/teach/control/stream/view/id/849794234">КЛУБ ПЕРЕГОВОРОВ</a><a href="https://f5game.site/teach/control/stream/view/id/935215840">Клуб визионеров</a></div>
+    <div class="f5g-corner f5g-help"><b>Помощь</b><a href="#ССЫЛКА-техподдержка">Техподдержка</a><a href="#ССЫЛКА-консультация">Консультация по&nbsp;продукту</a><a href="#ССЫЛКА-партнерская-программа">Партнерская программа</a></div>
+
+    <div class="f5g-center">
+      <div class="f5g-logo"><b>F5GAME.RU</b><span>Ходите по&nbsp;часовой стрелке от&nbsp;«Старта»</span></div>
+
+      <div class="f5g-box f5g-move">
+        <span class="f5g-k">Ваш ход · ближайшее</span>
+        <span class="f5g-big">Искусство влияния</span>
+        <span class="f5g-when">15 октября (чт) — обучение на&nbsp;интенсиве</span>
+        <a class="f5g-btn" href="https://f5game.site/vliyanie?utm_source=calendar">Подробнее</a>
+        <span class="f5g-later">
+          <a href="https://f5game.site/vliyanie?utm_source=calendar"><b>24 окт</b><span>Искусство влияния — практика</span></a>
+          <a href="https://f5game.site/expert-cabinet?utm_source=calendar"><b>29 окт</b><span>Экспертный кабинет — 1&nbsp;день</span></a>
+          <a href="https://f5game.site/expert-cabinet?utm_source=calendar"><b>5 ноя</b><span>Экспертный кабинет — 2&nbsp;день</span></a>
+        </span>
+      </div>
+
+      <div class="f5g-box f5g-dice">
+        <span class="f5g-k">Бросить кубик</span>
+        <p>Случайный мастер-класс на&nbsp;сегодня</p>
+        <input class="f5g-roll" type="checkbox" id="f5g-roll">
+        <div class="f5g-win">
+          <div class="f5g-strip"><a class="f5g-face" href="https://f5game.site/teach/control/stream/view/id/934683382"><span class="f5g-die"><i class="f5g-pip" style="grid-area:p5"></i></span><span class="f5g-ft"><b>Мастер-класс «Статусные игры»</b><small>10&nbsp;уроков · открыть →</small></span></a><a class="f5g-face" href="https://f5game.site/teach/control/stream/view/id/935037780"><span class="f5g-die"><i class="f5g-pip" style="grid-area:p1"></i><i class="f5g-pip" style="grid-area:p9"></i></span><span class="f5g-ft"><b>Мастер-класс «Ментальные ловушки»</b><small>8&nbsp;уроков · открыть →</small></span></a><a class="f5g-face" href="https://f5game.site/teach/control/stream/view/id/935198913"><span class="f5g-die"><i class="f5g-pip" style="grid-area:p1"></i><i class="f5g-pip" style="grid-area:p5"></i><i class="f5g-pip" style="grid-area:p9"></i></span><span class="f5g-ft"><b>Мастер-класс «Личный магнетизм»</b><small>8&nbsp;уроков · открыть →</small></span></a><a class="f5g-face" href="https://f5game.site/teach/control/stream/view/id/907939101"><span class="f5g-die"><i class="f5g-pip" style="grid-area:p1"></i><i class="f5g-pip" style="grid-area:p3"></i><i class="f5g-pip" style="grid-area:p7"></i><i class="f5g-pip" style="grid-area:p9"></i></span><span class="f5g-ft"><b>Мастер-класс «Претензии как игра»</b><small>12&nbsp;уроков · открыть →</small></span></a><a class="f5g-face" href="https://f5game.site/teach/control/stream/view/id/749393582"><span class="f5g-die"><i class="f5g-pip" style="grid-area:p1"></i><i class="f5g-pip" style="grid-area:p3"></i><i class="f5g-pip" style="grid-area:p5"></i><i class="f5g-pip" style="grid-area:p7"></i><i class="f5g-pip" style="grid-area:p9"></i></span><span class="f5g-ft"><b>Формула Чехова</b><small>8&nbsp;уроков · открыть →</small></span></a><a class="f5g-face" href="https://f5game.site/teach/control/stream/view/id/935325787"><span class="f5g-die"><i class="f5g-pip" style="grid-area:p1"></i><i class="f5g-pip" style="grid-area:p3"></i><i class="f5g-pip" style="grid-area:p4"></i><i class="f5g-pip" style="grid-area:p6"></i><i class="f5g-pip" style="grid-area:p7"></i><i class="f5g-pip" style="grid-area:p9"></i></span><span class="f5g-ft"><b>Мастер-класс «Речевые обереги»</b><small>8&nbsp;уроков · открыть →</small></span></a></div>
+          <span class="f5g-cover" aria-hidden="true">?</span>
+        </div>
+        <label class="f5g-throw" for="f5g-roll"><span class="f5g-first">Бросить кубик</span><span class="f5g-again">Бросить ещё раз</span></label>
+      </div>
+
+      <!-- ДЕМО: заменить системным блоком GC «Рейтинг пользователя по шкале достижений» -->
+      <div class="f5g-box f5g-lvl">
+        <span class="f5g-k">Мой уровень</span>
+        <b>Практик</b>
+        <div class="f5g-steps"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div>
+        <span class="f5g-demo">пример — сюда встанет шкала достижений GetCourse</span>
+      </div>
+
+      <a class="f5g-go" href="https://f5game.site/teach/control/stream/view/id/770384882"><span class="f5g-play" aria-hidden="true"></span><span><b>Обучающие курсы</b><small>963 урока</small></span><em>Продолжить обучение →</em></a>
+
+      <div class="f5g-box f5g-legend">
+        <span class="f5g-k">Цвета поля</span>
+        <div class="f5g-lgs"><span class="f5g-lg t-pink"><i></i>Переговоры</span><span class="f5g-lg t-sun"><i></i>Бизнес-игры</span><span class="f5g-lg t-blue"><i></i>Продукт</span><span class="f5g-lg t-orange"><i></i>Контент</span><span class="f5g-lg t-green"><i></i>Мышление</span></div>
+      </div>
+    </div>
+  </div>
+</div>

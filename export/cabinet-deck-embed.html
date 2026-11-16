@@ -1,0 +1,173 @@
+<!--
+  «Колода» — главная личного кабинета (вариант D).
+  Страница: f5game.site/teach/control/stream («Список тренингов»).
+
+  Слева «карта дня» — ближайшее событие, оформленное как игральная карта
+  (дата в углах вместо достоинства), под ней следующие события маленькими
+  картами. Справа — разделы веером из 4 карт с вашими иллюстрациями;
+  при наведении карта поднимается из веера. На телефоне веер
+  раскладывается в сетку 2×2.
+
+  Чистый HTML + CSS, без <script>. Размеры в px, классы с префиксом f5d-.
+
+  ЗАГЛУШКИ «#ССЫЛКА-…»: «Узнать о новых запусках», партнерская программа,
+  консультация, техподдержка.
+-->
+<div class="f5d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  .f5d{
+    --f5d-ink:#ffffff;
+    --f5d-ink-soft:rgba(255,255,255,0.78);
+    --f5d-line:rgba(255,255,255,0.16);
+    --f5d-deep:#3a2266;
+    --f5d-pink:#ee0778;
+    --f5d-sun:#f6dd4a;
+    --f5d-blue:#2f6fed;
+    --f5d-card:#ffffff;
+    --f5d-card-ink:#1b1023;
+    --f5d-card-soft:#6b5a80;
+    --f5d-display:'Unbounded',-apple-system,'Segoe UI',sans-serif;
+    --f5d-body:'Manrope',-apple-system,'Segoe UI',sans-serif;
+    font-family:var(--f5d-body) !important;
+    color:var(--f5d-ink) !important;
+    font-size:16px;line-height:1.45;
+    max-width:1030px;margin:0 auto;padding:8px 0 24px;
+    display:grid;gap:22px;
+    -webkit-font-smoothing:antialiased;box-sizing:border-box;
+  }
+  .f5d *,.f5d *::before,.f5d *::after{box-sizing:border-box;}
+  .f5d p{margin:0 !important;}
+  .f5d a{text-decoration:none !important;}
+
+  .f5d .f5d-eyebrow{font-family:var(--f5d-display) !important;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--f5d-sun) !important;}
+  .f5d .f5d-title{font-family:var(--f5d-display) !important;font-weight:800;font-size:32px;line-height:1.15;margin:0 !important;color:var(--f5d-ink) !important;}
+  .f5d .f5d-h{font-family:var(--f5d-display) !important;font-weight:700;font-size:16px;line-height:1.2;margin:0 !important;color:var(--f5d-ink) !important;}
+
+  .f5d .f5d-table{display:grid;grid-template-columns:340px 1fr;gap:36px;align-items:start;}
+
+  /* ---------- карта дня ---------- */
+  .f5d .f5d-left{display:grid;gap:16px;}
+  .f5d .f5d-card{
+    position:relative;display:grid;align-content:center;justify-items:center;gap:10px;text-align:center;
+    aspect-ratio:5 / 7;max-width:100%;
+    background:var(--f5d-card);color:var(--f5d-card-ink) !important;
+    border-radius:22px;padding:56px 30px;
+    box-shadow:0 0 0 8px #fff inset,0 0 0 10px var(--f5d-pink) inset,0 18px 40px rgba(0,0,0,0.35);
+    transform:rotate(-2deg);transition:transform .2s ease;
+  }
+  .f5d .f5d-card:hover{transform:rotate(0) translateY(-4px);}
+  .f5d .f5d-corner{
+    position:absolute;display:grid;justify-items:center;line-height:1;gap:3px;
+    font-family:var(--f5d-display) !important;color:var(--f5d-pink) !important;
+  }
+  .f5d .f5d-corner b{font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;}
+  .f5d .f5d-corner span{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;}
+  .f5d .f5d-corner.f5d-tl{top:22px;left:24px;}
+  .f5d .f5d-corner.f5d-br{bottom:22px;right:24px;transform:rotate(180deg);}
+  .f5d .f5d-suit{width:40px;height:40px;background:var(--f5d-pink);transform:rotate(45deg);border-radius:6px;margin-bottom:6px;}
+  .f5d .f5d-k{font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--f5d-card-soft) !important;}
+  .f5d .f5d-name{font-family:var(--f5d-display) !important;font-size:24px;font-weight:800;line-height:1.15;color:var(--f5d-card-ink) !important;}
+  .f5d .f5d-when{font-size:14px;color:var(--f5d-card-soft) !important;}
+  .f5d .f5d-btn{
+    display:inline-flex;margin-top:6px;font-weight:800;font-size:14px;padding:10px 20px;border-radius:12px;
+    background:var(--f5d-pink);color:#fff !important;
+  }
+
+  /* следующие события — мини-карты */
+  .f5d .f5d-next{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .f5d .f5d-mini{
+    background:var(--f5d-card);border-radius:12px;padding:10px 10px 12px;display:grid;gap:4px;align-content:start;
+    color:var(--f5d-card-ink) !important;box-shadow:0 0 0 3px #fff inset,0 0 0 4px var(--f5d-blue) inset;
+    transition:transform .15s ease;
+  }
+  .f5d .f5d-mini:hover{transform:translateY(-3px);}
+  .f5d .f5d-mini b{font-family:var(--f5d-display) !important;font-size:20px;font-weight:800;line-height:1;color:var(--f5d-blue) !important;font-variant-numeric:tabular-nums;}
+  .f5d .f5d-mini b small{font-size:10px;margin-left:3px;text-transform:uppercase;}
+  .f5d .f5d-mini span{font-size:12px;font-weight:700;line-height:1.3;color:var(--f5d-card-ink) !important;}
+  .f5d .f5d-mini em{font-style:normal;font-size:11px;color:var(--f5d-card-soft) !important;}
+
+  /* ---------- веер разделов ---------- */
+  .f5d .f5d-right{display:grid;gap:14px;}
+  .f5d .f5d-fan{position:relative;height:380px;}
+  .f5d .f5d-sec{
+    position:absolute;top:40px;width:30%;
+    border-radius:18px;transform-origin:50% 110%;
+    transition:transform .25s ease,box-shadow .25s ease;
+    box-shadow:0 14px 30px rgba(0,0,0,0.35);
+  }
+  .f5d .f5d-sec img{display:block;width:100%;height:auto;border-radius:18px;}
+  .f5d .f5d-s1{left:0;transform:rotate(-9deg);z-index:1;}
+  .f5d .f5d-s2{left:23.3%;transform:rotate(-3deg);z-index:2;}
+  .f5d .f5d-s3{left:46.6%;transform:rotate(3deg);z-index:3;}
+  .f5d .f5d-s4{left:70%;transform:rotate(9deg);z-index:4;}
+  .f5d .f5d-sec:hover,.f5d .f5d-sec:focus-visible{z-index:9;box-shadow:0 24px 44px rgba(0,0,0,0.45);}
+  .f5d .f5d-s1:hover,.f5d .f5d-s1:focus-visible{transform:rotate(-9deg) translateY(-30px);}
+  .f5d .f5d-s2:hover,.f5d .f5d-s2:focus-visible{transform:rotate(-3deg) translateY(-30px);}
+  .f5d .f5d-s3:hover,.f5d .f5d-s3:focus-visible{transform:rotate(3deg) translateY(-30px);}
+  .f5d .f5d-s4:hover,.f5d .f5d-s4:focus-visible{transform:rotate(9deg) translateY(-30px);}
+
+  .f5d .f5d-help{display:flex;flex-wrap:wrap;gap:10px 28px;padding-top:16px;border-top:1px solid var(--f5d-line);}
+  .f5d .f5d-help a{font-size:14px;font-weight:700;color:var(--f5d-ink-soft) !important;border-bottom:1px solid rgba(255,255,255,0.3);}
+  .f5d .f5d-help a:hover{color:#fff !important;border-color:var(--f5d-sun);}
+  .f5d a:focus-visible{outline:3px solid var(--f5d-sun);outline-offset:3px;}
+
+  @media (max-width:900px){
+    .f5d .f5d-table{grid-template-columns:1fr;}
+    .f5d .f5d-left{max-width:420px;width:100%;justify-self:center;}
+    .f5d .f5d-title{font-size:26px;}
+  }
+  @media (max-width:640px){
+    .f5d .f5d-fan{height:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+    .f5d .f5d-sec,.f5d .f5d-sec:hover,.f5d .f5d-sec:focus-visible{position:static;width:auto;transform:none !important;}
+    .f5d .f5d-card{padding:56px 22px;}
+    .f5d .f5d-name{font-size:21px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .f5d .f5d-card,.f5d .f5d-sec,.f5d .f5d-mini{transition:none;}
+  }
+</style>
+
+  <div>
+    <div class="f5d-eyebrow">F5GAME.RU</div>
+    <h1 class="f5d-title">Мой кабинет</h1>
+  </div>
+
+  <div class="f5d-table">
+    <div class="f5d-left">
+      <a class="f5d-card" href="https://f5game.site/vliyanie?utm_source=calendar">
+        <span class="f5d-corner f5d-tl"><b>15</b><span>окт</span></span>
+        <span class="f5d-suit" aria-hidden="true"></span>
+        <span class="f5d-k">Ближайшее · Интенсив</span>
+        <span class="f5d-name">Искусство влияния</span>
+        <span class="f5d-when">15 октября (чт) — обучение на&nbsp;интенсиве</span>
+        <span class="f5d-btn">Подробнее</span>
+        <span class="f5d-corner f5d-br"><b>15</b><span>окт</span></span>
+      </a>
+
+      <h2 class="f5d-h">Расписание обучений</h2>
+      <div class="f5d-next">
+        <a class="f5d-mini" href="https://f5game.site/vliyanie?utm_source=calendar"><b>24<small>окт</small></b><span>Искусство влияния</span><em>практика на&nbsp;интенсиве</em></a>
+        <a class="f5d-mini" href="https://f5game.site/expert-cabinet?utm_source=calendar"><b>29<small>окт</small></b><span>Экспертный кабинет</span><em>18:00 МСК · 1&nbsp;день</em></a>
+        <a class="f5d-mini" href="https://f5game.site/expert-cabinet?utm_source=calendar"><b>5<small>ноя</small></b><span>Экспертный кабинет</span><em>18:00 МСК · 2&nbsp;день</em></a>
+      </div>
+    </div>
+
+    <div class="f5d-right">
+      <div class="f5d-fan">
+        <a class="f5d-sec f5d-s1" href="https://f5game.site/teach/control/stream/view/id/770384882"><img src="https://f5game.site/pl/fileservice/user/file/download?h=c83a031182d8572d640becd5c4fc8d9f.png" alt="Обучающие курсы" loading="lazy"></a>
+        <a class="f5d-sec f5d-s2" href="https://f5game.site/teach/control/stream/view/id/934175109"><img src="https://f5game.site/pl/fileservice/user/file/download?h=6f01f031a8a80fc559a700526f9e1523.png" alt="Мастер-классы" loading="lazy"></a>
+        <a class="f5d-sec f5d-s3" href="https://f5game.site/teach/control/stream/view/id/889560098"><img src="https://f5game.site/pl/fileservice/user/file/download?h=9b965904a1b074b1ec6cdd37a44c6190.png" alt="Бонусы и подарки" loading="lazy"></a>
+        <a class="f5d-sec f5d-s4" href="#ССЫЛКА-новые-запуски"><img src="https://f5game.site/pl/fileservice/user/file/download?h=160457c8ddaa84be3965f53737e06528.png" alt="Узнать о новых запусках" loading="lazy"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="f5d-help">
+    <a href="#ССЫЛКА-партнерская-программа">Партнерская программа</a>
+    <a href="#ССЫЛКА-консультация">Консультация по&nbsp;продукту</a>
+    <a href="#ССЫЛКА-техподдержка">Техподдержка</a>
+  </div>
+</div>

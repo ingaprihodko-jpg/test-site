@@ -1,0 +1,50 @@
+/* форма GC (блок перед подвалом) — под стиль страницы */
+#ltBlock2257225622 .lt-block-wrapper{background:#0a0f1a !important;padding:24px 16px 88px !important}
+#ltBlock2257225622 .container{width:100% !important;max-width:none !important;padding:0 !important}
+#ltBlock2257225622 .block-box{float:none !important;width:100% !important;max-width:600px !important;margin:0 auto !important;left:auto !important;
+  background:radial-gradient(120% 80% at 100% 0%,rgba(217,180,90,.22),transparent 60%),#121a2b !important;
+  border:1px solid rgba(217,180,90,.22) !important;border-radius:24px !important;padding:44px 40px !important;box-shadow:none !important}
+#ltBlock2257225622 .part-header,#ltBlock2257225622 .part-header *{font-family:'Montserrat',sans-serif !important;font-size:30px !important;font-weight:800 !important;line-height:1.15 !important;
+  text-transform:uppercase !important;text-align:center !important;color:#d9b45a !important;margin:0 !important}
+#ltBlock2257225622 .part-header{margin-bottom:28px !important}
+#ltBlock2257225622 .part-userField{margin:0 0 12px !important;padding:0 !important}
+#ltBlock2257225622 .f-input{height:56px !important;width:100% !important;padding:0 20px !important;border-radius:14px !important;box-shadow:none !important;
+  background:#0a0f1a !important;border:1px solid rgba(255,255,255,.12) !important;color:#f3f1ec !important;font:500 16px 'Montserrat',sans-serif !important;transition:border-color .2s ease}
+#ltBlock2257225622 .f-input::placeholder{color:#7f8596 !important}
+#ltBlock2257225622 .f-input:focus{border-color:#d9b45a !important;outline:none !important}
+#ltBlock2257225622 .part-button{margin-top:20px !important;padding:0 !important}
+#ltBlock2257225622 .f-btn{width:100% !important;min-height:60px !important;border-radius:999px !important;padding:0 24px !important;
+  background:linear-gradient(180deg,#ecd38c 0%,#c9a24a 45%,#9a7630 100%) !important;border:1px solid rgba(255,232,170,.65) !important;
+  box-shadow:0 10px 30px -10px rgba(217,180,90,.55),inset 0 1px 0 rgba(255,255,255,.35) !important;color:#fff !important;text-shadow:0 1px 2px rgba(80,55,10,.55) !important;
+  font:700 16px 'Montserrat',sans-serif !important;letter-spacing:.06em !important;text-transform:uppercase !important;transition:transform .2s ease,filter .2s ease}
+#ltBlock2257225622 .f-btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+#ltBlock2257225622 .form-result-block,#ltBlock2257225622 .form-result-block *{color:#f3f1ec !important;font-family:'Montserrat',sans-serif !important}
+@media (max-width:640px){
+#ltBlock2257225622 .lt-block-wrapper{padding:8px 16px 56px !important}
+#ltBlock2257225622 .block-box{padding:32px 20px !important}
+#ltBlock2257225622 .part-header,#ltBlock2257225622 .part-header *{font-size:22px !important}
+}
+/* позиция (курс и цена) */
+#ltBlock2257225622 .part-position,#ltBlock2257225622 .part-position *{font-family:'Montserrat',sans-serif !important;color:#f3f1ec !important}
+#ltBlock2257225622 .part-position{text-align:center !important;margin:0 0 22px !important;padding:0 0 20px !important;border-bottom:1px solid rgba(217,180,90,.18) !important}
+#ltBlock2257225622 .part-position .offer-title{font-size:18px !important;font-weight:700 !important}
+#ltBlock2257225622 .part-position .form-position-price__discount{color:#a6abb7 !important;font-size:16px !important;font-weight:600 !important;text-decoration:line-through !important;text-decoration-color:#d9b45a !important;margin-right:8px}
+#ltBlock2257225622 .part-position .final-price{color:#e9cf86 !important;font-size:22px !important;font-weight:800 !important}
+/* галочки согласия */
+#ltBlock2257225622 .part-userField:has(input[type=checkbox]){margin:0 0 12px !important}
+#ltBlock2257225622 .part-button + .part-userField:has(input[type=checkbox]){margin-top:22px !important}
+#ltBlock2257225622 .type-checkbox label.field-label{display:flex !important;align-items:flex-start !important;gap:12px !important;margin:0 !important;padding:0 !important;cursor:pointer;
+  text-align:left !important;font:400 13.5px/1.5 'Montserrat',sans-serif !important;color:rgba(243,241,236,.78) !important}
+#ltBlock2257225622 .type-checkbox input[type=checkbox]{-webkit-appearance:none !important;appearance:none !important;flex:none !important;display:grid !important;place-content:center;
+  width:20px !important;height:20px !important;margin:1px 0 0 !important;padding:0 !important;border:1.5px solid rgba(217,180,90,.65) !important;border-radius:6px !important;background:#0a0f1a !important;cursor:pointer;transition:background .15s ease}
+#ltBlock2257225622 .type-checkbox input[type=checkbox]::after{content:"";width:10px;height:5px;border-left:2px solid #0a0f1a;border-bottom:2px solid #0a0f1a;transform:rotate(-45deg) translate(1px,-1px);opacity:0}
+#ltBlock2257225622 .type-checkbox input[type=checkbox]:checked{background:linear-gradient(180deg,#ecd38c,#c9a24a) !important;border-color:#e9cf86 !important}
+#ltBlock2257225622 .type-checkbox input[type=checkbox]:checked::after{opacity:1}
+#ltBlock2257225622 .type-checkbox .label-value{display:block !important;color:inherit !important;font:inherit !important}
+#ltBlock2257225622 .type-checkbox a{color:#e9cf86 !important;text-decoration:underline !important;text-decoration-color:rgba(233,207,134,.4) !important;text-underline-offset:2px}
+#ltBlock2257225622 .type-checkbox a:hover{text-decoration-color:#e9cf86 !important}
+#ltBlock2257225622 .part-position label.form-position{background:transparent !important;border:0 !important;box-shadow:none !important;padding:0 !important;margin:0 !important}
+#ltBlock2257225622 .part-position .offer-title .fa-link{display:none !important}
+#ltBlock2257225622 .part-position .offer-title{text-decoration:none !important}
+#ltBlock2257225622 .type-checkbox .label-value{margin:0 !important;padding:0 !important}
+#ltBlock2257225622 .row{margin-left:0 !important;margin-right:0 !important}

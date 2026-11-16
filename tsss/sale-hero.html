@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Большая распродажа: варианты</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+body{background:#fff;font-family:'Montserrat',system-ui,sans-serif}
+.wrap{container-type:inline-size}
+.h{position:relative;overflow:hidden;aspect-ratio:1280/700;--tape1:linear-gradient(90deg,#ffb036,#d25503);--tapec:#120d08}
+.txt{position:absolute;z-index:3;left:7cqw;top:5.5cqw;width:56cqw}
+.mic{position:absolute;z-index:2;display:block}
+.sale{font-weight:900;font-style:italic;text-transform:uppercase;line-height:.98;letter-spacing:-.01em}
+.sale b{display:block;font-weight:900}
+.conf{font-weight:600}
+.date{font-weight:700}
+.name{font-weight:800;line-height:1.14;letter-spacing:-.01em}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:99px;font-weight:700;text-transform:uppercase;text-decoration:none;letter-spacing:.02em}
+.tape{position:absolute;z-index:4;left:-6%;width:112%;overflow:hidden;background:var(--tape1);color:var(--tapec);font-weight:800;text-transform:uppercase;white-space:nowrap;font-size:1.5cqw;padding:.62cqw 0;box-shadow:0 .3cqw .9cqw rgba(0,0,0,.22)}
+.tape.t1{bottom:3.4cqw;transform:rotate(-1.6deg)}
+.tape.t2{bottom:1.1cqw;transform:rotate(1.4deg)}
+.run{display:inline-block;animation:run 40s linear infinite}
+.t2 .run{animation-direction:reverse}
+.run i{font-style:normal;margin:0 .7em}
+@keyframes run{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.run{animation:none}}
+
+/* A: светлый, как в макете, с воздухом */
+.a{background:linear-gradient(180deg,#e6e6ee,#f3f3f7 72%,#fff)}
+.a .sale{display:inline-block}
+.a .plaque{display:inline-block;position:relative;background:#0c0a08;border-radius:1.6cqw;padding:1.5cqw 3cqw 1.7cqw;font-size:4.9cqw;color:#fff}
+.a .plaque b:first-child{background:linear-gradient(90deg,#ffb036,#d25503);-webkit-background-clip:text;background-clip:text;color:transparent}
+.a .in{display:block;text-align:right;font-size:2.1cqw;margin-top:.6cqw;padding-right:.5cqw;color:#0c0a08}
+.a .off{position:absolute;right:-5.6cqw;top:-2.6cqw;width:10.4cqw;height:10.4cqw;border-radius:50%;background:#0c0a08;border:.14cqw solid #ffb036;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.15cqw;font-weight:700;font-style:normal;line-height:1.1;text-transform:uppercase}
+.a .off strong{font-size:3cqw;font-weight:900;font-style:italic}
+.a .conf{font-size:1.55cqw;margin-top:3cqw;color:#2f2f2f}
+.a .date{font-size:1.55cqw;color:#d25503;margin-top:.35cqw}
+.a .name{font-size:3.1cqw;margin-top:1.4cqw;color:#2f2f2f}
+.a .btn{margin-top:2.4cqw;height:4.1cqw;padding:0 3.4cqw;font-size:1.1cqw;background:#0c0a08;color:#fff;box-shadow:0 0 0 .12cqw #ffb036}
+.a .mic{width:45cqw;right:-.5cqw;bottom:1.5cqw}
+
+/* B: чёрный с тёплым свечением, как лендинги tsss */
+.b{background:#0b0907}
+.b:before{content:"";position:absolute;right:-8cqw;bottom:-14cqw;width:62cqw;height:62cqw;border-radius:50%;background:radial-gradient(closest-side,rgba(255,150,40,.95),rgba(210,85,3,.45) 50%,transparent)}
+.b .sale{font-size:6.5cqw;color:#fff}
+.b .sale b:first-child{background:linear-gradient(90deg,#ffb036,#f08a1d);-webkit-background-clip:text;background-clip:text;color:transparent}
+.b .row{display:flex;align-items:baseline;gap:1.2cqw;margin-top:1.1cqw;color:#fff;font-weight:700;text-transform:uppercase;font-size:1.7cqw}
+.b .row strong{font-size:5cqw;font-weight:900;font-style:italic;color:#ffb036}
+.b .conf{font-size:1.5cqw;margin-top:2.4cqw;color:#d8d2c8}
+.b .date{font-size:1.5cqw;color:#ffb036;margin-top:.35cqw}
+.b .name{font-size:2.6cqw;margin-top:1.1cqw;color:#fff;font-weight:700}
+.b .btn{margin-top:2cqw;height:4cqw;padding:0 3.2cqw;font-size:1.1cqw;background:linear-gradient(90deg,#ffb036,#d25503);color:#120d08}
+.b .mic{width:45cqw;right:-.5cqw;bottom:1.5cqw}
+
+/* C: размер скидки главный, оранжевая панель */
+.c{background:linear-gradient(180deg,#f1f1f5,#fbfbfc 72%,#fff)}
+.c:before{content:"";position:absolute;right:0;top:0;bottom:0;width:44cqw;background:linear-gradient(160deg,#ffc666,#ffb036 55%,#f08a1d);clip-path:polygon(16% 0,100% 0,100% 100%,0 100%)}
+.c{--tape1:#0c0a08;--tapec:#ffb036}
+.c .sale{font-size:4.1cqw;color:#0c0a08}
+.c .in{font-size:2.1cqw;margin-left:.5em}
+.c .off{display:flex;align-items:center;gap:1.2cqw;margin-top:.9cqw;color:#d25503}
+.c .off span{font-size:1.5cqw;font-weight:800;text-transform:uppercase;line-height:1.1;color:#0c0a08}
+.c .off strong{font-size:11cqw;line-height:.95;font-weight:900;font-style:italic;letter-spacing:-.03em}
+.c .conf{font-size:1.5cqw;margin-top:1.5cqw;color:#2f2f2f}
+.c .date{font-size:1.5cqw;color:#d25503;margin-top:.35cqw}
+.c .name{font-size:2.5cqw;margin-top:1cqw;color:#2f2f2f;font-weight:700}
+.c .btn{margin-top:1.8cqw;height:4cqw;padding:0 3.2cqw;font-size:1.1cqw;background:#0c0a08;color:#fff}
+.c .mic{width:45cqw;right:-1cqw;bottom:1.5cqw}
+
+/* Г: вариант Б, скидка на подложке */
+.g{background:#0b0907}
+.g:before{content:"";position:absolute;right:-8cqw;bottom:-14cqw;width:62cqw;height:62cqw;border-radius:50%;background:radial-gradient(closest-side,rgba(255,150,40,.95),rgba(210,85,3,.45) 50%,transparent)}
+.g .sale{font-size:6.5cqw;color:#fff}
+.g .sale b:first-child{background:linear-gradient(90deg,#ffb036,#f08a1d);-webkit-background-clip:text;background-clip:text;color:transparent}
+.g .row{display:flex;align-items:center;gap:1.6cqw;margin-top:1.3cqw;color:#fff;font-weight:800;font-style:italic;text-transform:uppercase;font-size:2.1cqw}
+.g .pill{display:inline-flex;align-items:center;gap:.8cqw;padding:.5cqw 2cqw .6cqw;border-radius:99px;background:linear-gradient(90deg,#ffb036,#f08a1d);color:#120d08;font-size:1.6cqw;font-weight:800;font-style:normal;transform:rotate(-2deg);box-shadow:0 .4cqw 1.6cqw rgba(255,150,40,.35)}
+.g .pill strong{font-size:3.6cqw;font-weight:900;font-style:italic;line-height:1}
+.g .conf{font-size:1.5cqw;margin-top:2.6cqw;color:#d8d2c8}
+.g .date{font-size:1.5cqw;color:#ffb036;margin-top:.35cqw}
+.g .name{font-size:2.6cqw;margin-top:1.1cqw;color:#fff;font-weight:700}
+.g .btn{margin-top:2cqw;height:4cqw;padding:0 3.2cqw;font-size:1.1cqw;background:linear-gradient(90deg,#ffb036,#d25503);color:#120d08}
+.g .mic{width:45cqw;right:-.5cqw;bottom:1.5cqw}
+
+/* Д: исходный макет — шрифт меньше, больше воздуха, микрофон меньше */
+.e{background:linear-gradient(180deg,#e6e6ee,#f3f3f7 72%,#fff)}
+.e .sale{display:inline-block;position:relative}
+.e .plaque{display:inline-block;position:relative;background:#0c0a08;border-radius:1.2cqw;padding:1.1cqw 2.4cqw 1.3cqw;font-size:3.6cqw;color:#fff}
+.e .plaque:before{content:"";position:absolute;left:-1.1cqw;top:-1cqw;right:1.6cqw;bottom:-1cqw;border:.13cqw solid #f08a1d;border-radius:1.2cqw;transform:skewX(-6deg);z-index:-1}
+.e .plaque b:first-child{background:linear-gradient(90deg,#ffb036,#d25503);-webkit-background-clip:text;background-clip:text;color:transparent}
+.e .in{display:block;text-align:right;font-size:1.6cqw;margin-top:1.9cqw;color:#0c0a08}
+.e .off{position:absolute;right:-4.4cqw;top:-2.4cqw;width:8cqw;height:8cqw;border-radius:50%;background:#0c0a08;border:.12cqw solid #ffb036;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.95cqw;font-weight:700;font-style:normal;line-height:1.1;text-transform:uppercase}
+.e .off strong{font-size:2.3cqw;font-weight:900;font-style:italic}
+.e .conf{font-size:1.05cqw;margin-top:3.2cqw;color:#6a6a70;text-transform:uppercase;letter-spacing:.16em}
+.e .date{font-size:1.45cqw;color:#d25503;margin-top:.6cqw}
+.e .name{font-size:2.5cqw;margin-top:1.8cqw;color:#2f2f2f;line-height:1.22}
+.e .name span{display:block;font-weight:500}
+.e .btn{margin-top:2.8cqw;height:3.8cqw;padding:0 3cqw;font-size:1cqw;background:#0c0a08;color:#fff;box-shadow:0 0 0 .12cqw #ffb036}
+.e .mic{width:42cqw;right:2.5cqw;bottom:3cqw}
+.e .tape.t1{transform:rotate(-2.4deg);bottom:2.6cqw}
+.e .tape.t2{transform:rotate(1.8deg)}
+
+/* Е: вариант Г — скидка-наклейка, белая кнопка с анимацией */
+.v .pill{border-radius:.5cqw;transform:skewX(-10deg) rotate(-2deg);box-shadow:none}
+.v .btn{background:#fff;color:#120d08}
+/* Ж: вариант А с анимацией кнопки */
+.v .btn,.w .btn{position:relative;overflow:hidden;animation:tsbtnping 2.4s ease-out infinite}
+.v .btn:after,.w .btn:after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:35%;transform:skewX(-20deg);animation:tsbtnshine 3.2s ease-in-out infinite}
+.v .btn:after{background:linear-gradient(100deg,transparent,rgba(255,176,54,.7),transparent)}
+.w .btn:after{background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent)}
+@keyframes tsbtnping{0%{box-shadow:0 0 0 0 rgba(255,176,54,.7)}70%,100%{box-shadow:0 0 0 1.3cqw rgba(255,176,54,0)}}
+@keyframes tsbtnshine{0%,55%{left:-60%}100%{left:130%}}
+@media (prefers-reduced-motion:reduce){.v .btn,.w .btn,.v .btn:after,.w .btn:after{animation:none}}
+
+/* З, И: варианты Е и Ж, кнопка выезжает при появлении экрана */
+.z .btn{opacity:0;transform:translateX(-120%);animation:none}
+.z.go .btn{animation:tsbtnin .9s cubic-bezier(.2,.9,.25,1.15) .3s forwards}
+.z .btn:after{display:none}
+@keyframes tsbtnin{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.z .btn,.z.go .btn{opacity:1;transform:none;animation:none}}
+
+/* К, Л: своя анимация — эквалайзер в кнопке и «дыхание» свечения */
+.g.k .pill{border-radius:.5cqw;transform:skewX(-10deg) rotate(-2deg);box-shadow:none}
+.g.k .btn{background:#fff;color:#120d08}
+.k .btn{gap:.9em;transition:transform .2s}
+.k .btn:hover{transform:translateY(-.2cqw)}
+.k .eq{display:inline-flex;align-items:center;gap:.2em;height:1.3em}
+.k .eq i{display:block;width:.22em;height:100%;border-radius:.11em;background:#d25503;animation:tseq 1s ease-in-out infinite}
+.a.k .eq i{background:#ffb036}
+.k .eq i:nth-child(2){animation-delay:-.45s}
+.k .eq i:nth-child(3){animation-delay:-.2s}
+.k .eq i:nth-child(4){animation-delay:-.7s}
+.k .btn:hover .eq i{animation-duration:.55s}
+@keyframes tseq{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+@keyframes tsglow{0%,100%{box-shadow:0 0 0 .12cqw #ffb036,0 0 0 rgba(255,176,54,0)}50%{box-shadow:0 0 0 .12cqw #ffb036,0 0 2.4cqw rgba(255,176,54,.6)}}
+@media (prefers-reduced-motion:reduce){.k .btn,.k .eq i{animation:none}}
+
+@container (max-width:767px){
+ .h{aspect-ratio:auto;height:182cqw}
+ .txt{left:6cqw;right:6cqw;width:auto;top:9cqw;text-align:center}
+ .tape{font-size:3.5cqw;padding:1.3cqw 0}
+ .tape.t1{bottom:8cqw}.tape.t2{bottom:2.5cqw}
+ .mic{width:88cqw!important;right:6cqw!important;bottom:6cqw!important}
+ .conf,.date{font-size:4.3cqw!important}
+ .btn{height:13cqw!important;width:78cqw;font-size:3.5cqw!important;padding:0!important}
+ .a .plaque{font-size:8.7cqw;padding:3cqw 4.5cqw 3.4cqw;border-radius:4cqw}
+ .a .in{font-size:4.6cqw;margin-top:1cqw}
+ .a .off{width:19cqw;height:19cqw;right:-5cqw;top:-8cqw;font-size:2.2cqw}.a .off strong{font-size:6cqw}
+ .a .conf{margin-top:5cqw}
+ .a .name{font-size:7.2cqw;margin-top:3cqw}.a .btn{margin-top:5cqw}
+ .b:before{right:-22cqw;bottom:-12cqw;width:144cqw;height:144cqw}
+ .b .sale{font-size:10.2cqw}.b .row{justify-content:center;font-size:3.8cqw;gap:2.4cqw;margin-top:2cqw}.b .row strong{font-size:12cqw}
+ .b .conf{margin-top:4cqw}.b .name{font-size:6.8cqw;margin-top:2.6cqw}.b .btn{margin-top:4.5cqw}
+ .c:before{width:auto;left:0;right:0;top:auto;height:88cqw;clip-path:polygon(0 12%,100% 0,100% 100%,0 100%)}
+ .c .sale{font-size:9.2cqw}.c .in{display:block;font-size:4.6cqw;margin:1cqw 0 0}
+ .c .off{justify-content:center;gap:2.4cqw;margin-top:2cqw}.c .off span{font-size:3.6cqw;text-align:left}.c .off strong{font-size:25cqw}
+ .c .conf{margin-top:2cqw}.c .name{font-size:6.6cqw;margin-top:2.4cqw}.c .btn{margin-top:4cqw}
+ .g:before{right:-22cqw;bottom:-12cqw;width:144cqw;height:144cqw}
+ .g .sale{font-size:10.2cqw}.g .row{flex-direction:column;gap:2.4cqw;font-size:4.4cqw;margin-top:2.4cqw}
+ .g .pill{font-size:3.6cqw;gap:2cqw;padding:1.2cqw 5cqw 1.4cqw}.g .pill strong{font-size:9cqw}
+ .g .conf{margin-top:5cqw}.g .name{font-size:6.8cqw;margin-top:2.6cqw}.g .btn{margin-top:4.5cqw}
+ .e{height:170cqw!important}
+ .e .plaque{font-size:7.6cqw;padding:2.6cqw 4.6cqw 3cqw;border-radius:3cqw}
+ .e .plaque:before{left:-2.4cqw;top:-2.2cqw;right:3cqw;bottom:-2.2cqw;border-width:.35cqw;border-radius:3cqw}
+ .e .in{font-size:3.8cqw;margin-top:4cqw}
+ .e .off{width:17cqw;height:17cqw;right:-6cqw;top:-8cqw;font-size:2cqw}.e .off strong{font-size:5cqw}
+ .e .conf{font-size:2.9cqw!important;margin-top:7cqw}.e .date{font-size:4cqw!important;margin-top:1.4cqw}
+ .e .name{font-size:6.2cqw;margin-top:3.6cqw}.e .btn{margin-top:6cqw;height:12cqw!important}
+ .e .mic{width:76cqw!important;right:12cqw!important;bottom:6cqw!important}
+}
+</style></head><body>
+
+<div class="wrap"><section class="h a" id="a"><div class="txt">
+  <h1 class="sale"><span class="plaque"><b>Большая</b><b>распродажа</b><em class="off">скидки <span>до</span> <strong>60%</strong></em></span><span class="in">в&nbsp;TSSS</span></h1>
+  <p class="conf">Закрытая онлайн-конференция</p><p class="date">12&nbsp;ноября в&nbsp;19:00&nbsp;МСК</p>
+  <p class="name">План выхода<br>на&nbsp;рынок озвучки<br>за&nbsp;3&nbsp;месяца</p>
+  <a class="btn" href="#">Пройти регистрацию</a></div>
+  <img class="mic" src="assets/sale-mic.webp" alt=""><div class="tape t1"></div><div class="tape t2"></div></section></div>
+
+<div class="wrap"><section class="h b" id="b"><div class="txt">
+  <h1 class="sale"><b>Большая</b><b>распродажа</b></h1>
+  <div class="row"><span>в&nbsp;TSSS</span><span>скидки до</span><strong>60%</strong></div>
+  <p class="conf">Закрытая онлайн-конференция</p><p class="date">12&nbsp;ноября в&nbsp;19:00&nbsp;МСК</p>
+  <p class="name">План выхода на&nbsp;рынок озвучки за&nbsp;3&nbsp;месяца</p>
+  <a class="btn" href="#">Пройти регистрацию</a></div>
+  <img class="mic" src="assets/sale-mic.webp" alt=""><div class="tape t1"></div><div class="tape t2"></div></section></div>
+
+<div class="wrap"><section class="h c" id="c"><div class="txt">
+  <h1 class="sale">Большая распродажа<span class="in">в&nbsp;TSSS</span></h1>
+  <div class="off"><span>скидки<br>до</span><strong>60%</strong></div>
+  <p class="conf">Закрытая онлайн-конференция</p><p class="date">12&nbsp;ноября в&nbsp;19:00&nbsp;МСК</p>
+  <p class="name">План выхода на&nbsp;рынок озвучки за&nbsp;3&nbsp;месяца</p>
+  <a class="btn" href="#">Пройти регистрацию</a></div>
+  <img class="mic" src="assets/sale-mic.webp" alt=""><div class="tape t1"></div><div class="tape t2"></div></section></div>
+
+<div class="wrap"><section class="h g" id="g"><div class="txt">
+  <h1 class="sale"><b>Большая</b><b>распродажа</b></h1>
+  <div class="row"><span>в&nbsp;TSSS</span><span class="pill">скидки до <strong>60%</strong></span></div>
+  <p class="conf">Закрытая онлайн-конференция</p><p class="date">12&nbsp;ноября в&nbsp;19:00&nbsp;МСК</p>
+  <p class="name">План выхода на&nbsp;рынок озвучки за&nbsp;3&nbsp;месяца</p>
+  <a class="btn" href="#">Пройти регистрацию</a></div>
+  <img class="mic" src="assets/sale-mic.webp" alt=""><div class="tape t1"></div><div class="tape t2"></div></section></div>
+
+<div class="wrap"><section class="h e" id="e"><div class="txt">
+  <h1 class="sale"><span class="plaque"><b>Большая</b><b>распродажа</b><em class="off">скидки <span>до</span> <strong>60%</strong></em></span><span class="in">в&nbsp;TSSS</span></h1>
+  <p class="conf">Закрытая онлайн-конференция</p><p class="date">12&nbsp;ноября в&nbsp;19:00&nbsp;МСК</p>
+  <p class="name"><span>План выхода</span>на&nbsp;рынок озвучки<br>за&nbsp;3&nbsp;месяца</p>
+  <a class="btn" href="#">Пройти регистрацию</a></div>
+  <img class="mic" src="assets/sale-mic.webp" alt=""><div class="tape t1"></div><div class="tape t2"></div></section></div>
+
+<div class="wrap"><section class="h g v" id="v"><div class="txt">
+  <h1 class="sale"><b>Большая</b><b>распродажа</b></h1>
+  <div class="row"><span>в&nbsp;TSSS</span><span class="pill">скидки до <strong>60%</strong></span></div>
+  <p class="conf">Закрытая онлайн-конференция</p><p class="date">12&nbsp;ноября в&nbsp;19:00&nbsp;МСК</p>
+  <p class="name">План выхода на&nbsp;рынок озвучки за&nbsp;3&nbsp;месяца</p>
+  <a class="btn" href="#">Пройти регистрацию</a></div>
+  <img class="mic" src="assets/sale-mic.webp" alt=""><div class="tape t1"></div><div class="tape t2"></div></section></div>
+
+<div class="wrap"><section class="h a w" id="w"><div class="txt">
+  <h1 class="sale"><span class="plaque"><b>Большая</b><b>распродажа</b><em class="off">скидки <span>до</span> <strong>60%</strong></em></span><span class="in">в&nbsp;TSSS</span></h1>
+  <p class="conf">Закрытая онлайн-конференция</p><p class="date">12&nbsp;ноября в&nbsp;19:00&nbsp;МСК</p>
+  <p class="name">План выхода<br>на&nbsp;рынок озвучки<br>за&nbsp;3&nbsp;месяца</p>
+  <a class="btn" href="#">Пройти регистрацию</a></div>
+  <img class="mic" src="assets/sale-mic.webp" alt=""><div class="tape t1"></div><div class="tape t2"></div></section></div>
+
+<div class="wrap"><section class="h g v z" id="z"><div class="txt">
+  <h1 class="sale"><b>Большая</b><b>распродажа</b></h1>
+  <div class="row"><span>в&nbsp;TSSS</span><span class="pill">скидки до <strong>60%</strong></span></div>
+  <p class="conf">Закрытая онлайн-конференция</p><p class="date">12&nbsp;ноября в&nbsp;19:00&nbsp;МСК</p>
+  <p class="name">План выхода на&nbsp;рынок озвучки за&nbsp;3&nbsp;месяца</p>
+  <a class="btn" href="#">Пройти регистрацию</a></div>
+  <img class="mic" src="assets/sale-mic.webp" alt=""><div class="tape t1"></div><div class="tape t2"></div></section></div>
+
+<div class="wrap"><section class="h a w z" id="i"><div class="txt">
+  <h1 class="sale"><span class="plaque"><b>Большая</b><b>распродажа</b><em class="off">скидки <span>до</span> <strong>60%</strong></em></span><span class="in">в&nbsp;TSSS</span></h1>
+  <p class="conf">Закрытая онлайн-конференция</p><p class="date">12&nbsp;ноября в&nbsp;19:00&nbsp;МСК</p>
+  <p class="name">План выхода<br>на&nbsp;рынок озвучки<br>за&nbsp;3&nbsp;месяца</p>
+  <a class="btn" href="#">Пройти регистрацию</a></div>
+  <img class="mic" src="assets/sale-mic.webp" alt=""><div class="tape t1"></div><div class="tape t2"></div></section></div>
+
+<div class="wrap"><section class="h g k" id="k"><div class="txt">
+  <h1 class="sale"><b>Большая</b><b>распродажа</b></h1>
+  <div class="row"><span>в&nbsp;TSSS</span><span class="pill">скидки до <strong>60%</strong></span></div>
+  <p class="conf">Закрытая онлайн-конференция</p><p class="date">12&nbsp;ноября в&nbsp;19:00&nbsp;МСК</p>
+  <p class="name">План выхода на&nbsp;рынок озвучки за&nbsp;3&nbsp;месяца</p>
+  <a class="btn" href="#"><span class="eq"><i></i><i></i><i></i><i></i></span>Пройти регистрацию</a></div>
+  <img class="mic" src="assets/sale-mic.webp" alt=""><div class="tape t1"></div><div class="tape t2"></div></section></div>
+
+<div class="wrap"><section class="h a k" id="l"><div class="txt">
+  <h1 class="sale"><span class="plaque"><b>Большая</b><b>распродажа</b><em class="off">скидки <span>до</span> <strong>60%</strong></em></span><span class="in">в&nbsp;TSSS</span></h1>
+  <p class="conf">Закрытая онлайн-конференция</p><p class="date">12&nbsp;ноября в&nbsp;19:00&nbsp;МСК</p>
+  <p class="name">План выхода<br>на&nbsp;рынок озвучки<br>за&nbsp;3&nbsp;месяца</p>
+  <a class="btn" href="#"><span class="eq"><i></i><i></i><i></i><i></i></span>Пройти регистрацию</a></div>
+  <img class="mic" src="assets/sale-mic.webp" alt=""><div class="tape t1"></div><div class="tape t2"></div></section></div>
+
+<script>
+document.querySelectorAll('.z').forEach(function(s){if(!('IntersectionObserver' in window)){s.classList.add('go');return}
+new IntersectionObserver(function(e,o){if(e[0].isIntersecting){s.classList.add('go');o.disconnect()}},{threshold:.35}).observe(s)});
+var only=new URLSearchParams(location.search).get('only');
+if(only)document.querySelectorAll('.h').forEach(function(s){if(s.id!==only)s.parentNode.style.display='none'});
+var w=['Ценные призы','Эксклюзивные подарки','Скидки до 60%'],h='';
+for(var i=0;i<24;i++)h+=w[i%3]+'<i>●</i>';
+document.querySelectorAll('.tape').forEach(function(t){t.innerHTML='<span class="run">'+h+'</span>'});
+</script>
+</body></html>

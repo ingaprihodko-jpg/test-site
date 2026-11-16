@@ -1,0 +1,102 @@
+<!-- f5game.site/irreplaceable (GC стр. 4599947): блок «Удивительный ноябрь» вместо карточки тарифов #buy.
+     Вставляется внутрь <div class="full-width-section"> в HTML-элементе aa524b4468 блока ltBlock2234303387.
+     Образец: f5game.ru/mental_traps (Tilda, rec5391703101).
+     Старая карточка тарифов оставлена в коде сразу после блока: id="buy-tarif", style="display:none". -->
+<style>
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap);
+.f5nov {
+  position: relative;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 28px;
+  padding: 64px 56px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  gap: 16px;
+  align-items: end;
+  color: #f8f6f6;
+  font-family: 'Montserrat', sans-serif;
+  background:
+    url(https://thb.tildacdn.com/tild3833-6163-4439-b930-306330313065/-/resize/900x/noroot.png) no-repeat left -200px top -260px / 380px auto,
+    url(https://thb.tildacdn.com/tild3833-6163-4439-b930-306330313065/-/resize/900x/noroot.png) no-repeat right -120px top -200px / 440px auto,
+    radial-gradient(closest-side, rgba(255, 108, 179, 0.8), rgba(255, 108, 179, 0)) no-repeat left -140px bottom -160px / 420px 460px,
+    radial-gradient(closest-side, rgba(0, 229, 255, 0.6), rgba(0, 229, 255, 0)) no-repeat right -60px top 40px / 560px 440px,
+    linear-gradient(0deg, #12002d 0%, #010508 85%);
+}
+.f5nov-text { padding-bottom: 64px; align-self: center; }
+.f5nov .f5nov-lead {
+  margin: 0 0 20px !important;
+  font-size: clamp(20px, 2.4vw, 32px);
+  font-weight: 600;
+  line-height: 1.2;
+  color: #f8f6f6;
+  text-wrap: balance;
+  text-shadow: 0 2px 14px rgba(1, 5, 8, 0.85);
+}
+.f5nov .f5nov-title {
+  margin: 0 0 36px !important;
+  font-size: clamp(28px, 4.6vw, 60px);
+  font-weight: 800;
+  line-height: 1.05;
+  text-transform: uppercase;
+  background: linear-gradient(0deg, #ffcfc5 0%, #f2f3bc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.f5nov .f5nov-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 280px;
+  padding: 24px 48px;
+  border-radius: 28px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #fff !important;
+  background: linear-gradient(180deg, #ff6b6b 0%, #ff1a1a 38%, #e00000 100%);
+  box-shadow: 0 14px 34px -12px rgba(255, 0, 0, 0.65);
+  transition: translate 180ms ease-out, box-shadow 180ms ease-out;
+}
+.f5nov .f5nov-btn:hover { translate: 0 -2px; box-shadow: 0 18px 38px -12px rgba(255, 0, 0, 0.8); }
+.f5nov-visual { position: relative; align-self: end; }
+/* таймер «Закрытие продаж» скрыт по просьбе клиента, элемент остался в редакторе */
+.lt-view .builder-item:has(#t-days) { display: none !important; }
+.f5nov .f5nov-glitter {
+  position: absolute;
+  left: -45%;
+  top: 30%;
+  width: 90%;
+  max-width: none;
+  pointer-events: none;
+}
+.f5nov .f5nov-girl { position: relative; display: block; width: 100%; height: auto; }
+@media (max-width: 767px) {
+  .f5nov {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 40px 20px 0;
+    border-radius: 20px;
+    background-size: 280px auto, 260px auto, 300px 360px, 420px 360px, auto;
+    background-position: left -170px top -200px, right -160px top -190px, left -140px bottom -160px, right -60px top 40px, 0 0;
+  }
+  .f5nov-text { padding-bottom: 8px; }
+  .f5nov .f5nov-title { margin-bottom: 28px !important; font-size: 32px; }
+  .f5nov .f5nov-btn { min-width: 0; width: 100%; padding: 20px 24px; }
+  .f5nov-visual { max-width: 320px; width: 100%; margin: 0 auto; }
+}
+</style>
+<div id="buy" class="f5nov">
+  <div class="f5nov-text">
+    <p class="f5nov-lead">Приобрести <span style="white-space: nowrap;">мастер-класс</span> по&nbsp;спеццене вы&nbsp;можете сейчас на&nbsp;распродаже</p>
+    <p class="f5nov-title">Удивительный ноябрь</p>
+    <a class="f5nov-btn" href="https://f5game.ru/magic">Купить</a>
+  </div>
+  <div class="f5nov-visual">
+    <img class="f5nov-glitter" src="https://thb.tildacdn.com/tild6564-3933-4235-a536-313535353131/-/resize/800x/pngwingcom_62.png" alt="" width="1680" height="2443">
+    <img class="f5nov-girl" src="https://thb.tildacdn.com/tild3137-3464-4139-b235-376335623039/-/resize/1000x/noroot.png" alt="Девушка летит на ракете" width="1024" height="1536">
+  </div>
+</div>

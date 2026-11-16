@@ -1,0 +1,42 @@
+<!--
+  Передача UTM с лендинга freeweb3 на /reg/ — замена текущего скрипта redirectParams.
+  Вставить в <head> (как можно выше) и на лендинге, и на странице /reg/.
+  На /reg/ — обязательно ДО скрипта виджета GetCourse.
+
+  Что делает:
+  1. Метки дописываются в ссылку в момент клика, а не на DOMContentLoaded —
+     кнопка с меткой работает, даже если внешние скрипты внизу страницы ещё грузятся.
+  2. Метки запоминаются на 24 часа. Если /reg/ всё же открылась без меток,
+     они возвращаются в адрес до загрузки виджета GC, и он забирает их в заказ.
+-->
+<script>
+(function () {
+  var KEY = 'lp_utm', TTL = 24 * 60 * 60 * 1000;
+  var REG_PATH = /\/freeweb3\/reg\//;
+  var q = location.search;
+  var hasUtm = /[?&]utm_/.test(q);
+
+  try {
+    if (hasUtm) localStorage.setItem(KEY, JSON.stringify({ q: q.slice(1), t: Date.now() }));
+  } catch (e) {}
+
+  if (!hasUtm && REG_PATH.test(location.pathname)) {
+    try {
+      var saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (saved && Date.now() - saved.t < TTL) {
+        q = (q ? q + '&' : '?') + saved.q;
+        history.replaceState(null, '', location.pathname + q + location.hash);
+      }
+    } catch (e) {}
+  }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a || !/[?&]utm_/.test(q)) return;
+    if (a.getAttribute('href').charAt(0) === '#') return;
+    if (a.hostname !== location.hostname) return;
+    if (/[?&]utm_/.test(a.search)) return;
+    a.search = a.search ? a.search + '&' + q.slice(1) : q;
+  }, true);
+})();
+</script>

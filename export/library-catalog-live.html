@@ -1,0 +1,350 @@
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Прототип каталога. Все размеры в px (на GetCourse html{font-size:10px}), классы с префиксом lbx- */
+.lbx{
+  --bg:#ffffff; --hero:#d9e6fb; --card:#f4f0e8; --card-h:#efe9de;
+  --ink:#1c2230; --muted:#5d6577; --line:#e3ddd2; --accent:#2f5fd0; --accent-soft:#e6eefd;
+  --dark:#1f1f1f;
+  font-family:'Manrope',system-ui,sans-serif !important;
+  color:var(--ink); background:var(--bg); font-size:16px; line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+}
+.lbx *{box-sizing:border-box}
+.lbx button,.lbx input,.lbx select{font:inherit;color:inherit}
+.lbx .lbx-jump,.lbx .lbx-more{color:#fff}
+.lbx-wrap{padding:0}
+
+/* hero */
+.lbx-hero{background:var(--hero);border-radius:24px;padding:32px 32px 28px;margin:0}
+.lbx-eyebrow{font-size:14px;font-weight:600;color:var(--muted);margin:0 0 8px}
+.lbx-h1{font-size:40px;line-height:1.1;font-weight:700;margin:0 0 24px;letter-spacing:-.01em;text-wrap:balance}
+.lbx-search{position:relative;max-width:640px}
+.lbx-search input{width:100%;height:56px;border:0;border-radius:16px;padding:0 20px 0 52px;font-size:17px;background:#fff;outline:none;box-shadow:0 1px 0 rgba(0,0,0,.04)}
+.lbx-search input:focus{box-shadow:0 0 0 3px rgba(47,95,208,.25)}
+.lbx-search svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--muted)}
+.lbx-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:24px;max-width:640px}
+.lbx-found{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:15px;font-weight:600}
+.lbx-found[hidden]{display:none}
+.lbx-jump{border:0;background:var(--dark);color:#fff;font-weight:600;font-size:14px;padding:9px 16px;border-radius:10px;cursor:pointer}
+.lbx-stat{background:rgba(255,255,255,.62);border-radius:14px;padding:12px 14px}
+.lbx-stat b{display:block;font-size:24px;font-weight:700;line-height:1.1;white-space:nowrap}
+.lbx-stat span{display:block;margin-top:4px;font-size:14px;line-height:1.2;color:#4a5266}
+
+/* views */
+.lbx-tabs{display:flex;gap:6px;margin:28px 0 18px;background:var(--card);padding:5px;border-radius:14px;width:max-content;max-width:100%}
+.lbx-tab{border:0;background:transparent;padding:10px 18px;border-radius:10px;font-weight:600;font-size:15px;cursor:pointer;color:var(--muted);transition:background .15s,color .15s}
+.lbx-tab[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+
+/* filters */
+.lbx-chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:thin}
+.lbx-chip{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s}
+.lbx-chip:hover{border-color:#c9c1b3}
+.lbx-chip[aria-pressed="true"]{background:var(--dark);border-color:var(--dark);color:#fff}
+.lbx-chip small{opacity:.6;margin-left:4px;font-size:13px}
+.lbx-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.lbx-select{height:42px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:0 34px 0 14px;font-size:14px;font-weight:500;appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%235d6577' stroke-width='1.6'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;width:200px;text-overflow:ellipsis}
+.lbx-select.is-set{border-color:var(--dark);box-shadow:inset 0 0 0 1px var(--dark)}
+.lbx-reset{border:0;background:none;color:var(--accent);font-weight:600;font-size:14px;cursor:pointer;padding:8px 4px}
+.lbx-count{margin-left:auto;font-size:14px;color:var(--muted)}
+
+/* list */
+.lbx-month{font-size:22px;font-weight:700;margin:32px 0 14px;display:flex;align-items:baseline;gap:10px}
+.lbx-month small{font-size:14px;font-weight:500;color:var(--muted)}
+.lbx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.lbx-card{display:flex;flex-direction:column;gap:12px;background:var(--card);border-radius:18px;padding:20px;text-decoration:none;color:inherit;min-height:200px;transition:background .15s,transform .15s}
+.lbx-card:hover{background:var(--card-h);transform:translateY(-2px)}
+.lbx-meta{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}
+.lbx-fmt{font-weight:600;padding:3px 9px;border-radius:999px;background:#fff;color:var(--ink)}
+.lbx-fmt[data-f="S"]{background:#fde7d6}
+.lbx-fmt[data-f="L"]{background:var(--accent-soft)}
+.lbx-fmt[data-f="D"]{background:#e2f3e6}
+.lbx-title{font-size:17px;font-weight:700;line-height:1.3;margin:0;text-wrap:pretty}
+.lbx-people{margin-top:auto;display:flex;flex-direction:column;gap:6px}
+.lbx-person{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+.lbx-person.is-none{color:var(--muted);font-weight:500}
+.lbx-ava{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;color:#fff}
+.lbx-theme{font-size:13px;line-height:1.35;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.lbx-theme span{display:block}
+.lbx-theme .lbx-tn{font-weight:600;color:var(--ink)}
+.lbx-theme .lbx-cn{margin-top:2px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+
+/* speakers & themes */
+.lbx-sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-top:8px}
+.lbx-scard{border:0;text-align:left;cursor:pointer;background:var(--card);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:background .15s,transform .15s}
+.lbx-scard:hover{background:var(--card-h);transform:translateY(-2px)}
+.lbx-scard .lbx-ava{width:56px;height:56px;font-size:18px}
+.lbx-sname{font-size:17px;font-weight:700;line-height:1.25}
+.lbx-ssub{font-size:13px;color:var(--muted)}
+.lbx-tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:8px}
+.lbx-tcard{border:0;text-align:left;cursor:pointer;border-radius:18px;padding:24px;min-height:170px;display:flex;flex-direction:column;gap:8px;transition:transform .15s,filter .15s}
+.lbx-tcard:hover{transform:translateY(-2px);filter:brightness(.98)}
+.lbx-tcard b{font-size:20px;line-height:1.2;font-weight:700;text-wrap:balance}
+.lbx-tcard .n{font-size:14px;font-weight:600}
+.lbx-tcard .who{margin-top:auto;font-size:13px;color:var(--muted)}
+
+.lbx-empty{padding:60px 20px;text-align:center;color:var(--muted);background:var(--card);border-radius:18px;margin-top:16px}
+.lbx-more{display:block;margin:28px auto 0;border:0;background:var(--dark);color:#fff;font-weight:600;padding:14px 28px;border-radius:14px;cursor:pointer}
+.lbx-foot{height:48px}
+
+@media (max-width:600px){
+  .lbx-hero{padding:24px 18px;border-radius:18px}
+  .lbx-h1{font-size:28px}
+  .lbx-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lbx-stat b{font-size:22px}
+  .lbx-card{min-height:0}
+  .lbx-count{margin-left:0;width:100%}
+  .lbx-select{flex:1 1 140px;width:auto;min-width:0}
+}
+@media (prefers-reduced-motion:reduce){.lbx *{transition:none!important}}
+
+.lbx-fmt[data-f="P"]{background:#fdeccf}
+/* защита от стилей GetCourse */
+.lbx,.lbx h1,.lbx h2,.lbx h3,.lbx p,.lbx a,.lbx span,.lbx b,.lbx small,.lbx button,.lbx input,.lbx select,.lbx option,.lbx label{font-family:'Manrope',system-ui,sans-serif !important;letter-spacing:normal}
+.lbx h1,.lbx h2,.lbx h3,.lbx p{padding:0;text-transform:none}
+.lbx .lbx-h1{margin:0 0 24px !important;font-size:36px !important;line-height:1.1 !important;font-weight:700 !important;color:var(--ink) !important}
+.lbx .lbx-month{margin:32px 0 14px !important;font-size:22px !important;line-height:1.3 !important;font-weight:700 !important;color:var(--ink) !important}
+.lbx .lbx-title{margin:0 !important;font-size:17px !important;line-height:1.3 !important;font-weight:700 !important;color:var(--ink) !important}
+.lbx .lbx-eyebrow{margin:0 0 8px !important;font-size:14px !important}
+.lbx a.lbx-card,.lbx a.lbx-card:hover,.lbx a.lbx-card:focus{text-decoration:none !important;color:var(--ink) !important}
+.lbx .lbx-search{display:block !important;max-width:640px;margin:0 !important;font-weight:400}
+.lbx .lbx-search input{height:56px !important;font-size:17px !important;border:0 !important;margin:0 !important}
+.lbx .lbx-select{height:42px !important;font-size:14px !important;margin:0 !important;line-height:normal}
+.lbx button{line-height:1.3;text-transform:none;box-shadow:none}
+.lbx .lbx-tab[aria-selected="true"]{box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.lbx .lbx-jump,.lbx .lbx-more{color:#fff}
+@media (max-width:600px){.lbx .lbx-h1{font-size:28px !important}.lbx-hero{padding:24px 18px}}
+</style>
+<div class="lbx" id="lbx">
+  <div class="lbx-wrap">
+    <section class="lbx-hero">
+      <p class="lbx-eyebrow">LifePractic</p>
+      <h1 class="lbx-h1">Библиотека встреч с&nbsp;экспертами</h1>
+      <label class="lbx-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="lbx-q" type="search" placeholder="Тема, спикер или ключевое слово" aria-label="Поиск по библиотеке">
+      </label>
+      <div class="lbx-found" id="lbx-found" hidden><span id="lbx-found-n"></span><button class="lbx-jump" data-act="jump">Показать ↓</button></div>
+      <div class="lbx-stats" id="lbx-stats"></div>
+    </section>
+
+    <div class="lbx-tabs" role="tablist">
+      <button class="lbx-tab" role="tab" data-view="list">Все записи</button>
+      <button class="lbx-tab" role="tab" data-view="speakers">Спикеры</button>
+      <button class="lbx-tab" role="tab" data-view="themes">Темы</button>
+    </div>
+
+    <div id="lbx-filters">
+      <div class="lbx-chips" id="lbx-chips"></div>
+      <div class="lbx-bar">
+        <select class="lbx-select" id="lbx-sp" aria-label="Спикер"></select>
+        <select class="lbx-select" id="lbx-course" aria-label="Курс"></select>
+        <select class="lbx-select" id="lbx-fmt" aria-label="Формат"></select>
+        <select class="lbx-select" id="lbx-year" aria-label="Год"></select>
+        <select class="lbx-select" id="lbx-sort" aria-label="Сортировка">
+          <option value="new">Сначала новые</option>
+          <option value="old">Сначала старые</option>
+          <option value="az">По алфавиту</option>
+        </select>
+        <button class="lbx-reset" id="lbx-reset" hidden>Сбросить</button>
+        <span class="lbx-count" id="lbx-count"></span>
+      </div>
+    </div>
+
+    <div id="lbx-out"></div>
+    <div class="lbx-foot"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+if(!/\/stream\/view\/id\/(935931538|934741030)(\/|$)/.test(location.pathname)){var _r=document.getElementById('lbx');if(_r)_r.style.display='none';return;}
+/* ===== ДАННЫЕ =====
+   В рабочей версии эти строки приходят из Google-таблицы (опубликованный CSV).
+   [id урока, месяц, название, [спикеры], тема 1–9 (0 — нет), курс, формат L/V/S/D] */
+var THEMES=['','Травмы и кризисы','Подходы и методы','Зависимости и окружение','Специфика терапевтической работы','Личность клиента','Предприниматели и бизнес','Сложные эмоции','Отношения в паре','Клиническая психология','СДВГ и аутизм у взрослых','Психодрама и монодрама','Групповая работа','Профессиональный путь психолога','Тревога, панические атаки и фобии','Суицидальность и самоповреждение','Сексуальность','Психосоматика','Краткосрочная терапия'];
+var THEME_BG=['','#fbe3dc','#e3ecfb','#efe3f7','#f4ecd9','#e0f1ea','#e9eef3','#fdeccf','#f9e1ea','#e2eef7','#e6f0dc','#f6e4f1','#dff0f2','#f1e9dc','#e8e4f8','#f6dede','#fbe6f0','#e6ecdc','#e0ebf5'];
+var FMT={L:'Лекция',V:'Встреча',S:'Супервизия',D:'Демо-сессия',P:'Практикум'};
+var MONTHS=['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+var CSV='https://docs.google.com/spreadsheets/d/e/2PACX-1vSKHV4QNiaqNHdDezYAl5F4RyY35pg4XNRaWx8UeCcug7s9pudH26A_zXuDGdAnfoebEmuT_VrjjfH6/pub?gid=1178025904&single=true&output=csv';
+var FCODE={'Лекция':'L','Встреча':'V','Супервизия':'S','Демо-сессия':'D','Практикум':'P'};
+var NOSP='Спикер не указан';
+var items=[];
+
+function parseCSV(t){var rows=[],row=[],f='',q=false;for(var i=0;i<t.length;i++){var c=t[i];
+  if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+  else if(c==='"')q=true;else if(c===','){row.push(f);f=''}else if(c==='\n'){row.push(f);rows.push(row);row=[];f=''}else if(c!=='\r')f+=c}
+  if(f||row.length){row.push(f);rows.push(row)}return rows}
+function idOf(link){var x=(link||'').match(/(?:id=|\/id\/)(\d+)/);return x?x[1]:''}
+function toRows(t){return parseCSV(t).slice(1).filter(function(r){return r[0]&&r[1]}).map(function(r){return{id:idOf(r[0]),url:r[0],title:r[1]||'',month:r[2]||'',theme:r[3]||'',speaker:r[4]||'',course:r[5]||'',type:r[6]||'',show:(r[7]||'').trim().toLowerCase()!=='нет'}})}
+
+/* название без приставки «Лекция»/«Супервизия» и без внешних кавычек: тип уже показан на карточке */
+function cleanTitle(s){
+  s=String(s).replace(/\s+/g,' ').trim();
+  s=s.replace(/^(Лекция\s*\+\s*демосессия|Лекция-дискуссия|Демосессия и супервизия|Лекция|Демосессия|Демосесия|Супервизия|Киноразбор|Интервью|Конференция)\s+/i,'');
+  if(s.charAt(0)==='\u00ab'){var d=0,closedAt=-1;for(var i=0;i<s.length;i++){var c=s.charAt(i);if(c==='\u00ab')d++;else if(c==='\u00bb'){d--;if(d===0){closedAt=i;break}}}
+    if(closedAt===s.length-1)s=s.slice(1,-1).trim();
+    else if(d>0&&s.indexOf('\u00bb')<0)s=s.slice(1).trim()}
+  return s}
+
+function build(rows){
+  items=rows.filter(function(r){return r.show}).map(function(r,i){
+    var th=THEMES.indexOf(r.theme);if(th<0)th=0;
+    var sp=r.speaker.split(/\s*,\s*/).filter(Boolean),t=cleanTitle(r.title);
+    return{id:r.id,url:r.url.replace(/^https?:\/\/iscelenie-course\.ru/,''),m:r.month,t:t,sp:sp,th:th,c:r.course,f:FCODE[r.type]||'L',o:i,y:r.month.slice(0,4),
+      q:(t+' '+sp.join(' ')+' '+THEMES[th]+' '+r.course).toLowerCase().replace(/\u0451/g,'\u0435')}})}
+
+/* ===== helpers ===== */
+var $=function(id){return document.getElementById(id)};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+/* неразрывный пробел после коротких слов */
+function typo(s){return esc(s).replace(/(^|[\s(«])([а-яёА-ЯЁ]{1,2}|для|без|над|под|про|при|что|или|как|это|если|когда)\s/g,'$1$2&nbsp;')}
+var PAL=['#2f5fd0','#c2573a','#7a4fb3','#2e8b6a','#b07a14','#c23f6d','#3d7f9f','#5a6b2f'];
+function hash(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return Math.abs(h)}
+function ava(name){var p=name.split(' ');return '<span class="lbx-ava" style="background:'+PAL[hash(name)%PAL.length]+'">'+esc((p[0][0]||'')+(p[1]?p[1][0]:''))+'</span>'}
+function monthLabel(m){if(m.length===4)return 'Архив '+m;var p=m.split('-');var s=MONTHS[+p[1]-1];return s[0].toUpperCase()+s.slice(1)+' '+p[0]}
+function plural(n,a,b,c){var m=n%10,h=n%100;return n+' '+(m===1&&h!==11?a:m>=2&&m<=4&&(h<10||h>=20)?b:c)}
+function countBy(list,fn){var o={};list.forEach(function(x){[].concat(fn(x)).forEach(function(k){o[k]=(o[k]||0)+1})});return o}
+
+/* поиск без учёта окончаний: «травма» найдёт «травмы», «травмой» */
+function stem(w){return w.length>=6?w.slice(0,-2):w.length===5?w.slice(0,-1):w}
+/* мгновенная прокрутка: плавную GetCourse глушит */
+function jump(){var t=document.querySelector('.lbx-tabs');if(t)window.scrollTo(0,Math.max(0,t.getBoundingClientRect().top+window.pageYOffset-16))}
+
+/* ===== state (в адресе страницы, чтобы фильтром можно было поделиться) ===== */
+var S={view:'list',q:'',th:'',sp:'',c:'',f:'',y:'',sort:'new',lim:24};
+function readHash(){var h=location.hash.slice(1);if(!h)return;h.split('&').forEach(function(kv){var p=kv.split('=');if(p[0] in S)S[p[0]]=decodeURIComponent(p[1]||'')})}
+function writeHash(){var o=[];['view','q','th','sp','c','f','y','sort'].forEach(function(k){var d={view:'list',sort:'new'}[k]||'';if(S[k]&&S[k]!==d)o.push(k+'='+encodeURIComponent(S[k]))});try{history.replaceState(null,'',o.length?'#'+o.join('&'):location.pathname+location.search)}catch(e){}}
+
+function filtered(skip){
+  var q=S.q.trim().toLowerCase().replace(/ё/g,'е').split(/[\s,.;:!?«»"()–—-]+/).filter(Boolean).map(stem);
+  return items.filter(function(x){
+    if(q.length&&q.some(function(w){return x.q.indexOf(w)<0}))return false;
+    if(skip!=='th'&&S.th&&String(x.th)!==S.th)return false;
+    if(skip!=='sp'&&S.sp&&(S.sp===NOSP?x.sp.length:x.sp.indexOf(S.sp)<0))return false;
+    if(skip!=='c'&&S.c&&x.c!==S.c)return false;
+    if(skip!=='f'&&S.f&&x.f!==S.f)return false;
+    if(skip!=='y'&&S.y&&x.y!==S.y)return false;
+    return true;
+  });
+}
+
+/* ===== controls ===== */
+function fillSelect(el,label,counts,cur,labelFn,order){
+  var keys=order||Object.keys(counts).sort(function(a,b){return a.localeCompare(b,'ru')});
+  var h='<option value="">'+label+'</option>';
+  keys.forEach(function(k){if(!counts[k]&&k!==cur)return;h+='<option value="'+esc(k)+'"'+(k===cur?' selected':'')+'>'+esc(labelFn?labelFn(k):k)+' · '+(counts[k]||0)+'</option>'});
+  el.innerHTML=h;el.classList.toggle('is-set',!!cur);
+}
+function renderControls(){
+  var base=filtered('th'),tc=countBy(base,function(x){return x.th});
+  var h='<button class="lbx-chip" data-th="" aria-pressed="'+(!S.th)+'">Все темы<small>'+base.length+'</small></button>';
+  for(var i=1;i<THEMES.length;i++){if(!tc[i]&&String(i)!==S.th)continue;h+='<button class="lbx-chip" data-th="'+i+'" aria-pressed="'+(S.th===String(i))+'">'+THEMES[i]+'<small>'+(tc[i]||0)+'</small></button>'}
+  $('lbx-chips').innerHTML=h;
+  fillSelect($('lbx-sp'),'Все спикеры',countBy(filtered('sp'),function(x){return x.sp.length?x.sp:NOSP}),S.sp);
+  fillSelect($('lbx-course'),'Все курсы',countBy(filtered('c').filter(function(x){return x.c}),function(x){return x.c}),S.c);
+  fillSelect($('lbx-fmt'),'Любой формат',countBy(filtered('f'),function(x){return x.f}),S.f,function(k){return FMT[k]},['L','V','S','D','P']);
+  fillSelect($('lbx-year'),'Все годы',countBy(filtered('y'),function(x){return x.y}),S.y,null,['2026','2025','2024']);
+  $('lbx-sort').value=S.sort;
+  $('lbx-reset').hidden=!(S.q||S.th||S.sp||S.c||S.f||S.y);
+  [].forEach.call(document.querySelectorAll('.lbx-tab'),function(b){b.setAttribute('aria-selected',b.dataset.view===S.view)});
+  $('lbx-filters').style.display=S.view==='list'?'':'none';
+}
+
+/* подпись карточки: тема и курс; если курс уже начинается с названия темы — показываем только курс, без повтора */
+function themeLine(x){
+  var tn=x.th?THEMES[x.th]:'Без темы',cn=x.c||'';
+  var norm=function(v){return v.toLowerCase().replace(/\u0451/g,'\u0435')};
+  var same=cn&&x.th&&norm(cn).indexOf(norm(tn))===0;
+  return (same?'':'<span class="lbx-tn">'+esc(tn)+'</span>')+(cn?'<span class="lbx-cn" title="'+esc(cn)+'">'+esc(cn)+'</span>':'')}
+function card(x){
+  var people=x.sp.length?x.sp.map(function(n){return '<span class="lbx-person">'+ava(n)+esc(n)+'</span>'}).join(''):'<span class="lbx-person is-none">'+NOSP+'</span>';
+  return '<a class="lbx-card" href="'+esc(x.url)+'" target="_top">'+
+    '<div class="lbx-meta"><span class="lbx-fmt" data-f="'+x.f+'">'+FMT[x.f]+'</span><span>'+monthLabel(x.m)+'</span></div>'+
+    '<h3 class="lbx-title">'+typo(x.t)+'</h3>'+
+    '<div class="lbx-people">'+people+'</div>'+
+    '<div class="lbx-theme">'+themeLine(x)+'</div></a>';
+}
+
+function renderList(){
+  var list=filtered();
+  list.sort(S.sort==='az'?function(a,b){return a.t.replace(/^[«"(]/,'').localeCompare(b.t.replace(/^[«"(]/,''),'ru')}:
+    S.sort==='old'?function(a,b){return a.m.localeCompare(b.m)||a.o-b.o}:function(a,b){return b.m.localeCompare(a.m)||b.o-a.o});
+  $('lbx-count').textContent=plural(list.length,'запись','записи','записей');
+  if(!list.length)return '<div class="lbx-empty">Ничего не нашлось. Попробуйте другое слово или <button class="lbx-reset" data-act="reset">сбросьте фильтры</button></div>';
+  var shown=list.slice(0,S.lim),h='';
+  if(S.sort==='az'){h='<div class="lbx-grid" style="margin-top:16px">'+shown.map(card).join('')+'</div>'}
+  else{
+    var groups=[],cur=null,total=countBy(list,function(x){return x.m});
+    shown.forEach(function(x){if(!cur||cur.m!==x.m){cur={m:x.m,a:[]};groups.push(cur)}cur.a.push(x)});
+    h=groups.map(function(g){return '<h2 class="lbx-month">'+monthLabel(g.m)+'<small>'+plural(total[g.m],'запись','записи','записей')+'</small></h2><div class="lbx-grid">'+g.a.map(card).join('')+'</div>'}).join('');
+  }
+  if(list.length>S.lim)h+='<button class="lbx-more" data-act="more">Показать ещё · '+(list.length-S.lim)+'</button>';
+  return h;
+}
+
+function renderSpeakers(){
+  var c=countBy(items,function(x){return x.sp}),th={};
+  items.forEach(function(x){x.sp.forEach(function(n){(th[n]=th[n]||{})[x.th]=((th[n]||{})[x.th]||0)+1})});
+  var names=Object.keys(c).sort(function(a,b){return c[b]-c[a]||a.localeCompare(b,'ru')});
+  return '<div class="lbx-sgrid">'+names.map(function(n){
+    var top=Object.keys(th[n]).filter(function(k){return +k}).sort(function(a,b){return th[n][b]-th[n][a]}).slice(0,2).map(function(k){return THEMES[k]}).join(', ');
+    return '<button class="lbx-scard" data-sp="'+esc(n)+'">'+ava(n)+'<span class="lbx-sname">'+esc(n)+'</span><span class="lbx-ssub">'+plural(c[n],'запись','записи','записей')+(top?' · '+top:'')+'</span></button>'}).join('')+'</div>';
+}
+
+function renderThemes(){
+  var h='<div class="lbx-tgrid">';
+  for(var i=1;i<THEMES.length;i++){
+    var list=items.filter(function(x){return x.th===i}),sc=countBy(list,function(x){return x.sp});
+    var who=Object.keys(sc).sort(function(a,b){return sc[b]-sc[a]}).slice(0,3).join(', ');
+    h+='<button class="lbx-tcard" style="background:'+THEME_BG[i]+'" data-th="'+i+'"><b>'+THEMES[i]+'</b><span class="n">'+plural(list.length,'запись','записи','записей')+'</span><span class="who">'+esc(who)+'</span></button>';
+  }
+  return h+'</div>';
+}
+
+function render(){
+  renderControls();
+  var hasQ=!!S.q.trim(),n=hasQ?filtered().length:0;
+  $('lbx-found').hidden=!hasQ;
+  $('lbx-found-n').textContent=n?'Найдено: '+plural(n,'запись','записи','записей'):'Ничего не нашлось';
+  $('lbx-found').querySelector('.lbx-jump').hidden=!n;
+  $('lbx-out').innerHTML=S.view==='speakers'?renderSpeakers():S.view==='themes'?renderThemes():renderList();
+  writeHash();
+}
+
+/* stats */
+function renderStats(){var sp=countBy(items,function(x){return x.sp});
+  $('lbx-stats').innerHTML=[[items.length,'записей'],[Object.keys(sp).length,'спикеров'],[THEMES.length-1,'тем'],['2024–2026','годы']].map(function(s){return '<div class="lbx-stat"><b>'+s[0]+'</b><span>'+s[1]+'</span></div>'}).join('');}
+
+/* events */
+var root=$('lbx');
+root.addEventListener('click',function(e){
+  var t=e.target.closest('[data-view],[data-th],[data-sp],[data-act]');if(!t)return;
+  if(t.dataset.view){S.view=t.dataset.view}
+  else if(t.dataset.sp!==undefined&&t.classList.contains('lbx-scard')){S.view='list';S.sp=t.dataset.sp;S.th='';setTimeout(jump,0)}
+  else if(t.dataset.th!==undefined){if(t.classList.contains('lbx-tcard')){S.view='list';setTimeout(jump,0)}S.th=(S.th===t.dataset.th&&t.dataset.th)?'':t.dataset.th}
+  else if(t.dataset.act==='more'){S.lim+=24}
+  else if(t.dataset.act==='reset'){resetAll()}
+  else if(t.dataset.act==='jump'){S.view='list';setTimeout(jump,0)}
+  if(t.dataset.act!=='more'&&t.dataset.act!=='jump')S.lim=24;
+  render();
+});
+function resetAll(){S.q='';S.th='';S.sp='';S.c='';S.f='';S.y='';S.lim=24;$('lbx-q').value=''}
+$('lbx-reset').addEventListener('click',function(){resetAll();render()});
+var tm;$('lbx-q').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();clearTimeout(tm);S.q=e.target.value;S.view='list';render();jump()}});
+$('lbx-q').addEventListener('input',function(e){clearTimeout(tm);tm=setTimeout(function(){S.q=e.target.value;S.lim=24;if(S.view!=='list'&&S.q)S.view='list';render()},150)});
+[['lbx-sp','sp'],['lbx-course','c'],['lbx-fmt','f'],['lbx-year','y'],['lbx-sort','sort']].forEach(function(p){$(p[0]).addEventListener('change',function(e){S[p[1]]=e.target.value;S.lim=24;render()})});
+
+readHash();$('lbx-q').value=S.q;S.lim=+S.lim||24;
+var sig='';
+function apply(rows){var s=JSON.stringify(rows);if(s===sig)return;sig=s;build(rows);renderStats();render()}
+var cached=null;try{cached=JSON.parse(localStorage.getItem('lsx-csv')||'null')}catch(e){}
+if(cached&&cached.rows&&cached.rows.length)apply(cached.rows);
+else $('lbx-out').innerHTML='<div class="lbx-empty">Загружаю записи…</div>';
+fetch(CSV).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(t){
+  var rows=toRows(t);if(!rows.length)throw 0;
+  try{localStorage.setItem('lsx-csv',JSON.stringify({t:Date.now(),rows:rows}))}catch(e){}
+  apply(rows)
+}).catch(function(){if(!items.length)$('lbx-out').innerHTML='<div class="lbx-empty">Не удалось загрузить записи. Обновите страницу.</div>'});
+})();
+</script>

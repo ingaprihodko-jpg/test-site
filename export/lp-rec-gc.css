@@ -1,0 +1,94 @@
+/* ===== Запись ОВ0 Гавердовская — стиль варианта B (lp-rec-b.html) ===== */
+/* Стили привязаны к CSS-классам блоков (Стиль → «CSS-класс блока»), поэтому
+   переносятся на любую страницу: вставьте этот CSS и проставьте блокам классы.
+   lp-gate — форма-вход; lp-hero — первый экран (заголовок); lp-timer — полоса таймера;
+   lp-video, lp-audio — запись; lp-expert — эксперт (текст, картинка, текст);
+   lp-reviews — HTML-блок отзывов; lp-course — курс; lp-social-title, lp-social — соцсети.
+   :is(.класс,#f5x) — вес как у id, чтобы перебить настройки блока GetCourse */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap');
+body,.lite-page.block-set,.lt-block-wrapper,.lt-block-wrapper .f-header,.lt-block-wrapper .f-subheader,.lt-block-wrapper .f-text,.lt-block-wrapper p,.lt-block-wrapper li,.lt-block-wrapper button,.lt-block-wrapper input{font-family:Manrope,sans-serif!important}
+body,.lite-page.block-set{background:#F4F1E7!important}
+.lt-block-wrapper{background:#F4F1E7!important}
+.lt-block-wrapper .f-header{font-weight:800!important;letter-spacing:-.01em;text-wrap:balance}
+.lt-block-wrapper p,.lt-block-wrapper li{text-wrap:pretty}
+
+/* форма-вход */
+:is(.lp-gate,#f5x) .block-box{background:#fff!important;border-radius:20px!important;padding:32px 24px!important}
+:is(.lp-gate,#f5x) .f-header{color:#262626!important}
+:is(.lp-gate,#f5x) input.form-control,:is(.lp-gate,#f5x) input[type=text],:is(.lp-gate,#f5x) input[type=email],:is(.lp-gate,#f5x) input[type=tel]{border-radius:16px!important;border:1px solid #DDD6C4!important;background:#fff!important;min-height:52px}
+:is(.lp-gate,#f5x) .btn,:is(.lp-gate,#f5x) button{background:#C82925!important;border-color:#C82925!important;border-radius:20px!important;color:#fff!important;font-weight:700!important}
+
+/* полоса с таймером, закреплена сверху */
+:is(.lp-timer,#f5x){position:sticky;top:0;z-index:50}
+:is(.lp-timer,#f5x) .lt-block-wrapper{background:#C82925!important;padding:8px 0!important}
+:is(.lp-timer,#f5x) .block-box{width:100%!important;margin:0!important;float:none!important}
+:is(.lp-timer,#f5x) .builder{display:flex!important;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 14px}
+:is(.lp-timer,#f5x) .builder-item{margin:0!important;padding:0!important}
+:is(.lp-timer,#f5x) .f-header{font-size:16px!important;line-height:1.3!important;font-weight:700!important;color:#fff!important;margin:0!important}
+:is(.lp-timer,#f5x) .part-countdown .f-header,:is(.lp-timer,#f5x) .countdown-el{font-size:20px!important;font-weight:800!important;color:#fff!important;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* первый экран + видео — фиолетовая секция */
+:is(.lp-hero,#f5x) .lt-block-wrapper,:is(.lp-video,#f5x) .lt-block-wrapper{background:linear-gradient(160deg,#706C91,#4E4A6E)!important}
+:is(.lp-hero,#f5x) .lt-block-wrapper{padding:40px 0 8px!important}
+:is(.lp-video,#f5x) .lt-block-wrapper{padding:24px 0 56px!important;background:linear-gradient(160deg,#5F5B80,#4E4A6E)!important}
+:is(.lp-hero,#f5x) .builder:nth-of-type(1){width:100%!important;max-width:1000px;float:none!important;margin:0 auto!important;text-align:center}
+:is(.lp-hero,#f5x) .builder:nth-of-type(2){display:none!important}
+:is(.lp-hero,#f5x) .f-subheader{font-size:18px!important;font-weight:700!important;color:rgba(255,255,255,.8)!important;margin-bottom:12px!important}
+:is(.lp-hero,#f5x) .f-header{font-size:44px!important;line-height:1.15!important;color:#fff!important}
+:is(.lp-video,#f5x) .block-box{max-width:900px;float:none!important;margin:0 auto!important}
+:is(.lp-video,#f5x) .vhi-root,:is(.lp-video,#f5x) iframe{border-radius:20px!important;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+
+/* аудио */
+:is(.lp-audio,#f5x) .lt-block-wrapper{padding:24px 0 0!important}
+
+/* эксперт: имя по центру, фото слева на фиолетовой подложке, регалии карточками */
+:is(.lp-expert,#f5x) .lt-block-wrapper{padding:56px 0 28px!important}
+:is(.lp-expert,#f5x) .block-box{background:transparent!important;box-shadow:none!important;padding:0!important;border:0!important}
+:is(.lp-expert,#f5x) .builder{display:grid!important;grid-template-columns:400px minmax(0,1fr);gap:0 56px;align-items:center}
+:is(.lp-expert,#f5x) .builder>div.builder-item:nth-of-type(1){grid-column:1/-1;text-align:center!important;margin-bottom:40px!important}
+:is(.lp-expert,#f5x) .builder>div.builder-item:nth-of-type(1) p{font-size:34px!important;line-height:1.2!important;font-weight:800!important;color:#262626!important}
+:is(.lp-expert,#f5x) .part-image{position:relative;margin:0!important}
+:is(.lp-expert,#f5x) .part-image::before{content:"";position:absolute;left:8%;right:8%;bottom:0;top:18%;border-radius:50% 50% 24px 24px;background:#706C91;pointer-events:none}
+:is(.lp-expert,#f5x) .part-image img{position:relative;display:block;width:100%!important;height:auto!important}
+:is(.lp-expert,#f5x) .builder>div.builder-item:nth-of-type(3) ul{list-style:none!important;margin:0!important;padding:0!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+:is(.lp-expert,#f5x) .builder>div.builder-item:nth-of-type(3) li{background:#fff;border-radius:20px;padding:16px 20px;margin:0!important;font-size:18px!important;line-height:1.5!important;color:#262626!important}
+
+/* курс: белая карточка */
+:is(.lp-course,#f5x) .lt-block-wrapper{padding:28px 0 56px!important}
+:is(.lp-course,#f5x) .block-box{background:#fff!important;border-radius:20px!important;box-shadow:none!important;padding:48px 56px!important;border:0!important}
+:is(.lp-course,#f5x) .f-header{font-size:34px!important;line-height:1.2!important;color:#262626!important;text-align:center!important;margin-bottom:24px!important}
+:is(.lp-course,#f5x) .part-text p,:is(.lp-course,#f5x) .part-text li{font-size:18px!important;line-height:1.5!important;color:#262626!important;text-align:left!important}
+:is(.lp-course,#f5x) .part-text p{margin:0 0 16px!important}
+:is(.lp-course,#f5x) .f-header p{font-size:inherit!important;line-height:inherit!important;margin:0!important}
+:is(.lp-course,#f5x) ul{list-style:none!important;padding:0!important;margin:20px 0 0!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+:is(.lp-course,#f5x) li{background:#F4F1E7;border-radius:20px;padding:20px!important;margin:0!important}
+:is(.lp-course,#f5x) li strong{display:block;color:#C82925;font-size:28px;line-height:1.1;font-weight:800;margin-bottom:6px}
+:is(.lp-course,#f5x) .part-button button,:is(.lp-course,#f5x) .btn{background:#C82925!important;border-color:#C82925!important;border-radius:20px!important;color:#fff!important;font-weight:700!important;min-height:60px;padding:0 40px!important;box-shadow:none!important}
+
+/* соцсети */
+:is(.lp-social-title,#f5x) .lt-block-wrapper,:is(.lp-social,#f5x) .lt-block-wrapper{background:#F4F1E7!important}
+:is(.lp-social-title,#f5x) .f-header{color:#262626!important;font-size:28px!important}
+:is(.lp-social,#f5x) .btn,:is(.lp-social,#f5x) button{border-radius:20px!important;background:#706C91!important;border-color:#706C91!important;color:#fff!important;font-weight:700!important}
+
+[data-reveal]{opacity:1!important}
+
+@media (max-width:767px){
+  :is(.lp-gate,#f5x) .block-box{padding:24px 16px!important}
+  :is(.lp-timer,#f5x) .f-header{font-size:14px!important}
+  :is(.lp-timer,#f5x) .countdown-el,:is(.lp-timer,#f5x) .part-countdown .f-header{font-size:18px!important}
+  :is(.lp-hero,#f5x) .lt-block-wrapper{padding:24px 0 4px!important}
+  :is(.lp-hero,#f5x) .f-header{font-size:28px!important}
+  :is(.lp-hero,#f5x) .f-subheader{font-size:16px!important}
+  :is(.lp-video,#f5x) .lt-block-wrapper{padding:16px 0 24px!important}
+  :is(.lp-expert,#f5x) .lt-block-wrapper{padding:24px 0 12px!important}
+  :is(.lp-expert,#f5x) .builder{grid-template-columns:minmax(0,1fr);gap:0}
+  :is(.lp-expert,#f5x) .builder>div.builder-item:nth-of-type(1){margin-bottom:28px!important}
+  :is(.lp-expert,#f5x) .builder>div.builder-item:nth-of-type(1) p{font-size:26px!important}
+  :is(.lp-expert,#f5x) .part-image{max-width:320px;margin:0 auto 24px!important}
+  :is(.lp-expert,#f5x) .builder>div.builder-item:nth-of-type(3) ul{grid-template-columns:minmax(0,1fr)}
+  :is(.lp-course,#f5x) .lt-block-wrapper{padding:12px 0 24px!important}
+  :is(.lp-course,#f5x) .block-box{padding:24px 16px!important}
+  :is(.lp-course,#f5x) .f-header{font-size:26px!important}
+  :is(.lp-course,#f5x) ul{grid-template-columns:minmax(0,1fr)}
+  :is(.lp-course,#f5x) .part-button button,:is(.lp-course,#f5x) .btn{width:100%}
+}

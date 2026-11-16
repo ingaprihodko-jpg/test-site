@@ -1,0 +1,143 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F1E7}
+body .lite-page,body .lite-page.block-set,body .lt-block.lt-video{background:#F4F1E7!important}
+.f5-root{
+  --f5-bg:#F4F1E7;
+  --f5-card:#FFFFFF;
+  --f5-ink:#262626;
+  --f5-ink-soft:#555555;
+  --f5-red:#C82925;
+  --f5-red-soft:rgba(200,41,37,.08);
+  --f5-violet:#706C91;
+  --f5-violet-deep:#4E4A6E;
+  --f5-max:1140px;
+  font-family:Manrope,sans-serif;font-size:18px;line-height:1.5;color:var(--f5-ink);
+  background:var(--f5-bg);
+}
+.f5-root *{box-sizing:border-box}
+.f5-root .f5-wrap{max-width:var(--f5-max);margin:0 auto;padding:0 16px}
+.f5-root .f5-sec{padding:24px 0}
+.f5-root .f5-sec+.f5-sec{padding-top:0}
+.f5-root h1,.f5-root h2{font-weight:800;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.f5-root h1{font-size:28px;line-height:1.2}
+.f5-root h2{font-size:24px;line-height:1.25;text-align:center;margin-bottom:28px}
+.f5-root p{margin:0 0 16px;text-wrap:pretty}
+.f5-root p:last-child{margin-bottom:0}
+
+/* первый экран */
+.f5-root .f5-hero{background:linear-gradient(160deg,var(--f5-violet),var(--f5-violet-deep));color:#fff;padding:24px 0 32px}
+.f5-root .f5-hero-in{max-width:900px;margin:0 auto;text-align:center}
+.f5-root .f5-eyebrow{display:inline-block;margin:0 0 16px;padding:6px 16px;border-radius:999px;background:rgba(255,255,255,.16);font-weight:700;font-size:16px}
+.f5-root .f5-hero h1{margin-bottom:20px}
+.f5-root .f5-host{margin:0 auto;max-width:760px;color:rgba(255,255,255,.85)}
+
+/* о лекции */
+.f5-root .f5-about{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;max-width:900px;margin:0 auto}
+.f5-root .f5-card{background:var(--f5-card);border-radius:20px;padding:24px 20px}
+.f5-root .f5-card-accent{background:var(--f5-red-soft);box-shadow:inset 0 0 0 2px rgba(200,41,37,.2)}
+.f5-root .f5-enjoy{margin:24px 0 0;text-align:center;font-weight:800;font-size:22px}
+
+/* место под видео (в GC — родной блок видео) */
+.f5-root .f5-video{margin:0 auto;max-width:900px;aspect-ratio:16/9;border-radius:20px;background:#1E1C2B;display:flex;align-items:center;justify-content:center}
+.f5-root .f5-play{width:76px;height:76px;border-radius:50%;background:var(--f5-red);display:flex;align-items:center;justify-content:center}
+.f5-root .f5-play::after{content:"";border-left:24px solid #fff;border-top:15px solid transparent;border-bottom:15px solid transparent;margin-left:6px}
+
+/* курс */
+.f5-root .f5-course{background:linear-gradient(160deg,var(--f5-violet),var(--f5-violet-deep));color:#fff;border-radius:24px;padding:28px 16px}
+.f5-root .f5-course h2{color:#fff}
+.f5-root .f5-quotes{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;list-style:none;margin:0 0 24px;padding:0}
+.f5-root .f5-quotes li{background:rgba(255,255,255,.12);border-radius:20px 20px 20px 6px;padding:16px 20px;font-weight:700;text-wrap:pretty}
+.f5-root .f5-course-txt{max-width:860px;margin:0 auto}
+.f5-root .f5-key{margin:24px auto 0;max-width:860px;background:#fff;color:var(--f5-ink);border-radius:20px;padding:20px;font-weight:700}
+
+.f5-root .f5-h3{display:block;font-weight:800;font-size:22px;line-height:1.25;margin:0 0 20px;text-align:center}
+.f5-root .f5-get{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;list-style:none;margin:0;padding:0}
+.f5-root .f5-get li{background:var(--f5-card);border-radius:20px;padding:20px;text-wrap:pretty}
+.f5-root .f5-get b{display:block;font-size:40px;line-height:1;font-weight:800;color:var(--f5-red);margin-bottom:8px}
+
+/* ведущая */
+.f5-root .f5-expert{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:center}
+.f5-root .f5-photo{position:relative;max-width:360px;margin:0 auto;width:100%}
+.f5-root .f5-photo::before{content:"";position:absolute;left:8%;right:8%;bottom:0;top:18%;border-radius:50% 50% 24px 24px;background:var(--f5-violet);pointer-events:none}
+.f5-root .f5-photo img{position:relative;display:block;width:100%;height:auto}
+.f5-root .f5-facts{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;list-style:none;margin:0;padding:0}
+.f5-root .f5-facts li{background:var(--f5-card);border-radius:20px;padding:16px 20px;text-wrap:pretty}
+
+.f5-root .f5-cta{text-align:center;margin-top:28px}
+.f5-root .f5-btn{display:inline-flex;align-items:center;justify-content:center;min-height:60px;padding:0 48px;border-radius:20px;background:var(--f5-red);color:#fff;font-weight:700;font-size:18px;text-decoration:none;transition:transform .15s,background-color .15s}
+.f5-root .f5-btn:hover{background:#B0221F}
+.f5-root .f5-btn:active{transform:scale(.97)}
+@media (max-width:767px){
+  .f5-root .f5-btn{width:100%;padding:0 12px}
+  .f5-root .f5-key{padding:16px;font-size:17px}
+}
+@media (min-width:768px){
+  .f5-root .f5-sec{padding:28px 0}
+  .f5-root .f5-hero{padding:56px 0}
+  .f5-root h1{font-size:40px}
+  .f5-root h2{font-size:32px;margin-bottom:40px}
+  .f5-root .f5-card{padding:32px}
+  .f5-root .f5-enjoy{margin-top:32px;font-size:26px}
+  .f5-root .f5-course{padding:56px}
+  .f5-root .f5-quotes{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:32px}
+  .f5-root .f5-key{padding:24px 32px}
+  .f5-root .f5-h3{font-size:26px;margin-bottom:32px}
+  .f5-root .f5-get{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .f5-root .f5-get li{padding:28px}
+  .f5-root .f5-expert{grid-template-columns:380px minmax(0,1fr);gap:56px}
+  .f5-root .f5-facts{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .f5-root .f5-cta{margin-top:40px}
+}
+</style>
+<style>body,.lite-page.block-set,.lt-raw-html,.lt-block-wrapper,.f5-root{font-family:'Manrope',sans-serif!important}[data-reveal]{opacity:1!important}.f5-root :where(p,li){text-wrap:pretty}.f5-root :where(h1,h2,h3){text-wrap:balance}</style>
+<div class="f5-root">
+
+  <section class="f5-sec">
+    <div class="f5-wrap">
+      <div class="f5-course">
+        <h2>Краткосрочное консультирование в&nbsp;мультимодальном подходе</h2>
+        <ul class="f5-quotes">
+          <li>«На&nbsp;долгую терапию сейчас нет ни&nbsp;времени, ни&nbsp;денег»</li>
+          <li>«Мне нужно до&nbsp;пятницы решить, уходить или&nbsp;оставаться»</li>
+          <li>«Мы&nbsp;на&nbsp;грани развода. Помогите понять, что&nbsp;нам&nbsp;делать»</li>
+        </ul>
+        <div class="f5-course-txt">
+          <p>За&nbsp;каждым таким запросом стоит человек, которому нужна помощь&nbsp;сейчас.</p>
+          <p>Краткосрочная работа&nbsp;— отдельный навык со&nbsp;своими задачами, структурой встречи и&nbsp;инструментами. Даже опытные психологи могут теряться, когда&nbsp;на&nbsp;долгий процесс времени&nbsp;нет.</p>
+          <p>На&nbsp;курсе «Краткосрочное консультирование в&nbsp;мультимодальном подходе» разберём, как&nbsp;за&nbsp;1–3 сессии перейти от&nbsp;жалобы к&nbsp;посильному контракту, подобрать точные интервенции под&nbsp;психотип клиента и&nbsp;дать устойчивый результат без&nbsp;потери&nbsp;глубины.</p>
+        </div>
+        <p class="f5-key">Вы&nbsp;узнаете, как&nbsp;работать с&nbsp;запросом уже на&nbsp;первой встрече, выделять главное среди множества тем клиента и&nbsp;уверенно действовать, когда&nbsp;у&nbsp;человека поднимаются сильные чувства или&nbsp;травматические&nbsp;переживания.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="f5-sec">
+    <div class="f5-wrap">
+      <p class="f5-h3">Вас&nbsp;ждут:</p>
+      <ul class="f5-get">
+        <li><b>12</b>лекций, а&nbsp;после каждой&nbsp;— практическая&nbsp;встреча</li>
+        <li>Инструменты разных подходов на&nbsp;гештальт-основе: цикл контакта и&nbsp;теория Self, концепции ACT, профайлинг 8&nbsp;психотипов по&nbsp;модели МАИЛ, инструменты коучинга, медиация и&nbsp;модель GATLA, модель Тодда Берли (элементы&nbsp;EMDR)</li>
+        <li>Система короткой работы: от&nbsp;понимания ситуации клиента до&nbsp;завершения встречи понятным итогом и&nbsp;следующим&nbsp;шагом</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="f5-sec">
+    <div class="f5-wrap">
+      <h2>Ведущая курса&nbsp;— Полина Гавердовская</h2>
+      <div class="f5-expert">
+        <div class="f5-photo"><img src="https://fs-thb03.getcourse.ru/fileservice/file/thumbnail/h/7d2f648f0a78278bf72608097fbc8016.png/s/800x" alt="Полина Гавердовская" width="800" height="715"></div>
+        <ul class="f5-facts">
+          <li>Гештальт-терапевт и&nbsp;супервизор с&nbsp;опытом более 25 лет, 12&nbsp;000+ часов работы с&nbsp;клиентами и&nbsp;супервизантами</li>
+          <li>Ведущий тренер программы «Московский Гештальт Институт»; подготовила около 100 гештальт-терапевтов и&nbsp;консультантов</li>
+          <li>Сертифицированный медиатор (АКПП), профайлер-верификатор (МАИЛ), сертификат&nbsp;GATLA</li>
+          <li>Автор шести книг, в&nbsp;том числе бестселлера «Страдаю, но&nbsp;остаюсь»</li>
+        </ul>
+      </div>
+      <div class="f5-cta"><a class="f5-btn" href="#COURSE_URL" target="_blank" rel="noopener">Узнать подробнее</a></div>
+    </div>
+  </section>
+
+</div>

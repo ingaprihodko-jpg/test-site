@@ -11,12 +11,15 @@
 
   Все ссылки — с ?utm_source=calendar.
 
-  Данные о мероприятиях (даты, названия, картинки, ссылки) взяты
-  из блока "Анонсы" на f5game.ru по состоянию на 21.08.2026, плюс дата
-  повышения цены (1 сентября) и гипотезы дат практики (17, 26 сентября —
-  тема ещё не определена, помечены тегом "Гипотеза") от заказчика.
-  Октябрь добавлен как пустая сетка (мероприятий пока нет — впишутся
-  по мере появления данных).
+  Баннер распродажи "Удивительный ноябрь" (f5game.ru/magic) — над
+  сеткой, ссылка — трекинговая ссылка GetCourse от заказчика.
+  Даты окончания распродажи на сайте нет, в баннере её тоже нет.
+
+  Данные о мероприятиях (даты, названия, ссылки) взяты из блока
+  "Анонсы" на f5game.ru по состоянию на 03.11.2026. Показаны ноябрь и
+  декабрь 2026. Журнал "Гений переговоров" № 2 в календарь не попал —
+  на сайте у него нет даты. Время указано только у "Экспертного
+  кабинета" (18:00 МСК, от заказчика); у остальных на сайте времени нет.
 
   Чтобы добавить/изменить мероприятие — правь два места:
   1) саму ячейку дня в сетке месяца (.f5ec-day.f5ec-event или
@@ -280,7 +283,7 @@
 
   /* ---------- price-increase day: list of linked items instead of one CTA ---------- */
   .f5ec .f5ec-price-list{display:block;margin-top:6px;}
-  .f5ec a.f5ec-price-item{
+  .f5ec .f5ec-price-item{
     display:block;
     padding:12px 0;
     border-top:1px solid rgba(255,255,255,0.14);
@@ -313,6 +316,62 @@
     margin-top:4px;
   }
 
+  /* ---------- sale banner ---------- */
+  .f5ec a.f5ec-sale{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px 24px;
+    flex-wrap:wrap;
+    background:var(--malinovy);
+    border-radius:16px;
+    padding:20px 24px;
+    margin:0 0 20px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .f5ec a.f5ec-sale:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(19,10,38,0.35);}
+  .f5ec .f5ec-sale-text{display:block;flex:1 1 280px;}
+  .f5ec .f5ec-sale-tag{
+    display:block;
+    font-family:var(--font-display) !important;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,0.8) !important;
+    margin:0 0 8px;
+  }
+  .f5ec .f5ec-sale-title{
+    display:block;
+    font-family:var(--font-display) !important;
+    font-size:clamp(17px,3vw,21px);
+    font-weight:800;
+    line-height:1.25;
+    color:var(--white) !important;
+    margin:0 0 8px;
+  }
+  .f5ec .f5ec-sale-desc{
+    display:block;
+    font-family:var(--font-body) !important;
+    font-size:13px;
+    font-weight:600;
+    line-height:1.5;
+    color:rgba(255,255,255,0.9) !important;
+  }
+  .f5ec .f5ec-sale-btn{
+    display:inline-block;
+    font-family:var(--font-display) !important;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--malinovy) !important;
+    background:var(--white);
+    padding:12px 22px;
+    border-radius:24px;
+    white-space:nowrap;
+  }
+
   @media (max-width:480px){
     .f5ec .f5ec-tip{width:200px;}
     .f5ec .f5ec-tip.f5ec-tip-wide{width:250px;}
@@ -332,128 +391,26 @@
     <span class="f5ec-legend-item"><i class="f5ec-dot f5ec-dot-malinovy"></i>Повышение цены</span>
   </div>
 
+  <a class="f5ec-sale" href="https://f5game.site/g/113726359834/3f7e93c9?u=https%3A%2F%2Ff5game.ru%2Fmagic%26a%3D1" target="_blank" rel="noopener" aria-label="Распродажа «Удивительный ноябрь»">
+    <span class="f5ec-sale-text">
+      <span class="f5ec-sale-tag">Распродажа</span>
+      <span class="f5ec-sale-title">Удивительный ноябрь</span>
+      <span class="f5ec-sale-desc">Суперцены на&nbsp;мастер-классы и&nbsp;игры F5GAME.RU. При&nbsp;покупке любого продукта — 3&nbsp;книги-практикума Ольги&nbsp;Грищенко в&nbsp;подарок</span>
+    </span>
+    <span class="f5ec-sale-btn">Подробнее</span>
+  </a>
+
   <div class="f5ec-month-grid">
 
     <div class="f5ec-month-card">
-      <p class="f5ec-month-title">Сентябрь 2026</p>
+      <p class="f5ec-month-title">Ноябрь 2026</p>
       <div class="f5ec-weekdays">
         <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
       </div>
       <div class="f5ec-days">
         <div class="f5ec-day f5ec-empty"></div>
-        <div class="f5ec-day f5ec-event f5ec-event-price" tabindex="0" aria-label="Повышение цен на интенсивы, 1 сентября">
-          1
-          <span class="f5ec-tip f5ec-tip-left f5ec-tip-down f5ec-tip-wide">
-            <span class="f5ec-tip-body">
-              <span class="f5ec-tip-tag f5ec-tip-tag-malinovy">Повышение цен</span>
-              <span class="f5ec-tip-title">Повышение цен на интенсивы</span>
-              <span class="f5ec-price-list">
-                <a class="f5ec-price-item" href="https://f5game.site/lime?utm_source=calendar" target="_blank" rel="noopener">
-                  <span class="f5ec-price-item-name">Как завоевать клиентов?</span>
-                  <span class="f5ec-price-item-desc">Большое исследование применения успеха LIME для экспертов</span>
-                </a>
-                <a class="f5ec-price-item" href="https://f5game.ru/vibecoding?utm_source=calendar" target="_blank" rel="noopener">
-                  <span class="f5ec-price-item-name">Сайт за 1 вечер</span>
-                  <span class="f5ec-price-item-desc">Как создать сайт, приглашающий на ваше мероприятие</span>
-                </a>
-                <a class="f5ec-price-item" href="https://f5game.site/presentation?utm_source=calendar" target="_blank" rel="noopener">
-                  <span class="f5ec-price-item-name">Красивые презентации</span>
-                  <span class="f5ec-price-item-desc">Как оформлять свои экспертные выступления так, чтобы превращать слушателей в клиентов</span>
-                </a>
-                <a class="f5ec-price-item" href="https://f5game.site/expert-tests?utm_source=calendar" target="_blank" rel="noopener">
-                  <span class="f5ec-price-item-name">Экспертные тесты</span>
-                  <span class="f5ec-price-item-desc">Как создать инструмент диагностики, усиливающий ваш личный бренд и продающий ваши услуги вместо вас</span>
-                  <span class="f5ec-price-item-note">Можно попасть онлайн — 5 сентября, 10:00 МСК</span>
-                </a>
-              </span>
-            </span>
-          </span>
-        </div>
-        <div class="f5ec-day">2</div>
-        <a class="f5ec-day f5ec-event" href="https://f5game.site/forma/pay/map_role?utm_source=calendar" target="_blank" rel="noopener" aria-label="Карта ролей и интересов — практика с Ольгой, 3 сентября, 18:00 МСК">
-          3
-          <span class="f5ec-tip f5ec-tip-center f5ec-tip-down">
-            <img class="f5ec-tip-img" src="https://static.tildacdn.com/tild6239-6665-4835-a165-653166383237/_2-23.png" alt="">
-            <span class="f5ec-tip-body">
-              <span class="f5ec-tip-tag">Интенсив</span>
-              <span class="f5ec-tip-title">Карта ролей и интересов — практика с Ольгой</span>
-              <span class="f5ec-tip-meta">3 сентября · 18:00 МСК</span>
-            </span>
-          </span>
-        </a>
-        <div class="f5ec-day">4</div>
-        <a class="f5ec-day f5ec-event" href="https://f5game.site/forma/pay/test-ekspert?utm_source=calendar" target="_blank" rel="noopener" aria-label="Экспертные тесты, 5 сентября, 10:00 МСК">
-          5
-          <span class="f5ec-tip f5ec-tip-right f5ec-tip-down">
-            <img class="f5ec-tip-img" src="https://static.tildacdn.com/tild3431-6262-4764-a338-643038323338/_2-31_2.png" alt="">
-            <span class="f5ec-tip-body">
-              <span class="f5ec-tip-tag">Интенсив</span>
-              <span class="f5ec-tip-title">Экспертные тесты</span>
-              <span class="f5ec-tip-meta">5 сентября (сб) · 10:00 МСК</span>
-            </span>
-          </span>
-        </a>
-        <div class="f5ec-day">6</div>
-        <div class="f5ec-day">7</div>
-        <div class="f5ec-day">8</div>
-        <div class="f5ec-day">9</div>
-        <div class="f5ec-day">10</div>
-        <div class="f5ec-day">11</div>
-        <div class="f5ec-day">12</div>
-        <div class="f5ec-day">13</div>
-        <div class="f5ec-day">14</div>
-        <div class="f5ec-day">15</div>
-        <div class="f5ec-day">16</div>
-        <a class="f5ec-day f5ec-event" href="https://f5game.site/forma/pay/hypotheses?utm_source=calendar" target="_blank" rel="noopener" aria-label="Практика (гипотеза), 17 сентября, 18:00 МСК">
-          17
-          <span class="f5ec-tip f5ec-tip-center">
-            <span class="f5ec-tip-body">
-              <span class="f5ec-tip-tag">Гипотеза</span>
-              <span class="f5ec-tip-title">Практика</span>
-              <span class="f5ec-tip-meta">17 сентября (чт) · 18:00 МСК</span>
-            </span>
-          </span>
-        </a>
-        <div class="f5ec-day">18</div>
-        <a class="f5ec-day f5ec-event" href="https://f5game.ru/explorable_explanations1?utm_source=calendar" target="_blank" rel="noopener" aria-label="Исследуемые объяснения — практика, 19 сентября, 10:00 МСК">
-          19
-          <span class="f5ec-tip f5ec-tip-right">
-            <span class="f5ec-tip-body">
-              <span class="f5ec-tip-tag">Интенсив</span>
-              <span class="f5ec-tip-title">Исследуемые объяснения — практика</span>
-              <span class="f5ec-tip-meta">19 сентября (сб) · 10:00 МСК</span>
-            </span>
-          </span>
-        </a>
-        <div class="f5ec-day">20</div>
-        <div class="f5ec-day">21</div>
-        <div class="f5ec-day">22</div>
-        <div class="f5ec-day">23</div>
-        <div class="f5ec-day">24</div>
-        <div class="f5ec-day">25</div>
-        <a class="f5ec-day f5ec-event" href="https://f5game.site/forma/pay/hypotheses?utm_source=calendar" target="_blank" rel="noopener" aria-label="Практика (гипотеза), 26 сентября, 10:00 МСК">
-          26
-          <span class="f5ec-tip f5ec-tip-right">
-            <span class="f5ec-tip-body">
-              <span class="f5ec-tip-tag">Гипотеза</span>
-              <span class="f5ec-tip-title">Практика</span>
-              <span class="f5ec-tip-meta">26 сентября (сб) · 10:00 МСК</span>
-            </span>
-          </span>
-        </a>
-        <div class="f5ec-day">27</div>
-        <div class="f5ec-day">28</div>
-        <div class="f5ec-day">29</div>
-        <div class="f5ec-day">30</div>
-      </div>
-    </div>
-
-    <div class="f5ec-month-card">
-      <p class="f5ec-month-title">Октябрь 2026</p>
-      <div class="f5ec-weekdays">
-        <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
-      </div>
-      <div class="f5ec-days">
+        <div class="f5ec-day f5ec-empty"></div>
+        <div class="f5ec-day f5ec-empty"></div>
         <div class="f5ec-day f5ec-empty"></div>
         <div class="f5ec-day f5ec-empty"></div>
         <div class="f5ec-day f5ec-empty"></div>
@@ -466,7 +423,101 @@
         <div class="f5ec-day">7</div>
         <div class="f5ec-day">8</div>
         <div class="f5ec-day">9</div>
-        <div class="f5ec-day">10</div>
+        <a class="f5ec-day f5ec-event" href="https://f5game.site/expert-cabinet?utm_source=calendar" target="_blank" rel="noopener" aria-label="Экспертный кабинет, 10 ноября, 18:00 МСК">
+          10
+          <span class="f5ec-tip f5ec-tip-left">
+            <span class="f5ec-tip-body">
+              <span class="f5ec-tip-tag">Интенсив</span>
+              <span class="f5ec-tip-title">Экспертный кабинет — создаём красивое виртуальное пространство для онлайн-консультаций</span>
+              <span class="f5ec-tip-meta">10 ноября (вт) · 18:00 МСК — 2 день, реализация</span>
+            </span>
+          </span>
+        </a>
+        <div class="f5ec-day">11</div>
+        <a class="f5ec-day f5ec-event" href="https://f5game.site/forma/pay/ekspert-gide?utm_source=calendar" target="_blank" rel="noopener" aria-label="Экспертные гайды, 12 ноября">
+          12
+          <span class="f5ec-tip f5ec-tip-center f5ec-tip-down">
+            <span class="f5ec-tip-body">
+              <span class="f5ec-tip-tag">Курс-практикум</span>
+              <span class="f5ec-tip-title">Экспертные гайды — пишем продающий экспертный гайд и осваиваем нейросети для оформления гайдов и афиш мероприятий</span>
+              <span class="f5ec-tip-meta">12 и 19 ноября — двухдневный курс-практикум</span>
+            </span>
+          </span>
+        </a>
+        <div class="f5ec-day">13</div>
+        <div class="f5ec-day">14</div>
+        <div class="f5ec-day">15</div>
+        <div class="f5ec-day">16</div>
+        <div class="f5ec-day">17</div>
+        <div class="f5ec-day">18</div>
+        <a class="f5ec-day f5ec-event" href="https://f5game.site/forma/pay/ekspert-gide?utm_source=calendar" target="_blank" rel="noopener" aria-label="Экспертные гайды, 19 ноября">
+          19
+          <span class="f5ec-tip f5ec-tip-center">
+            <span class="f5ec-tip-body">
+              <span class="f5ec-tip-tag">Курс-практикум</span>
+              <span class="f5ec-tip-title">Экспертные гайды — пишем продающий экспертный гайд и осваиваем нейросети для оформления гайдов и афиш мероприятий</span>
+              <span class="f5ec-tip-meta">12 и 19 ноября — двухдневный курс-практикум</span>
+            </span>
+          </span>
+        </a>
+        <div class="f5ec-day">20</div>
+        <div class="f5ec-day">21</div>
+        <div class="f5ec-day">22</div>
+        <a class="f5ec-day f5ec-event" href="https://f5game.site/system?utm_source=calendar" target="_blank" rel="noopener" aria-label="Система продаж в новой реальности, старт 23 ноября">
+          23
+          <span class="f5ec-tip f5ec-tip-left">
+            <span class="f5ec-tip-body">
+              <span class="f5ec-tip-tag">Авторский курс</span>
+              <span class="f5ec-tip-title">Система продаж в новой реальности</span>
+              <span class="f5ec-tip-meta">Старт обучения — 23 ноября (пн)</span>
+            </span>
+          </span>
+        </a>
+        <div class="f5ec-day">24</div>
+        <div class="f5ec-day">25</div>
+        <div class="f5ec-day">26</div>
+        <div class="f5ec-day">27</div>
+        <div class="f5ec-day">28</div>
+        <div class="f5ec-day">29</div>
+        <div class="f5ec-day">30</div>
+      </div>
+    </div>
+
+    <div class="f5ec-month-card">
+      <p class="f5ec-month-title">Декабрь 2026</p>
+      <div class="f5ec-weekdays">
+        <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+      </div>
+      <div class="f5ec-days">
+        <div class="f5ec-day f5ec-empty"></div>
+        <div class="f5ec-day">1</div>
+        <div class="f5ec-day">2</div>
+        <a class="f5ec-day f5ec-event" href="https://f5game.site/forma/pay/dialog-frame?utm_source=calendar" target="_blank" rel="noopener" aria-label="Как управлять диалогом с помощью фреймов, 3 декабря">
+          3
+          <span class="f5ec-tip f5ec-tip-center f5ec-tip-down">
+            <span class="f5ec-tip-body">
+              <span class="f5ec-tip-tag">Интенсив</span>
+              <span class="f5ec-tip-title">Как управлять диалогом с помощью фреймов</span>
+              <span class="f5ec-tip-meta">3 и 10 декабря — последний интенсив для экспертов в этом году</span>
+            </span>
+          </span>
+        </a>
+        <div class="f5ec-day">4</div>
+        <div class="f5ec-day">5</div>
+        <div class="f5ec-day">6</div>
+        <div class="f5ec-day">7</div>
+        <div class="f5ec-day">8</div>
+        <div class="f5ec-day">9</div>
+        <a class="f5ec-day f5ec-event" href="https://f5game.site/forma/pay/dialog-frame?utm_source=calendar" target="_blank" rel="noopener" aria-label="Как управлять диалогом с помощью фреймов, 10 декабря">
+          10
+          <span class="f5ec-tip f5ec-tip-center f5ec-tip-down">
+            <span class="f5ec-tip-body">
+              <span class="f5ec-tip-tag">Интенсив</span>
+              <span class="f5ec-tip-title">Как управлять диалогом с помощью фреймов</span>
+              <span class="f5ec-tip-meta">3 и 10 декабря — последний интенсив для экспертов в этом году</span>
+            </span>
+          </span>
+        </a>
         <div class="f5ec-day">11</div>
         <div class="f5ec-day">12</div>
         <div class="f5ec-day">13</div>
@@ -488,7 +539,6 @@
         <div class="f5ec-day">29</div>
         <div class="f5ec-day">30</div>
         <div class="f5ec-day">31</div>
-        <div class="f5ec-day f5ec-empty"></div>
       </div>
     </div>
 

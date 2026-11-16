@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Домашнее задание: ваша первая начитка — TSSS</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&display=swap');
+
+  :root{
+    --bg: #1F1E1D;
+    --bg-card: #1b1d25;
+    --accent: #f2a93b;
+    --accent-dim: #7a5a24;
+    --text: #f4f2ee;
+    --text-dim: #a7a7b0;
+    --border: rgba(242,169,59,.28);
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Montserrat',sans-serif;
+    font-size:16px;
+    line-height:1.5;
+  }
+
+  .wrap{
+    max-width:860px;
+    margin:0 auto;
+    padding:56px 24px 80px;
+  }
+
+  .lead{
+    color:var(--text-dim);
+    font-size:18px;
+    max-width:100%;
+    margin:0 0 44px;
+  }
+
+  .lead.top{
+    color:var(--text);
+    font-size:clamp(22px, 3.2vw, 29px);
+    font-weight:800;
+    max-width:720px;
+    line-height:1.3;
+  }
+
+  h2{
+    font-weight:800;
+    text-transform:uppercase;
+    font-size:clamp(26px, 3.6vw, 34px);
+    letter-spacing:.01em;
+    margin:0 0 22px;
+  }
+
+  .video-grid{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    margin-bottom:56px;
+  }
+
+  .video-card{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:26px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .video-card .icon{
+    width:48px;
+    height:48px;
+    border-radius:12px;
+    background:rgba(242,169,59,.12);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+  }
+
+  .video-card h3{
+    font-size:19px;
+    font-weight:700;
+    margin:0;
+    text-transform:none;
+  }
+
+  .video-card .filler{
+    flex-grow:1;
+  }
+
+  .video-embed{
+    position:relative;
+    width:100%;
+    padding-top:56.25%;
+    border-radius:12px;
+    overflow:hidden;
+    background:#000;
+  }
+
+  .video-embed iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    background:var(--accent);
+    color:#181818;
+    font-weight:700;
+    font-size:16px;
+    text-decoration:none;
+    padding:14px 24px;
+    border-radius:10px;
+    transition:opacity .15s ease;
+  }
+
+  .btn:hover{ opacity:.88; }
+
+  .btn.disabled{
+    background:transparent;
+    border:1px dashed var(--border);
+    color:var(--text-dim);
+    cursor:default;
+    pointer-events:none;
+  }
+
+  .section{
+    margin-bottom:52px;
+  }
+
+  .steps{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .step{
+    display:flex;
+    gap:18px;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px 22px;
+  }
+
+  .step .num{
+    flex:none;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:var(--accent);
+    color:#181818;
+    font-weight:800;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+  }
+
+  .step .body h4{
+    margin:0 0 6px;
+    font-size:17px;
+    font-weight:700;
+  }
+
+  .step .body p{
+    margin:0 0 10px;
+    color:var(--text-dim);
+    font-size:15.5px;
+  }
+
+  .step .body p:last-child{ margin-bottom:0; }
+
+  .step a.inline-link{
+    color:var(--accent);
+    font-weight:700;
+    text-decoration:none;
+    word-break:break-all;
+  }
+
+  .step a.inline-link:hover{ text-decoration:underline; }
+
+  .summary{
+    background:rgba(242,169,59,.08);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px 24px;
+    font-size:15.5px;
+    color:var(--text-dim);
+    margin-top:10px;
+  }
+
+  .summary b{ color:var(--text); }
+
+  .done{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:700;
+    font-size:17px;
+    color:var(--accent);
+    margin-top:36px;
+  }
+
+  .note{
+    margin-top:18px;
+    padding:20px 24px;
+    border-left:3px solid var(--accent);
+    background:rgba(242,169,59,.06);
+    border-radius:0 12px 12px 0;
+    color:var(--text-dim);
+    font-size:16px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="section">
+    <h2>🎙 Домашнее задание: ваша первая начитка</h2>
+    <p class="lead" style="margin-bottom:26px;">Выполните задание по инструкции и отправьте свою запись на проверку, чтобы получить обратную связь</p>
+
+    <div class="note" style="margin-top:0; margin-bottom:26px;">
+      <b>Важно!</b> Если у вас остались вопросы, что-то непонятно или не получится сделать запись — не переживайте🙏👇
+      <br><br>
+      Кураторы обязательно свяжутся с вами 23 сентября в порядке очередности и во всем помогут разобраться😍
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="body">
+          <h4>Скачайте фрагмент текста для начитки</h4>
+          <p><a class="inline-link" href="https://tsss.site/pl/fileservice/user/file/download/h/bd8f4cc645baf8be78a0d742fdafeaba.pdf" target="_blank" rel="noopener">👉 Скачать текст</a></p>
+          <p>Прочитайте текст несколько раз перед записью и подготовьтесь к начитке.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">2</div>
+        <div class="body">
+          <h4>Запишите свою начитку</h4>
+          <p><a class="inline-link" href="https://timbrica.com/ru/dictaphone" target="_blank" rel="noopener">👉 Открыть онлайн-диктофон</a></p>
+          <p>Запишите фрагмент, сохраните в формате WAV или другим удобным способом</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">3</div>
+        <div class="body">
+          <h4>Загрузите запись на диск</h4>
+          <p>Загрузите сохранённый файл на Google, Яндекс Диск или другой облачный диск</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">4</div>
+        <div class="body">
+          <h4>Откройте доступ по ссылке</h4>
+          <p>В настройках файла обязательно установите доступ: «Всем, у кого есть ссылка».</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">5</div>
+        <div class="body">
+          <h4>Скопируйте и проверьте ссылку</h4>
+          <p>Убедитесь, что запись открывается и её можно прослушать без запроса доступа.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">6</div>
+        <div class="body">
+          <h4>Отправьте работу на проверку куратору (если он уже с вами связался) или в окно диалога, который открылся по этой ссылке</h4>
+          <p><a class="inline-link" href="#forma" rel="noopener">👉 Отправить работу</a></p>
+        </div>
+      </div>
+    </div>
+
+    <p class="lead top">Видео инструкция как по шагам сделать запись на компьютере или на телефоне без сложных программ.</p>
+
+    <div class="video-grid">
+      <div class="video-card">
+        <h3>Как сделать запись с компьютера</h3>
+        <div class="video-embed">
+          <iframe src="https://kinescope.io/embed/dm4tEx5UdkoU2ggRetSR4a" allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write;" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="video-card">
+        <h3>Как сделать запись с телефона</h3>
+        <div class="video-embed">
+          <iframe src="https://kinescope.io/embed/2Y1N6UBUgxgZJ3abW518aV" allow="autoplay; fullscreen; picture-in-picture; encrypted-media; gyroscope; accelerometer; clipboard-write;" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="done">✅ Готово! Ваша работа отправлена экспертам на прослушивание.</div>
+
+    <div class="summary">
+      <b>Коротко:</b> скачать текст → записать начитку → сохранить WAV → загрузить на диск → открыть доступ → отправить ссылку.
+    </div>
+
+    <div class="note">
+      Не стремитесь сделать идеально с первого раза. Это тест-драйв — возможность попробовать себя в озвучке и получить профессиональную обратную связь по своей первой работе.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

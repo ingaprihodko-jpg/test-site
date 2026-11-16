@@ -1,0 +1,338 @@
+<!-- Тест «Как ранний опыт отвержения влияет на ваши отношения?» · ОВ3 Сценарии (Эрскин). Вставляется в HTML-блок GetCourse.
+     Текст — из документа «Сценарии», вкладки «ТЕСТ НА ГК ОВ3 РЕГА» / «ТЕСТ НА ГК ОВ3 КУРС».
+     Сохранение в карточку пользователя: ниже на той же странице стандартная форма GetCourse
+     с доп. полем пользователя (плейсхолдер ovt_result). Скрипт найдёт форму, спрячет это поле, впишет туда баллы
+     и покажет форму перед результатом — результат открывается после отправки формы. Нет формы — результат сразу.
+     Призыв: до 30.10.2026 00:00 МСК — регистрация на вебинар 29.10, после — приглашение на курс.
+     Проверка призыва вручную: ?ovt_cta=web или ?ovt_cta=course в адресе страницы. -->
+<style>
+.ovt{--navy:#13283c;--navy2:#0c1e30;--orange:#f4783a;--cream:#f8f3ec;--ink:#172337;--line:#d8d6d0;--muted:#667080;
+  background:var(--cream);color:var(--ink);margin:0;font-family:Arial,Helvetica,sans-serif !important;font-size:16px;line-height:1.4;text-align:left}
+.ovt *{box-sizing:border-box;font-family:inherit}
+.ovt :where(h1,h2,h3,p,ul,li,fieldset,legend){margin:0;padding:0}
+.ovt button{font-family:Arial,Helvetica,sans-serif !important}
+.ovt h1,.ovt h2,.ovt .ovt-score b{font-family:Georgia,serif !important}
+.ovt [hidden]{display:none !important}
+
+.ovt .ovt-hero{background:var(--navy);color:#fff;text-align:center;padding:88px 24px 96px}
+.ovt .ovt-eyebrow,.ovt .ovt-label{letter-spacing:1.8px;color:var(--orange);font-size:12px;font-weight:700;text-transform:uppercase}
+.ovt .ovt-hero h1{letter-spacing:-1.8px;margin:18px auto 20px;max-width:860px;font-size:clamp(36px,5.2vw,62px);line-height:1.06;color:#fff;font-weight:700}
+.ovt .ovt-facts{color:#d6e0e7;font-size:15px;margin:0 0 26px;font-style:italic}
+.ovt .ovt-hero p{color:#e4eaf0;max-width:640px;margin:0 auto 14px;font-size:18px;line-height:1.5}
+
+.ovt .ovt-quiz{max-width:800px;margin:auto;padding:60px 24px 80px}
+.ovt .ovt-section{margin:0 0 56px}
+.ovt .ovt-section>.ovt-label{margin:0 0 22px}
+.ovt .ovt-q{border:0;margin:0 0 34px;padding:0;min-width:0}
+.ovt .ovt-q legend{display:block;width:100%;font-size:19px;line-height:1.4;font-weight:700;color:var(--ink);margin:0 0 14px}
+.ovt .ovt-q legend span{color:var(--orange);margin-right:6px}
+.ovt .ovt-q.ovt-missing legend{color:#c0392b}
+.ovt .ovt-choices{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.ovt .ovt-choice{border:1px solid var(--line);text-align:left;color:var(--ink);cursor:pointer;background:#fff;border-radius:4px;padding:13px 14px;font-size:15px;line-height:1.3;transition:border-color .15s,background-color .15s}
+.ovt .ovt-choice:hover{border-color:#b9b5ad}
+.ovt .ovt-choice.ovt-active{border:2px solid var(--orange);background:#fff9f5;padding:12px 13px}
+.ovt .ovt-q.ovt-missing .ovt-choice{border-color:#e3a59d}
+.ovt .ovt-submit{text-align:center;margin-top:12px}
+.ovt .ovt-primary{display:inline-block;background:var(--orange) !important;color:#fff !important;cursor:pointer;border:0;border-radius:3px;padding:17px 28px;font-size:16px;font-weight:700;line-height:1.2;text-decoration:none !important;text-transform:uppercase;letter-spacing:.5px}
+.ovt .ovt-primary:hover{filter:brightness(1.05)}
+.ovt .ovt-hint{color:#c0392b;font-size:15px;margin-top:14px}
+
+.ovt .ovt-gate{max-width:800px;margin:auto;padding:60px 24px 80px}
+#ovt-gate .lt-block,#ovt-gate .lt-block-wrapper{background:transparent !important;padding:0 !important;margin:0 !important;box-shadow:none !important}
+#ovt-gate .container,#ovt-gate .row,#ovt-gate .block-box{width:auto !important;max-width:none !important;margin:0 !important;padding:0 !important;float:none !important}
+#ovt-gate .lt-form,#ovt-gate .lt-form *{font-family:Arial,Helvetica,sans-serif !important}
+#ovt-gate .builder-item{margin:0 0 12px !important;text-align:left !important}
+#ovt-gate .part-header{margin-bottom:28px !important}
+#ovt-gate .f-header,#ovt-gate .f-header p{font-family:Georgia,serif !important;font-size:clamp(28px,3.6vw,42px) !important;line-height:1.1 !important;letter-spacing:-1px !important;font-weight:700 !important;color:var(--ink) !important;text-align:left !important;margin:0 !important}
+#ovt-gate input.form-control,#ovt-gate input.f-input,#ovt-gate .lt-form input[type=text],#ovt-gate .lt-form input[type=email],#ovt-gate .lt-form input[type=tel]{height:auto !important;width:100% !important;display:block !important;box-sizing:border-box !important;min-height:56px !important;border:1px solid var(--line) !important;border-radius:4px !important;background:#fff !important;padding:16px 18px !important;font-size:16px !important;line-height:1.35 !important;color:var(--ink) !important;box-shadow:none !important}
+#ovt-gate .lt-form input:focus{border-color:var(--orange) !important;outline:none !important}
+#ovt-gate .part-button{margin-top:28px !important}
+#ovt-gate .f-btn,#ovt-gate .lt-form button[type=submit],#ovt-gate .lt-form .btn{background:var(--orange) !important;border:0 !important;border-radius:3px !important;color:#fff !important;padding:17px 28px !important;font-size:16px !important;font-weight:700 !important;line-height:1.2 !important;width:auto !important;height:auto !important;box-shadow:none !important;text-transform:uppercase !important;letter-spacing:.5px !important}
+#ovt-gate .form-result-block{font-size:15px;color:var(--muted)}
+
+.ovt .ovt-results{max-width:800px;margin:auto;padding:60px 24px 90px}
+.ovt .ovt-score{display:flex;align-items:baseline;gap:12px;margin:0 0 26px;color:var(--muted);font-size:17px}
+.ovt .ovt-score b{color:var(--orange);font-size:64px;line-height:1;letter-spacing:-2px}
+.ovt .ovt-res h2{font-size:clamp(28px,3.6vw,42px);line-height:1.12;letter-spacing:-1px;color:var(--ink);font-weight:700;margin:0 0 26px}
+.ovt .ovt-res h2 span{display:block;color:var(--orange);font-size:15px;letter-spacing:1.6px;font-family:Arial,Helvetica,sans-serif !important;text-transform:uppercase;margin:0 0 10px}
+.ovt .ovt-res p{font-size:18px;line-height:1.6;margin:0 0 18px;color:#2a3546}
+.ovt .ovt-note{color:var(--muted) !important;font-size:14px !important;font-style:italic;margin-top:26px !important}
+
+.ovt .ovt-cta{background:var(--navy);color:#fff;padding:44px 44px 48px;margin-top:48px;border-radius:4px}
+.ovt .ovt-cta h3{font-family:Georgia,serif !important;color:#fff;font-size:clamp(26px,3.2vw,36px);line-height:1.12;letter-spacing:-.8px;font-weight:700;margin:0 0 20px}
+.ovt .ovt-cta p{color:#e4eaf0;font-size:17px;line-height:1.55;margin:0 0 16px}
+.ovt .ovt-cta b{color:#fff}
+.ovt .ovt-cta ul{list-style:none;margin:0 0 18px;padding:0}
+.ovt .ovt-cta li{position:relative;padding-left:22px;color:#e4eaf0;font-size:17px;line-height:1.5;margin:0 0 10px}
+.ovt .ovt-cta li:before{content:"";position:absolute;left:0;top:10px;width:8px;height:8px;border-radius:50%;background:var(--orange)}
+.ovt .ovt-cta .ovt-primary{margin-top:14px}
+
+@media (max-width:680px){
+  .ovt .ovt-hero{padding:60px 20px 68px}
+  .ovt .ovt-hero h1{letter-spacing:-1px}
+  .ovt .ovt-hero p{font-size:17px}
+  .ovt .ovt-quiz,.ovt .ovt-gate,.ovt .ovt-results{padding:42px 18px 64px}
+  .ovt .ovt-choices{grid-template-columns:1fr 1fr}
+  .ovt .ovt-q legend{font-size:17px}
+  .ovt .ovt-res p,.ovt .ovt-cta p,.ovt .ovt-cta li{font-size:16px}
+  .ovt .ovt-cta{padding:30px 22px 34px;margin-left:-6px;margin-right:-6px}
+  .ovt .ovt-primary{display:block;width:100%;text-align:center}
+  .ovt .ovt-score b{font-size:54px}
+}
+[data-reveal]{opacity:1 !important;transform:translateY(0) !important}
+</style>
+
+<div class="ovt" id="ovt">
+  <section class="ovt-hero" id="ovt-start">
+    <div class="ovt-eyebrow">Тест</div>
+    <h1>Как&nbsp;ранний опыт отвержения влияет на&nbsp;ваши отношения?</h1>
+    <div class="ovt-facts">12&nbsp;вопросов · 3&nbsp;минуты</div>
+    <p>Иногда ранний опыт отвержения продолжает влиять на&nbsp;то, как&nbsp;мы&nbsp;воспринимаем себя, выбираем партнеров и&nbsp;строим близкие отношения.</p>
+    <p>Ответьте на&nbsp;12&nbsp;вопросов и&nbsp;узнайте, насколько вам&nbsp;знакомы переживания и&nbsp;реакции, которые могут быть связаны со&nbsp;сценарием отвержения.</p>
+  </section>
+
+  <section class="ovt-quiz" id="ovt-quiz">
+    <div class="ovt-section">
+      <div class="ovt-label">1. Сценарные убеждения</div>
+      <fieldset class="ovt-q" data-q="1"><legend><span>1.</span>Даже когда близкий человек проявляет ко&nbsp;мне любовь, мне бывает трудно поверить, что&nbsp;я&nbsp;действительно ему нужен(нужна).</legend></fieldset>
+      <fieldset class="ovt-q" data-q="2"><legend><span>2.</span>Когда важный для&nbsp;меня человек отдаляется, у&nbsp;меня возникает мысль, что&nbsp;со&nbsp;мной что-то не&nbsp;так.</legend></fieldset>
+      <fieldset class="ovt-q" data-q="3"><legend><span>3.</span>Мне бывает трудно поверить, что&nbsp;меня могут любить, даже когда я&nbsp;ничего специально для&nbsp;этого не&nbsp;делаю.</legend></fieldset>
+      <fieldset class="ovt-q" data-q="4"><legend><span>4.</span>В&nbsp;близких отношениях я&nbsp;часто ожидаю, что&nbsp;рано или&nbsp;поздно меня отвергнут или&nbsp;оставят.</legend></fieldset>
+    </div>
+    <div class="ovt-section">
+      <div class="ovt-label">2. Привычные реакции в&nbsp;отношениях</div>
+      <fieldset class="ovt-q" data-q="5"><legend><span>5.</span>Я&nbsp;стараюсь быть удобным(удобной), чтобы не&nbsp;вызвать недовольство близкого человека.</legend></fieldset>
+      <fieldset class="ovt-q" data-q="6"><legend><span>6.</span>Мне трудно прямо говорить о&nbsp;своих потребностях, потому что&nbsp;я&nbsp;опасаюсь негативной реакции.</legend></fieldset>
+      <fieldset class="ovt-q" data-q="7"><legend><span>7.</span>Когда я&nbsp;чувствую дистанцию со&nbsp;стороны партнёра, мне хочется срочно вернуть его&nbsp;внимание или&nbsp;расположение.</legend></fieldset>
+      <fieldset class="ovt-q" data-q="8"><legend><span>8.</span>Иногда я&nbsp;отстраняюсь первым(первой), чтобы не&nbsp;столкнуться с&nbsp;возможным отвержением.</legend></fieldset>
+    </div>
+    <div class="ovt-section">
+      <div class="ovt-label">3. Подкрепляющий опыт</div>
+      <fieldset class="ovt-q" data-q="9"><legend><span>9.</span>Одно проявление холодности или&nbsp;невнимания может надолго перечеркнуть для&nbsp;меня множество проявлений заботы.</legend></fieldset>
+      <fieldset class="ovt-q" data-q="10"><legend><span>10.</span>Когда другой человек не&nbsp;отвечает или&nbsp;ведёт себя непривычно, я&nbsp;представляю, что&nbsp;он&nbsp;потерял ко&nbsp;мне интерес.</legend></fieldset>
+      <fieldset class="ovt-q" data-q="11"><legend><span>11.</span>Я&nbsp;склонен(склонна) объяснять проявления любви и&nbsp;заботы обстоятельствами, вежливостью или&nbsp;чужой выгодой.</legend></fieldset>
+      <fieldset class="ovt-q" data-q="12"><legend><span>12.</span>Мне бывает легче поверить в&nbsp;признаки отвержения, чем в&nbsp;признаки того, что&nbsp;меня ценят и&nbsp;хотят быть рядом.</legend></fieldset>
+    </div>
+    <div class="ovt-submit">
+      <button class="ovt-primary" type="button" data-act="result">Посмотреть результат</button>
+      <div class="ovt-hint" id="ovt-hint" hidden></div>
+    </div>
+  </section>
+
+  <!-- форма GetCourse перед результатом: результат открывается после отправки -->
+  <section class="ovt-gate" id="ovt-gate" hidden></section>
+
+  <section class="ovt-results" id="ovt-results" hidden>
+    <div class="ovt-score"><b id="ovt-points">0</b><span id="ovt-points-word">баллов из&nbsp;36</span></div>
+
+    <div class="ovt-res" data-min="0" data-max="8">
+      <h2><span>0–8&nbsp;баллов</span>Сценарные проявления отвержения выражены слабо</h2>
+      <p>В&nbsp;ваших ответах редко встречаются убеждения и&nbsp;реакции, характерные для&nbsp;сценария отвержения. Возможно, вам&nbsp;достаточно легко доверять близким людям, принимать их&nbsp;внимание и&nbsp;заботу, не&nbsp;воспринимая временную дистанцию как&nbsp;угрозу отношениям.</p>
+      <p>В&nbsp;сценарной системе Ричарда Эрскина важно не&nbsp;только то, какой опыт человек получил в&nbsp;прошлом, но&nbsp;и&nbsp;какие выводы он&nbsp;сделал о&nbsp;себе и&nbsp;других людях, как&nbsp;привык действовать в&nbsp;отношениях и&nbsp;какой опыт замечает в&nbsp;настоящем.</p>
+      <p>Низкий результат не&nbsp;означает, что&nbsp;вы&nbsp;никогда не&nbsp;сталкивались с&nbsp;отвержением. Возможно, этот опыт не&nbsp;стал устойчивым организующим принципом ваших отношений или&nbsp;проявляется иначе, чем в&nbsp;предложенных вопросах.</p>
+    </div>
+    <div class="ovt-res" data-min="9" data-max="17">
+      <h2><span>9–17&nbsp;баллов</span>Некоторые проявления сценария отвержения вам&nbsp;знакомы</h2>
+      <p>В&nbsp;определённых ситуациях вы&nbsp;можете сомневаться в&nbsp;своей значимости для&nbsp;близких людей, опасаться потери отношений или&nbsp;болезненно реагировать на&nbsp;проявления холодности.</p>
+      <p>С&nbsp;точки зрения сценарной системы, за&nbsp;такими переживаниями могут стоять ранние выводы о&nbsp;себе и&nbsp;других: например, «Чтобы меня любили, я&nbsp;должен быть удобным» или&nbsp;«Если человек отдаляется, значит, я&nbsp;ему больше не&nbsp;нужен».</p>
+      <p>Эти убеждения могут влиять на&nbsp;ваше поведение: побуждать сильнее добиваться внимания, скрывать свои потребности или&nbsp;заранее готовиться к&nbsp;отвержению.</p>
+      <p>При&nbsp;этом важно исследовать не&nbsp;только сами убеждения, но&nbsp;и&nbsp;то, как&nbsp;они подкрепляются в&nbsp;сегодняшних отношениях. Иногда человек особенно остро замечает признаки дистанции, тогда как&nbsp;проявления заботы воспринимает как&nbsp;нечто случайное или&nbsp;недостаточно убедительное.</p>
+    </div>
+    <div class="ovt-res" data-min="18" data-max="26">
+      <h2><span>18–26&nbsp;баллов</span>Сценарные механизмы отвержения могут заметно влиять на&nbsp;ваши отношения</h2>
+      <p>Ваши ответы показывают, что&nbsp;страх отвержения, сомнения в&nbsp;собственной ценности и&nbsp;привычные способы защиты от&nbsp;возможной потери близости могут занимать заметное место в&nbsp;ваших отношениях.</p>
+      <p>В&nbsp;сценарной системе Ричарда Эрскина убеждения, поведение и&nbsp;подкрепляющий опыт образуют взаимосвязанную систему.</p>
+      <p>Например, человек убеждён: «Меня рано или&nbsp;поздно оставят». Поэтому он&nbsp;постоянно ищет подтверждения любви, болезненно реагирует на&nbsp;дистанцию партнёра или&nbsp;старается не&nbsp;проявлять свои потребности. Возникающее напряжение может влиять на&nbsp;отношения, а&nbsp;любые признаки охлаждения воспринимаются как&nbsp;доказательство первоначального убеждения.</p>
+      <p>Так&nbsp;сценарий продолжает подкреплять сам себя, даже если обстоятельства жизни давно изменились.</p>
+      <p>В&nbsp;работе со&nbsp;сценарием важно понять не&nbsp;только, откуда возник страх отвержения, но&nbsp;и <b>каким образом он&nbsp;продолжает поддерживаться сегодня</b>.</p>
+    </div>
+    <div class="ovt-res" data-min="27" data-max="36">
+      <h2><span>27–36&nbsp;баллов</span>Переживания отвержения могут быть устойчивой частью вашего сценария отношений</h2>
+      <p>В&nbsp;ваших ответах часто встречаются страх потерять близкого человека, сомнения в&nbsp;том, что&nbsp;вас&nbsp;можно по-настоящему любить, и&nbsp;привычные способы защиты от&nbsp;возможного отвержения.</p>
+      <p>Возможно, даже в&nbsp;отношениях, где есть любовь и&nbsp;забота, вам&nbsp;трудно почувствовать себя в&nbsp;безопасности. Вы&nbsp;можете особенно остро замечать признаки холодности, ожидать, что&nbsp;вас&nbsp;оставят, или&nbsp;стараться заслужить любовь, отказываясь от&nbsp;собственных потребностей.</p>
+      <p>В&nbsp;сценарной системе Ричарда Эрскина подобные переживания рассматриваются не&nbsp;как&nbsp;отдельные реакции, а&nbsp;как&nbsp;возможные элементы целостной системы, сформировавшейся на&nbsp;основе жизненного опыта.</p>
+      <p>Ранние переживания отвержения могли повлиять на&nbsp;представления о&nbsp;себе и&nbsp;других людях, способы выстраивать близость и&nbsp;ожидания от&nbsp;отношений. А&nbsp;привычные реакции и&nbsp;интерпретации происходящего могут продолжать подтверждать эти представления.</p>
+      <p>При&nbsp;этом сценарий&nbsp;— не&nbsp;просто набор негативных убеждений. Он&nbsp;может выполнять защитную функцию: помогать заранее готовиться к&nbsp;боли, избегать уязвимости и&nbsp;сохранять ощущение предсказуемости.</p>
+      <p><b>Поэтому изменение сценария предполагает не&nbsp;только понимание его&nbsp;причин, но&nbsp;и&nbsp;исследование того, от&nbsp;чего он&nbsp;защищает, как&nbsp;поддерживается и&nbsp;какой новый опыт отношений человек может постепенно научиться принимать.</b></p>
+    </div>
+    <p class="ovt-note">* Это&nbsp;авторский тест для&nbsp;саморефлексии, а&nbsp;не&nbsp;диагностика травмы отвержения. Диапазоны баллов условные.</p>
+
+    <!-- призыв до вебинара (ОВ3 РЕГА) -->
+    <div class="ovt-cta" data-cta="web" hidden>
+      <h3>Как&nbsp;перестать воспроизводить привычный сценарий отвержения?</h3>
+      <p>Возможно, вы&nbsp;узнали в&nbsp;результатах теста свои привычные реакции. Но&nbsp;как&nbsp;они сформировались? Почему сохраняются спустя годы? И&nbsp;что&nbsp;помогает изменить сценарий, который продолжает влиять на&nbsp;отношения?</p>
+      <p><b>29&nbsp;октября в&nbsp;19:00&nbsp;МСК</b> приглашаем вас&nbsp;на&nbsp;открытый вебинар Ричарда Эрскина&nbsp;— создателя интегративной психотерапии, сфокусированной на&nbsp;отношениях, и&nbsp;одного из&nbsp;разработчиков модели сценарной системы.</p>
+      <p>Вы&nbsp;узнаете, как&nbsp;опыт раннего отвержения может влиять на&nbsp;жизненный сценарий, каким образом он&nbsp;поддерживается и&nbsp;как&nbsp;с&nbsp;ним работают в&nbsp;интегративной психотерапии.</p>
+      <p><b>В&nbsp;программе&nbsp;— лекция и&nbsp;демонстрационная сессия.</b></p>
+      <a class="ovt-primary" data-link="web" href="#" target="_blank" rel="noopener">Зарегистрироваться на&nbsp;вебинар</a>
+    </div>
+
+    <!-- призыв после вебинара (ОВ3 КУРС) -->
+    <div class="ovt-cta" data-cta="course" hidden>
+      <h3>Научитесь работать с&nbsp;жизненными сценариями клиентов</h3>
+      <p>На&nbsp;онлайн-курсе повышения квалификации <b>«Свобода выбирать. Терапия повторяющихся сценариев»</b> вы&nbsp;изучите сценарную систему и&nbsp;освоите пошаговый алгоритм работы с&nbsp;ней.</p>
+      <p><b>Что&nbsp;вы&nbsp;разберете на&nbsp;курсе:</b></p>
+      <ul>
+        <li>Как&nbsp;распознавать сценарий за&nbsp;повторяющимися проблемами клиента и&nbsp;находить точку входа в&nbsp;терапию</li>
+        <li>Как&nbsp;работать со&nbsp;сценарными убеждениями, ранними решениями, интроектами и&nbsp;привычными моделями поведения</li>
+        <li>Почему клиент продолжает воспроизводить прежний сценарий, даже когда понимает причины своих трудностей</li>
+        <li>Как&nbsp;выстраивать последовательную стратегию терапии и&nbsp;сопровождать клиента к&nbsp;новым способам взаимодействия с&nbsp;собой и&nbsp;окружающими</li>
+      </ul>
+      <p>В&nbsp;программе&nbsp;— теория, демонстрационные сессии, практические занятия и&nbsp;супервизии. Вы&nbsp;получите инструменты, которые можно интегрировать в&nbsp;работу в&nbsp;разных терапевтических подходах.</p>
+      <p><b>Ваши преподаватели:</b></p>
+      <p><b>Ричард Эрскин</b>&nbsp;— интегративный психотерапевт, создатель концепции сценарной системы.</p>
+      <p><b>Елена Станковская</b>&nbsp;— интегративный психотерапевт с&nbsp;опытом более 15&nbsp;лет, ученица Ричарда Эрскина.</p>
+      <p>Обучение проходит с&nbsp;23&nbsp;ноября по&nbsp;1&nbsp;марта в&nbsp;онлайн-формате.</p>
+      <a class="ovt-primary" data-link="course" href="#" target="_blank" rel="noopener">Выбрать тариф</a>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  var root=document.getElementById('ovt'); if(!root||root.dataset.init) return; root.dataset.init='1';
+
+  // Ссылки призывов
+  var LINKS={
+    web:'https://life-practic.ru/course/recurring-patterns/freeweb3/?utm_source=site&utm_medium=smm&utm_campaign=none_ov3_scenarios_e.s._none&utm_content=article&utm_group=organic',
+    course:'https://life-practic.ru/course/recurring-patterns/?utm_source=site&utm_medium=smm&utm_campaign=none_direct-ads_scenarios_e.s._none&utm_content=article&utm_group=organic'
+  };
+  // Смена призыва: с 30 октября 2026, 00:00 МСК — приглашение на курс
+  var SWITCH_AT=Date.parse('2026-10-30T00:00:00+03:00');
+  var ANSWERS=['Никогда или почти никогда','Редко','Иногда','Часто или почти всегда'];
+  // Поле формы GetCourse, куда пишется результат (ищется по плейсхолдеру)
+  var GC_FIELDS={result:'ovt_result'};
+
+  var st={answers:{},unlocked:false,shown:false};
+  function $(id){ return document.getElementById(id); }
+
+  function ctaMode(){
+    var m=(location.search.match(/[?&]ovt_cta=(web|course)/)||[])[1];
+    return m||(Date.now()>=SWITCH_AT?'course':'web');
+  }
+  [].forEach.call(root.querySelectorAll('[data-link]'),function(a){ a.href=LINKS[a.dataset.link]; });
+
+  // варианты ответа — одинаковые для всех вопросов, 0–3 балла
+  [].forEach.call(root.querySelectorAll('.ovt-q'),function(q){
+    var box=document.createElement('div'); box.className='ovt-choices';
+    ANSWERS.forEach(function(t,i){
+      var b=document.createElement('button'); b.type='button'; b.className='ovt-choice';
+      b.textContent=t; b.dataset.v=i; b.setAttribute('aria-pressed','false'); box.appendChild(b);
+    });
+    q.appendChild(box);
+  });
+
+  function total(){ var s=0; for(var k in st.answers) s+=st.answers[k]; return s; }
+  function plural(n){ var a=n%10,b=n%100; return a===1&&b!==11?'балл':a>=2&&a<=4&&(b<12||b>14)?'балла':'баллов'; }
+  function resultFor(n){
+    var hit=null;
+    [].forEach.call(root.querySelectorAll('.ovt-res'),function(r){ if(n>=+r.dataset.min&&n<=+r.dataset.max) hit=r; });
+    return hit;
+  }
+
+  function renderResult(){
+    var n=total(), res=resultFor(n), mode=ctaMode();
+    $('ovt-points').textContent=n;
+    $('ovt-points-word').textContent=plural(n)+' из 36';
+    [].forEach.call(root.querySelectorAll('.ovt-res'),function(r){ r.hidden=r!==res; });
+    [].forEach.call(root.querySelectorAll('[data-cta]'),function(c){ c.hidden=c.dataset.cta!==mode; });
+    return {score:n,title:res?res.querySelector('h2').textContent.replace(/^(\d+–\d+\sбаллов)/,'$1. ').replace(/\u00a0/g,' '):''};
+  }
+
+  // ---------- Запись результата в карточку пользователя через форму GetCourse ----------
+  function findGcForm(){
+    var inp=document.querySelector('input[placeholder="'+GC_FIELDS.result+'"],textarea[placeholder="'+GC_FIELDS.result+'"]');
+    return inp?inp.closest('form'):null;
+  }
+  function gcInput(form,key){ return form.querySelector('input[placeholder="'+GC_FIELDS[key]+'"],textarea[placeholder="'+GC_FIELDS[key]+'"]'); }
+  function serviceBox(el){ return el.closest('.f-input-wrapper,.form-group,.field-content')||el.parentElement; }
+  function hideServiceFields(form){
+    Object.keys(GC_FIELDS).forEach(function(k){ var el=gcInput(form,k); if(el) serviceBox(el).style.display='none'; });
+  }
+  function setVal(el,v){
+    if(!el) return;
+    // у доп. полей GetCourse видимый input без name, а отправляется скрытый formParams[userCustomFields][id] рядом
+    var wrap=el.closest('.custom-field'), hid=wrap&&wrap.querySelector('[name*="userCustomFields"]');
+    [el,hid].forEach(function(x){ if(!x) return; x.value=v; x.dispatchEvent(new Event('input',{bubbles:true})); x.dispatchEvent(new Event('change',{bubbles:true})); });
+  }
+  function fillGcForm(r){
+    var form=findGcForm(); if(!form) return false;
+    hideServiceFields(form);
+    // поле «Строка» в GetCourse короткое — баллы и название диапазона
+    setVal(gcInput(form,'result'),(r.score+' — '+r.title).slice(0,250));
+    if(!st.unlocked) restoreForm(form);
+    var block=form.closest('.lt-block')||form;
+    $('ovt-gate').appendChild(block); block.style.display='';
+    watchSubmit(form);
+    return true;
+  }
+  // после отправки GetCourse может спрятать поля или показать сообщение — возвращаем форму для повторной отправки
+  function restoreForm(form){
+    var service=[]; Object.keys(GC_FIELDS).forEach(function(k){ var el=gcInput(form,k); if(el) service.push(serviceBox(el)); });
+    [].forEach.call(form.querySelectorAll('[style*="display: none"],[style*="display:none"]'),function(el){
+      if(service.some(function(w){ return w===el||w.contains(el); })) return;
+      el.style.display='';
+    });
+    [].forEach.call(form.querySelectorAll('.form-result-block'),function(el){ el.innerHTML=''; });
+    [].forEach.call(form.querySelectorAll('button,[type=submit]'),function(el){ el.disabled=false; el.classList.remove('disabled'); });
+  }
+  // результат открывается после успешной отправки формы
+  function unlock(){ if(st.unlocked) return; st.unlocked=true; if(st.shown) show(); }
+  function watchSubmit(form){
+    if(form.dataset.ovtWatch) return; form.dataset.ovtWatch='1';
+    var hasErrors=function(){ return !!form.querySelector('.has-error,.error,.field-error:not(:empty)'); };
+    if(window.jQuery){
+      jQuery(document).ajaxComplete(function(e,xhr,opt){
+        if(!opt||!/block-public\/process/.test(opt.url||'')||xhr.status!==200) return;
+        var r=xhr.responseJSON; if(!r){ try{ r=JSON.parse(xhr.responseText); }catch(err){} }
+        if(r&&(r.success===false||r.errorMessage||r.errors)) return;
+        setTimeout(function(){ if(!hasErrors()) unlock(); },300);
+      });
+    } else {
+      form.addEventListener('submit',function(){ setTimeout(function(){ if(!hasErrors()) unlock(); },2000); });
+    }
+  }
+  function prepareGcForm(){
+    var form=findGcForm(); if(!form||root.contains(form)) return;
+    hideServiceFields(form);
+    var block=form.closest('.lt-block')||form; block.style.display='none';
+  }
+  prepareGcForm();
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',prepareGcForm);
+  window.addEventListener('load',prepareGcForm);
+
+  // ---------- Показ ----------
+  function show(){
+    var r=renderResult();
+    var gate=!st.unlocked&&fillGcForm(r);
+    $('ovt-gate').hidden=!gate;
+    $('ovt-results').hidden=gate;
+    ($('ovt-gate').hidden?$('ovt-results'):$('ovt-gate')).scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  root.addEventListener('click',function(e){
+    var c=e.target.closest('.ovt-choice');
+    if(c){
+      var q=c.closest('.ovt-q');
+      [].forEach.call(q.querySelectorAll('.ovt-choice'),function(b){ var on=b===c; b.classList.toggle('ovt-active',on); b.setAttribute('aria-pressed',on?'true':'false'); });
+      st.answers[q.dataset.q]=+c.dataset.v;
+      q.classList.remove('ovt-missing');
+      if(!root.querySelector('.ovt-q.ovt-missing')) $('ovt-hint').hidden=true;
+      return;
+    }
+    var b=e.target.closest('[data-act="result"]'); if(!b) return;
+    var missing=[].filter.call(root.querySelectorAll('.ovt-q'),function(q){ return !(q.dataset.q in st.answers); });
+    missing.forEach(function(q){ q.classList.add('ovt-missing'); });
+    if(missing.length){
+      $('ovt-hint').textContent='Ответьте, пожалуйста, на все вопросы: осталось '+missing.length+'.';
+      $('ovt-hint').hidden=false;
+      missing[0].scrollIntoView({behavior:'smooth',block:'center'});
+      return;
+    }
+    // если ответы поменяли после отправки формы — просим отправить ещё раз, чтобы перезаписать поле в карточке
+    if(st.shown&&st.lastScore!==total()) st.unlocked=false;
+    st.shown=true; st.lastScore=total();
+    show();
+  });
+})();
+</script>

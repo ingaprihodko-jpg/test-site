@@ -1,0 +1,135 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F4F1E7}
+.f5-root{
+  --f5-bg:#F4F1E7;
+  --f5-card:#FFFFFF;
+  --f5-ink:#262626;
+  --f5-ink-soft:#555555;
+  --f5-red:#C82925;
+  --f5-red-soft:rgba(200,41,37,.08);
+  --f5-violet:#706C91;
+  --f5-violet-deep:#4E4A6E;
+  --f5-sky:#8FB8DE;
+  --f5-max:1140px;
+  font-family:Manrope,sans-serif;font-size:18px;line-height:1.5;color:var(--f5-ink);
+  background:var(--f5-bg);
+}
+.f5-root *{box-sizing:border-box}
+.f5-root .f5-wrap{max-width:var(--f5-max);margin:0 auto;padding:0 16px}
+.f5-root .f5-sec{padding:24px 0}
+.f5-root .f5-hero+.f5-sec,.f5-root .f5-sec+.f5-sec{padding-top:0}
+.f5-root h1,.f5-root h2{font-weight:800;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.f5-root h1{font-size:30px;line-height:1.15}
+.f5-root h2{font-size:24px;line-height:1.25;text-align:center;margin-bottom:28px}
+.f5-root p{margin:0 0 16px;text-wrap:pretty}
+.f5-root p:last-child{margin-bottom:0}
+
+/* первый экран */
+.f5-root .f5-hero{padding:24px 0}
+.f5-root .f5-hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:center}
+.f5-root .f5-eyebrow{display:inline-block;margin:0 0 16px;padding:6px 14px;border-radius:999px;background:var(--f5-red-soft);color:var(--f5-red);font-weight:700;font-size:16px}
+.f5-root .f5-hero h1{margin-bottom:20px}
+.f5-root .f5-lead{font-size:18px;color:var(--f5-ink-soft)}
+.f5-root .f5-photo{max-width:440px;width:100%;margin:0 auto}
+.f5-root .f5-photo img{display:block;width:100%;height:auto}
+.f5-root .f5-hero .f5-btn{margin-top:24px}
+
+/* история сессии */
+.f5-root .f5-story{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.f5-root .f5-card{background:var(--f5-card);border-radius:20px;padding:24px 20px}
+.f5-root .f5-card-accent{background:var(--f5-red-soft);box-shadow:inset 0 0 0 2px rgba(200,41,37,.25)}
+.f5-root .f5-card-k{display:block;font-weight:800;font-size:18px;margin-bottom:8px;color:var(--f5-violet-deep)}
+
+/* подводка к видео */
+.f5-root .f5-watch{text-align:center;max-width:820px;margin:0 auto;font-weight:700;font-size:18px;line-height:1.45;text-wrap:pretty}
+.f5-root .f5-watch-ico{display:block;font-size:40px;line-height:1;margin-bottom:12px}
+
+/* место под видео (в GC — родной блок видео) */
+.f5-root .f5-video{margin:28px auto 0;max-width:900px;aspect-ratio:16/9;border-radius:20px;background:#1E1C2B;display:flex;align-items:center;justify-content:center;color:#fff}
+.f5-root .f5-play{width:76px;height:76px;border-radius:50%;background:var(--f5-red);display:flex;align-items:center;justify-content:center}
+.f5-root .f5-play::after{content:"";border-left:24px solid #fff;border-top:15px solid transparent;border-bottom:15px solid transparent;margin-left:6px}
+
+/* приглашение */
+.f5-root .f5-invite{background:linear-gradient(160deg,var(--f5-violet),var(--f5-violet-deep));color:#fff;border-radius:24px;padding:28px 20px;text-align:center}
+.f5-root .f5-invite h2{color:#fff;margin-bottom:20px}
+.f5-root .f5-invite p{max-width:760px;margin-left:auto;margin-right:auto}
+.f5-root .f5-gift{display:flex;align-items:center;gap:14px;max-width:760px;margin:24px auto 0;padding:16px 20px;border-radius:20px;background:rgba(255,255,255,.12);text-align:left}
+.f5-root .f5-gift-ico{flex:0 0 auto;font-size:32px;line-height:1}
+.f5-root .f5-gift p{margin:0;font-weight:700}
+.f5-root .f5-invite .f5-btn{margin-top:28px}
+.f5-root [hidden]{display:none!important}
+.f5-root .f5-dates{display:table;margin:24px auto 0;padding:8px 18px;border-radius:999px;background:#fff;color:var(--f5-violet-deep);font-weight:800;white-space:nowrap}
+
+.f5-root .f5-btn{display:inline-flex;align-items:center;justify-content:center;min-height:60px;padding:0 40px;border-radius:20px;background:var(--f5-red);color:#fff;font-weight:700;font-size:18px;text-decoration:none;transition:transform .15s,background-color .15s}
+.f5-root .f5-btn:hover{background:#B0221F}
+.f5-root .f5-btn:active{transform:scale(.97)}
+@media (max-width:767px){
+  .f5-root .f5-btn{width:100%;padding:0 12px;font-size:17px}
+  .f5-root .f5-invite{padding:28px 16px}
+  .f5-root .f5-invite .f5-btn{font-size:16px}
+  .f5-root .f5-invite p:not(.f5-dates){text-align:left}
+  .f5-root .f5-gift p:not(.f5-dates){text-align:center}
+  .f5-root .f5-gift{flex-direction:column;gap:8px;padding:16px;text-align:center}
+}
+@media (min-width:768px){
+  .f5-root .f5-sec{padding:28px 0}
+  .f5-root .f5-hero{padding:56px 0 28px}
+  .f5-root h1{font-size:44px}
+  .f5-root h2{font-size:32px;margin-bottom:40px}
+  .f5-root .f5-hero-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:48px}
+  .f5-root .f5-story{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+  .f5-root .f5-card{padding:32px}
+  .f5-root .f5-watch{font-size:24px}
+  .f5-root .f5-video{margin-top:40px}
+  .f5-root .f5-invite{padding:56px}
+  .f5-root .f5-invite h2{margin-bottom:24px}
+}
+</style>
+<style>body,.lite-page.block-set,.lt-raw-html,.lt-block-wrapper,.f5-root{font-family:'Manrope',sans-serif!important}[data-reveal]{opacity:1!important}.f5-root :where(p,li){text-wrap:pretty}.f5-root :where(h1,h2,h3){text-wrap:balance}</style>
+<div class="f5-root">
+
+  <section class="f5-hero">
+    <div class="f5-wrap">
+      <div class="f5-hero-grid">
+        <div>
+          <p class="f5-eyebrow">Отрывок из&nbsp;демосессии</p>
+          <h1>«Если&nbsp;я&nbsp;стану ближе к&nbsp;человеку, мне придётся отказаться от&nbsp;себя»</h1>
+          <p class="f5-lead">В&nbsp;демонстрационной сессии клиентка рассказывает о&nbsp;страхе, что&nbsp;близкие однажды поймут, что&nbsp;её нельзя любить, и&nbsp;оставят.</p>
+          <a class="f5-btn" data-cta="web" href="https://life-practic.ru/course/recurring-patterns/freeweb4/?utm_source=site&amp;utm_medium=smm&amp;utm_campaign=none_ov4_scenarios_e.s._none&amp;utm_content=article&amp;utm_group=organic" target="_blank" rel="noopener">Зарегистрироваться бесплатно</a>
+          <a class="f5-btn" data-cta="course" hidden href="https://life-practic.ru/course/recurring-patterns/?utm_source=site&amp;utm_medium=smm&amp;utm_campaign=none_direct-ads_scenarios_e.s._none&amp;utm_content=article&amp;utm_group=organic" target="_blank" rel="noopener">Изучить программу курса</a>
+        </div>
+        <div class="f5-photo"><img src="https://fs22.getcourse.ru/fileservice/file/download/a/6110/sc/140/h/fd4709d71e532046d44291133f6aadfb.png" alt="Елена Станковская"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="f5-sec">
+    <div class="f5-wrap">
+      <div class="f5-story">
+        <div class="f5-card">
+          <p>В&nbsp;ходе работы Елена Станковская помогает ей исследовать детский опыт: тоску по&nbsp;маме, потребность в&nbsp;близости и&nbsp;привычку отказываться от&nbsp;собственных чувств, чтобы&nbsp;не&nbsp;расстраивать близкого&nbsp;человека.</p>
+        </div>
+        <div class="f5-card f5-card-accent">
+          <p>Постепенно проявляется внутренний конфликт: желание быть ближе к&nbsp;людям сталкивается со&nbsp;страхом потерять себя в&nbsp;отношениях.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="f5-sec">
+    <div class="f5-wrap">
+      <p class="f5-watch"><span class="f5-watch-ico" aria-hidden="true">🎬</span>Посмотрите отрывок из&nbsp;демонстрационной сессии Елены Станковской, чтобы&nbsp;увидеть, как&nbsp;психолог исследует связь детского опыта с&nbsp;трудностями в&nbsp;близких&nbsp;отношениях.</p>
+    </div>
+  </section>
+<script>
+/* Смена призыва: с 11.11.2026 00:00 МСК — курс. Проверка: ?f5_cta=web или ?f5_cta=course */
+(function(){
+  var q=(location.search.match(/[?&]f5_cta=(web|course)/)||[])[1];
+  var cta=q||(Date.now()>=Date.UTC(2026,10,10,21,0,0)?'course':'web');
+  document.querySelectorAll('.f5-root [data-cta]').forEach(function(el){el.hidden=el.getAttribute('data-cta')!==cta});
+})();
+</script>
+
+</div>

@@ -1,0 +1,29 @@
+<!-- Виджет 1675879 (HTML-элемент «limit 3-5-10 offers» в форме): разрешено выбрать только 3, 5 или 10 предложений. -->
+<style>.f5-offer-hint{margin:12px 0 0;text-align:center;font-size:15px;line-height:1.4;color:#d00000}.f5-offer-locked{opacity:.45 !important;cursor:not-allowed !important}</style>
+<script>
+(function(){
+var ALLOWED=[3,5,10];
+var HINT='\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 3, 5 \u0438\u043b\u0438 10 \u043f\u0440\u0435\u0434\u043b\u043e\u0436\u0435\u043d\u0438\u0439';
+function setup(form){
+if(form.__f5OfferLimit)return;
+var boxes=form.querySelectorAll('input[type=checkbox][name="formParams[offer_id][]"]');
+if(!boxes.length)return;
+form.__f5OfferLimit=true;
+var btn=form.querySelector('button.f-btn, button[type=submit]');
+var hint=document.createElement('div');
+hint.className='f5-offer-hint';hint.textContent=HINT;hint.style.display='none';
+if(btn)btn.parentNode.insertBefore(hint,btn.nextSibling);
+function count(){var n=0;for(var i=0;i<boxes.length;i++)if(boxes[i].checked)n++;return n;}
+function ok(){return ALLOWED.indexOf(count())!==-1;}
+function refresh(){var good=ok();if(btn)btn.classList.toggle('f5-offer-locked',!good);if(good)hint.style.display='none';}
+function block(e){if(ok())return;e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();hint.style.display='block';}
+form.addEventListener('change',refresh);
+form.addEventListener('submit',block,true);
+if(btn)btn.addEventListener('click',block,true);
+refresh();
+}
+function init(){var forms=document.querySelectorAll('form');for(var i=0;i<forms.length;i++)setup(forms[i]);}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+setTimeout(init,1000);
+})();
+</script>

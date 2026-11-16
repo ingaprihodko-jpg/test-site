@@ -1,0 +1,155 @@
+<!--
+  «Игровое поле: путь ученика» — главная личного кабинета (вариант B6).
+  Страница: f5game.site/teach/control/stream («Список тренингов»).
+
+  Материалы разложены по ЭТАПАМ — лестница из 5 уровней, каждый выше
+  предыдущего: Начать → Учиться → Играть → Вести самому → Зарабатывать.
+  Названия уровней — предложение, не из ТЗ, можно поменять.
+
+  В каждом уровне — 6 тренингов с реальными ссылками (выборка на 15.10.2026).
+  Список статичный: ученик без доступа при клике увидит экран GetCourse.
+
+  Чистый HTML + CSS, без <script>. Размеры в px, классы с префиксом f5w-.
+  ЗАГЛУШКИ «#ССЫЛКА-…»: служебные ссылки внизу.
+-->
+<div class="f5w">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800;900&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  .f5w{
+    --f5w-ink:#ffffff;--f5w-ink-soft:rgba(255,255,255,0.78);--f5w-line:rgba(255,255,255,0.16);
+    --f5w-board:#2a1857;--f5w-pink:#ee0778;--f5w-sun:#f6dd4a;--f5w-blue:#2f6fed;--f5w-green:#22b07d;--f5w-orange:#ff7a2f;
+    --f5w-dark:#1b1023;--f5w-soft:#6b5a80;
+    --f5w-display:'Unbounded',-apple-system,'Segoe UI',sans-serif;
+    --f5w-body:'Manrope',-apple-system,'Segoe UI',sans-serif;
+    font-family:var(--f5w-body) !important;color:var(--f5w-ink) !important;
+    font-size:16px;line-height:1.45;max-width:1030px;margin:0 auto;padding:8px 0 24px;
+    display:grid;gap:20px;-webkit-font-smoothing:antialiased;box-sizing:border-box;
+  }
+  .f5w *,.f5w *::before,.f5w *::after{box-sizing:border-box;}
+  .f5w p{margin:0 !important;}
+  .f5w a{text-decoration:none !important;}
+  .f5w .f5w-eyebrow{font-family:var(--f5w-display) !important;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--f5w-sun) !important;}
+  .f5w .f5w-title{font-family:var(--f5w-display) !important;font-weight:800;font-size:32px;line-height:1.15;margin:0 !important;color:var(--f5w-ink) !important;}
+  /* ближайшее событие — строка сверху */
+  .f5w .f5w-next{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;background:#fff;border-radius:18px;padding:14px 18px;color:var(--f5w-dark) !important;}
+  .f5w .f5w-next-date{font-family:var(--f5w-display) !important;font-weight:900;font-size:26px;line-height:1;color:#fff !important;background:var(--f5w-pink);border-radius:12px;padding:10px 12px;font-variant-numeric:tabular-nums;}
+  .f5w .f5w-next-date small{font-size:11px;margin-left:4px;text-transform:uppercase;}
+  .f5w .f5w-next-t{display:grid;gap:1px;flex:1 1 220px;min-width:0;}
+  .f5w .f5w-next-t small{font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--f5w-pink) !important;}
+  .f5w .f5w-next-t b{font-family:var(--f5w-display) !important;font-size:18px;font-weight:800;color:var(--f5w-dark) !important;}
+  .f5w .f5w-next-t span{font-size:13px;color:var(--f5w-soft) !important;}
+  .f5w .f5w-next-more{display:flex;flex-wrap:wrap;gap:8px;}
+  .f5w .f5w-next-more a{font-size:12.5px;font-weight:700;padding:6px 10px;border-radius:10px;background:rgba(47,111,237,0.1);color:var(--f5w-blue) !important;}
+  .f5w .f5w-next-more a b{font-weight:900;}
+  .f5w .f5w-btn{display:inline-flex;font-weight:800;font-size:14px;padding:10px 18px;border-radius:12px;background:var(--f5w-pink);color:#fff !important;white-space:nowrap;}
+  /* пункт-тренинг */
+  .f5w .f5w-it{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:7px 10px;border-radius:10px;background:rgba(255,255,255,0.07);color:var(--f5w-ink) !important;transition:background-color .15s ease;}
+  .f5w .f5w-it:hover{background:rgba(255,255,255,0.16);}
+  .f5w .f5w-itn{font-size:13.5px;font-weight:700;line-height:1.3;min-width:0;color:var(--f5w-ink) !important;}
+  .f5w .f5w-itc{font-size:11.5px;font-weight:600;white-space:nowrap;color:var(--f5w-ink-soft) !important;font-variant-numeric:tabular-nums;}
+  .f5w .f5w-help{display:flex;flex-wrap:wrap;gap:10px 28px;padding-top:16px;border-top:1px solid var(--f5w-line);}
+  .f5w .f5w-help a{font-size:14px;font-weight:700;color:var(--f5w-ink-soft) !important;border-bottom:1px solid rgba(255,255,255,0.3);}
+  .f5w .f5w-help a:hover{color:#fff !important;border-color:var(--f5w-sun);}
+  .f5w a:focus-visible{outline:3px solid var(--f5w-sun);outline-offset:3px;}
+
+  /* лестница уровней */
+  .f5w .f5w-path{
+    position:relative;border-radius:28px;padding:22px 16px 18px;
+    background:radial-gradient(rgba(255,255,255,0.08) 1.5px,transparent 1.6px) 0 0/16px 16px,var(--f5w-board);
+  }
+  .f5w .f5w-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:start;}
+  .f5w .f5w-stage{display:grid;gap:10px;align-content:start;}
+  .f5w .f5w-stage:nth-child(1){margin-top:128px;}
+  .f5w .f5w-stage:nth-child(2){margin-top:96px;}
+  .f5w .f5w-stage:nth-child(3){margin-top:64px;}
+  .f5w .f5w-stage:nth-child(4){margin-top:32px;}
+  /* ступень */
+  .f5w .f5w-step{position:relative;border-radius:16px 16px 6px 6px;padding:14px 14px 12px;background:var(--sc);color:var(--f5w-dark) !important;
+    box-shadow:0 8px 0 color-mix(in srgb,var(--sc) 60%,#000);}
+  .f5w .s-sun{--sc:var(--f5w-sun);} .f5w .s-blue{--sc:var(--f5w-blue);} .f5w .s-pink{--sc:var(--f5w-pink);}
+  .f5w .s-orange{--sc:var(--f5w-orange);} .f5w .s-green{--sc:var(--f5w-green);}
+  .f5w .f5w-lvl{font-family:var(--f5w-display) !important;font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;opacity:0.75;}
+  .f5w .f5w-sn{display:block;font-family:var(--f5w-display) !important;font-size:17px;font-weight:900;line-height:1.15;margin-top:2px;}
+  .f5w .s-blue .f5w-lvl,.f5w .s-blue .f5w-sn,.f5w .s-pink .f5w-lvl,.f5w .s-pink .f5w-sn,.f5w .s-green .f5w-lvl,.f5w .s-green .f5w-sn{color:#fff !important;}
+  .f5w .s-sun .f5w-lvl,.f5w .s-sun .f5w-sn,.f5w .s-orange .f5w-lvl,.f5w .s-orange .f5w-sn{color:var(--f5w-dark) !important;}
+  .f5w .f5w-items{display:grid;gap:6px;}
+  .f5w .f5w-it{flex-direction:column;align-items:flex-start;gap:2px;}
+  /* финиш */
+  .f5w .f5w-stage:nth-child(5) .f5w-step::after{
+    content:"";position:absolute;top:-26px;right:12px;width:30px;height:30px;background:var(--f5w-sun);
+    clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+  }
+
+  @media (max-width:900px){
+    .f5w .f5w-steps{grid-template-columns:1fr;gap:18px;}
+    .f5w .f5w-stage:nth-child(n){margin-top:0;}
+    .f5w .f5w-stage{grid-template-columns:150px 1fr;align-items:start;gap:12px;}
+    .f5w .f5w-items{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:600px){
+    .f5w .f5w-title{font-size:26px;}
+    .f5w .f5w-stage{grid-template-columns:1fr;}
+    .f5w .f5w-items{grid-template-columns:1fr;}
+    .f5w .f5w-path{padding:14px 10px;}
+  }
+</style>
+
+  <div>
+    <div class="f5w-eyebrow">F5GAME.RU</div>
+    <h1 class="f5w-title">Мой кабинет</h1>
+  </div>
+
+  <div class="f5w-next">
+    <span class="f5w-next-date">15<small>окт</small></span>
+    <span class="f5w-next-t"><small>Ближайшее · Интенсив</small><b>Искусство влияния</b><span>15 октября (чт) — обучение на&nbsp;интенсиве</span></span>
+    <span class="f5w-next-more">
+      <a href="https://f5game.site/vliyanie?utm_source=calendar"><b>24 окт</b> Искусство влияния</a>
+      <a href="https://f5game.site/expert-cabinet?utm_source=calendar"><b>29 окт</b> Экспертный кабинет</a>
+      <a href="https://f5game.site/expert-cabinet?utm_source=calendar"><b>5 ноя</b> Экспертный кабинет</a>
+    </span>
+    <a class="f5w-btn" href="https://f5game.site/vliyanie?utm_source=calendar">Подробнее</a>
+  </div>
+
+  <div class="f5w-path">
+    <div class="f5w-steps">
+      <section class="f5w-stage">
+        <div class="f5w-step s-sun"><span class="f5w-lvl">Уровень 1</span><span class="f5w-sn">Начать</span></div>
+        <div class="f5w-items">
+          <a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/917469219"><span class="f5w-itn">Предобучение Экспертные игры 2024</span><span class="f5w-itc">1&nbsp;урок</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/869281157"><span class="f5w-itn">Гений общения [Демо]</span><span class="f5w-itc">9&nbsp;уроков</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/877198100"><span class="f5w-itn">Гайд &quot;25 суперфраз&quot;</span><span class="f5w-itc">1&nbsp;урок</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/833341579"><span class="f5w-itn">13 демонов экспертов</span><span class="f5w-itc">1&nbsp;урок</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/933830690"><span class="f5w-itn">Гайд Карта победы над демонами</span><span class="f5w-itc">1&nbsp;урок</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/849847262"><span class="f5w-itn">ТРЕНДЫ 2024 для обучения</span><span class="f5w-itc">7&nbsp;уроков</span></a>
+        </div>
+      </section>
+      <section class="f5w-stage">
+        <div class="f5w-step s-blue"><span class="f5w-lvl">Уровень 2</span><span class="f5w-sn">Учиться</span></div>
+        <div class="f5w-items">
+          <a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/934446540"><span class="f5w-itn">Курс Авторский метод 2025</span><span class="f5w-itc">59&nbsp;уроков</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/916961565"><span class="f5w-itn">Экспертные игры 2024</span><span class="f5w-itc">121&nbsp;урок</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/798162117"><span class="f5w-itn">Курс &quot;Гений переговоров&quot;</span><span class="f5w-itc">13&nbsp;уроков</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/934062756"><span class="f5w-itn">Курс Создай свой бренд</span><span class="f5w-itc">19&nbsp;уроков</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/934698665"><span class="f5w-itn">Курс Карта смыслов</span><span class="f5w-itc">20&nbsp;уроков</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/929915480"><span class="f5w-itn">Курс Похитители сердец</span><span class="f5w-itc">15&nbsp;уроков</span></a>
+        </div>
+      </section>
+      <section class="f5w-stage">
+        <div class="f5w-step s-pink"><span class="f5w-lvl">Уровень 3</span><span class="f5w-sn">Играть</span></div>
+        <div class="f5w-items">
+          <a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/933973723"><span class="f5w-itn">Онлайн игры</span><span class="f5w-itc">7&nbsp;уроков</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/849794234"><span class="f5w-itn">КЛУБ ПЕРЕГОВОРОВ</span><span class="f5w-itc">37&nbsp;уроков</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/935215840"><span class="f5w-itn">Клуб визионеров</span><span class="f5w-itc">4&nbsp;урока</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/935490402"><span class="f5w-itn">Игра «Эффект красной розы»</span><span class="f5w-itc">2&nbsp;урока</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/935498959"><span class="f5w-itn">«Триггеры»</span><span class="f5w-itc">3&nbsp;урока</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/934017991"><span class="f5w-itn">Онлайн-игра «Большая тайна переговоров»</span><span class="f5w-itc">1&nbsp;урок</span></a>
+        </div>
+      </section>
+      <section class="f5w-stage">
+        <div class="f5w-step s-orange"><span class="f5w-lvl">Уровень 4</span><span class="f5w-sn">Вести самому</span></div>
+        <div class="f5w-items">
+          <a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/754766871"><span class="f5w-itn">Базовый курс &quot;Мастер бизнес игр&quot;</span><span class="f5w-itc">16&nbsp;уроков</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/679042004"><span class="f5w-itn">&quot;Гений игры&quot;- Лицензия</span><span class="f5w-itc">11&nbsp;уроков</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/896200257"><span class="f5w-itn">Обучение по ведению мастер-классов</span><span class="f5w-itc">2&nbsp;урока</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/935062545"><span class="f5w-itn">Интенсив Мастерская ведущего</span><span class="f5w-itc">1&nbsp;урок</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/934357677"><span class="f5w-itn">Интенсив по переговорным играм</span><span class="f5w-itc">2&nbsp;урока</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/748991783"><span class="f5w-itn">Метафорические карты для экспертных игр</span><span class="f5w-itc">1&nbsp;урок</span></a>
+        </div>
+      </section>
+      <section class="f5w-stage">
+        <div class="f5w-step s-green"><span class="f5w-lvl">Уровень 5</span><span class="f5w-sn">Зарабатывать</span></div>
+        <div class="f5w-items">
+          <a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/740890667"><span class="f5w-itn">Партнерская программа</span><span class="f5w-itc">2&nbsp;урока</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/753470870"><span class="f5w-itn">Как зарабатывать на бизнес-играх 100 000Р+ за месяц</span><span class="f5w-itc">1&nbsp;урок</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/753367790"><span class="f5w-itn">Гайд &quot;Как заработать на бизнес-играх&quot;</span><span class="f5w-itc">1&nbsp;урок</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/863706467"><span class="f5w-itn">Отдел продаж</span><span class="f5w-itc">9&nbsp;уроков</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/867716406"><span class="f5w-itn">Гайд &quot;Высокочековые продукты&quot;</span><span class="f5w-itc">1&nbsp;урок</span></a><a class="f5w-it" href="https://f5game.site/teach/control/stream/view/id/930483341"><span class="f5w-itn">Мастер-класс «Продажи в переписке»</span><span class="f5w-itc">9&nbsp;уроков</span></a>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="f5w-help">
+    <a href="#ССЫЛКА-партнерская-программа">Партнерская программа</a>
+    <a href="#ССЫЛКА-консультация">Консультация по&nbsp;продукту</a>
+    <a href="#ССЫЛКА-техподдержка">Техподдержка</a>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<!-- Виджет 1675879 (HTML-элемент field89 в форме): рассрочка только при сумме заказа больше 30 000 ₽. В основных предложениях рассрочка выключена; при нужной сумме отмеченные чекбоксы отправляют id копий с включённой рассрочкой. Копии добавлены в промоакцию 511423, цены одинаковые. -->
+<script>
+(function(){
+// Порог по сумме без скидки: 4 × 9 950 = 39 800 → по акции 27 800 (меньше 30 000); 5 × 9 950 = 49 750 → 34 750.
+var MIN_BASE=40000;
+var MAP={7744377:8876846,7744541:8876852,7744640:8876853,7744713:8876854,8010708:8876855,7832784:8876857,8176050:8876858,7744680:8876859,8492570:8876860,7768525:8876861,7750163:8876862,8872621:8876863};
+function setup(form){
+if(form.__f5Installment)return;
+var boxes=form.querySelectorAll('input[type=checkbox][name="formParams[offer_id][]"]');
+if(!boxes.length)return;
+form.__f5Installment=true;
+for(var i=0;i<boxes.length;i++)boxes[i].setAttribute('data-f5-orig',boxes[i].value);
+function sync(){
+var sum=0;
+for(var i=0;i<boxes.length;i++)if(boxes[i].checked)sum+=parseFloat(boxes[i].getAttribute('data-price-value'))||0;
+var on=sum>=MIN_BASE;
+for(var j=0;j<boxes.length;j++){var o=boxes[j].getAttribute('data-f5-orig');boxes[j].value=on&&MAP[o]?MAP[o]:o;}
+}
+// click в фазе захвата — раньше, чем GC пересчитывает «Общую сумму» по change
+form.addEventListener('click',sync,true);
+form.addEventListener('change',sync,true);
+form.addEventListener('submit',sync,true);
+sync();
+}
+function init(){var forms=document.querySelectorAll('form');for(var i=0;i<forms.length;i++)setup(forms[i]);}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+setTimeout(init,1000);
+})();
+</script>
